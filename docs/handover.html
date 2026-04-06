@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>システム引継ぎ資料 — 全日本マスターズレガッタ 2026</title>
+<style>
+  :root {
+    --accent: #2D4F2C;
+    --bg: #F7F4EF;
+    --card: #FFFFFF;
+    --border: #E8E4DC;
+    --text: #1A1A18;
+    --text-sub: #6B6860;
+    --text-muted: #9B9890;
+    --ok: #2D7A2D;
+    --warn: #B8860B;
+    --ng: #C0392B;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.8; }
+  .page { max-width: 860px; margin: 0 auto; padding: 48px 24px 100px; }
+
+  /* ヘッダー */
+  .doc-header { border-left: 5px solid var(--accent); padding: 0 0 0 20px; margin-bottom: 48px; }
+  .doc-header-label { font-size: 11px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
+  .doc-header-title { font-size: 24px; font-weight: 600; color: var(--text); }
+  .doc-header-sub { font-size: 13px; color: var(--text-sub); margin-top: 6px; }
+
+  /* セクション */
+  h2 { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); font-weight: 400; margin: 48px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 14px; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+
+  /* カード */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 12px; }
+  .card-title { font-size: 13px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .card-icon { font-size: 18px; }
+
+  /* URLリスト */
+  .url-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #F0EDE7; }
+  .url-item:last-child { border-bottom: none; }
+  .url-label { font-size: 12px; color: var(--text-sub); width: 160px; flex-shrink: 0; padding-top: 1px; }
+  .url-body { flex: 1; }
+  .url-link { font-size: 13px; color: var(--accent); text-decoration: none; word-break: break-all; }
+  .url-link:hover { text-decoration: underline; }
+  .url-note { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* 認証情報テーブル */
+  .cred-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .cred-table th { padding: 8px 12px; text-align: left; font-size: 11px; color: var(--text-muted); font-weight: 400; border-bottom: 1px solid var(--border); background: #FAF8F4; }
+  .cred-table td { padding: 10px 12px; border-bottom: 1px solid #F0EDE7; vertical-align: top; }
+  .cred-table tr:last-child td { border-bottom: none; }
+  .cred-key { font-family: monospace; font-size: 12px; background: #F0EDE7; padding: 2px 6px; border-radius: 3px; }
+  .cred-val { font-family: monospace; font-size: 12px; }
+  .cred-blank { color: var(--text-muted); font-style: italic; }
+
+  /* ステップ */
+  .steps { list-style: none; padding: 0; }
+  .step { display: flex; gap: 14px; margin-bottom: 10px; }
+  .step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-body { flex: 1; font-size: 13px; }
+  .step-note { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* 注意バナー */
+  .alert { border-radius: 6px; padding: 14px 18px; margin-bottom: 12px; font-size: 13px; }
+  .alert-warn { background: #fef9e7; border: 1px solid #e8c840; color: #7a5c00; }
+  .alert-info { background: #e8f5e8; border: 1px solid #a8d8a8; color: #1a4d1a; }
+
+  /* フロー図 */
+  .flow { display: flex; flex-direction: column; gap: 0; }
+  .flow-step { background: var(--card); border: 1px solid var(--border); padding: 12px 18px; display: flex; align-items: center; gap: 12px; }
+  .flow-step:first-child { border-radius: 6px 6px 0 0; }
+  .flow-step:last-child  { border-radius: 0 0 6px 6px; }
+  .flow-step + .flow-step { border-top: none; }
+  .flow-arrow { text-align: center; font-size: 13px; color: var(--text-muted); padding: 2px; background: var(--bg); border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+  .flow-icon { font-size: 18px; width: 28px; text-align: center; flex-shrink: 0; }
+  .flow-body { flex: 1; }
+  .flow-title { font-size: 13px; font-weight: 500; }
+  .flow-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* フッター */
+  .footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted); text-align: center; }
+
+  @media print {
+    body { background: #fff; }
+    .page { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ヘッダー -->
+  <div class="doc-header">
+    <div class="doc-header-label">System Handover Document</div>
+    <div class="doc-header-title">全日本マスターズレガッタ 2026<br>速報サイト システム引継ぎ資料</div>
+    <div class="doc-header-sub">作成日: 2026年4月 &nbsp;|&nbsp; 担当: システム管理者 → 大会担当者</div>
+  </div>
+
+  <div class="alert alert-info">
+    このシステムは、計測スタッフがCSVファイルをGoogle Driveにアップロードするだけで、レース結果が自動的に速報サイトに反映される仕組みです。大会当日は基本的に「GASトリガーが動いているか確認する」だけで運用できます。
+  </div>
+
+  <!-- ===== 1. サイト・管理URL ===== -->
+  <h2>① 公開URL・管理URL一覧</h2>
+  <div class="card">
+    <div class="url-item">
+      <div class="url-label">🌐 本番速報サイト</div>
+      <div class="url-body">
+        <a class="url-link" href="https://masters-regatta-2026.pages.dev" target="_blank">https://masters-regatta-2026.pages.dev</a>
+        <div class="url-note">観客・選手・関係者がレース結果を確認するページ。大会当日はここが自動更新される</div>
+      </div>
+    </div>
+    <div class="url-item">
+      <div class="url-label">📋 管理者ダッシュボード</div>
+      <div class="url-body">
+        <a class="url-link" href="https://masters-regatta-2026.pages.dev/admin/9922/" target="_blank">https://masters-regatta-2026.pages.dev/admin/9922/</a>
+        <div class="url-note">大会当日の運用管理画面。GASの稼働状態・レース公開状況・チェックリストを確認する。URLは第三者に共有しないこと</div>
+      </div>
+    </div>
+    <div class="url-item">
+      <div class="url-label">📁 Google Drive</div>
+      <div class="url-body">
+        <a class="url-link" href="https://drive.google.com/drive/folders/1Gxt7ript39f1YZqbYPVR3XWBvzBK9ui0" target="_blank">大会用フォルダを開く</a>
+        <div class="url-note">CSVの投入先。race_csv/500m/ と race_csv/1000m/ にレース結果CSVをアップする</div>
+      </div>
+    </div>
+    <div class="url-item">
+      <div class="url-label">⚙️ Google Apps Script</div>
+      <div class="url-body">
+        <a class="url-link" href="https://script.google.com" target="_blank">https://script.google.com</a>
+        <div class="url-note">「マスターズ石川県大会2026」プロジェクトを開く。大会前にトリガーを有効にし、終了後に停止する</div>
+      </div>
+    </div>
+    <div class="url-item">
+      <div class="url-label">🐙 GitHub</div>
+      <div class="url-body">
+        <a class="url-link" href="https://github.com/RYUIYAMADA/masters-regatta-2026" target="_blank">https://github.com/RYUIYAMADA/masters-regatta-2026</a>
+        <div class="url-note">サイトのソースコード。GASが結果JSONをここにPushし、Cloudflareが自動でデプロイする</div>
+      </div>
+    </div>
+    <div class="url-item">
+      <div class="url-label">☁️ Cloudflare Pages</div>
+      <div class="url-body">
+        <a class="url-link" href="https://dash.cloudflare.com" target="_blank">https://dash.cloudflare.com</a>
+        <div class="url-note">デプロイ状況の確認。通常は操作不要。アカウント: Row2014.2015.k@gmail.com</div>
+      </div>
+    </div>
+    <div class="url-item">
+      <div class="url-label">📄 当日担当者マニュアル</div>
+      <div class="url-body">
+        <a class="url-link" href="https://masters-regatta-2026.pages.dev/docs/day-manual.html" target="_blank">https://masters-regatta-2026.pages.dev/docs/day-manual.html</a>
+        <div class="url-note">計測スタッフ向けのCSVアップロード手順書。大会当日に計測スタッフへ送付する</div>
+      </div>
+    </div>
+    <div class="url-item">
+      <div class="url-label">📐 CSVファイル命名ルール</div>
+      <div class="url-body">
+        <a class="url-link" href="https://masters-regatta-2026.pages.dev/docs/csv_naming_rules.html" target="_blank">https://masters-regatta-2026.pages.dev/docs/csv_naming_rules.html</a>
+        <div class="url-note">スケジュール・エントリー・レース結果CSVの命名ルールとテンプレートDL</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 2. アカウント情報 ===== -->
+  <h2>② アカウント・認証情報</h2>
+
+  <div class="alert alert-warn">
+    ⚠️ 以下の情報は厳重に管理してください。第三者への共有・メール送信は禁止です。
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="card-icon">🔐</span>各サービスのアカウント</div>
+    <table class="cred-table">
+      <thead><tr><th>サービス</th><th>アカウント</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Google（Drive / GAS）</td>
+          <td>Row2014.2015.k@gmail.com</td>
+          <td>パスワードは別途管理</td>
+        </tr>
+        <tr>
+          <td>GitHub</td>
+          <td>RYUIYAMADA</td>
+          <td>パスワードは別途管理</td>
+        </tr>
+        <tr>
+          <td>Cloudflare</td>
+          <td>Row2014.2015.k@gmail.com</td>
+          <td>同上</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="card-icon">⚙️</span>GAS スクリプトプロパティ（設定済み）</div>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px">GASプロジェクト → プロジェクトの設定 → スクリプトプロパティ で確認できます。</p>
+    <table class="cred-table">
+      <thead><tr><th>プロパティ名</th><th>内容</th><th>変更タイミング</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="cred-key">GITHUB_TOKEN</span></td>
+          <td>GitHubへのPush権限トークン（gho_...）</td>
+          <td>トークンが失効したら再発行・再設定</td>
+        </tr>
+        <tr>
+          <td><span class="cred-key">DRIVE_ROOT_FOLDER_ID</span></td>
+          <td>Google DriveフォルダID<br><span class="cred-val">1Gxt7ript39f1YZqbYPVR3XWBvzBK9ui0</span></td>
+          <td>フォルダを変更した場合のみ</td>
+        </tr>
+        <tr>
+          <td><span class="cred-key">MEASUREMENT_POINTS</span></td>
+          <td><span class="cred-val">500m,1000m</span></td>
+          <td>コース変更時のみ</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== 3. 仕組みの概要 ===== -->
+  <h2>③ システムの仕組み</h2>
+  <div class="card">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-icon">📁</div>
+        <div class="flow-body">
+          <div class="flow-title">計測スタッフが CSVをGoogle Driveにアップロード</div>
+          <div class="flow-desc">race_csv/500m/ と race_csv/1000m/ に投入。両方揃って初めて処理される</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓ 最大5分</div>
+      <div class="flow-step">
+        <div class="flow-icon">⚙️</div>
+        <div class="flow-body">
+          <div class="flow-title">GAS（Google Apps Script）が自動検知・変換</div>
+          <div class="flow-desc">5分間隔で自動実行。CSVをJSON形式に変換してGitHubにPush</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓ 約1分</div>
+      <div class="flow-step">
+        <div class="flow-icon">☁️</div>
+        <div class="flow-body">
+          <div class="flow-title">Cloudflare Pagesが自動デプロイ</div>
+          <div class="flow-desc">GitHubへのPushを検知して自動でサイトを更新</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">
+        <div class="flow-icon">🌐</div>
+        <div class="flow-body">
+          <div class="flow-title">速報サイトに結果が表示される</div>
+          <div class="flow-desc">CSV投入から最大6分で公開。閲覧者はブラウザをリロードすれば確認できる</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 4. 大会前の準備 ===== -->
+  <h2>④ 大会前の準備（スケジュール・エントリー登録）</h2>
+  <div class="card">
+    <ul class="steps">
+      <li class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          スケジュールCSV（schedule.csv）を作成し、Google Drive の <strong>master/</strong> フォルダにアップロード
+          <div class="step-note">テンプレートは管理画面 → ④ テストCSVダウンロード から取得。列の詳細は命名ルール文書を参照</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          エントリーCSV（entries.csv）を作成し、同じく <strong>master/</strong> フォルダにアップロード
+          <div class="step-note">クルー名・所属・レーン番号をスケジュールのrace_noと合わせて記入</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          GASで <strong>importMasterData()</strong> を手動実行
+          <div class="step-note">script.google.com → プロジェクトを開く → 関数ドロップダウンで importMasterData を選択 → 実行</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          速報サイトにスケジュール・エントリーが表示されているか確認
+          <div class="step-note">masters-regatta-2026.pages.dev を開いてレース一覧が表示されればOK</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ===== 5. 大会当日の操作 ===== -->
+  <h2>⑤ 大会当日の操作</h2>
+  <div class="card">
+    <ul class="steps">
+      <li class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>GASトリガーを有効にする</strong>
+          <div class="step-note">script.google.com → マスターズ石川県大会2026 → 左メニュー「トリガー」→ onTrigger が5分間隔で設定されているか確認。なければ追加</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>管理者ダッシュボードで「正常」を確認する</strong>
+          <div class="step-note">masters-regatta-2026.pages.dev/admin/9922/ を開き、③ CSV自動アップロード監視 → 緑の「正常」になるまで待つ（最大8分）</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>計測スタッフへ当日マニュアルのURLを共有する</strong>
+          <div class="step-note">masters-regatta-2026.pages.dev/docs/day-manual.html をLINE等で送付</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>競技中：管理画面でサイト反映を定期確認する</strong>
+          <div class="step-note">レース終了後5〜6分でサイトに反映されているか確認。「要確認」になったらトリガーを再起動</div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>全レース終了後：GASトリガーを停止する</strong>
+          <div class="step-note">script.google.com → トリガー → onTrigger を削除または無効化。GASには90分/日の実行制限があるため不要な稼働は止める</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ===== 6. トラブル対応 ===== -->
+  <h2>⑥ よくあるトラブルと対処法</h2>
+  <div class="card">
+    <table class="cred-table">
+      <thead><tr><th>症状</th><th>原因</th><th>対処</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>管理画面が「要確認」になっている</td>
+          <td>GASトリガーが止まっている</td>
+          <td>script.google.com → トリガー → onTrigger を再設定して実行</td>
+        </tr>
+        <tr>
+          <td>CSVをアップしてもサイトが更新されない</td>
+          <td>500m・1000m両方が揃っていない</td>
+          <td>もう一方のCSVもアップする。両方揃うと次のGAS実行（最大5分後）に処理される</td>
+        </tr>
+        <tr>
+          <td>サイトに古い結果が表示されている</td>
+          <td>ブラウザキャッシュ</td>
+          <td>Ctrl+Shift+R（Mac: Cmd+Shift+R）で強制リロード</td>
+        </tr>
+        <tr>
+          <td>GASがエラーログを出している</td>
+          <td>GitHubトークンの期限切れ等</td>
+          <td>GAS → 実行ログを確認。GITHUB_TOKEN が失効している場合は GitHub で再発行してプロパティを更新</td>
+        </tr>
+        <tr>
+          <td>スケジュール・選手名が正しく表示されない</td>
+          <td>master.json が古い</td>
+          <td>schedule.csv / entries.csv を修正して Drive にアップ → GASで importMasterData() を再実行</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== 7. 連絡先 ===== -->
+  <h2>⑦ システム担当者連絡先</h2>
+  <div class="card">
+    <p style="font-size:13px;color:var(--text-sub)">
+      技術的なトラブルや設定変更が必要な場合は、システム構築担当者へご連絡ください。<br>
+      （連絡先は別途お伝えします）
+    </p>
+  </div>
+
+  <div class="footer">
+    全日本マスターズレガッタ 2026 速報サイト — システム引継ぎ資料<br>
+    このドキュメントの内容は関係者のみ共有可。第三者への転送・公開は禁止。
+  </div>
+
+</div>
+</body>
+</html>
