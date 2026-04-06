@@ -70,7 +70,7 @@ const CONFIG = {
   // GitHub リポジトリ情報
   github: {
     owner: 'RYUIYAMADA',
-    repo: 'rowing-live-results',
+    repo: 'masters-regatta-2026',
     branch: 'main',
     resultsPath: 'data/results',
     masterPath: 'data/master.json',
@@ -104,7 +104,7 @@ const CONFIG = {
 
 /**
  * スケジュールトリガーから呼ばれるメイン関数
- * 実行時間が5分を超えたら自動停止する
+ * 実行時間が4分を超えたら自動停止する
  */
 function onTrigger() {
   const startTime = Date.now();

@@ -284,7 +284,7 @@
         <ul class="role-list">
           <li>計測システムでCSVを出力</li>
           <li>DriveにCSVをアップロード</li>
-          <li>5〜6分後にサイト反映を確認</li>
+          <li>3〜4分後にサイト反映を確認</li>
           <li>問題あれば大会担当者に連絡</li>
         </ul>
       </div>
@@ -331,7 +331,7 @@
       <div class="url-item">
         <div class="url-label">📁 Google Drive（大会フォルダ）</div>
         <div class="url-body">
-          <a class="url-link" href="https://drive.google.com/drive/folders/1Gxt7ript39f1YZqbYPVR3XWBvzBK9ui0" target="_blank">大会フォルダを開く</a>
+          <a class="url-link" href="https://drive.google.com/drive/folders/1LA-9BOcZtxesmlY5V0BrMgotvEEB7eu3" target="_blank">大会フォルダを開く</a>
           <div class="url-note">CSVの投入先。フォルダ構成: race_csv/500m・1000m/（結果CSV）、master/（スケジュール・エントリー）、processed/（処理済み）</div>
         </div>
       </div>
@@ -389,7 +389,7 @@
         <thead><tr><th>プロパティ名</th><th>内容</th><th>変更が必要なタイミング</th></tr></thead>
         <tbody>
           <tr><td><code>GITHUB_TOKEN</code></td><td>GitHubへのPush権限トークン（gho_...）</td><td>トークンが失効したとき（年1回程度）。GitHubの Settings → Personal access tokens で再発行</td></tr>
-          <tr><td><code>DRIVE_ROOT_FOLDER_ID</code></td><td>Google DriveフォルダのID<br><code>1Gxt7ript39f1YZqbYPVR3XWBvzBK9ui0</code></td><td>Driveフォルダを変更した場合のみ</td></tr>
+          <tr><td><code>DRIVE_ROOT_FOLDER_ID</code></td><td>Google DriveフォルダのID<br><code>1LA-9BOcZtxesmlY5V0BrMgotvEEB7eu3</code></td><td>Driveフォルダを変更した場合のみ</td></tr>
           <tr><td><code>MEASUREMENT_POINTS</code></td><td><code>500m,1000m</code></td><td>コース構成が変わった場合のみ</td></tr>
         </tbody>
       </table>
@@ -436,7 +436,7 @@
           <div class="step-body">
             <strong>Google Drive の master/ フォルダに2ファイルをアップロード</strong>
             <div class="step-note">
-              ・<a href="https://drive.google.com/drive/folders/1Gxt7ript39f1YZqbYPVR3XWBvzBK9ui0" target="_blank">大会フォルダ</a> → master/ フォルダを開く<br>
+              ・<a href="https://drive.google.com/drive/folders/1LA-9BOcZtxesmlY5V0BrMgotvEEB7eu3" target="_blank">大会フォルダ</a> → master/ フォルダを開く<br>
               ・schedule.csv と entries.csv をドラッグ&ドロップまたは「+新規」でアップロード<br>
               ・既存ファイルがある場合は上書きアップロードでOK
             </div>
@@ -516,7 +516,7 @@
     <div class="card">
       <h3>🏁 競技中（継続的にやること）</h3>
       <ul class="blist">
-        <li><strong>管理画面を定期的に確認する</strong> — レース終了後5〜6分でサイトに反映されているか確認。「③ タイムライン」でレースが「サイト公開済み」になっているか見る<span class="note">特に最初の数レースは確実に確認すること。問題があれば早期に発見できる</span></li>
+        <li><strong>管理画面を定期的に確認する</strong> — レース終了後3〜4分でサイトに反映されているか確認。「③ タイムライン」でレースが「サイト公開済み」になっているか見る<span class="note">特に最初の数レースは確実に確認すること。問題があれば早期に発見できる</span></li>
         <li><strong>GAS稼働状態を確認する</strong> — 「③ CSV自動アップロード監視」が常に緑の「正常」かを確認<span class="note">「要確認」になったらGASトリガーを再起動（一度削除して再設定）</span></li>
         <li><strong>計測スタッフと連絡を取れる状態を維持する</strong> — CSVアップが遅れている場合の連絡手段を確保しておく</li>
       </ul>
@@ -606,7 +606,7 @@
       <ul class="blist">
         <li><strong>GAS実行時間: 90分/日の上限あり</strong> — 5分×18回=90分。大会が2日間の場合も1日ごとにカウントされる。大会終了後は必ずトリガーを停止すること<span class="note">超過するとその日のGAS処理が止まる。大会中に止まった場合はシステム管理者へ連絡</span></li>
         <li><strong>CSVは500mと1000m両方が揃わないとサイトに反映されない</strong> — 1000mコースのため両ポイントの計測CSVが必要。片方だけでは保留される<span class="note">両方揃った時点で次のGAS実行（最大2分後）に処理される</span></li>
-        <li><strong>反映まで最大3〜4分かかる</strong> — GAS5分周期+デプロイ1分のため、即時反映はできない<span class="note">タイムラグを関係者に事前に周知しておくと混乱が少ない</span></li>
+        <li><strong>反映まで最大3〜4分かかる</strong> — GAS2分間隔+デプロイ1分のため、即時反映はできない<span class="note">タイムラグを関係者に事前に周知しておくと混乱が少ない</span></li>
         <li><strong>GitHubトークンは有効期限がある</strong> — 設定した期限によって1年以内に失効する。失効するとGASのPushが止まる<span class="note">年1回程度、大会前にトークンの有効期限を確認することを推奨</span></li>
       </ul>
     </div>

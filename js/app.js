@@ -10,7 +10,7 @@ const CONFIG = {
   // 結果JSONのパスパターン（race_no を3桁ゼロ埋め）
   RESULT_JSON: (no) => `data/results/race_${String(no).padStart(3, '0')}.json`,
   // 自動更新間隔（ミリ秒）
-  REFRESH_INTERVAL: 60000,
+  REFRESH_INTERVAL: 120000,
   // ラウンドの表示名マッピング
   ROUND_NAMES: {
     FA: '決勝A', FB: '決勝B', SF: '準決勝',
