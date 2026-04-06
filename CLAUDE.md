@@ -6,7 +6,7 @@
 ## 対応大会
 - 大会名: 全日本マスターズレガッタ 2026
 - リポジトリ: RYUIYAMADA/masters-regatta-2026（作成予定）
-- 本番URL: masters-regatta-2026.pages.dev（Cloudflare Pages 設定後）
+- 本番URL: masters-regatta-2026-3ha.pages.dev（Cloudflare Pages 設定後）
 
 ## テストサイトとの違い
 - data/master.json はこの大会専用の内容に書き換えて使う
