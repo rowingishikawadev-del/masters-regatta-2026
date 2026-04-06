@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ボート競技ライブリザルト セットアップガイド</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #ffffff;
+    }
+
+    .page-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 32px 120px;
+    }
+
+    /* ── ヘッダー ── */
+    .page-header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+    .page-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .page-header .subtitle {
+      color: #6b6b6b;
+      font-size: 0.95rem;
+    }
+    .page-header .badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 2px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: #f0f0f0;
+      border-radius: 4px;
+      color: #555;
+    }
+
+    /* ── 目次 ── */
+    .toc {
+      background: #f9f9f9;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 48px;
+    }
+    .toc-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #999;
+      margin-bottom: 12px;
+    }
+    .toc ol {
+      padding-left: 20px;
+    }
+    .toc li {
+      margin: 4px 0;
+    }
+    .toc a {
+      color: #1a1a1a;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .toc a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── セクション ── */
+    .section {
+      margin-bottom: 56px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .section-header h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      color: #1a1a1a;
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    /* ── リスト ── */
+    ul, ol {
+      padding-left: 22px;
+      margin-bottom: 12px;
+    }
+    li {
+      margin: 5px 0;
+      color: #333;
+    }
+
+    /* ── コールアウト ── */
+    .callout {
+      display: flex;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 6px;
+      margin: 16px 0;
+      font-size: 0.93rem;
+    }
+    .callout-icon {
+      flex-shrink: 0;
+      font-size: 1.1rem;
+      margin-top: 1px;
+    }
+    .callout-body { flex: 1; }
+    .callout-body strong { display: block; margin-bottom: 2px; }
+
+    .callout-info    { background: #f0f7ff; border: 1px solid #c8e0ff; }
+    .callout-warning { background: #fffbf0; border: 1px solid #ffe0a0; }
+    .callout-danger  { background: #fff0f0; border: 1px solid #ffc8c8; }
+    .callout-tip     { background: #f0fff4; border: 1px solid #a8e6c0; }
+
+    /* ── コードブロック ── */
+    pre {
+      background: #f5f5f5;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 16px 18px;
+      overflow-x: auto;
+      font-family: "SFMono-Regular", "Fira Code", "Courier New", monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin: 12px 0 16px;
+    }
+    code {
+      font-family: "SFMono-Regular", "Fira Code", "Courier New", monospace;
+      font-size: 0.88em;
+      background: #f0f0f0;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* ── テーブル ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.93rem;
+    }
+    th {
+      background: #f5f5f5;
+      font-weight: 600;
+      text-align: left;
+      padding: 10px 14px;
+      border: 1px solid #e0e0e0;
+    }
+    td {
+      padding: 9px 14px;
+      border: 1px solid #e0e0e0;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #fafafa; }
+
+    /* ── ステップ番号付きリスト ── */
+    .steps {
+      list-style: none;
+      padding-left: 0;
+      counter-reset: step-counter;
+    }
+    .steps li {
+      counter-increment: step-counter;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .steps li::before {
+      content: counter(step-counter);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      background: #e8e8e8;
+      color: #555;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-top: 2px;
+    }
+
+    /* ── ファイルツリー ── */
+    .file-tree {
+      background: #f5f5f5;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 16px 18px;
+      font-family: "SFMono-Regular", "Fira Code", "Courier New", monospace;
+      font-size: 0.88rem;
+      line-height: 1.8;
+    }
+    .file-tree .folder { color: #1a1a1a; font-weight: 600; }
+    .file-tree .file   { color: #555; }
+
+    /* ── セパレーター ── */
+    hr {
+      border: none;
+      border-top: 1px solid #e8e8e8;
+      margin: 40px 0;
+    }
+
+    /* ── フッター ── */
+    .page-footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid #e8e8e8;
+      font-size: 0.85rem;
+      color: #999;
+      text-align: center;
+    }
+
+    /* ── 画面サイズ対応 ── */
+    @media (max-width: 600px) {
+      .page-wrapper { padding: 24px 16px 80px; }
+      .page-header h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- ── ページヘッダー ── -->
+  <div class="page-header">
+    <h1>ボート競技ライブリザルト<br>セットアップガイド</h1>
+    <p class="subtitle">大会運営スタッフ向け・初期設定手順書</p>
+    <span class="badge">対象: Google Apps Script / Cloudflare Pages</span>
+  </div>
+
+  <!-- ── 目次 ── -->
+  <nav class="toc">
+    <div class="toc-title">目次</div>
+    <ol>
+      <li><a href="#step1">Step 1 — GitHub リポジトリの確認</a></li>
+      <li><a href="#step2">Step 2 — Google Drive フォルダの作成</a></li>
+      <li><a href="#step3">Step 3 — Google Apps Script の設定</a></li>
+      <li><a href="#step4">Step 4 — Cloudflare Pages の設定</a></li>
+      <li><a href="#step5">Step 5 — エントリーデータの投入</a></li>
+      <li><a href="#step6">Step 6 — 当日の運用手順</a></li>
+    </ol>
+  </nav>
+
+  <!-- ══════════════════════════════════════
+       STEP 1 — GitHub リポジトリ確認
+  ══════════════════════════════════════ -->
+  <div class="section" id="step1">
+    <div class="section-header">
+      <span class="step-badge">1</span>
+      <h2>GitHub リポジトリの確認と Personal Access Token の発行</h2>
+    </div>
+
+    <p>
+      このシステムは GitHub のリポジトリにリザルトデータを書き込み、Cloudflare Pages が自動的に公開します。
+      まず使用するリポジトリと、書き込みに必要な認証トークンを準備します。
+    </p>
+
+    <h3>1-1. リポジトリの存在を確認する</h3>
+    <p>ブラウザで下記の URL を開き、リポジトリが表示されることを確認してください。</p>
+    <pre>https://github.com/RYUIYAMADA/rowing-live-results</pre>
+    <div class="callout callout-info">
+      <span class="callout-icon">ℹ</span>
+      <div class="callout-body">
+        <strong>「404」が表示された場合</strong>
+        リポジトリが存在しないか、非公開になっています。システム管理者に連絡してください。
+      </div>
+    </div>
+
+    <h3>1-2. Personal Access Token (PAT) を発行する</h3>
+    <p>
+      GAS (Google Apps Script) が GitHub に結果を書き込むためのパスワードとして機能します。
+      以下の手順で発行してください。
+    </p>
+    <ol class="steps">
+      <li>GitHub にログインした状態で、右上のアイコンをクリック → <strong>Settings</strong> を選択します。</li>
+      <li>左サイドバーを一番下までスクロールして <strong>Developer settings</strong> をクリックします。</li>
+      <li><strong>Personal access tokens</strong> → <strong>Tokens (classic)</strong> の順にクリックします。</li>
+      <li>右上の <strong>Generate new token</strong> → <strong>Generate new token (classic)</strong> をクリックします。</li>
+      <li><strong>Note</strong> 欄に用途が分かる名前を入力します（例: <code>rowing-live-results-gas</code>）。</li>
+      <li><strong>Expiration</strong>（有効期限）を設定します。大会期間をカバーできる期間を選択してください。</li>
+      <li>
+        <strong>Select scopes</strong> で <strong>repo</strong> にチェックを入れます。
+        <br>（<code>repo</code> にチェックを入れると配下の項目もすべて選択されます）
+      </li>
+      <li>ページ下部の緑色ボタン <strong>Generate token</strong> をクリックします。</li>
+      <li>
+        表示されたトークン（<code>ghp_...</code> で始まる文字列）を <strong>必ずこの画面でコピー</strong> してください。
+        画面を閉じると二度と確認できません。
+      </li>
+    </ol>
+    <div class="callout callout-danger">
+      <span class="callout-icon">⚠</span>
+      <div class="callout-body">
+        <strong>トークンは絶対に他人に教えないでください</strong>
+        このトークンはリポジトリへの書き込み権限を持ちます。メールや SNS で共有しないようにしてください。
+        漏洩した場合は即座に GitHub の同じ画面から Delete（削除）してください。
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ══════════════════════════════════════
+       STEP 2 — Google Drive フォルダ作成
+  ══════════════════════════════════════ -->
+  <div class="section" id="step2">
+    <div class="section-header">
+      <span class="step-badge">2</span>
+      <h2>Google Drive フォルダの作成</h2>
+    </div>
+
+    <p>
+      タイマーアプリが出力する CSV ファイルをアップロードするフォルダを Google Drive に作ります。
+      フォルダ構成は下記のとおりに作成してください。
+    </p>
+
+    <h3>2-1. フォルダ構成</h3>
+    <div class="file-tree">
+      <span class="folder">📁 [大会名]/</span><br>
+      &nbsp;&nbsp;<span class="folder">📁 race_csv/</span> &nbsp;← タイマーCSVをここに入れる<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">📁 500m/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">📁 1000m/</span><br>
+      &nbsp;&nbsp;<span class="folder">📁 master/</span> &nbsp;← エントリーデータをここに入れる<br>
+      &nbsp;&nbsp;<span class="folder">📁 processed/</span> &nbsp;← 処理済みファイルが自動移動される（作成のみ）<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">📁 500m/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">📁 1000m/</span>
+    </div>
+
+    <h3>2-2. フォルダの作成手順</h3>
+    <ol class="steps">
+      <li><a href="https://drive.google.com" target="_blank">Google Drive</a> を開きます。</li>
+      <li>「マイドライブ」内の任意の場所で右クリック → <strong>新しいフォルダ</strong> で大会名のフォルダを作ります（例: <code>2025年諏訪湖レガッタ</code>）。</li>
+      <li>作成したフォルダを開き、その中に <code>race_csv</code>・<code>master</code>・<code>processed</code> の3つのフォルダを作ります。</li>
+      <li><code>race_csv</code> の中に <code>500m</code> と <code>1000m</code> を作ります。</li>
+      <li><code>processed</code> の中にも同様に <code>500m</code> と <code>1000m</code> を作ります。</li>
+    </ol>
+
+    <h3>2-3. ルートフォルダの ID を取得する</h3>
+    <p>
+      大会名のフォルダ（ルートフォルダ）を開き、ブラウザの URL バーを確認してください。
+      URL は次のような形式になっています。
+    </p>
+    <pre>https://drive.google.com/drive/folders/<strong>1AbCdEfGhIjKlMnOpQrStUvWxYz</strong></pre>
+    <p>
+      <code>folders/</code> の後ろにある文字列がフォルダ ID です。
+      この値をコピーして、次の Step 3 で使用します。
+    </p>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        フォルダを右クリック → <strong>リンクをコピー</strong> でも同じ URL が得られます。
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ══════════════════════════════════════
+       STEP 3 — Google Apps Script 設定
+  ══════════════════════════════════════ -->
+  <div class="section" id="step3">
+    <div class="section-header">
+      <span class="step-badge">3</span>
+      <h2>Google Apps Script の設定</h2>
+    </div>
+
+    <p>
+      Google Apps Script (GAS) は、Google のサーバー上で動く自動化スクリプトです。
+      Drive に CSV がアップロードされると定期的に検知し、GitHub へデータを書き込みます。
+    </p>
+
+    <h3>3-1. 新規プロジェクトの作成</h3>
+    <ol class="steps">
+      <li>ブラウザで <a href="https://script.google.com" target="_blank">script.google.com</a> を開きます。</li>
+      <li><strong>新しいプロジェクト</strong> をクリックします。</li>
+      <li>左上の「無題のプロジェクト」をクリックして、分かりやすい名前に変更します（例: <code>rowing-live-results</code>）。</li>
+    </ol>
+
+    <h3>3-2. Code.gs の内容をコピーする</h3>
+    <ol class="steps">
+      <li>エディタ画面の左側に <code>Code.gs</code> というファイルが表示されているはずです。クリックして選択します。</li>
+      <li>エディタ内の既存テキストをすべて削除します（Ctrl+A → Delete）。</li>
+      <li>このリポジトリの <code>gas/Code.gs</code> の内容をすべてコピーして貼り付けます。</li>
+      <li>Ctrl+S（Mac は Cmd+S）で保存します。</li>
+    </ol>
+
+    <h3>3-3. スクリプトプロパティの設定</h3>
+    <p>機密情報（トークン等）はコードに直接書かず、スクリプトプロパティとして安全に保管します。</p>
+    <ol class="steps">
+      <li>メニューバーの <strong>プロジェクトの設定</strong>（歯車アイコン）をクリックします。</li>
+      <li>ページ下部の <strong>スクリプト プロパティ</strong> セクションまでスクロールします。</li>
+      <li><strong>スクリプト プロパティを追加</strong> をクリックし、下記の3つを入力します。</li>
+    </ol>
+
+    <table>
+      <thead>
+        <tr>
+          <th>プロパティ名</th>
+          <th>設定する値</th>
+          <th>取得元</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>DRIVE_ROOT_FOLDER_ID</code></td>
+          <td>Step 2-3 で取得したフォルダ ID</td>
+          <td>Google Drive の URL</td>
+        </tr>
+        <tr>
+          <td><code>GITHUB_TOKEN</code></td>
+          <td>Step 1-2 で発行したトークン（<code>ghp_...</code>）</td>
+          <td>GitHub Settings</td>
+        </tr>
+        <tr>
+          <td><code>MEASUREMENT_POINTS</code></td>
+          <td><code>500m,1000m</code></td>
+          <td>固定値（変更不要）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-warning">
+      <span class="callout-icon">⚠</span>
+      <div class="callout-body">
+        <strong>プロパティ名は半角・大文字で正確に入力してください</strong>
+        スペルミスがあるとスクリプトが動作しません。コピー&ペーストを推奨します。
+      </div>
+    </div>
+
+    <h3>3-4. 初回の認証を行う</h3>
+    <p>
+      GAS が Drive や GitHub にアクセスするには、最初に一度だけ手動で権限を承認する必要があります。
+    </p>
+    <ol class="steps">
+      <li>エディタ画面上部の関数セレクタ（ドロップダウン）で <strong>testRun</strong> を選択します。</li>
+      <li>▶ <strong>実行</strong> ボタンをクリックします。</li>
+      <li>「承認が必要です」というダイアログが表示されたら <strong>権限を確認</strong> をクリックします。</li>
+      <li>Google アカウントを選択し、「このアプリは確認されていません」と表示されたら <strong>詳細</strong> → <strong>（プロジェクト名）に移動</strong> をクリックします。</li>
+      <li>要求される権限の一覧を確認して <strong>許可</strong> をクリックします。</li>
+      <li>元のエディタ画面に戻り、下部の「実行ログ」に <code>testRun completed</code> などのメッセージが表示されれば成功です。</li>
+    </ol>
+    <div class="callout callout-info">
+      <span class="callout-icon">ℹ</span>
+      <div class="callout-body">
+        「このアプリは確認されていません」の警告は、個人用スクリプトに必ず表示される Google のセキュリティ警告です。
+        自分自身が作成したスクリプトなので、安心して「許可」してください。
+      </div>
+    </div>
+
+    <h3>3-4b. setupAll() で一括セットアップする【推奨】</h3>
+    <p>
+      認証が完了したら、<code>setupAll()</code> を実行することで以下の作業を自動化できます。
+    </p>
+    <ul>
+      <li>スクリプトプロパティが正しく設定されているか確認</li>
+      <li>Google Drive のフォルダ構成（race_csv/, master/, processed/ および計測ポイントのサブフォルダ）を自動作成</li>
+      <li>GitHub API への接続テスト（テスト用ファイルを作成・削除して書き込み権限を確認）</li>
+    </ul>
+    <ol class="steps">
+      <li>関数セレクタで <strong>setupAll</strong> を選択して ▶ <strong>実行</strong> をクリックします。</li>
+      <li>実行ログに <code>=== セットアップ完了 ===</code> と表示されれば成功です。</li>
+      <li>ログに <code>[未設定]</code> が表示された場合は、3-3 のスクリプトプロパティを再確認してください。</li>
+      <li>GitHub 接続エラーが表示された場合は、ログのメッセージに従いトークンの権限またはリポジトリ名を確認してください。</li>
+    </ol>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>setupAll() を使わず手動でフォルダを作成することもできます。</strong>
+        Drive に以下のフォルダ構成を手動で作成してください:
+        <code>race_csv/500/</code>、<code>race_csv/1000/</code>、<code>master/</code>、<code>processed/500m/</code>、<code>processed/1000m/</code>
+      </div>
+    </div>
+
+    <h3>3-5. トリガーを設定する</h3>
+    <p>
+      2分おきに自動でスクリプトを動かすためのスケジュールを設定します。
+      <strong>setupTrigger()</strong> を実行すると自動で設定されます。
+    </p>
+
+    <h4>方法A: setupTrigger() で自動設定（推奨）</h4>
+    <ol class="steps">
+      <li>関数セレクタで <strong>setupTrigger</strong> を選択して ▶ <strong>実行</strong> をクリックします。</li>
+      <li>実行ログに <code>[OK] トリガーを設定しました: onTrigger (2分間隔)</code> と表示されれば完了です。</li>
+    </ol>
+    <div class="callout callout-info">
+      <span class="callout-icon">ℹ</span>
+      <div class="callout-body">
+        トリガーをリセットしたい場合は <code>deleteTriggers()</code> を実行すると全トリガーを削除できます。
+        その後 <code>setupTrigger()</code> で再設定してください。
+      </div>
+    </div>
+
+    <h4>方法B: 手動設定</h4>
+    <ol class="steps">
+      <li>左サイドバーの時計アイコン（<strong>トリガー</strong>）をクリックします。</li>
+      <li>右下の <strong>トリガーを追加</strong> ボタンをクリックします。</li>
+      <li>以下のとおり設定します。</li>
+    </ol>
+
+    <table>
+      <thead>
+        <tr><th>設定項目</th><th>値</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>実行する関数</td><td><code>onTrigger</code></td></tr>
+        <tr><td>実行するデプロイ</td><td>Head</td></tr>
+        <tr><td>イベントのソース</td><td>時間主導型</td></tr>
+        <tr><td>時間ベースのトリガーのタイプ</td><td>分ベースのタイマー</td></tr>
+        <tr><td>時間の間隔</td><td><strong>2分おき</strong></td></tr>
+      </tbody>
+    </table>
+
+    <ol class="steps" style="counter-reset: step-counter 3;">
+      <li>設定が完了したら <strong>保存</strong> をクリックします。</li>
+      <li>トリガー一覧に今設定した項目が表示されれば完了です。</li>
+    </ol>
+
+    <h3>3-6. マスターデータを投入する</h3>
+    <ol class="steps">
+      <li>Drive の <code>master/</code> フォルダに <code>schedule.csv</code> と <code>entries.csv</code> をアップロードします。</li>
+      <li>関数セレクタで <strong>importMasterData</strong> を選択して ▶ <strong>実行</strong> をクリックします。</li>
+      <li>実行ログに <code>master.json Push完了</code> と表示されれば、GitHub の <code>data/master.json</code> が更新されています。</li>
+    </ol>
+  </div>
+
+  <hr>
+
+  <!-- ══════════════════════════════════════
+       STEP 4 — Cloudflare Pages 設定
+  ══════════════════════════════════════ -->
+  <div class="section" id="step4">
+    <div class="section-header">
+      <span class="step-badge">4</span>
+      <h2>Cloudflare Pages の設定</h2>
+    </div>
+
+    <p>
+      Cloudflare Pages を使うことで、GitHub に Push されたデータが即座に Web サイトとして公開されます。
+      無料で使用できます。
+    </p>
+
+    <h3>4-1. Cloudflare アカウントの準備</h3>
+    <p>
+      <a href="https://dash.cloudflare.com/sign-up/pages" target="_blank">cloudflare.com</a> でアカウントを作成してください（無料）。
+      すでにアカウントがある場合はログインします。
+    </p>
+
+    <h3>4-2. Pages プロジェクトの作成（実際の画面の流れ）</h3>
+    <ol class="steps">
+      <li><a href="https://dash.cloudflare.com" target="_blank">https://dash.cloudflare.com</a> にアクセスします。</li>
+      <li>左サイドバー「<strong>Workers &amp; Pages</strong>」→「<strong>Pages</strong>」→「<strong>新しいプロジェクトを作成</strong>」をクリックします。</li>
+      <li>「<strong>GitHubに接続</strong>」をクリックし、GitHub アカウントを認証します（初回のみ）。</li>
+      <li>リポジトリ一覧から <strong>RYUIYAMADA/rowing-live-results</strong> を選択します。</li>
+      <li>「<strong>セットアップの開始</strong>」でビルド設定を以下のとおり入力します。</li>
+    </ol>
+
+    <h3>4-3. ビルド設定</h3>
+    <p>このサイトはビルド不要の静的 HTML です。以下のとおり設定してください。</p>
+
+    <table>
+      <thead>
+        <tr><th>設定項目</th><th>値</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>プロジェクト名</td><td>任意（例: <code>rowing-live-results</code>）</td></tr>
+        <tr><td>本番ブランチ</td><td><code>main</code></td></tr>
+        <tr><td>フレームワーク プリセット</td><td><em>なし</em></td></tr>
+        <tr><td>ビルドコマンド</td><td><em>（空欄のまま）</em></td></tr>
+        <tr><td>ビルド出力ディレクトリ</td><td><code>/</code></td></tr>
+        <tr><td>ルートディレクトリ</td><td><code>/</code></td></tr>
+      </tbody>
+    </table>
+
+    <ol class="steps" style="counter-reset: step-counter 5;">
+      <li>「<strong>保存してデプロイ</strong>」をクリックします。</li>
+      <li>デプロイ完了後、表示される URL（例: <code>rowing-live-results.pages.dev</code>）をメモします。</li>
+      <li>その URL をブラウザで開いてサイトが表示されることを確認します。</li>
+    </ol>
+
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>カスタムドメインの設定（任意）</strong>
+        <code>xxx.pages.dev</code> の URL を独自ドメイン（例: <code>results.example-regatta.jp</code>）に変更できます。
+        Cloudflare → Pages → <strong>カスタムドメイン</strong> タブから設定してください。
+      </div>
+    </div>
+
+    <h3>4-4. GitHub Actions 用シークレットの設定</h3>
+    <p>サイト疎通確認ワークフローで使用する URL をシークレットとして登録します。</p>
+    <ol class="steps">
+      <li>GitHub リポジトリ → <strong>Settings</strong> → <strong>Secrets and variables</strong> → <strong>Actions</strong> を開きます。</li>
+      <li>「<strong>New repository secret</strong>」をクリックします。</li>
+      <li>Name に <code>SITE_URL</code>、Value に Cloudflare Pages の URL（例: <code>https://rowing-live-results.pages.dev</code>）を入力して保存します。</li>
+    </ol>
+
+    <h3>4-5. 確認コマンド（ローカル）</h3>
+    <p>ローカル環境から疎通確認を実行する場合は以下のコマンドを使用します。</p>
+    <pre><code>python3 tools/check_status.py --site https://rowing-live-results.pages.dev</code></pre>
+
+    <div class="callout callout-info">
+      <span class="callout-icon">ℹ️</span>
+      <div class="callout-body">
+        <strong>大会当日の自動確認について</strong>
+        <code>.github/workflows/pages-check.yml</code> を有効にすると 10 分ごとにサイトの疎通確認が自動実行されます。
+        大会終了後は GitHub Actions の <strong>pages-check</strong> ワークフローを手動で <strong>disable</strong> してください（無駄なトリガー消費を防ぐため）。
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ══════════════════════════════════════
+       STEP 5 — エントリーデータの投入
+  ══════════════════════════════════════ -->
+  <div class="section" id="step5">
+    <div class="section-header">
+      <span class="step-badge">5</span>
+      <h2>エントリーデータの投入</h2>
+    </div>
+
+    <p>
+      大会情報・レーススケジュール・エントリーを <strong>3つの CSV ファイル</strong>で登録します。
+      Google Drive の <code>master/</code> フォルダにアップロードし、<strong>runImportMaster()</strong> を実行するだけです。
+    </p>
+
+    <!-- ── ファイル構成 ── -->
+    <h3>5-0. 用意するファイル</h3>
+    <table>
+      <thead>
+        <tr><th>ファイル名</th><th>内容</th><th>必須</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>tournament.csv</code></td><td>大会情報（大会名・会場・YouTube URL など）</td><td>必須</td></tr>
+        <tr><td><code>schedule.csv</code></td><td>レース一覧（1行 = 1レース）</td><td>必須</td></tr>
+        <tr><td><code>entries.csv</code></td><td>エントリー情報（1行 = 1クルー）</td><td>必須</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ── tournament.csv ── -->
+    <h3>5-1. tournament.csv（大会情報）</h3>
+    <p>1列目に項目名（key）、2列目に値（value）を入力します。</p>
+
+    <table>
+      <thead>
+        <tr><th>プロパティ名（key）</th><th>日本語の項目名</th><th>必須</th><th>型・形式</th><th>入力例</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>race_name</code></td><td>大会名</td><td>必須</td><td>テキスト</td>
+          <td>全日本マスターズレガッタ 第100回大会</td>
+        </tr>
+        <tr>
+          <td><code>venue</code></td><td>会場名</td><td>任意</td><td>テキスト</td>
+          <td>手取川ダム湖 1000mコース</td>
+        </tr>
+        <tr>
+          <td><code>course_length</code></td><td>コース距離（m）</td><td>任意</td><td>数値（整数）</td>
+          <td>1000（省略時は1000）</td>
+        </tr>
+        <tr>
+          <td><code>dates</code></td><td>開催日（補足）</td><td>任意</td><td>日付・カンマ区切り</td>
+          <td>空欄でOK（schedule.csv から自動収集）</td>
+        </tr>
+        <tr>
+          <td><code>youtube_url</code></td><td>YouTube Live URL</td><td>任意</td><td>テキスト（URL）</td>
+          <td>https://www.youtube.com/watch?v=xxx（配信なしは空欄）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre>key,value
+race_name,全日本マスターズレガッタ 第100回大会
+venue,手取川ダム湖 1000mコース
+course_length,1000
+dates,
+youtube_url,</pre>
+
+    <!-- ── schedule.csv ── -->
+    <h3>5-2. schedule.csv（レース一覧）</h3>
+    <p>1行目はヘッダー。2行目以降に1レース1行で入力します。</p>
+
+    <table>
+      <thead>
+        <tr><th>プロパティ名</th><th>日本語の項目名</th><th>必須</th><th>型・形式</th><th>入力例・選択肢</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>race_no</code></td><td>レース番号</td><td>必須</td><td>数値（整数）</td>
+          <td>1, 2, 3…（1始まりの連番）</td>
+        </tr>
+        <tr>
+          <td><code>event_name</code></td><td>種目名</td><td>必須</td><td>テキスト</td>
+          <td>男子シングルスカル　／　女子クォドルプル</td>
+        </tr>
+        <tr>
+          <td><code>category</code></td><td>性別区分</td><td>必須</td><td>テキスト（固定値）</td>
+          <td><code>M</code>=男子 ／ <code>W</code>=女子 ／ <code>X</code>=混成</td>
+        </tr>
+        <tr>
+          <td><code>age_group</code></td><td>年齢・クラス区分</td><td>必須</td><td>テキスト（固定値）</td>
+          <td><code>G</code>=一般 ／ <code>J</code>=ジュニア ／ <code>U23</code>=U23 ／ <code>M</code>=マスターズ</td>
+        </tr>
+        <tr>
+          <td><code>round</code></td><td>ラウンド（レース種別）</td><td>必須</td><td>テキスト（固定値）</td>
+          <td><code>H</code>=予選 ／ <code>R</code>=敗者復活 ／ <code>SF</code>=準決勝<br><code>FA</code>=決勝A ／ <code>FB</code>=決勝B ／ <code>RK</code>=順位決定</td>
+        </tr>
+        <tr>
+          <td><code>date</code></td><td>レース実施日</td><td>必須</td><td>日付（文字列）</td>
+          <td>2025-09-14（YYYY-MM-DD形式。<strong>Excelは文字列書式で入力</strong>）</td>
+        </tr>
+        <tr>
+          <td><code>time</code></td><td>スタート予定時刻</td><td>必須</td><td>時刻（文字列）</td>
+          <td>09:00（HH:MM・24時間表記。<strong>Excelは文字列書式で入力</strong>）</td>
+        </tr>
+        <tr>
+          <td><code>event_code</code></td><td>種目コード（フィルタ用）</td><td>任意</td><td>テキスト</td>
+          <td>M1X ／ W2X ／ X4+（省略可）</td>
+        </tr>
+        <tr>
+          <td><code>course_length</code></td><td>このレースのコース距離（m）</td><td>任意</td><td>数値（整数）</td>
+          <td>500（1000m大会に500m種目がある場合のみ指定。省略時はtournament.csvの値を使用）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre>race_no,event_name,category,age_group,round,date,time,event_code,course_length
+1,男子シングルスカル,M,G,FA,2025-09-14,09:00,M1X,
+2,女子シングルスカル,W,G,FA,2025-09-14,09:08,W1X,
+3,男子ダブルスカル,M,G,FA,2025-09-14,09:16,M2X,
+9,男子ジュニアシングルスカル,M,J,FA,2025-09-15,09:00,M1X,500</pre>
+
+    <!-- ── entries.csv ── -->
+    <h3>5-3. entries.csv（エントリー情報）</h3>
+    <p>1行目はヘッダー。2行目以降に1クルー1行で入力します。</p>
+
+    <table>
+      <thead>
+        <tr><th>プロパティ名</th><th>日本語の項目名</th><th>必須</th><th>型・形式</th><th>入力例</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>race_no</code></td><td>レース番号</td><td>必須</td><td>数値（整数）</td>
+          <td>1（schedule.csv の race_no と一致させる）</td>
+        </tr>
+        <tr>
+          <td><code>lane</code></td><td>レーン番号</td><td>必須</td><td>数値（整数）</td>
+          <td>1, 2, 3…（1始まりの整数。同一レース内で重複不可）</td>
+        </tr>
+        <tr>
+          <td><code>crew_name</code></td><td>クルー名・選手名</td><td>必須</td><td>テキスト</td>
+          <td>山田太郎（シングル）<br>高橋雄介 / 小林誠（ダブル：「 / 」区切り）<br>中島拓 / 前田亮 / 野村健 / 大野聡（クォド）</td>
+        </tr>
+        <tr>
+          <td><code>affiliation</code></td><td>所属団体名</td><td>必須</td><td>テキスト</td>
+          <td>諏訪漕艇クラブ　／　長野県立松本高等学校</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre>race_no,lane,crew_name,affiliation
+1,1,山田太郎,諏訪漕艇クラブ
+1,2,鈴木次郎,松本ボートクラブ
+3,1,高橋雄介 / 小林誠,長野漕艇協会
+5,1,中島拓 / 前田亮 / 野村健 / 大野聡,諏訪漕艇クラブ</pre>
+
+    <!-- ── アップロードと取り込み ── -->
+    <h3>5-4. ファイルのアップロードと取り込み</h3>
+    <ol class="steps">
+      <li>作成した <code>tournament.csv</code>・<code>schedule.csv</code>・<code>entries.csv</code> を Google Drive の <code>[大会名]/master/</code> フォルダにアップロードします。</li>
+      <li>GAS エディタに戻り、関数セレクタで <strong>runImportMaster</strong> を選択して <strong>▶ 実行</strong> をクリックします。</li>
+      <li>実行ログに <code>master.json Push完了</code> と表示されれば完了です。</li>
+      <li>サイトを開いてレーススケジュールと大会名が表示されているか確認してください。</li>
+    </ol>
+
+    <div class="callout callout-warning">
+      <span class="callout-icon">⚠</span>
+      <div class="callout-body">
+        <strong>CSV は必ず UTF-8 で保存してください</strong><br>
+        Excel で作成する場合は「名前を付けて保存」→ ファイル形式「<strong>CSV UTF-8（コンマ区切り）</strong>」を選択してください。<br>
+        また <code>date</code> 列と <code>time</code> 列は <strong>セルの書式を「文字列」に設定してから入力</strong>してください。Excelが自動変換すると取り込みエラーになります。
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ══════════════════════════════════════
+       STEP 6 — 当日の運用手順
+  ══════════════════════════════════════ -->
+  <div class="section" id="step6">
+    <div class="section-header">
+      <span class="step-badge">6</span>
+      <h2>当日の運用手順</h2>
+    </div>
+
+    <div style="background:#e8f0e8; border:1px solid #b2d0b2; border-radius:8px; padding:14px 18px; margin-bottom:20px; font-size:14px;">
+      📋 <strong>当日作業スタッフ（学生）向けには専用マニュアルを用意しています</strong><br>
+      CSVアップロードの手順・トラブル対応・チェックリストをわかりやすくまとめています。<br>
+      <a href="../docs/day-manual.html" style="color:#2D4F2C; font-weight:700; margin-top:8px; display:inline-block;">👉 当日スタッフ マニュアルを開く</a>
+    </div>
+
+    <h3>6-1. RowingTimerWeb のファイル名設定</h3>
+    <p>
+      CSVファイル名は <strong>レース番号と計測ポイントだけ</strong>で構いません。大会はフォルダで管理するため、日時の付与は不要です。
+    </p>
+
+    <pre>【推奨】R{NNN}_{計測ポイント}.csv
+
+例:
+  R001_500.csv    ← Race 1, 500 地点
+  R001_1000.csv   ← Race 1, 1000 地点（フィニッシュ）
+  R003_500.csv    ← Race 3, 500 地点</pre>
+
+    <table>
+      <thead>
+        <tr><th>要素</th><th>説明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>R{NNN}</code></td><td>レース番号・3桁ゼロ埋め（例: R001, R012）</td></tr>
+        <tr><td><code>{計測ポイント}</code></td><td>500m または 1000m</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-info" style="background:#e8f0fe;border:1px solid #8ab4f8;border-radius:6px;padding:10px 14px;margin-top:12px;font-size:14px;">
+      ⚙️ <strong>旧形式（YYYYMMDD_HHMMSS_R001_500.csv）も引き続き使用可能です。</strong>
+      タイマーアプリ側が自動で日時を付与する場合はそのままで問題ありません。
+    </div>
+
+    <h3>6-2. CSV のアップロード</h3>
+    <ol class="steps">
+      <li>レース終了後、RowingTimerWeb から CSV をエクスポートします。</li>
+      <li>計測ポイントに応じて、対象フォルダにアップロードします。
+        <ul>
+          <li>500m 計測 → <code>[大会名]/race_csv/500/</code></li>
+          <li>1000m 計測（フィニッシュ）→ <code>[大会名]/race_csv/1000/</code></li>
+        </ul>
+      </li>
+      <li>アップロード後、<strong>約2〜3分で</strong> サイトに結果が反映されます。</li>
+    </ol>
+
+    <h3>6-3. 自動更新の仕組み（参考）</h3>
+    <p>
+      仕組みを理解しておくとトラブル時に役立ちます。
+    </p>
+    <pre>1. GAS が2分ごとに起動
+        ↓
+2. race_csv/ フォルダの未処理 CSV を検知
+        ↓
+3. CSV を解析して JSON に変換
+        ↓
+4. GitHub の data/ フォルダに JSON を Push
+        ↓
+5. Cloudflare Pages が変更を検知して再デプロイ（数十秒）
+        ↓
+6. 観客がサイトを開くと最新の結果が表示される</pre>
+
+    <h3>6-4. トラブルシューティング</h3>
+
+    <h3 style="margin-top: 20px;">サイトが更新されない場合</h3>
+    <ol class="steps">
+      <li>CSV ファイルが正しいフォルダ（500m または 1000m）にアップロードされているか確認します。</li>
+      <li>ファイル名が正しいフォーマット（<code>R001_500.csv</code> または <code>YYYYMMDD_HHMMSS_R001_500.csv</code>）になっているか確認します。</li>
+      <li>GAS のトリガーが有効になっているか確認します（時計アイコン → トリガー一覧）。</li>
+      <li>GAS のログを確認します（下記参照）。</li>
+    </ol>
+
+    <h3>GAS ログの確認方法</h3>
+    <ol class="steps">
+      <li>GAS エディタを開きます。</li>
+      <li>左サイドバーの <strong>実行数</strong>（再生アイコン）をクリックします。</li>
+      <li>実行履歴の一覧が表示されます。<span style="color:#c0392b;">赤いエラーアイコン</span>がある行をクリックすると詳細が確認できます。</li>
+    </ol>
+
+    <h3>よくある問題と解決方法</h3>
+    <table>
+      <thead>
+        <tr><th>症状</th><th>原因</th><th>対処方法</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GAS ログに <code>Invalid token</code> が出る</td>
+          <td>GitHub トークンが失効または誤り</td>
+          <td>Step 1-2 を参照して新しいトークンを発行し、スクリプトプロパティを更新する</td>
+        </tr>
+        <tr>
+          <td>GAS ログに <code>Folder not found</code> が出る</td>
+          <td>フォルダ ID が間違っている</td>
+          <td>Step 2-3 を参照してフォルダ ID を再確認し、スクリプトプロパティを更新する</td>
+        </tr>
+        <tr>
+          <td>結果は更新されているがエントリー名が表示されない</td>
+          <td><code>entries.csv</code> のレース番号またはレーン番号が一致していない</td>
+          <td>entries.csv の <code>race_no</code> と <code>lane</code> が CSV ファイルのデータと一致しているか確認する</td>
+        </tr>
+        <tr>
+          <td>文字化けしている</td>
+          <td>CSV が UTF-8 以外で保存されている</td>
+          <td>Excel で「CSV UTF-8（コンマ区切り）」形式で保存し直す</td>
+        </tr>
+        <tr>
+          <td>トリガーが自動停止している</td>
+          <td>連続エラーにより GAS がトリガーを無効化した</td>
+          <td>エラーを修正した後、トリガーを一度削除して再作成する</td>
+        </tr>
+        <tr>
+          <td>Cloudflare でデプロイが失敗する</td>
+          <td>リポジトリの権限設定の問題</td>
+          <td>Cloudflare の Pages 設定で GitHub との連携を再承認する</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>問題が解決しない場合</strong>
+        GAS の実行ログをスクリーンショットで保存し、システム管理者に共有してください。
+        ログには問題の原因が詳しく記録されています。
+      </div>
+    </div>
+  </div>
+
+  <!-- ── フッター ── -->
+  <div class="page-footer">
+    ボート競技ライブリザルト システム — セットアップガイド<br>
+    RYUIYAMADA/rowing-live-results
+  </div>
+
+</div>
+</body>
+</html>

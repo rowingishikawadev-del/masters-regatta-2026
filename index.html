@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全日本マスターズレガッタ 2026 速報</title>
+
+<!-- OGPメタタグ -->
+<meta property="og:title" content="全日本マスターズレガッタ 2026 速報">
+<meta property="og:description" content="全日本マスターズレガッタ 2026 レース結果をリアルタイム更新">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2D4F2C">
+
+<!-- favicon（外部ファイル不要のbase64 SVG） -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚣</text></svg>">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background: #F7F4EF">
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="site-header-label">BOAT RACE RESULTS</div>
+    <div class="cover-tournament-name" id="cover-tournament-name">速報サイト</div>
+    <div class="cover-meta" id="cover-meta"></div>
+  </div>
+</header>
+
+<div class="notion-page">
+
+  <!-- YouTube Live 埋め込み（youtube_url が設定されている場合のみ表示） -->
+  <div id="youtube-container"></div>
+
+  <!-- ローディング・エラー表示 -->
+  <div id="loading" class="loading">
+    <span class="loading-spinner"></span>データを読み込んでいます...
+  </div>
+  <div id="error-message" style="display:none; padding:16px; background:#ffe0e0; color:#e03e3e; border-radius:6px; margin-bottom:16px;"></div>
+
+  <!-- ビュー切替タブ -->
+  <div class="view-tabs">
+    <div class="view-tab active" onclick="switchView('toggle', this)">🏁 種目別</div>
+    <div class="view-tab" onclick="switchView('table', this)">📊 全レース一覧</div>
+    <div class="view-tab" onclick="switchView('schedule', this)">🕐 スケジュール</div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--                     VIEW 1: 種目別トグル表示                       -->
+  <!-- ================================================================ -->
+  <div class="view-content active" id="view-toggle">
+
+    <!-- 日別タブ（JS側で動的生成） -->
+    <div id="day-tabs" class="day-tabs"></div>
+
+    <!-- フィルタバー -->
+    <div class="filter-bar">
+      <label>フィルタ:</label>
+      <select class="filter-select" id="filter-cat" onchange="applyFilters()">
+        <option value="all">カテゴリ: すべて</option>
+        <option value="M">👨 男子</option>
+        <option value="W">👩 女子</option>
+        <option value="X">🤝 混成</option>
+      </select>
+      <select class="filter-select" id="filter-round" onchange="applyFilters()">
+        <option value="all">ラウンド: すべて</option>
+        <option value="FA">決勝A</option>
+        <option value="FB">決勝B</option>
+        <option value="SF">準決勝</option>
+        <option value="H">予選</option>
+        <option value="RK">順位決定</option>
+        <option value="R">敗者復活</option>
+      </select>
+      <select class="filter-select" id="filter-day" onchange="applyFilters()">
+        <option value="all">日程: すべて</option>
+        <!-- 日程オプションはJS側で動的生成 -->
+      </select>
+      <!-- 状態フィルタ（結果あり/未実施） -->
+      <select class="filter-select" id="filter-status" onchange="applyFilters()">
+        <option value="all">状態: すべて</option>
+        <option value="done">結果あり</option>
+        <option value="upcoming">未実施</option>
+      </select>
+      <input type="text" class="filter-search" id="filter-crew"
+        placeholder="🔍 所属・クルー名で検索" oninput="applyFilters()">
+      <button class="filter-reset" onclick="resetFilters()">✕ リセット</button>
+      <!-- 全展開・全折畳ボタン（フィルタバー右端） -->
+      <button class="filter-reset" onclick="expandAll()">全展開</button>
+      <button class="filter-reset" onclick="collapseAll()">全折畳</button>
+      <span class="filter-count" id="filter-count">-</span>
+    </div>
+
+    <!-- トグル一覧（JS側で動的生成） -->
+    <div id="view-toggle-content"></div>
+
+  </div>
+
+  <!-- ================================================================ -->
+  <!--                   VIEW 2: 全レース一覧テーブル                      -->
+  <!-- ================================================================ -->
+  <div class="view-content" id="view-table">
+    <div id="view-table-content"></div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!--                   VIEW 3: スケジュールビュー                        -->
+  <!-- ================================================================ -->
+  <div class="view-content" id="view-schedule">
+    <div id="schedule-day-tabs" class="day-tabs"></div>
+    <div id="schedule-table-container"></div>
+  </div>
+
+</div>
+
+<!-- ステータスバー -->
+<div class="update-bar"></div>
+
+<!-- トースト通知コンテナ -->
+<div id="toast-container"></div>
+
+<script src="js/app.js?v=20260407e"></script>
+</body>
+</html>

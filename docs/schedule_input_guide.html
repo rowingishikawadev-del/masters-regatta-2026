@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登録シート 全項目定義書</title>
+<style>
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 1200px; margin: 40px auto; padding: 0 20px; color: #333; font-size: 14px; }
+  h1 { font-size: 22px; border-bottom: 3px solid #2D4F2C; padding-bottom: 8px; margin-bottom: 6px; }
+  .subtitle { color: #666; font-size: 13px; margin-bottom: 28px; }
+  h2 { font-size: 15px; background: #2D4F2C; color: #fff; padding: 7px 14px; border-radius: 4px; margin-top: 36px; margin-bottom: 0; display: flex; align-items: center; gap: 8px; }
+  h2 .file-label { font-family: monospace; font-size: 13px; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 3px; }
+  h2 .opt-label { font-size: 11px; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; margin-top: 0; margin-bottom: 24px; border: 1px solid #c5d8c5; }
+  thead th { background: #e8f0e8; color: #2D4F2C; padding: 8px 10px; text-align: left; border: 1px solid #c5d8c5; white-space: nowrap; font-weight: bold; }
+  tbody td { border: 1px solid #dde; padding: 7px 10px; vertical-align: top; line-height: 1.6; }
+  tbody tr:hover { background: #f5fbf5; }
+  .prop { font-family: monospace; font-size: 12px; background: #f0f4ff; border: 1px solid #c0ccee; padding: 2px 6px; border-radius: 3px; white-space: nowrap; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; white-space: nowrap; }
+  .badge-req { background: #fde8e8; color: #c0392b; }
+  .badge-opt { background: #f0f0f0; color: #777; }
+  .type-tag { display: inline-block; font-size: 11px; color: #555; background: #f4f4f4; border: 1px solid #ddd; padding: 1px 6px; border-radius: 3px; white-space: nowrap; }
+  .fixed-values { margin-top: 4px; }
+  .val { display: inline-block; font-family: monospace; font-size: 11px; background: #fff8e1; border: 1px solid #e0c060; padding: 1px 6px; border-radius: 3px; margin: 1px; }
+  .example { color: #1a5c1a; font-size: 12px; }
+  .note { background: #fffbe6; border: 1px solid #f0c040; border-radius: 4px; padding: 10px 14px; font-size: 13px; margin: 12px 0 20px; }
+  .note-blue { background: #e8f0fe; border: 1px solid #8ab4f8; border-radius: 4px; padding: 10px 14px; font-size: 13px; margin: 12px 0 20px; }
+  .sample { background: #f4f8f4; border: 1px solid #b2d0b2; border-radius: 4px; padding: 12px 16px; font-family: monospace; font-size: 12px; white-space: pre; overflow-x: auto; margin: 8px 0 24px; line-height: 1.7; }
+  .sample .comment { color: #888; }
+  code { background: #f0f0f0; padding: 1px 5px; border-radius: 3px; font-size: 12px; font-family: monospace; }
+  /* ダウンロードセクション */
+  .dl-section { background: #f0f7f0; border: 2px solid #2D4F2C; border-radius: 8px; padding: 20px 24px; margin: 24px 0 32px; }
+  .dl-section h3 { font-size: 15px; color: #2D4F2C; margin: 0 0 6px; }
+  .dl-section p { font-size: 13px; color: #555; margin: 0 0 16px; }
+  .dl-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+  .dl-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; border: none; text-decoration: none; transition: opacity 0.15s; }
+  .dl-btn:hover { opacity: 0.85; }
+  .dl-btn-primary { background: #2D4F2C; color: #fff; }
+  .dl-btn-secondary { background: #fff; color: #2D4F2C; border: 2px solid #2D4F2C; }
+  .dl-btn-icon { font-size: 18px; }
+  .dl-contents { margin-top: 12px; font-size: 12px; color: #666; }
+  .dl-contents span { display: inline-block; background: #e8f0fe; border: 1px solid #8ab4f8; border-radius: 3px; padding: 1px 7px; font-family: monospace; margin: 2px; }
+  .file-chip { display: inline-block; background: #e8f0fe; border: 1px solid #8ab4f8; border-radius: 4px; padding: 3px 10px; font-family: monospace; font-size: 12px; }
+  .section-desc { color: #555; font-size: 13px; margin: 10px 0 12px; padding-left: 4px; }
+  ol.steps { line-height: 2.2; font-size: 14px; padding-left: 20px; }
+  .warn { color: #c0392b; }
+  hr { margin: 40px 0; border: none; border-top: 1px solid #ddd; }
+</style>
+</head>
+<body>
+
+<h1>📋 登録シート 全項目定義書</h1>
+<div class="subtitle">Google Drive の <code>master/</code> フォルダにアップロードする3つのCSVファイルの全項目を定義します。</div>
+
+<!-- ============================================================ -->
+<!-- ダウンロードセクション -->
+<!-- ============================================================ -->
+<div class="dl-section">
+  <h3>📥 CSVファイルをダウンロード</h3>
+  <p>以下の2種類のZIPをワンクリックでダウンロードできます。3ファイル（tournament.csv・schedule.csv・entries.csv）がまとめて入っています。</p>
+  <div class="dl-buttons">
+    <button class="dl-btn dl-btn-primary" onclick="downloadZip('sample')">
+      <span class="dl-btn-icon">📦</span> ダミーデータ入り ZIP
+    </button>
+    <button class="dl-btn dl-btn-secondary" onclick="downloadZip('template')">
+      <span class="dl-btn-icon">📄</span> テンプレート（ヘッダーのみ）ZIP
+    </button>
+  </div>
+  <div class="dl-contents">
+    同梱ファイル：
+    <span>tournament.csv</span>
+    <span>schedule.csv</span>
+    <span>entries.csv</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ファイル構成 -->
+<!-- ============================================================ -->
+<h2>① ファイル構成</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>ファイル名</th>
+      <th>内容</th>
+      <th>必須</th>
+      <th>アップロード先</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="file-chip">tournament.csv</span></td>
+      <td>大会情報（大会名・会場・YouTube URLなど）</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><code>master/</code> フォルダ</td>
+    </tr>
+    <tr>
+      <td><span class="file-chip">schedule.csv</span></td>
+      <td>レース一覧（種目・日程・ラウンドごとの1行1レース）</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><code>master/</code> フォルダ</td>
+    </tr>
+    <tr>
+      <td><span class="file-chip">entries.csv</span></td>
+      <td>エントリー情報（レーンごとのクルー名・所属）</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><code>master/</code> フォルダ</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<!-- tournament.csv -->
+<!-- ============================================================ -->
+<h2>② <span class="file-label">tournament.csv</span> — 大会情報 <span class="opt-label">key / value 形式</span></h2>
+
+<div class="section-desc">1列目に項目名（key）、2列目に値（value）を入力します。順番は問いません。</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:160px">プロパティ名<br><small>（key列に入力）</small></th>
+      <th style="width:120px">日本語の項目名</th>
+      <th style="width:70px">必須</th>
+      <th style="width:120px">型・形式</th>
+      <th>説明・入力例</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="prop">race_name</span></td>
+      <td>大会名</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><span class="type-tag">テキスト</span></td>
+      <td>
+        サイトのタイトルに表示される大会の正式名称<br>
+        <span class="example">例: 全日本マスターズレガッタ 第100回大会</span><br>
+        <span class="example">例: 第42回石川県ボート選手権大会</span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">venue</span></td>
+      <td>会場名</td>
+      <td><span class="badge badge-opt">任意</span></td>
+      <td><span class="type-tag">テキスト</span></td>
+      <td>
+        開催会場の名称。コース距離も含めて記載するとわかりやすい<br>
+        <span class="example">例: 手取川ダム湖 1000mコース</span><br>
+        <span class="example">例: 諏訪湖漕艇場 2000mコース</span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">course_length</span></td>
+      <td>コース距離（m）</td>
+      <td><span class="badge badge-opt">任意</span></td>
+      <td><span class="type-tag">数値（整数）</span></td>
+      <td>
+        大会全体のデフォルトコース距離。省略時は <code>1000</code> として扱う<br>
+        レースごとに異なる場合は schedule.csv の <span class="prop">course_length</span> 列で個別に上書き可能<br>
+        <span class="example">例: <code>500</code> / <code>1000</code> / <code>2000</code></span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">dates</span></td>
+      <td>開催日（補足）</td>
+      <td><span class="badge badge-opt">任意</span></td>
+      <td><span class="type-tag">日付・カンマ区切り</span></td>
+      <td>
+        通常は schedule.csv の <span class="prop">date</span> 列から自動収集されるため <strong>空欄で構わない</strong><br>
+        schedule.csv に含まれない日付（予備日・閉会式日など）を追加したい場合のみ記入<br>
+        <span class="example">例: <code>2025-09-14,2025-09-15</code></span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">youtube_url</span></td>
+      <td>YouTube Live URL</td>
+      <td><span class="badge badge-opt">任意</span></td>
+      <td><span class="type-tag">テキスト（URL）</span></td>
+      <td>
+        YouTube Liveの配信URLを入力するとサイト上に動画が埋め込まれる。配信がない場合は空欄<br>
+        <span class="example">例: <code>https://www.youtube.com/watch?v=xxxxxxxxxxxxxxx</code></span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="sample"><span class="comment">tournament.csv のサンプル</span>
+key,value
+race_name,全日本マスターズレガッタ 第100回大会
+venue,手取川ダム湖 1000mコース
+course_length,1000
+dates,                               <span class="comment">← 空欄でOK（schedule.csvから自動収集）</span>
+youtube_url,                         <span class="comment">← 配信がない場合は空欄</span></div>
+
+<!-- ============================================================ -->
+<!-- schedule.csv -->
+<!-- ============================================================ -->
+<h2>③ <span class="file-label">schedule.csv</span> — レース一覧 <span class="opt-label">1行 = 1レース</span></h2>
+
+<div class="section-desc">1行目はヘッダー行。2行目以降に1レース1行で入力します。レース番号順に並べることを推奨。</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:150px">プロパティ名<br><small>（列ヘッダー）</small></th>
+      <th style="width:130px">日本語の項目名</th>
+      <th style="width:70px">必須</th>
+      <th style="width:140px">型・形式</th>
+      <th>説明・入力例・選択肢</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="prop">race_no</span></td>
+      <td>レース番号</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><span class="type-tag">数値（整数）</span></td>
+      <td>
+        大会内でユニークな番号。1から始まる連番を推奨。CSV計測ファイルのR番号と一致させること<br>
+        <span class="example">例: <code>1</code> / <code>2</code> / <code>3</code> …</span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">event_name</span></td>
+      <td>種目名</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><span class="type-tag">テキスト</span></td>
+      <td>
+        サイト上に表示される種目の正式名称<br>
+        <span class="example">例: 男子シングルスカル / 女子ダブルスカル / 混成クォドルプル</span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">category</span></td>
+      <td>性別区分</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><span class="type-tag">テキスト（固定値）</span></td>
+      <td>
+        性別を表すコード。フィルタ機能で使用される<br>
+        <div class="fixed-values">
+          <span class="val">M</span> 男子（Male）
+          <span class="val">W</span> 女子（Women）
+          <span class="val">X</span> 混成（Mixed）
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">age_group</span></td>
+      <td>年齢・クラス区分</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><span class="type-tag">テキスト（固定値）</span></td>
+      <td>
+        選手のクラス・年齢区分を表すコード<br>
+        <div class="fixed-values">
+          <span class="val">G</span> 一般（General・オープン）<br>
+          <span class="val">J</span> ジュニア（Junior・18歳以下）<br>
+          <span class="val">U23</span> アンダー23（23歳以下）<br>
+          <span class="val">M</span> マスターズ（Masters・27歳以上）
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">round</span></td>
+      <td>ラウンド（レース種別）</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><span class="type-tag">テキスト（固定値）</span></td>
+      <td>
+        レースのラウンドを表すコード。フィルタ・並び順に使用される<br>
+        <div class="fixed-values">
+          <span class="val">H</span> 予選（Heat）<br>
+          <span class="val">R</span> 敗者復活戦（Repechage）<br>
+          <span class="val">SF</span> 準決勝（Semifinal）<br>
+          <span class="val">FA</span> 決勝A（Final A・1位決定戦）<br>
+          <span class="val">FB</span> 決勝B（Final B・7位決定戦）<br>
+          <span class="val">RK</span> 順位決定戦（Ranking）
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">date</span></td>
+      <td>レース実施日</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><span class="type-tag">日付（文字列）</span></td>
+      <td>
+        レースが行われる日付。<strong class="warn">Excelでは必ず「文字列」書式で入力すること</strong>（自動変換に注意）<br>
+        形式: <code>YYYY-MM-DD</code>（年4桁-月2桁-日2桁）<br>
+        <span class="example">例: <code>2025-09-14</code> / <code>2025-09-15</code></span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">time</span></td>
+      <td>スタート予定時刻</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><span class="type-tag">時刻（文字列）</span></td>
+      <td>
+        レースのスタート予定時刻。<strong class="warn">Excelでは必ず「文字列」書式で入力すること</strong><br>
+        形式: <code>HH:MM</code>（24時間表記・時2桁:分2桁）<br>
+        <span class="example">例: <code>09:00</code> / <code>13:30</code> / <code>08:08</code></span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">event_code</span></td>
+      <td>種目コード</td>
+      <td><span class="badge badge-opt">任意</span></td>
+      <td><span class="type-tag">テキスト</span></td>
+      <td>
+        フィルタ機能で同一種目をまとめるためのコード。省略可（省略時は category + "_" + 艇種で自動生成）<br>
+        <span class="example">例: <code>M1X</code>（男子シングルスカル）/ <code>W2X</code>（女子ダブルスカル）/ <code>X4+</code>（混成フォア）</span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">course_length</span></td>
+      <td>このレースのコース距離（m）</td>
+      <td><span class="badge badge-opt">任意</span></td>
+      <td><span class="type-tag">数値（整数）</span></td>
+      <td>
+        このレースだけ大会デフォルトと異なる距離の場合に指定。省略時は tournament.csv の <span class="prop">course_length</span> を使用<br>
+        1000m大会に500m種目が混在する場合などに使用<br>
+        <span class="example">例: <code>500</code>（500m短距離種目）</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="sample"><span class="comment">schedule.csv のサンプル（2日間大会・500m種目混在の例）</span>
+race_no,event_name,category,age_group,round,date,time,event_code,course_length
+1,男子シングルスカル,M,G,FA,2025-09-14,09:00,M1X,        <span class="comment">← course_length 空欄 = 大会デフォルト(1000m)を使用</span>
+2,女子シングルスカル,W,G,FA,2025-09-14,09:08,W1X,
+3,男子ダブルスカル,M,G,FA,2025-09-14,09:16,M2X,
+4,女子ダブルスカル,W,G,FA,2025-09-14,09:24,W2X,
+5,男子クォドルプル,M,G,FA,2025-09-14,09:32,M4X,
+6,女子クォドルプル,W,G,FA,2025-09-14,09:40,W4X,
+7,男子シングルスカル,M,G,H,2025-09-14,10:00,M1X,
+8,女子シングルスカル,W,G,H,2025-09-14,10:08,W1X,
+9,男子ジュニアシングルスカル,M,J,FA,2025-09-15,09:00,M1X,500  <span class="comment">← 500m種目のみ明示指定</span>
+10,女子ジュニアシングルスカル,W,J,FA,2025-09-15,09:08,W1X,500</div>
+
+<!-- ============================================================ -->
+<!-- entries.csv -->
+<!-- ============================================================ -->
+<h2>④ <span class="file-label">entries.csv</span> — エントリー情報 <span class="opt-label">1行 = 1クルー</span></h2>
+
+<div class="section-desc">1行目はヘッダー行。2行目以降に1クルー1行で入力します。同じ race_no のクルーはレーン番号順に並べることを推奨。</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:150px">プロパティ名<br><small>（列ヘッダー）</small></th>
+      <th style="width:130px">日本語の項目名</th>
+      <th style="width:70px">必須</th>
+      <th style="width:140px">型・形式</th>
+      <th>説明・入力例</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="prop">race_no</span></td>
+      <td>レース番号</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><span class="type-tag">数値（整数）</span></td>
+      <td>
+        このクルーが出場するレース番号。schedule.csv の <span class="prop">race_no</span> と必ず一致させること<br>
+        <span class="example">例: <code>1</code> / <code>5</code></span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">lane</span></td>
+      <td>レーン番号</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><span class="type-tag">数値（整数）</span></td>
+      <td>
+        1から始まる整数。同じ race_no 内でレーン番号は重複不可<br>
+        <span class="example">例: <code>1</code> / <code>2</code> / <code>3</code> …</span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">crew_name</span></td>
+      <td>クルー名・選手名</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><span class="type-tag">テキスト</span></td>
+      <td>
+        選手名（個人）またはクルー名。複数人の場合は <code> / </code>（スペース・スラッシュ・スペース）で区切る<br>
+        <span class="example">シングル: 山田太郎</span><br>
+        <span class="example">ダブル: 高橋雄介 / 小林誠</span><br>
+        <span class="example">クォド: 中島拓 / 前田亮 / 野村健 / 大野聡</span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">affiliation</span></td>
+      <td>所属団体名</td>
+      <td><span class="badge badge-req">必須</span></td>
+      <td><span class="type-tag">テキスト</span></td>
+      <td>
+        クルーの所属クラブ・学校・チーム名。フィルタ検索の対象になる<br>
+        <span class="example">例: 諏訪漕艇クラブ</span><br>
+        <span class="example">例: 長野県立松本高等学校</span><br>
+        <span class="example">例: 長野漕艇協会</span>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">age_group</span></td>
+      <td>年齢・クラス区分（個別）</td>
+      <td><span class="badge badge-opt">任意</span></td>
+      <td><span class="type-tag">テキスト（固定値）</span></td>
+      <td>
+        同一レース内でクルーごとに年齢区分が異なる場合に指定。省略時はschedule.csvのage_groupを適用<br>
+        例: 一般とマスターズが同じレースに出る混合レース、予選で複数クラスが一緒に走る場合など<br>
+        <div class="fixed-values">
+          <span class="val">G</span> 一般
+          <span class="val">J</span> ジュニア
+          <span class="val">U23</span> U23
+          <span class="val">M</span> マスターズ
+        </div>
+        <span class="example">全員同じ区分のレースは空欄でOK</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <strong>棄権（DNS）について：</strong>エントリーに登録されていて当日出漕しなかったクルーは「棄権（DNS）」として自動表示されます。entries.csv からは削除せず、そのまま登録しておいてください。
+</div>
+
+<div class="sample"><span class="comment">entries.csv のサンプル（age_groupは必要なレースのみ指定）</span>
+race_no,lane,crew_name,affiliation,age_group
+1,1,山田太郎,諏訪漕艇クラブ,          <span class="comment">← 空欄 = scheduleのage_groupを適用</span>
+1,2,鈴木次郎,松本ボートクラブ,
+1,3,佐藤健一,長野漕艇協会,
+1,4,木村四郎,上田ローイング,
+3,1,高橋雄介 / 小林誠,長野漕艇協会,   <span class="comment">← ダブルスカル：「 / 」で区切る</span>
+5,1,中島拓 / 前田亮 / 野村健 / 大野聡,諏訪漕艇クラブ,  <span class="comment">← クォドルプル</span>
+9,1,山崎雅人,長野漕艇協会,G           <span class="comment">← 混合レース：一般とマスターズが混在</span>
+9,2,桜井昭夫,諏訪漕艇クラブ,M
+9,3,荒木浩之,岡谷漕艇クラブ,G
+9,4,工藤達也,松本ボートクラブ,M</div>
+
+<!-- ============================================================ -->
+<!-- Excel注意事項 -->
+<!-- ============================================================ -->
+<h2>⑤ Excel・Googleスプレッドシートで作成する場合の注意点</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:160px">該当列</th>
+      <th>注意事項</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="prop">date</span>（レース実施日）</td>
+      <td>
+        Excelが <code>2025/9/14</code> などに自動変換してしまうため、<strong>セルの書式を「文字列」に設定してから入力</strong>する。<br>
+        すでに変換されてしまった場合は先頭にシングルクォートを付けて <code>'2025-09-14</code> と入力するか、書式を変更してから再入力する。
+      </td>
+    </tr>
+    <tr>
+      <td><span class="prop">time</span>（スタート時刻）</td>
+      <td>
+        Excelが時刻型に自動変換してしまうため、<strong>セルの書式を「文字列」に設定してから入力</strong>する。<br>
+        09:00 のように先頭がゼロの場合も正しく保持される。
+      </td>
+    </tr>
+    <tr>
+      <td>CSV保存形式</td>
+      <td>
+        保存時に <strong>「CSV UTF-8（コンマ区切り）」</strong> を選択する。BOM付きでも自動対応済み。<br>
+        「CSV（コンマ区切り）」（旧形式 Shift-JIS）を選ぶと文字化けする場合があるため注意。
+      </td>
+    </tr>
+    <tr>
+      <td>空行・空列</td>
+      <td>1行目はヘッダー行のみ。データの途中や末尾に空行を入れないこと。</td>
+    </tr>
+    <tr>
+      <td>Googleスプレッドシート</td>
+      <td>
+        CSVに変換せず直接スプレッドシートとして <code>master/</code> フォルダに置いても読み込み可能。<br>
+        ファイル名を <code>schedule</code>・<code>entries</code>・<code>tournament</code> にすること（拡張子不要）。
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<!-- アップロード手順 -->
+<!-- ============================================================ -->
+<h2>⑥ アップロード手順</h2>
+
+<ol class="steps">
+  <li>Google Drive の大会フォルダを開く</li>
+  <li><code>master/</code> フォルダに移動</li>
+  <li><span class="file-chip">tournament.csv</span>・<span class="file-chip">schedule.csv</span>・<span class="file-chip">entries.csv</span> の3ファイルをドラッグ＆ドロップ</li>
+  <li>GASエディタで <strong>runImportMaster()</strong> を実行（または5分後に自動処理される）</li>
+  <li>サイトに大会スケジュールとエントリーが反映される ✅</li>
+</ol>
+
+<div class="note-blue">
+  ⚠️ <strong>内容を更新したい場合：</strong>ファイルを上書きアップロードして再度 <strong>runImportMaster()</strong> を実行してください。<br>
+  Driveで「置き換え」を選択すると同じファイルIDで更新されます（新規アップロードでもOK）。
+</div>
+
+<hr>
+<p style="font-size: 12px; color: #888; text-align: center;">ボート競技ライブリザルトシステム — 登録シート全項目定義書</p>
+
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script>
+// ============================================================
+// CSV データ定義
+// ============================================================
+const CSV_DATA = {
+
+  // ── ダミーデータ入り ──────────────────────────
+  sample: {
+    'tournament.csv':
+`key,value
+race_name,全日本マスターズレガッタ 第100回大会
+venue,手取川ダム湖 1000mコース
+course_length,1000
+dates,
+youtube_url,`,
+
+    'schedule.csv':
+`race_no,event_name,category,age_group,round,date,time,event_code,course_length
+1,男子シングルスカル,M,G,FA,2025-09-14,09:00,M1X,
+2,女子シングルスカル,W,G,FA,2025-09-14,09:08,W1X,
+3,男子ダブルスカル,M,G,FA,2025-09-14,09:16,M2X,
+4,女子ダブルスカル,W,G,FA,2025-09-14,09:24,W2X,
+5,男子クォドルプル,M,G,FA,2025-09-14,09:32,M4X,
+6,女子クォドルプル,W,G,FA,2025-09-14,09:40,W4X,
+7,男子シングルスカル,M,G,H,2025-09-14,10:00,M1X,
+8,女子シングルスカル,W,G,H,2025-09-14,10:08,W1X,
+9,男子ジュニアシングルスカル,M,J,FA,2025-09-15,09:00,M1X,500
+10,女子ジュニアシングルスカル,W,J,FA,2025-09-15,09:08,W1X,500`,
+
+    'entries.csv':
+`race_no,lane,crew_name,affiliation,age_group
+1,1,山田太郎,諏訪漕艇クラブ,
+1,2,鈴木次郎,松本ボートクラブ,
+1,3,佐藤健一,長野漕艇協会,
+1,4,木村四郎,上田ローイング,
+2,1,田中花子,岡谷漕艇クラブ,
+2,2,伊藤明美,飯田ローイング,
+2,3,渡辺麻衣,諏訪漕艇クラブ,
+2,4,中村さくら,松本ボートクラブ,
+3,1,高橋雄介 / 小林誠,長野漕艇協会,
+3,2,加藤大輔 / 吉田拓也,諏訪漕艇クラブ,
+3,3,山本隆太 / 石川健,岡谷漕艇クラブ,
+3,4,林直樹 / 清水翔,松本ボートクラブ,
+4,1,斎藤由美 / 松田綾,上田ローイング,
+4,2,井上千恵 / 木下瞳,飯田ローイング,
+4,3,橋本美香 / 坂本奈々,諏訪漕艇クラブ,
+4,4,西村友美 / 藤田香,長野漕艇協会,
+5,1,中島拓 / 前田亮 / 野村健 / 大野聡,諏訪漕艇クラブ,
+5,2,後藤慎 / 岡田悠 / 長谷川涼 / 近藤豊,松本ボートクラブ,
+5,3,菊地恒 / 河野純 / 池田充 / 市川努,岡谷漕艇クラブ,
+6,1,上野彩 / 内田葵 / 杉山莉 / 村田葉,長野漕艇協会,
+6,2,石田朱 / 浜田恵 / 宮本陽 / 金子桜,上田ローイング,
+7,1,森田雄一,長野漕艇協会,J
+7,2,藤原隆司,諏訪漕艇クラブ,J
+7,3,小野寺亮,松本ボートクラブ,J
+7,4,村上浩二,岡谷漕艇クラブ,J
+8,1,宮田美穂,上田ローイング,J
+8,2,坂本彩花,飯田ローイング,J
+8,3,長谷部由里,諏訪漕艇クラブ,J
+8,4,福島奈緒,長野漕艇協会,J
+9,1,小川光太,長野県立松本高等学校,G
+9,2,三浦颯太,長野県立諏訪清陵高等学校,M
+9,3,岩田海斗,長野県立岡谷東高等学校,G
+10,1,松本優奈,長野県立松本高等学校,G
+10,2,福田結衣,長野県立諏訪清陵高等学校,M
+10,3,川口美咲,長野県立飯田高等学校,G`
+  },
+
+  // ── テンプレート（ヘッダーのみ）──────────────────
+  template: {
+    'tournament.csv':
+`key,value
+race_name,
+venue,
+course_length,
+dates,
+youtube_url,`,
+
+    'schedule.csv':
+`race_no,event_name,category,age_group,round,date,time,event_code,course_length`,
+
+    'entries.csv':
+`race_no,lane,crew_name,affiliation,age_group`
+  }
+};
+
+// ============================================================
+// ZIP 生成 & ダウンロード
+// ============================================================
+async function downloadZip(type) {
+  const btn = event.currentTarget;
+  const origText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = btn.innerHTML.replace(/ZIP|ヘッダーのみ\）ZIP/, '生成中…');
+
+  try {
+    const zip = new JSZip();
+    const files = CSV_DATA[type];
+
+    // BOM付き UTF-8 で追加（Excelで開いたとき文字化けしないよう）
+    const BOM = '\uFEFF';
+    Object.entries(files).forEach(([name, content]) => {
+      zip.file(name, BOM + content);
+    });
+
+    const zipName = type === 'sample'
+      ? 'master_csv_sample.zip'
+      : 'master_csv_template.zip';
+
+    const blob = await zip.generateAsync({ type: 'blob' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = zipName;
+    a.click();
+    URL.revokeObjectURL(url);
+  } catch (e) {
+    alert('ダウンロードに失敗しました: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = origText;
+  }
+}
+</script>
+</body>
+</html>
