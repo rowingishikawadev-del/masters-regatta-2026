@@ -449,7 +449,7 @@
           <div class="cl-step-body">
             <div class="checklist-item" id="ci-gas-trigger">
               <input type="checkbox" id="c-gas-trigger" onchange="onCheck(this)">
-              <label for="c-gas-trigger">GAS のトリガーを有効にした<span class="item-note"><a href="https://script.google.com" target="_blank">script.google.com</a> → プロジェクトを開く → 左メニュー「トリガー」→ onTrigger が5分間隔で設定されているか確認。なければ追加</span></label>
+              <label for="c-gas-trigger">GAS のトリガーを有効にした<span class="item-note"><a href="https://script.google.com" target="_blank">script.google.com</a> → プロジェクトを開く → 左メニュー「トリガー」→ onTrigger が2分間隔で設定されているか確認。なければ追加</span></label>
             </div>
           </div>
         </div>
@@ -476,7 +476,7 @@
           <div class="cl-step-body">
             <div class="checklist-item" id="ci-test-csv">
               <input type="checkbox" id="c-test-csv" onchange="onCheck(this)">
-              <label for="c-test-csv">（任意）テスト CSV でパイプライン疎通を確認した<span class="item-note">test/csv/ のサンプルCSVをDriveに投入 → 5分以内にサイトが更新されるか確認 → 確認後は race_XXX.json を削除しておく</span></label>
+              <label for="c-test-csv">（任意）テスト CSV でパイプライン疎通を確認した<span class="item-note">test/csv/ のサンプルCSVをDriveに投入 → 2分以内にサイトが更新されるか確認 → 確認後は race_XXX.json を削除しておく</span></label>
             </div>
           </div>
         </div>
@@ -612,7 +612,7 @@
       <div style="color:var(--text-muted);font-size:13px"><span class="spinner"></span>確認中...</div>
     </div>
     <p style="font-size:12px;color:var(--text-muted);margin-top:10px">
-      ※ GASは5分間隔でCSVを監視→JSON変換→GitHubにPushします。master.jsonの生成時刻から稼働状況を判定しています。
+      ※ GASは2分間隔でCSVを監視→JSON変換→GitHubにPushします。master.jsonの生成時刻から稼働状況を判定しています。
     </p>
   </section>
 
@@ -1034,7 +1034,7 @@ function initChecklist() {
 
 /* ===== パイプライン ===== */
 function renderPipeline() {
-  // last_trigger_at = 定期トリガーの最終実行時刻（5分ごとに自動更新）
+  // last_trigger_at = 定期トリガーの最終実行時刻（2分ごとに自動更新）
   // generated_at    = importMasterData() 手動実行時のみ更新
   const triggerAt = masterData?.last_trigger_at;
   const diffMin = triggerAt ? (Date.now()-new Date(triggerAt))/60000 : Infinity;
@@ -1078,7 +1078,7 @@ function renderPipeline() {
   };
   const steps = [
     { icon:'📁', title:'Google Drive — CSV投入', desc:'race_csv/500m/ および 1000m/ にCSVをアップロード', badge: periodStatus==='active' ? 'ok' : 'idle', note:'計測スタッフが手動アップ' },
-    { icon:'⚙️', title:'GAS — CSV監視・JSON変換', desc:gasDesc, badge:gasStatus, note:'5分間隔で自動実行' },
+    { icon:'⚙️', title:'GAS — CSV監視・JSON変換', desc:gasDesc, badge:gasStatus, note:'2分間隔で自動実行' },
     { icon:'🐙', title:'GitHub — JSON Push', desc:'master.json / race_XXX.json を自動Push', badge:pipelineBadge('ok','ng'), note:'GAS経由で自動更新' },
     { icon:'☁️', title:'Cloudflare Pages — デプロイ', desc:'GitHubのPushを検知して約1分でデプロイ完了', badge:pipelineBadge('ok','warn'), note:'自動デプロイ' },
     { icon:'🌐', title:'サイト公開', desc:'https://masters-regatta-2026-3ha.pages.dev', badge:'ok', note:'閲覧者がリアルタイム確認' },

@@ -163,7 +163,7 @@
     <div class="card">
       <h3>🏁 速報サイトの機能</h3>
       <ul class="blist">
-        <li><strong>リアルタイム速報</strong> — レース終了後、最大6分以内に結果がサイトに反映される<span class="note">計測CSVのアップロードから GAS処理（最大5分）+ Cloudflareデプロイ（約1分）</span></li>
+        <li><strong>リアルタイム速報</strong> — レース終了後、最大4分以内に結果がサイトに反映される<span class="note">計測CSVのアップロードから GAS処理（最大2分）+ Cloudflareデプロイ（約1分）</span></li>
         <li><strong>種目別表示</strong> — 男子・女子・混成、予選・決勝などでフィルタリングして表示できる<span class="note">フィルタバー・検索ボックスを使って絞り込み可能</span></li>
         <li><strong>全レース一覧テーブル</strong> — 全レースの結果を1画面で俯瞰できる<span class="note">ラップタイム・スプリットタイム・着順を一覧表示</span></li>
         <li><strong>スケジュール表示</strong> — 発艇時刻・種目・エントリー情報をスケジュール形式で表示<span class="note">大会前からスケジュールのみ公開し、結果は追いかけて表示</span></li>
@@ -222,12 +222,12 @@
             <div class="flow-time">所要時間: 計測スタッフの操作次第（通常1〜2分）</div>
           </div>
         </div>
-        <div class="flow-arrow">↓ 最大5分待機</div>
+        <div class="flow-arrow">↓ 最大2分待機</div>
         <div class="flow-step">
           <div class="flow-icon">⚙️</div>
           <div class="flow-body">
             <div class="flow-title">GAS（Google Apps Script）が自動検知・変換</div>
-            <div class="flow-desc">5分間隔で自動実行。CSVを読み取り、タイム計算・着順判定を行い、JSON形式に変換してGitHubにPushする</div>
+            <div class="flow-desc">2分間隔で自動実行。CSVを読み取り、タイム計算・着順判定を行い、JSON形式に変換してGitHubにPushする</div>
             <div class="flow-time">所要時間: 約30秒〜1分</div>
           </div>
         </div>
@@ -246,7 +246,7 @@
           <div class="flow-body">
             <div class="flow-title">速報サイトにレース結果が表示される</div>
             <div class="flow-desc">閲覧者がブラウザをリロードすると最新結果が表示される。自動更新通知も出る</div>
-            <div class="flow-time">CSV投入から合計: 最大6〜7分</div>
+            <div class="flow-time">CSV投入から合計: 最大3〜4分</div>
           </div>
         </div>
       </div>
@@ -482,8 +482,8 @@
             <strong>GASトリガーを有効にする</strong>
             <div class="step-note">
               ・<a href="https://script.google.com" target="_blank">script.google.com</a> → 「マスターズ石川県大会2026」を開く<br>
-              ・左メニュー「時計アイコン（トリガー）」→ <code>onTrigger</code> が5分間隔で設定されているか確認<br>
-              ・設定がない場合: 「＋トリガーを追加」→ 関数: onTrigger / 時間ベース / 5分ごと で追加<br>
+              ・左メニュー「時計アイコン（トリガー）」→ <code>onTrigger</code> が2分間隔で設定されているか確認<br>
+              ・設定がない場合: 「＋トリガーを追加」→ 関数: onTrigger / 時間ベース / 2分ごと で追加<br>
               ・一度 <code>onTrigger</code> を手動実行してエラーがないか確認するとさらに安心
             </div>
           </div>
@@ -605,8 +605,8 @@
       <h3>⚠️ 運用上の制限</h3>
       <ul class="blist">
         <li><strong>GAS実行時間: 90分/日の上限あり</strong> — 5分×18回=90分。大会が2日間の場合も1日ごとにカウントされる。大会終了後は必ずトリガーを停止すること<span class="note">超過するとその日のGAS処理が止まる。大会中に止まった場合はシステム管理者へ連絡</span></li>
-        <li><strong>CSVは500mと1000m両方が揃わないとサイトに反映されない</strong> — 1000mコースのため両ポイントの計測CSVが必要。片方だけでは保留される<span class="note">両方揃った時点で次のGAS実行（最大5分後）に処理される</span></li>
-        <li><strong>反映まで最大6〜7分かかる</strong> — GAS5分周期+デプロイ1分のため、即時反映はできない<span class="note">タイムラグを関係者に事前に周知しておくと混乱が少ない</span></li>
+        <li><strong>CSVは500mと1000m両方が揃わないとサイトに反映されない</strong> — 1000mコースのため両ポイントの計測CSVが必要。片方だけでは保留される<span class="note">両方揃った時点で次のGAS実行（最大2分後）に処理される</span></li>
+        <li><strong>反映まで最大3〜4分かかる</strong> — GAS5分周期+デプロイ1分のため、即時反映はできない<span class="note">タイムラグを関係者に事前に周知しておくと混乱が少ない</span></li>
         <li><strong>GitHubトークンは有効期限がある</strong> — 設定した期限によって1年以内に失効する。失効するとGASのPushが止まる<span class="note">年1回程度、大会前にトークンの有効期限を確認することを推奨</span></li>
       </ul>
     </div>

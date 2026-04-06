@@ -1308,10 +1308,10 @@ function setupTrigger() {
 
   ScriptApp.newTrigger('onTrigger')
     .timeBased()
-    .everyMinutes(5)
+    .everyMinutes(2)
     .create();
 
-  Logger.log('[OK] トリガーを設定しました: onTrigger (5分間隔)');
+  Logger.log('[OK] トリガーを設定しました: onTrigger (2分間隔)');
 }
 
 /**
@@ -1329,7 +1329,7 @@ function deleteTriggers() {
 /**
  * テスト用サンプルCSVを race_csv/500m/ と race_csv/1000m/ に生成する
  * 本番前の動作確認用（R001〜R005の5レース分）
- * 実行後5分以内に onTrigger が自動でJSONを生成してGitHubにPushする
+ * 実行後2分以内に onTrigger が自動でJSONを生成してGitHubにPushする
  */
 function createTestCSVs() {
   const props = PropertiesService.getScriptProperties();
@@ -1428,7 +1428,7 @@ function createTestCSVs() {
   });
 
   Logger.log('[createTestCSVs] 完了: ' + csvData.length + 'ファイル生成');
-  Logger.log('5分以内に onTrigger が自動実行してJSONを生成します');
+  Logger.log('2分以内に onTrigger が自動実行してJSONを生成します');
 }
 
 /**
@@ -1472,5 +1472,5 @@ function createTestRace006() {
 
   Logger.log('[createTestRace006] 完了');
   Logger.log('  レーン1〜3: 完走 / レーン4: 途中棄権（500mのみ） / レーン5: 棄権（CSVなし）');
-  Logger.log('5分以内に onTrigger が自動実行します');
+  Logger.log('2分以内に onTrigger が自動実行します');
 }
