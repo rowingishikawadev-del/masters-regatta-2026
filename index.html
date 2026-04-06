@@ -54,39 +54,50 @@
 
     <!-- フィルタバー -->
     <div class="filter-bar">
-      <label>フィルタ:</label>
-      <select class="filter-select" id="filter-cat" onchange="applyFilters()">
-        <option value="all">カテゴリ: すべて</option>
-        <option value="M">👨 男子</option>
-        <option value="W">👩 女子</option>
-        <option value="X">🤝 混成</option>
-      </select>
-      <select class="filter-select" id="filter-round" onchange="applyFilters()">
-        <option value="all">ラウンド: すべて</option>
-        <option value="FA">決勝A</option>
-        <option value="FB">決勝B</option>
-        <option value="SF">準決勝</option>
-        <option value="H">予選</option>
-        <option value="RK">順位決定</option>
-        <option value="R">敗者復活</option>
-      </select>
-      <select class="filter-select" id="filter-day" onchange="applyFilters()">
-        <option value="all">日程: すべて</option>
-        <!-- 日程オプションはJS側で動的生成 -->
-      </select>
-      <!-- 状態フィルタ（結果あり/未実施） -->
-      <select class="filter-select" id="filter-status" onchange="applyFilters()">
-        <option value="all">状態: すべて</option>
-        <option value="done">結果あり</option>
-        <option value="upcoming">未実施</option>
-      </select>
-      <input type="text" class="filter-search" id="filter-crew"
-        placeholder="🔍 所属・クルー名で検索" oninput="applyFilters()">
-      <button class="filter-reset" onclick="resetFilters()">✕ リセット</button>
-      <!-- 全展開・全折畳ボタン（フィルタバー右端） -->
-      <button class="filter-reset" onclick="expandAll()">全展開</button>
-      <button class="filter-reset" onclick="collapseAll()">全折畳</button>
-      <span class="filter-count" id="filter-count">-</span>
+      <!-- モバイル用: 検索+トグルボタン行 -->
+      <div class="filter-top-row">
+        <input type="text" class="filter-search" id="filter-crew"
+          placeholder="🔍 所属・クルー名で検索" oninput="applyFilters()">
+        <button class="filter-toggle-btn" id="filter-toggle-btn"
+          onclick="toggleFilterPanel()" aria-expanded="false">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          フィルタ
+        </button>
+      </div>
+      <!-- フィルタパネル（モバイルでは折りたたみ） -->
+      <div class="filter-panel" id="filter-panel">
+        <select class="filter-select" id="filter-cat" onchange="applyFilters()">
+          <option value="all">カテゴリ: すべて</option>
+          <option value="M">男子</option>
+          <option value="W">女子</option>
+          <option value="X">混成</option>
+        </select>
+        <select class="filter-select" id="filter-round" onchange="applyFilters()">
+          <option value="all">ラウンド: すべて</option>
+          <option value="FA">決勝A</option>
+          <option value="FB">決勝B</option>
+          <option value="SF">準決勝</option>
+          <option value="H">予選</option>
+          <option value="RK">順位決定</option>
+          <option value="R">敗者復活</option>
+        </select>
+        <select class="filter-select" id="filter-day" onchange="applyFilters()">
+          <option value="all">日程: すべて</option>
+        </select>
+        <select class="filter-select" id="filter-status" onchange="applyFilters()">
+          <option value="all">状態: すべて</option>
+          <option value="done">結果あり</option>
+          <option value="upcoming">未実施</option>
+        </select>
+        <div class="filter-actions">
+          <button class="filter-reset" onclick="resetFilters()">✕ リセット</button>
+          <button class="filter-reset" onclick="expandAll()">全展開</button>
+          <button class="filter-reset" onclick="collapseAll()">全折畳</button>
+          <span class="filter-count" id="filter-count">-</span>
+        </div>
+      </div>
     </div>
 
     <!-- トグル一覧（JS側で動的生成） -->
@@ -114,9 +125,31 @@
 <!-- ステータスバー -->
 <div class="update-bar"></div>
 
+<!-- ボトムナビゲーション（モバイル用） -->
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="bnav-item active" data-view="toggle" onclick="switchView('toggle', document.querySelector('.view-tab:nth-child(1)'))">
+    <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+    </svg>
+    <span class="bnav-label">種目別</span>
+  </button>
+  <button class="bnav-item" data-view="table" onclick="switchView('table', document.querySelector('.view-tab:nth-child(2)'))">
+    <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/>
+    </svg>
+    <span class="bnav-label">全一覧</span>
+  </button>
+  <button class="bnav-item" data-view="schedule" onclick="switchView('schedule', document.querySelector('.view-tab:nth-child(3)'))">
+    <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+    </svg>
+    <span class="bnav-label">日程</span>
+  </button>
+</nav>
+
 <!-- トースト通知コンテナ -->
 <div id="toast-container"></div>
 
-<script src="js/app.js?v=20260406f"></script>
+<script src="js/app.js?v=20260406g"></script>
 </body>
 </html>

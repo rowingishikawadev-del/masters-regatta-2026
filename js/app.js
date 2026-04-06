@@ -933,10 +933,23 @@ function collapseAll() {
 function switchView(id, tabEl) {
   document.querySelectorAll('.view-content').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.bnav-item').forEach(t => t.classList.remove('active'));
   document.getElementById('view-' + id)?.classList.add('active');
   if (tabEl) tabEl.classList.add('active');
+  // ボトムナビも同期
+  const bnavItem = document.querySelector(`.bnav-item[data-view="${id}"]`);
+  if (bnavItem) bnavItem.classList.add('active');
   // URLハッシュを更新（pushStateで履歴に残さない）
   history.replaceState(null, '', '#view-' + id);
+}
+
+// フィルターパネルの開閉（モバイル用）
+function toggleFilterPanel() {
+  const panel = document.getElementById('filter-panel');
+  const btn = document.getElementById('filter-toggle-btn');
+  if (!panel) return;
+  const isOpen = panel.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', isOpen);
 }
 
 // ========= ステータスバー =========
