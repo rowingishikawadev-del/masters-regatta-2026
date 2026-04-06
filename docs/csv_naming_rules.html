@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSVファイル命名ルール — 全日本マスターズレガッタ 2026</title>
+<style>
+  body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif; background: #F7F4EF; color: #1A1A18; font-size: 14px; line-height: 1.7; margin: 0; }
+  .page { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+  h2 { font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: #9B9890; font-weight: 400; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #E8E4DC; }
+  h3 { font-size: 14px; font-weight: 600; margin: 20px 0 8px; }
+  .card { background: #fff; border: 1px solid #E8E4DC; border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .rule-box { background: #F0EDE7; border-left: 4px solid #2D4F2C; border-radius: 0 6px 6px 0; padding: 14px 18px; font-size: 15px; font-family: monospace; margin: 12px 0; letter-spacing: 0.03em; }
+  .ok { color: #2D7A2D; font-weight: 600; }
+  .ng { color: #C0392B; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { padding: 8px 14px; text-align: left; font-size: 11px; color: #9B9890; font-weight: 400; border-bottom: 1px solid #E8E4DC; background: #FAF8F4; }
+  td { padding: 10px 14px; border-bottom: 1px solid #F0EDE7; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  code { background: #F0EDE7; padding: 2px 6px; border-radius: 3px; font-family: monospace; font-size: 12px; }
+  .note { font-size: 12px; color: #6B6860; margin-top: 8px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; }
+  .badge-ok { background: #e8f5e8; color: #2D7A2D; }
+  .badge-ng { background: #fce8e8; color: #C0392B; }
+  .file-list { list-style: none; padding: 0; margin: 0; }
+  .file-list li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #F0EDE7; font-size: 13px; }
+  .file-list li:last-child { border-bottom: none; }
+  .file-name { font-family: monospace; font-size: 12px; background: #F0EDE7; padding: 2px 8px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
+  .file-desc { color: #6B6860; }
+  a { color: #2D4F2C; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>📄 CSVファイル 命名ルール</h1>
+  <p style="color:#6B6860;margin-bottom:32px">全日本マスターズレガッタ 2026 / システム運用マニュアル</p>
+
+  <!-- ===== レース結果CSV ===== -->
+  <h2>① レース結果CSV（計測システム出力）</h2>
+  <div class="card">
+    <h3>推奨ファイル名形式</h3>
+    <div class="rule-box">R{レース番号3桁}_{計測ポイント}.csv</div>
+    <table>
+      <thead><tr><th>例</th><th>意味</th><th>投入先フォルダ</th></tr></thead>
+      <tbody>
+        <tr><td><code>R001_500m.csv</code></td><td>レース1 500m計測</td><td>race_csv/500m/</td></tr>
+        <tr><td><code>R001_1000m.csv</code></td><td>レース1 1000m計測</td><td>race_csv/1000m/</td></tr>
+        <tr><td><code>R012_500m.csv</code></td><td>レース12 500m計測</td><td>race_csv/500m/</td></tr>
+        <tr><td><code>R012_1000m.csv</code></td><td>レース12 1000m計測</td><td>race_csv/1000m/</td></tr>
+      </tbody>
+    </table>
+    <p class="note">※ RowingTimerWebが出力する旧形式 <code>YYYYMMDD_HHMMSS_R001_500m.csv</code> も自動認識されます。</p>
+
+    <h3 style="margin-top:20px">注意事項</h3>
+    <table>
+      <thead><tr><th>ルール</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>500m・1000m の両方が揃ってからサイトに反映される</td><td>片方だけでは不完全なため自動保留</td></tr>
+        <tr><td>レース番号はスケジュールのrace_noと一致させること</td><td>番号が違うとデータが紐付かない</td></tr>
+        <tr><td>同じファイルを再投入すると上書き更新される</td><td>タイム修正時に使用</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:20px">OK / NG 例</h3>
+    <table>
+      <thead><tr><th>ファイル名</th><th>判定</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td><code>R001_500m.csv</code></td><td><span class="badge badge-ok">OK</span></td><td>推奨形式</td></tr>
+        <tr><td><code>20260912_090000_R001_500m.csv</code></td><td><span class="badge badge-ok">OK</span></td><td>旧形式（自動認識）</td></tr>
+        <tr><td><code>race1_500.csv</code></td><td><span class="badge badge-ng">NG</span></td><td>Rで始まらない・3桁でない</td></tr>
+        <tr><td><code>R1_500m.csv</code></td><td><span class="badge badge-ng">NG</span></td><td>番号が3桁でない（R001 とすること）</td></tr>
+        <tr><td><code>R001_500.csv</code></td><td><span class="badge badge-ng">NG</span></td><td>計測ポイントに「m」がない</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== スケジュールCSV ===== -->
+  <h2>② スケジュールCSV（大会前に1回登録）</h2>
+  <div class="card">
+    <h3>ファイル名</h3>
+    <div class="rule-box">schedule.csv　（固定）</div>
+    <p class="note">※ ファイル名は変更しないこと。Google Drive の <code>master/</code> フォルダに投入する。</p>
+
+    <h3 style="margin-top:20px">列の説明</h3>
+    <table>
+      <thead><tr><th>列名</th><th>必須</th><th>内容・形式</th><th>例</th></tr></thead>
+      <tbody>
+        <tr><td><code>race_no</code></td><td>必須</td><td>レース番号（計測システムと一致させること）</td><td>1, 2, 3...</td></tr>
+        <tr><td><code>event_code</code></td><td>必須</td><td>種目コード</td><td>M_1X, W_2X, X_4+</td></tr>
+        <tr><td><code>event_name</code></td><td>必須</td><td>種目名（サイトに表示される名称）</td><td>男子シングルスカル</td></tr>
+        <tr><td><code>category</code></td><td>必須</td><td>M（男子）/ W（女子）/ X（混成）</td><td>M</td></tr>
+        <tr><td><code>age_group</code></td><td>必須</td><td>年齢区分 ※下記参照</td><td>G, H, J</td></tr>
+        <tr><td><code>round</code></td><td>必須</td><td>FA（決勝A）/ FB（決勝B）/ SF（準決勝）/ H（予選）/ RK（順位決定）/ R（敗者復活）</td><td>FA</td></tr>
+        <tr><td><code>date</code></td><td>必須</td><td>開催日（YYYY-MM-DD形式）</td><td>2026-09-12</td></tr>
+        <tr><td><code>time</code></td><td>必須</td><td>発艇時刻（HH:MM形式）</td><td>09:00</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:20px">年齢区分（age_group）一覧</h3>
+    <table>
+      <thead><tr><th>コード</th><th>区分</th></tr></thead>
+      <tbody>
+        <tr><td><code>G</code></td><td>Masters G（70歳以上）</td></tr>
+        <tr><td><code>H</code></td><td>Masters H（75歳以上）</td></tr>
+        <tr><td><code>A</code>〜<code>F</code></td><td>Masters A〜F（各年齢区分）</td></tr>
+        <tr><td><code>J</code></td><td>ジュニア（18歳未満）</td></tr>
+        <tr><td><code>O</code></td><td>オープン</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== エントリーCSV ===== -->
+  <h2>③ エントリーCSV（大会前に1回登録）</h2>
+  <div class="card">
+    <h3>ファイル名</h3>
+    <div class="rule-box">entries.csv　（固定）</div>
+    <p class="note">※ ファイル名は変更しないこと。Google Drive の <code>master/</code> フォルダに投入する。</p>
+
+    <h3 style="margin-top:20px">列の説明</h3>
+    <table>
+      <thead><tr><th>列名</th><th>必須</th><th>内容・形式</th><th>例</th></tr></thead>
+      <tbody>
+        <tr><td><code>race_no</code></td><td>必須</td><td>スケジュールのrace_noと一致させること</td><td>1, 2, 3...</td></tr>
+        <tr><td><code>lane</code></td><td>必須</td><td>レーン番号</td><td>1, 2, 3, 4...</td></tr>
+        <tr><td><code>crew_name</code></td><td>必須</td><td>クルー名。ペア以上は「選手A / 選手B」形式（スラッシュ前後に半角スペース）</td><td>山田太郎 / 鈴木次郎</td></tr>
+        <tr><td><code>affiliation</code></td><td>必須</td><td>所属（クラブ名・学校名等）</td><td>秋田ボートクラブ</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== ダウンロード ===== -->
+  <h2>④ テンプレート・サンプルファイル</h2>
+  <div class="card">
+    <ul class="file-list">
+      <li>
+        <span class="file-name">schedule_template.csv</span>
+        <span class="file-desc">スケジュール <strong>テンプレート</strong>（ヘッダー行のみ・記入用）<br>
+        <a href="../test/master/schedule_template.csv" download>ダウンロード</a></span>
+      </li>
+      <li>
+        <span class="file-name">schedule_sample.csv</span>
+        <span class="file-desc">スケジュール <strong>記入例</strong>（10レース分のサンプルデータ入り）<br>
+        <a href="../test/master/schedule_sample.csv" download>ダウンロード</a></span>
+      </li>
+      <li>
+        <span class="file-name">entries_template.csv</span>
+        <span class="file-desc">エントリー <strong>テンプレート</strong>（ヘッダー行のみ・記入用）<br>
+        <a href="../test/master/entries_template.csv" download>ダウンロード</a></span>
+      </li>
+      <li>
+        <span class="file-name">entries_sample.csv</span>
+        <span class="file-desc">エントリー <strong>記入例</strong>（10レース分のサンプルデータ入り）<br>
+        <a href="../test/master/entries_sample.csv" download>ダウンロード</a></span>
+      </li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
