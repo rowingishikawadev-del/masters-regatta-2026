@@ -547,7 +547,8 @@
       <li><a href="#section-status">① システム状態</a></li>
       <li><a href="#section-timeline">② レース 日別タイムライン</a></li>
       <li><a href="#section-pipeline">③ CSV自動アップロード監視</a></li>
-      <li><a href="#section-links">④ リンク一覧</a></li>
+      <li><a href="#section-csv">④ テストCSVダウンロード</a></li>
+      <li><a href="#section-links">⑤ リンク一覧</a></li>
     </ul>
   </nav>
 
@@ -615,11 +616,35 @@
     </p>
   </section>
 
-  <!-- ===== ④ リンク一覧 ===== -->
+  <!-- ===== ④ テストCSVダウンロード ===== -->
+  <section class="section">
+    <div id="section-csv" class="section-anchor"></div>
+    <div class="section-header">
+      <div class="section-title">④ テストCSVダウンロード</div>
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px">
+      疎通確認用のサンプルCSVです。Google Drive の race_csv/500m/ または 1000m/ に投入して動作確認できます。確認後は race_XXX.json を削除してください。
+    </p>
+    <div class="links-table-wrapper">
+      <table class="links-table">
+        <thead><tr><th>ファイル名</th><th>内容</th><th>投入先</th></tr></thead>
+        <tbody>
+          <tr><td><a href="../../test/csv/20250607_070000_R001_500m.csv" download>R001_500m.csv</a></td><td class="link-use">R001 500m計測サンプル（4レーン）</td><td class="link-use">race_csv/500m/</td></tr>
+          <tr><td><a href="../../test/csv/20250607_070800_R001_1000m.csv" download>R001_1000m.csv</a></td><td class="link-use">R001 1000m計測サンプル（4レーン）</td><td class="link-use">race_csv/1000m/</td></tr>
+          <tr><td><a href="../../test/csv/20250607_071600_R002_500m.csv" download>R002_500m.csv</a></td><td class="link-use">R002 500m計測サンプル</td><td class="link-use">race_csv/500m/</td></tr>
+          <tr><td><a href="../../test/csv/20250607_072400_R002_1000m.csv" download>R002_1000m.csv</a></td><td class="link-use">R002 1000m計測サンプル</td><td class="link-use">race_csv/1000m/</td></tr>
+          <tr><td><a href="../../test/csv/20250607_073200_R003_500m.csv" download>R003_500m.csv</a></td><td class="link-use">R003 500m計測サンプル</td><td class="link-use">race_csv/500m/</td></tr>
+          <tr><td><a href="../../test/csv/20250607_074000_R003_1000m.csv" download>R003_1000m.csv</a></td><td class="link-use">R003 1000m計測サンプル</td><td class="link-use">race_csv/1000m/</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== ⑤ リンク一覧 ===== -->
   <section class="section">
     <div id="section-links" class="section-anchor"></div>
     <div class="section-header">
-      <div class="section-title">④ リンク一覧</div>
+      <div class="section-title">⑤ リンク一覧</div>
     </div>
     <div class="links-table-wrapper">
       <table class="links-table">
