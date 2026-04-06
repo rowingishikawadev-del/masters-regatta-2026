@@ -16,7 +16,7 @@ const SETUP_DRIVE_FOLDER_ID = '';  // ← ここに貼り付け（saveSetup()実
 const SETUP_GITHUB_TOKEN = '';  // ← ここに貼り付け例: 'ghp_xxxxxxxxxxxx'
 
 // 3. 計測ポイント（カンマ区切り、変更不要）
-const SETUP_MEASUREMENT_POINTS = '500,1000';
+const SETUP_MEASUREMENT_POINTS = '500m,1000m';
 
 // ============================================================
 // ▲▲▲ 入力ここまで ▲▲▲
