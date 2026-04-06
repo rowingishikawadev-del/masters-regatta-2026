@@ -40,16 +40,18 @@
     flex-shrink: 0;
   }
   .live-clock-time {
-    font-size: 28px;
-    font-weight: 200;
+    font-size: 48px;
+    font-weight: 600;
     color: #fff;
     letter-spacing: 0.05em;
     font-variant-numeric: tabular-nums;
+    line-height: 1;
   }
   .live-clock-date {
-    font-size: 11px;
-    color: rgba(255,255,255,0.6);
-    margin-top: 2px;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    margin-top: 6px;
   }
 
   /* 進行中レースバナー */
@@ -364,7 +366,8 @@
 
   @media (max-width: 640px) {
     .site-header { padding: 0 16px; }
-    .live-clock-time { font-size: 20px; }
+    .live-clock-time { font-size: 32px; }
+    .live-clock-date { font-size: 13px; }
     .page { padding: 20px 12px 60px; }
     .summary-grid { grid-template-columns: 1fr 1fr; }
   }
