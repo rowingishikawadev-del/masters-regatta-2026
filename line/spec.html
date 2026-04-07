@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LINE公式アカウント 運用仕様書 | 全日本マスターズレガッタ 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 15px; color: #222; background: #f7f7f7; }
+    header { background: #06C755; color: white; padding: 24px 32px; }
+    header h1 { font-size: 22px; font-weight: bold; }
+    header p { font-size: 13px; margin-top: 6px; opacity: 0.85; }
+    main { max-width: 900px; margin: 32px auto; padding: 0 20px 60px; }
+    section { background: white; border-radius: 8px; padding: 28px 32px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    h2 { font-size: 17px; font-weight: bold; border-left: 4px solid #06C755; padding-left: 12px; margin-bottom: 18px; }
+    h3 { font-size: 14px; font-weight: bold; margin: 20px 0 10px; color: #444; }
+    p { line-height: 1.75; margin-bottom: 10px; }
+    ul, ol { padding-left: 20px; line-height: 1.9; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+    th { background: #f0f0f0; padding: 10px 14px; text-align: left; border: 1px solid #ddd; }
+    td { padding: 10px 14px; border: 1px solid #ddd; vertical-align: top; }
+    .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: bold; }
+    .badge-tbd { background: #fff3cd; color: #856404; }
+    .badge-done { background: #d4edda; color: #155724; }
+    .badge-wip { background: #d1ecf1; color: #0c5460; }
+    .note { background: #fffbe6; border-left: 3px solid #f0ad00; padding: 12px 16px; border-radius: 4px; font-size: 13px; margin-top: 12px; }
+    .updated { font-size: 12px; color: #999; margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>LINE公式アカウント 運用仕様書</h1>
+  <p>全日本マスターズレガッタ 2026 ／ 石川県ボート協会</p>
+  <p class="updated">最終更新: 2026-04-07　ステータス: <span style="background:rgba(255,255,255,0.25); padding:2px 8px; border-radius:10px; font-size:12px;">策定中</span></p>
+</header>
+
+<main>
+
+  <!-- 1. 概要 -->
+  <section>
+    <h2>1. 概要・方針</h2>
+    <p>石川県ボート協会の公式LINEアカウントを大会運営ツールとして活用する。問い合わせ対応は行わず、<strong>大会に関する情報発信専用</strong>のチャネルとして運用する。</p>
+    <table>
+      <tr><th>項目</th><th>内容</th><th>ステータス</th></tr>
+      <tr><td>アカウント名</td><td>全日本マスターズレガッタ 2026（仮）</td><td><span class="badge badge-tbd">未確定</span></td></tr>
+      <tr><td>アカウント種別</td><td>LINE公式アカウント</td><td><span class="badge badge-wip">検討中</span></td></tr>
+      <tr><td>プラン</td><td>ライトプラン（¥5,000/月）※大会月のみ課金想定</td><td><span class="badge badge-wip">検討中</span></td></tr>
+      <tr><td>月間配信数上限</td><td>5,000通</td><td>—</td></tr>
+      <tr><td>想定登録者数</td><td>最大500人</td><td><span class="badge badge-tbd">未確定</span></td></tr>
+      <tr><td>個別問い合わせ</td><td>対応しない（一方向配信のみ）</td><td><span class="badge badge-done">確定</span></td></tr>
+    </table>
+    <div class="note">
+      ※ 無料プランは月200通のため、500人規模の運用では不足。ライトプラン（5,000通）を推奨。大会開催月のみ課金し、それ以外は無料プランに戻す運用を想定。
+    </div>
+  </section>
+
+  <!-- 2. 配信種別 -->
+  <section>
+    <h2>2. 配信種別</h2>
+
+    <h3>① 自動配信：レース結果通知</h3>
+    <p>速報サイト（masters-regatta-2026）のデータ更新をトリガーに、登録済みユーザーへ自動Push通知する。</p>
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>対象</td><td>事前登録済みユーザーのみ（登録チーム・レース番号に紐づく）</td></tr>
+      <tr><td>トリガー</td><td>GAS がレース結果を更新した時点</td></tr>
+      <tr><td>登録方法</td><td>LINE上でキーワード送信（仕様検討中）</td></tr>
+      <tr><td>登録単位</td><td>団体名 ＋ レース番号（複数登録可の想定）</td></tr>
+      <tr><td>実装</td><td>GAS ＋ LINE Messaging API（Push）</td></tr>
+      <tr><td>ステータス</td><td><span class="badge badge-tbd">未実装</span></td></tr>
+    </table>
+    <div class="note">
+      登録フロー・キーワード形式は別途確定。スプレッドシートまたはGASプロパティでuserIdと登録情報を管理予定。
+    </div>
+
+    <h3>② 手動一斉配信：アナウンス</h3>
+    <p>全登録者に向けた情報発信。Claude Codeで文面を作成し、LINE管理画面またはGAS経由で配信する。</p>
+    <table>
+      <tr><th>配信種別</th><th>タイミング</th><th>頻度</th></tr>
+      <tr><td>前日挨拶</td><td>大会前日夜</td><td>1〜2回</td></tr>
+      <tr><td>変更・締切アナウンス</td><td>随時</td><td>不定期</td></tr>
+      <tr><td>落とし物・忘れ物</td><td>大会中・終了後</td><td>不定期</td></tr>
+      <tr><td>写真販売通知</td><td>大会後</td><td>1〜2回</td></tr>
+      <tr><td>その他アナウンス</td><td>随時</td><td>不定期</td></tr>
+    </table>
+  </section>
+
+  <!-- 3. 登録フロー -->
+  <section>
+    <h2>3. ユーザー登録フロー（レース結果通知）</h2>
+    <div class="note">
+      ⚠ このセクションは未確定。フロー・キーワード形式・データ保存先は今後決定する。
+    </div>
+    <h3>想定フロー（案）</h3>
+    <ol>
+      <li>ユーザーがLINE公式アカウントを友だち追加</li>
+      <li>自動応答で登録方法を案内</li>
+      <li>ユーザーが「団体名 レース番号」の形式でメッセージを送信</li>
+      <li>GAS Webhookで受信 → スプレッドシートにuserIdと登録情報を保存</li>
+      <li>登録完了メッセージを返信</li>
+      <li>レース結果更新時に該当userIdへPush通知</li>
+    </ol>
+    <h3>未決定事項</h3>
+    <ul>
+      <li>キーワードフォーマット（例: 「登録 石川ボート 12」など）</li>
+      <li>登録情報の保存先（Googleスプレッドシート or GASプロパティ）</li>
+      <li>複数レース登録の可否・上限</li>
+      <li>登録解除方法</li>
+    </ul>
+  </section>
+
+  <!-- 4. システム構成 -->
+  <section>
+    <h2>4. システム構成</h2>
+    <pre style="background:#f4f4f4; padding:16px; border-radius:6px; font-size:13px; line-height:1.8; overflow-x:auto;">
+Claude Code
+├── 配信文面の作成・管理（templates/）
+└── 配信実行（LINE Messaging API呼び出し）
+
+速報サイト GAS（gas/Code.gs）
+└── レース結果更新 → LINE Push トリガー（追加予定）
+
+Googleスプレッドシート（未作成）
+└── 登録者管理（団体名・レース番号・LINE userId）
+
+LINE Messaging API
+├── Webhook（登録受信）
+└── Push配信 / Broadcast配信
+    </pre>
+    <table>
+      <tr><th>コンポーネント</th><th>ステータス</th></tr>
+      <tr><td>LINE公式アカウント作成</td><td><span class="badge badge-tbd">未着手</span></td></tr>
+      <tr><td>Messaging API 有効化</td><td><span class="badge badge-tbd">未着手</span></td></tr>
+      <tr><td>GAS Webhook実装</td><td><span class="badge badge-tbd">未着手</span></td></tr>
+      <tr><td>登録者管理スプレッドシート</td><td><span class="badge badge-tbd">未着手</span></td></tr>
+      <tr><td>配信文面テンプレート</td><td><span class="badge badge-wip">本ドキュメント整備中</span></td></tr>
+    </table>
+  </section>
+
+  <!-- 5. 配信テンプレート -->
+  <section>
+    <h2>5. 配信文面テンプレート</h2>
+    <p>詳細は <code>line/templates/</code> を参照。</p>
+    <table>
+      <tr><th>ファイル</th><th>用途</th></tr>
+      <tr><td>broadcast.md</td><td>一斉配信テンプレート（前日挨拶・アナウンス・写真販売など）</td></tr>
+      <tr><td>race_result.md</td><td>レース結果自動通知テンプレート</td></tr>
+    </table>
+  </section>
+
+  <!-- 6. 運用ルール -->
+  <section>
+    <h2>6. 運用ルール</h2>
+    <ul>
+      <li>個別問い合わせへの返信は行わない（自動応答で案内文のみ）</li>
+      <li>配信前に文面をClaude Codeで確認・生成する</li>
+      <li>月間配信数の消費状況をLINE管理画面で定期確認する</li>
+      <li>大会終了後は翌月の課金前にプランを無料に戻す</li>
+    </ul>
+  </section>
+
+  <!-- 7. 今後の課題 -->
+  <section>
+    <h2>7. 今後の課題・未決定事項</h2>
+    <ul>
+      <li>LINE公式アカウント名・プロフィール画像の確定</li>
+      <li>登録キーワードフォーマットの確定</li>
+      <li>GAS Webhook実装</li>
+      <li>登録者管理スプレッドシート設計</li>
+      <li>自動応答メッセージの設計</li>
+      <li>プラン・課金タイミングの確定</li>
+    </ul>
+  </section>
+
+</main>
+</body>
+</html>
