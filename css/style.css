@@ -1175,6 +1175,10 @@ body.fs-large .schedule-table td { font-size: 16px; }
 .status-dns, .status-dnf { font-size: 12px; color: var(--text-muted); letter-spacing: 0.05em; }
 /* エントリー個別の年齢区分（混合レース用） */
 .entry-age-group { display: inline-block; margin-left: 5px; font-size: 10px; color: #555; background: #f0f0f0; border: 1px solid #ccc; border-radius: 3px; padding: 0 4px; vertical-align: middle; }
+/* 複数カテゴリー合同レース用 区分列 */
+.entry-category { display: inline-block; font-size: 11px; font-weight: 600; color: #1a5276; background: #d6eaf8; border: 1px solid #a9cce3; border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
+.cat-rank { display: inline-block; margin-left: 4px; font-size: 10px; color: #666; }
+.cat-col { text-align: center; white-space: nowrap; }
 
 /* 日別タブ */
 .day-tabs {

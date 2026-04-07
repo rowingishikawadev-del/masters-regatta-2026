@@ -727,9 +727,13 @@ function importMasterData() {
         crew_name: row.crew_name || '',
         affiliation: row.affiliation || '',
       };
-      // age_group が指定されている場合のみ追加（レースのage_groupと異なる場合に使用）
+      // category: 複数カテゴリー合同レースで各クルーのカテゴリーを保持（半角に正規化）
+      if (row.category && row.category.trim()) {
+        entry.category = normalizeFullWidth_(row.category).toUpperCase();
+      }
+      // age_group が指定されている場合のみ追加（後方互換）
       if (row.age_group && row.age_group.trim()) {
-        entry.age_group = row.age_group.trim();
+        entry.age_group = normalizeFullWidth_(row.age_group).toUpperCase();
       }
       entriesByRace[raceNo].push(entry);
     }
@@ -750,12 +754,18 @@ function importMasterData() {
     const schedule = scheduleRows.map(row => {
       const raceNo = parseInt(row.race_no, 10);
       const raceCourseLength = row.course_length ? parseInt(row.course_length, 10) : null;
+      // 全角→半角正規化（種別コード・カテゴリー）
+      const eventCode = normalizeFullWidth_(row.event_code || '');
+      const ageGroup  = normalizeFullWidth_(row.age_group  || '').toUpperCase();
       const result = {
         race_no: raceNo,
-        event_code: row.event_code || '',
+        event_code: eventCode,
         event_name: row.event_name || '',
         category: row.category || '',
-        age_group: row.age_group || '',
+        age_group: ageGroup,
+        // categories: age_group 文字列からカテゴリーコードの配列を生成
+        // 例: "DEF" → ["D","E","F"]、単一 "G" → ["G"]
+        categories: parseCategories_(ageGroup),
         round: row.round || '',
         date: formatDateValue_(row.date),
         time: formatTimeValue_(row.time),
@@ -775,6 +785,25 @@ function importMasterData() {
     }
 
     const now = new Date().toISOString();
+
+    // マスターズレガッタ 年齢カテゴリー定義（要項10条）
+    const AGE_CATEGORIES = [
+      { code: 'A', label: '+A', min_age: 27, max_age: 35 },
+      { code: 'B', label: '+B', min_age: 36, max_age: 42 },
+      { code: 'C', label: '+C', min_age: 43, max_age: 49 },
+      { code: 'D', label: '+D', min_age: 50, max_age: 54 },
+      { code: 'E', label: '+E', min_age: 55, max_age: 59 },
+      { code: 'F', label: '+F', min_age: 60, max_age: 64 },
+      { code: 'G', label: '+G', min_age: 65, max_age: 69 },
+      { code: 'H', label: '+H', min_age: 70, max_age: 74 },
+      { code: 'I', label: '+I', min_age: 75, max_age: 79 },
+      { code: 'J', label: '+J', min_age: 80, max_age: 82 },
+      { code: 'K', label: '+K', min_age: 83, max_age: 85 },
+      { code: 'L', label: '+L', min_age: 86, max_age: 88 },
+      { code: 'M', label: '+M', min_age: 89, max_age: 91 },
+      { code: 'N', label: '+N', min_age: 92, max_age: null },
+    ];
+
     const masterJson = {
       generated_at: now,
       updated_at: now,
@@ -790,6 +819,7 @@ function importMasterData() {
         course_length: tournamentInfo['course_length'] ? parseInt(tournamentInfo['course_length'], 10) : 1000,
         youtube_url: tournamentInfo['youtube_url'] || '',
       },
+      age_categories: AGE_CATEGORIES,
       schedule: schedule,
     };
 
@@ -801,6 +831,32 @@ function importMasterData() {
     recordError('importMasterData', e);
     throw e;
   }
+}
+
+/**
+ * 全角英数字・記号を半角に正規化する
+ * スケジュールCSV取り込み時の種別コード・カテゴリー正規化に使用
+ * 例: "Ｍ４＋" → "M4+"、"ＡＢＣＤ" → "ABCD"
+ */
+function normalizeFullWidth_(str) {
+  if (!str || typeof str !== 'string') return str;
+  return str
+    .replace(/[Ａ-Ｚ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
+    .replace(/[ａ-ｚ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
+    .replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
+    .replace(/[＋]/g, '+')
+    .replace(/[－]/g, '-')
+    .trim();
+}
+
+/**
+ * age_group 文字列（例: "DEF", "JKLMN"）から カテゴリーコードの配列を生成する
+ * @param {string} ageGroup - 例: "DEF"
+ * @returns {string[]} - 例: ["D","E","F"]
+ */
+function parseCategories_(ageGroup) {
+  if (!ageGroup) return [];
+  return ageGroup.split('').filter(c => /[A-N]/i.test(c)).map(c => c.toUpperCase());
 }
 
 /**

@@ -2,7 +2,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| 作成日 | 2026-04-07 14:53 |
+| 作成日 | 2026-04-07 14:53 / 最終更新: 2026-04-07 15:30 |
 | リポジトリ | [RYUIYAMADA/masters-regatta-2026](https://github.com/RYUIYAMADA/masters-regatta-2026) |
 | 本番URL | https://masters-regatta-2026-3ha.pages.dev |
 | 管理画面 | https://masters-regatta-2026-3ha.pages.dev/admin/9922/ |

@@ -438,6 +438,12 @@ function renderResultTable(race, result) {
   const entryMap = {};
   (race.entries || []).forEach(e => { entryMap[e.lane] = e; });
 
+  // 複数カテゴリー合同レースの検知
+  // categories 配列が2以上、またはエントリーに category フィールドがある場合
+  const isMultiCategory = (race.categories && race.categories.length > 1) ||
+    (race.entries || []).some(e => e.category);
+  const showCategoryCol = isMultiCategory;
+
   // エントリーにあるが結果にないレーン → 棄権（DNS）として追加
   const resultsList = result?.results || [];
   const resultLanes = new Set(resultsList.map(r => r.lane));
@@ -460,6 +466,32 @@ function renderResultTable(race, result) {
       tieGroupCounts[r.tie_group] = (tieGroupCounts[r.tie_group] || 0) + 1;
     }
   });
+
+  // 複数カテゴリー合同レースのカテゴリー内順位を計算
+  // エントリーのcategoryをもとに、完走者をカテゴリーごとにグループ化して順位付け
+  const rankInCategoryMap = {};
+  if (isMultiCategory) {
+    const finishedByCategory = {};
+    sorted.forEach(r => {
+      if (r.status !== 'finish') return;
+      const cat = (entryMap[r.lane] || {}).category || '';
+      if (!cat) return;
+      if (!finishedByCategory[cat]) finishedByCategory[cat] = [];
+      finishedByCategory[cat].push(r);
+    });
+    Object.entries(finishedByCategory).forEach(([cat, rows]) => {
+      // すでにfinishタイム順にソート済み
+      let catRank = 1;
+      rows.forEach((r, i) => {
+        if (i > 0) {
+          const prev = rows[i - 1];
+          const isTied = r.tie_group && r.tie_group === prev.tie_group;
+          if (!isTied) catRank = i + 1;
+        }
+        rankInCategoryMap[r.lane] = catRank;
+      });
+    });
+  }
 
   const rows = sorted.map(r => {
     const entry = entryMap[r.lane] || {};
@@ -487,8 +519,18 @@ function renderResultTable(race, result) {
       finishDisplay = `<span class="time-main">${r.finish ? r.finish.formatted : '-'}</span>${r.split ? `<div class="time-half">${r.split}</div>` : ''}`;
     }
 
-    // エントリー個別のage_groupがある場合（混合レース）はクラス名を表示
-    const entryAgeLabel = entry.age_group ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
+    // カテゴリー列（複数カテゴリー合同レースのみ表示）
+    let categoryCell = '';
+    if (showCategoryCol) {
+      const cat = entry.category || '';
+      const catRank = rankInCategoryMap[r.lane];
+      const catRankStr = (!isDns && !isDnf && catRank) ? `<span class="cat-rank">${catRank}位</span>` : '';
+      categoryCell = `<td class="hide-mobile cat-col"><span class="entry-category">${cat ? '+' + cat : '-'}</span>${catRankStr}</td>`;
+    }
+
+    // エントリー個別のage_groupがある場合（後方互換）はクルー名横に表示
+    const entryAgeLabel = (!showCategoryCol && entry.age_group)
+      ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
 
     return `
       <tr class="${rankClass}${isDns || isDnf ? ' row-retired' : ''}">
@@ -496,6 +538,7 @@ function renderResultTable(race, result) {
         <td>${r.lane}</td>
         <td>${h(entry.affiliation) || '-'}</td>
         <td class="crew-name">${h(entry.crew_name) || '-'}${entryAgeLabel}</td>
+        ${categoryCell}
         <td class="hide-mobile">${isDns ? '-' : midTime}</td>
         <td>${finishDisplay}</td>
         <td>${isDns ? '' : photoMark + note}</td>
@@ -506,6 +549,9 @@ function renderResultTable(race, result) {
     ? `<th class="hide-mobile" style="width:70px">${pts[0]}</th>`
     : '';
   const finishHeader = `${raceCourseLength}m`;
+  const categoryHeader = showCategoryCol
+    ? `<th class="hide-mobile cat-col" style="width:60px">区分</th>`
+    : '';
 
   return `
     <div class="result-table-wrapper">
@@ -516,6 +562,7 @@ function renderResultTable(race, result) {
           <th style="width:28px">B</th>
           <th style="min-width:100px">所属</th>
           <th style="min-width:120px">クルー</th>
+          ${categoryHeader}
           ${midHeader}
           <th style="width:90px">${finishHeader}</th>
           <th style="min-width:80px">備考</th>
@@ -750,6 +797,33 @@ function renderTableView() {
         if (r.tie_group) tieGroupCounts[r.tie_group] = (tieGroupCounts[r.tie_group] || 0) + 1;
       });
 
+      // 複数カテゴリー合同レース検知
+      const isMultiCat = (race.categories && race.categories.length > 1) ||
+        (race.entries || []).some(e => e.category);
+
+      // カテゴリー内順位を計算
+      const catRankMap = {};
+      if (isMultiCat) {
+        const finishedByCat = {};
+        allResults.forEach(r => {
+          if (r.status !== 'finish') return;
+          const cat = (entryMap[r.lane] || {}).category || '';
+          if (!cat) return;
+          if (!finishedByCat[cat]) finishedByCat[cat] = [];
+          finishedByCat[cat].push(r);
+        });
+        Object.entries(finishedByCat).forEach(([, rows]) => {
+          let cr = 1;
+          rows.forEach((r, i) => {
+            if (i > 0) {
+              const isTied = r.tie_group && r.tie_group === rows[i - 1].tie_group;
+              if (!isTied) cr = i + 1;
+            }
+            catRankMap[r.lane] = cr;
+          });
+        });
+      }
+
       tableBody = allResults.map(r => {
         const entry = entryMap[r.lane] || {};
         const isDns = r.status === 'dns';
@@ -767,30 +841,43 @@ function renderTableView() {
           rankCell = `<span class="rank rank-${r.rank}">${r.rank}${isTie ? '=' : ''}</span>`;
           finishCell = `<span class="time-main">${r.finish ? r.finish.formatted : '-'}</span>${r.split ? `<div class="time-half">${r.split}</div>` : ''}`;
         }
-        const entryAgeLabel = entry.age_group ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
+        const entryAgeLabel = (!isMultiCat && entry.age_group) ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
+        const catCell = isMultiCat ? (() => {
+          const cat = entry.category || '';
+          const cr = catRankMap[r.lane];
+          const crStr = (!isDns && !isDnf && cr) ? `<span class="cat-rank">${cr}位</span>` : '';
+          return `<td class="hide-mobile cat-col"><span class="entry-category">${cat ? '+' + cat : '-'}</span>${crStr}</td>`;
+        })() : '';
         return `<tr class="${r.rank && r.rank <= 3 ? `rank-${r.rank}` : ''}${isDns || isDnf ? ' row-retired' : ''}">
           <td>${rankCell}</td>
           <td>${r.lane}</td>
           <td>${h(entry.affiliation) || '-'}</td>
           <td class="crew-name">${h(entry.crew_name) || '-'}${entryAgeLabel}</td>
+          ${catCell}
           ${showMid ? `<td class="hide-mobile">${isDns ? '-' : midTime}</td>` : ''}
           <td>${finishCell}</td>
           <td>${(!isDns && r.note) ? `<span style="color:#e03e3e;font-size:11px">${h(r.note)}</span>` : ''}</td>
         </tr>`;
       }).join('');
     } else {
+      const isMultiCat = (race.categories && race.categories.length > 1) ||
+        (race.entries || []).some(e => e.category);
       tableBody = (race.entries || []).map(e => `
         <tr class="row-retired">
           <td>-</td><td>${e.lane}</td>
           <td>${h(e.affiliation)}</td>
           <td class="crew-name">${h(e.crew_name)}</td>
+          ${isMultiCat ? `<td class="hide-mobile cat-col"><span class="entry-category">${e.category ? '+' + e.category : '-'}</span></td>` : ''}
           ${showMid ? `<td class="hide-mobile">-</td>` : ''}
           <td>-</td><td></td>
         </tr>`).join('');
     }
 
+    const isMultiCatFinal = (race.categories && race.categories.length > 1) ||
+      (race.entries || []).some(e => e.category);
     const midHeader = showMid ? `<th class="hide-mobile">${pts[0]}</th>` : '';
     const finishHeader = `${raceCourseLength}m`;
+    const catHeader = isMultiCatFinal ? `<th class="hide-mobile cat-col" style="width:60px">区分</th>` : '';
 
     return `
       <div class="toggle" data-race="${race.race_no}">
@@ -807,6 +894,7 @@ function renderTableView() {
               <th style="width:52px">順位</th>
               <th style="width:28px">B</th>
               <th style="min-width:100px">所属</th><th style="min-width:120px">クルー</th>
+              ${catHeader}
               ${midHeader}
               <th style="width:90px">${finishHeader}</th>
               <th style="min-width:80px">備考</th>
@@ -1272,8 +1360,10 @@ function detectUsedProps() {
   if (!masterData) return {};
   const schedule = masterData.schedule || [];
   return {
-    hasAgeGroup: schedule.some(r => r.age_group && r.age_group.trim() !== ''),
-    hasRound:    schedule.some(r => r.round    && r.round.trim()    !== ''),
+    hasAgeGroup:    schedule.some(r => r.age_group && r.age_group.trim() !== ''),
+    hasRound:       schedule.some(r => r.round     && r.round.trim()     !== ''),
+    hasCategories:  schedule.some(r => r.categories && r.categories.length > 1),
+    hasAgeCategories: !!(masterData.age_categories && masterData.age_categories.length > 0),
   };
 }
 
