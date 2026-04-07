@@ -2,7 +2,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| 作成日 | 2026-04-07 14:53 / 最終更新: 2026-04-07 15:30 |
+| 作成日 | 2026-04-07 14:53 / 最終更新: 2026-04-07 15:13 |
 | リポジトリ | [RYUIYAMADA/masters-regatta-2026](https://github.com/RYUIYAMADA/masters-regatta-2026) |
 | 本番URL | https://masters-regatta-2026-3ha.pages.dev |
 | 管理画面 | https://masters-regatta-2026-3ha.pages.dev/admin/9922/ |
@@ -81,6 +81,10 @@ Cloudflare Pages（CDN配信）
 │       └── race_001.json   # レース結果（GASが自動生成）
 ├── admin/9922/index.html   # 管理者ダッシュボード
 ├── docs/                   # 各種HTMLマニュアル
+├── sample_csv/             # 実運用用サンプルCSV（tournament/schedule/entries）
+├── test/
+│   ├── master/             # テスト用スケジュール・エントリーCSV（ダウンロード可）
+│   └── csv/                # テスト用レース結果CSV（R001〜R008）
 └── gas/Code.gs             # GASスクリプト（Driveには直接コピーして使用）
 ```
 
@@ -105,6 +109,34 @@ Cloudflare Pages（CDN配信）
 | `r001_500m.csv` | 先頭が小文字（GAS側で `.toLowerCase()` 対処済み） |
 | `R01_500m.csv` | レース番号が2桁（3桁必須） |
 | `R001_500m.CSV` | 拡張子が大文字 |
+
+### master/ フォルダCSV仕様
+
+**schedule.csv カラム**
+
+| カラム | 例 | 説明 |
+|---|---|---|
+| race_no | 1 | レース番号（1から連番） |
+| event_code | M1X | 種別コード（半角英数）。全角は自動正規化 |
+| event_name | 男子シングルスカル | 種目名 |
+| category | M / W / Mix | 性別区分 |
+| age_group | G / DEF / JKLMN | 年齢カテゴリー。**複数カテゴリー合同レースは連続記入**（例: `DEF`） |
+| round | FA | ラウンド（FA=決勝A等） |
+| date | 2026-05-23 | 開催日（YYYY-MM-DD） |
+| time | 07:00 | 発艇時刻（HH:MM） |
+| course_length | （空欄=1000m） | 500m種目は `500` と記入 |
+
+**entries.csv カラム**
+
+| カラム | 例 | 説明 |
+|---|---|---|
+| race_no | 1 | レース番号 |
+| lane | 1 | レーン番号 |
+| crew_name | 田中 太郎 | 選手名またはクルー名 |
+| affiliation | 東京ローイングクラブ | 所属団体名 |
+| **category** | **D** | **年齢カテゴリーコード（A〜N）。複数カテゴリー合同レースは必須記入** |
+
+> 複数カテゴリー合同レース（age_groupが2文字以上）でcategoryを記入すると、サイト上でカテゴリー別順位が自動表示される。
 
 ### CSVフォーマット（RowingTimerWeb出力）
 
@@ -135,6 +167,10 @@ measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,
   "updated_at": "ISO8601",
   "last_trigger_at": "ISO8601",      // GASハートビート（2分ごとに更新）
   "measurement_points": ["500m", "1000m"],
+  "age_categories": [                // 年齢カテゴリー定義（A〜N）
+    { "code": "A", "label": "+A", "min_age": 27, "max_age": 35 },
+    { "code": "N", "label": "+N", "min_age": 92, "max_age": null }
+  ],
   "tournament": {
     "race_name": "全日本マスターズレガッタ 2026",
     "dates": ["2026-06-06", "2026-06-07"],
@@ -148,9 +184,13 @@ measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,
       "event_name": "男子シングルスカル",
       "category": "M",
       "round": "FA",
-      "date": "2026-06-07",
+      "date": "2026-05-23",
       "time": "07:00",
-      "entries": [{ "lane": 1, "crew_name": "...", "affiliation": "..." }]
+      "age_group": "DEF",            // 複数カテゴリー合同レースは連続文字列
+      "categories": ["D","E","F"],   // GASがage_groupから自動生成する配列
+      "entries": [
+        { "lane": 1, "crew_name": "...", "affiliation": "...", "category": "D" }
+      ]
     }
   ]
 }
@@ -272,6 +312,11 @@ measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,
 | `runImportMaster()` | schedule.csv / entries.csv を master.json にインポート |
 | `saveSetup()` | スクリプトプロパティへの初期設定 |
 | `setupAll()` | DriveフォルダとGitHubリポジトリの初期構築 |
+| `runTestAll()` | **全テスト一括実行**（マスター作成→import→全CSV生成） |
+| `runTestMasterData()` | テスト用 tournament/schedule/entries CSV を Drive に作成 |
+| `runTestMultiCategory()` | R007（W1X DEF合同）+ R008（Mix2X GH）の結果CSVを生成 |
+| `normalizeFullWidth_()` | 全角英数字・記号を半角に正規化（内部ユーティリティ） |
+| `parseCategories_()` | "DEF" → ["D","E","F"] に変換（内部ユーティリティ） |
 
 ### GAS実行時間の見積もり
 
@@ -420,6 +465,15 @@ measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,
 | M-4 | 自動更新タイマーの同期によるリクエスト集中 | ✅ ランダムジッター（±15秒）を追加済み |
 | M-5 | ハートビートがGitHub Pushを発生しCloudflareビルドを消費 | ⏸ 監視アーキテクチャ変更が必要 |
 
+#### ✅ 要項対応（2026-04-07 対応済み）
+
+| # | 対応内容 | 詳細 |
+|---|---|---|
+| 要項-1 | 大会基本情報修正 | 大会名・日程（5/23-24）・会場（石川県津幡漕艇競技場）を正式値に修正 |
+| 要項-2 | 複数カテゴリー合同レース対応 | `categories` 配列生成・entries に `category` フィールド・結果画面でカテゴリー別順位を自動表示 |
+| 要項-3 | 種別全角→半角変換 | GAS `normalizeFullWidth_()` 実装。CSV取込時に自動正規化（Ｍ４＋→M4+等） |
+| 要項-4 | カテゴリー年齢定義 | master.json に `age_categories`（A〜N・N=92歳以上は2026年新設）を追加 |
+
 #### 🟢 低リスク
 
 | # | 問題 | 改善案 |
@@ -440,4 +494,4 @@ measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,
 
 ---
 
-*最終更新: 2026-04-07 14:53 / リポジトリ: [RYUIYAMADA/masters-regatta-2026](https://github.com/RYUIYAMADA/masters-regatta-2026)*
+*最終更新: 2026-04-07 15:13 / リポジトリ: [RYUIYAMADA/masters-regatta-2026](https://github.com/RYUIYAMADA/masters-regatta-2026)*
