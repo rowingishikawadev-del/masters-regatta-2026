@@ -614,6 +614,18 @@
     <p style="font-size:12px;color:var(--text-muted);margin-top:10px">
       ※ GASは2分間隔でCSVを監視→JSON変換→GitHubにPushします。master.jsonの生成時刻から稼働状況を判定しています。
     </p>
+
+    <!-- CSVファイル名チェッカー -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-top:16px;">
+      <div style="font-size:11px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;margin-bottom:12px;font-weight:400;">CSV ファイル名チェッカー — スタッフ用</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <input type="text" id="admin-fname-input" placeholder="例: R001_500m.csv" oninput="adminCheckFname(this.value)"
+          style="flex:1;min-width:200px;border:1px solid var(--border);border-radius:var(--radius);padding:7px 12px;font-family:monospace;font-size:13px;background:var(--bg);color:var(--text);">
+        <button onclick="document.getElementById('admin-fname-input').value='';document.getElementById('admin-fname-result').innerHTML=''"
+          style="border:1px solid var(--border);border-radius:var(--radius);padding:7px 12px;font-size:12px;background:var(--bg);cursor:pointer;color:var(--text-muted);">クリア</button>
+      </div>
+      <div id="admin-fname-result" style="margin-top:10px;font-size:12px;min-height:20px;"></div>
+    </div>
   </section>
 
   <!-- ===== ④ テストCSVダウンロード ===== -->
@@ -686,6 +698,28 @@
 </div>
 
 <script>
+function adminCheckFname(val) {
+  const el = document.getElementById('admin-fname-result');
+  if (!val) { el.innerHTML = ''; return; }
+  const ok = /^R\d{3}_(500m|1000m)\.csv$/.test(val);
+  const caseFix = /^r\d{3}_(500m|1000m)\.csv$/i.test(val);
+  const noM = /^R\d{3}_(500|1000)\.csv$/i.test(val);
+  const badN = /^R\d{1,2}_(500m|1000m)\.csv$/i.test(val);
+  if (ok) {
+    const folder = val.includes('500m') ? 'race_csv / 500m /' : 'race_csv / 1000m /';
+    el.innerHTML = `<span style="color:var(--ok);font-weight:700;">✅ 正しい形式</span>　→ アップロード先: <code style="background:var(--ok-bg);padding:1px 6px;border-radius:3px;">${folder}</code>`;
+  } else if (caseFix) {
+    el.innerHTML = `<span style="color:var(--ng);font-weight:700;">❌ 先頭が小文字「r」</span>　→ 正しくは <code>R${val.slice(1)}</code>`;
+  } else if (noM) {
+    const num = val.includes('1000') ? '1000' : '500';
+    el.innerHTML = `<span style="color:var(--ng);font-weight:700;">❌ 「m」が抜けています</span>　→ 正しくは <code>${val.replace(num+'.csv', num+'m.csv')}</code>`;
+  } else if (badN) {
+    el.innerHTML = `<span style="color:var(--ng);font-weight:700;">❌ レース番号が3桁でありません</span>　→ 例: R1→<code>R001</code>、R12→<code>R012</code>`;
+  } else {
+    el.innerHTML = `<span style="color:var(--ng);font-weight:700;">❌ 形式が違います</span>　正しい形式: <code>R001_500m.csv</code> または <code>R001_1000m.csv</code>`;
+  }
+}
+
 const MASTER_JSON = '../../data/master.json';
 const RESULT_JSON = no => `../../data/results/race_${String(no).padStart(3,'0')}.json`;
 const ROUND_NAMES = { FA:'決勝A', FB:'決勝B', SF:'準決勝', H:'予選', RK:'順位決定', R:'敗者復活' };

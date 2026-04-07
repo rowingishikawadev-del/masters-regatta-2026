@@ -184,6 +184,31 @@
         間違えると自動処理されません。
       </div>
     </div>
+
+    <!-- フォルダ分岐ガイド -->
+    <div style="background:#f0f7ff;border:2px solid #3b7dd8;border-radius:10px;padding:18px 20px;margin-top:18px;">
+      <div style="font-size:13px;font-weight:700;color:#1967d2;margin-bottom:12px;">📂 どのフォルダに入れるか？ 迷ったらこれを見てください</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;background:#fff;border:2px solid #f0c040;border-radius:8px;padding:14px;">
+          <div style="font-size:12px;color:#888;margin-bottom:6px;">ファイル名に</div>
+          <div style="font-size:22px;font-weight:700;color:#b8860b;text-align:center;margin:8px 0;font-family:monospace;">_500m</div>
+          <div style="font-size:12px;color:#888;margin-bottom:10px;text-align:center;">が含まれている</div>
+          <div style="background:#fef9e7;border-radius:6px;padding:8px;text-align:center;">
+            <div style="font-size:11px;color:#888;">入れる場所</div>
+            <div style="font-size:15px;font-weight:700;color:#9a7d0a;font-family:monospace;">race_csv / 500m /</div>
+          </div>
+        </div>
+        <div style="flex:1;min-width:200px;background:#fff;border:2px solid #3b7dd8;border-radius:8px;padding:14px;">
+          <div style="font-size:12px;color:#888;margin-bottom:6px;">ファイル名に</div>
+          <div style="font-size:22px;font-weight:700;color:#1967d2;text-align:center;margin:8px 0;font-family:monospace;">_1000m</div>
+          <div style="font-size:12px;color:#888;margin-bottom:10px;text-align:center;">が含まれている</div>
+          <div style="background:#e8f0fe;border-radius:6px;padding:8px;text-align:center;">
+            <div style="font-size:11px;color:#888;">入れる場所</div>
+            <div style="font-size:15px;font-weight:700;color:#1967d2;font-family:monospace;">race_csv / 1000m /</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- STEP 2: ファイル名の見方 -->
@@ -216,6 +241,72 @@
         500m だけ・1000m だけでは反映されません。両方アップされるのを待ってください。
       </div>
     </div>
+
+    <!-- NG/OK ファイル名比較 -->
+    <h3>よくある間違い — ファイル名の NG 例</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+      <div style="display:flex;gap:10px;align-items:center;background:#fdedec;border:1px solid #f1948a;border-radius:6px;padding:10px 14px;">
+        <span style="font-size:18px;flex-shrink:0;">❌</span>
+        <div style="flex:1;">
+          <span style="font-family:monospace;font-size:14px;color:#c0392b;">R001_500.csv</span>
+          <span style="font-size:12px;color:#888;margin-left:8px;">← 「m」が抜けている</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;background:#fdedec;border:1px solid #f1948a;border-radius:6px;padding:10px 14px;">
+        <span style="font-size:18px;flex-shrink:0;">❌</span>
+        <div style="flex:1;">
+          <span style="font-family:monospace;font-size:14px;color:#c0392b;">R1_500m.csv</span>
+          <span style="font-size:12px;color:#888;margin-left:8px;">← 番号が3桁でない（R001 と書く）</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;background:#fdedec;border:1px solid #f1948a;border-radius:6px;padding:10px 14px;">
+        <span style="font-size:18px;flex-shrink:0;">❌</span>
+        <div style="flex:1;">
+          <span style="font-family:monospace;font-size:14px;color:#c0392b;">r001_500m.csv</span>
+          <span style="font-size:12px;color:#888;margin-left:8px;">← 小文字「r」はNG（大文字「R」で始める）</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;background:#eafaf1;border:1px solid #82e0aa;border-radius:6px;padding:10px 14px;">
+        <span style="font-size:18px;flex-shrink:0;">✅</span>
+        <div style="flex:1;">
+          <span style="font-family:monospace;font-size:14px;color:#1a7a3e;font-weight:700;">R001_500m.csv</span>
+          <span style="font-size:12px;color:#888;margin-left:8px;">← 正しい形式</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CSVファイル名チェッカー -->
+    <div style="background:#fff;border:2px solid #2D4F2C;border-radius:10px;padding:18px 20px;margin-top:20px;">
+      <div style="font-size:13px;font-weight:700;color:#2D4F2C;margin-bottom:10px;">🔍 ファイル名チェッカー — アップロード前に確認</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input type="text" id="fname-check-input" placeholder="例: R001_500m.csv" oninput="checkFilename(this.value)"
+          style="flex:1;min-width:180px;border:1px solid #ddd;border-radius:6px;padding:8px 12px;font-family:monospace;font-size:14px;">
+      </div>
+      <div id="fname-check-result" style="margin-top:10px;font-size:13px;min-height:24px;"></div>
+    </div>
+    <script>
+    function checkFilename(val) {
+      const el = document.getElementById('fname-check-result');
+      if (!val) { el.innerHTML = ''; return; }
+      const ok = /^R\d{3}_(500m|1000m)\.csv$/i.test(val);
+      const caseFix = /^r\d{3}_(500m|1000m)\.csv$/i.test(val);
+      const noM = /^R\d{3}_(500|1000)\.csv$/i.test(val);
+      const badN = /^R\d{1,2}_(500m|1000m)\.csv$/i.test(val);
+      if (ok && !caseFix) {
+        const folder = val.includes('500m') ? 'race_csv / 500m /' : 'race_csv / 1000m /';
+        el.innerHTML = `<span style="color:#1a7a3e;font-weight:700;">✅ 正しい形式です！</span>　アップロード先: <code style="background:#e8f0fe;padding:2px 6px;border-radius:3px;">${folder}</code>`;
+      } else if (caseFix) {
+        el.innerHTML = `<span style="color:#c0392b;font-weight:700;">❌ 先頭が小文字「r」になっています。</span>　正しくは <code>R${val.slice(1)}</code> です。`;
+      } else if (noM) {
+        const num = val.includes('1000') ? '1000' : '500';
+        el.innerHTML = `<span style="color:#c0392b;font-weight:700;">❌ 計測ポイントの「m」が抜けています。</span>　正しくは <code>${val.replace(num+'.csv', num+'m.csv')}</code> です。`;
+      } else if (badN) {
+        el.innerHTML = `<span style="color:#c0392b;font-weight:700;">❌ レース番号が3桁でありません。</span>　例: R1 → <code>R001</code>、R12 → <code>R012</code> のようにゼロを補ってください。`;
+      } else {
+        el.innerHTML = `<span style="color:#c0392b;font-weight:700;">❌ ファイル名の形式が違います。</span>　正しい形式: <code>R001_500m.csv</code> または <code>R001_1000m.csv</code>`;
+      }
+    }
+    </script>
   </div>
 
   <!-- STEP 3: アップロード手順 -->
