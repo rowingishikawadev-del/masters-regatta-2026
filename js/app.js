@@ -1293,26 +1293,71 @@ function formatTime(ms) {
 }
 
 /**
- * ローディング表示の切替
+ * ローディング表示の切替（タイムアウト検知付き）
  */
+let _loadingSlowTimer = null;
 function showLoading(show) {
   const el = document.getElementById('loading');
-  if (el) el.style.display = show ? 'block' : 'none';
+  const slowEl = document.getElementById('loading-slow');
+  if (!el) return;
+  el.style.display = show ? 'block' : 'none';
+  if (show) {
+    // 8秒後に「遅い」メッセージを表示
+    _loadingSlowTimer = setTimeout(() => {
+      if (slowEl) slowEl.style.display = 'block';
+    }, 8000);
+  } else {
+    clearTimeout(_loadingSlowTimer);
+    if (slowEl) slowEl.style.display = 'none';
+  }
 }
 
 /**
- * エラーメッセージをカード形式で表示する
+ * エラーメッセージを丁寧なトラブルシューティング案内付きで表示
  */
 function showError(msg) {
   const el = document.getElementById('error-message');
   if (el) {
     el.innerHTML = `
-      <div class="error-card">
-        <div class="error-icon">⚠</div>
-        <div class="error-title">データを読み込めませんでした</div>
-        <div class="error-body">${msg || 'しばらく待ってから画面を更新してください'}</div>
-        <button onclick="location.reload()">再読み込み</button>
+      <div class="error-msg-title">⚠ データを読み込めませんでした</div>
+      <div class="error-msg-body">
+        以下をご確認ください：<br>
+        ① インターネットに接続されていますか？（Wi-Fi・モバイル通信）<br>
+        ② ブラウザを一度閉じて、もう一度開いてみてください<br>
+        ③ しばらく待ってから再度お試しください（数分で自動復旧することがあります）<br>
+        <span style="color:var(--text-muted);font-size:12px">技術情報: ${msg || '接続エラー'}</span>
+      </div>
+      <div class="error-msg-action">
+        <button onclick="location.reload()">🔄 画面を再読み込みする</button>
+        <span style="font-size:12px;color:var(--text-muted);margin-left:12px">それでも解決しない場合は会場スタッフへお声がけください</span>
       </div>`;
     el.style.display = 'block';
   }
 }
+
+// ========= 文字サイズ変更 =========
+
+/**
+ * 文字サイズを変更してlocalStorageに保存
+ */
+function setFontSize(size) {
+  document.body.classList.remove('fs-small', 'fs-normal', 'fs-large');
+  document.body.classList.add('fs-' + size);
+  document.querySelectorAll('.fs-btn').forEach(btn => btn.classList.remove('fs-btn-active'));
+  const activeBtn = document.querySelector(`.fs-btn[onclick*="${size}"]`);
+  if (activeBtn) activeBtn.classList.add('fs-btn-active');
+  try { localStorage.setItem('fontSize', size); } catch(e) {}
+}
+
+/**
+ * 保存済みの文字サイズを復元
+ */
+function restoreFontSize() {
+  try {
+    const saved = localStorage.getItem('fontSize');
+    if (saved) setFontSize(saved);
+  } catch(e) {}
+}
+
+// 起動時に文字サイズを復元
+restoreFontSize();

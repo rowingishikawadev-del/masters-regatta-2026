@@ -1047,6 +1047,113 @@ td.age-group-cell { text-align: center; }
   .hide-sp { display: none !important; }
 }
 
+/* ========= 文字サイズ変更 ========= */
+.site-header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.font-size-ctrl {
+  display: flex;
+  gap: 4px;
+}
+.fs-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.8);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+  min-width: 36px;
+  min-height: 32px;
+}
+.fs-btn:hover { background: rgba(255,255,255,0.25); }
+.fs-btn.fs-btn-active {
+  background: rgba(255,255,255,0.3);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* フォントサイズクラス */
+body.fs-small  { font-size: 12px; }
+body.fs-normal { font-size: 14px; }
+body.fs-large  { font-size: 17px; }
+body.fs-large .cover-tournament-name { font-size: 22px; }
+body.fs-large .time-main { font-size: 18px; }
+body.fs-large .toggle-title { font-size: 17px; }
+body.fs-large .result-table td { font-size: 16px; }
+body.fs-large .schedule-table td { font-size: 16px; }
+
+/* ========= エラーメッセージ（改善版） ========= */
+#error-message {
+  padding: 20px 24px;
+  background: #fff8f8;
+  border: 1px solid #f5c0c0;
+  border-left: 4px solid var(--live);
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.error-msg-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--live);
+  margin-bottom: 8px;
+}
+.error-msg-body {
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 1.8;
+}
+.error-msg-action {
+  margin-top: 12px;
+  font-size: 13px;
+}
+.error-msg-action button {
+  padding: 8px 16px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ========= フッター ========= */
+.site-footer {
+  background: #2A2825;
+  color: rgba(255,255,255,0.55);
+  font-size: 11px;
+  padding: 16px 24px 100px; /* モバイルのボトムナビ分の余白 */
+  margin-top: 40px;
+}
+.site-footer-inner {
+  max-width: 1170px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.footer-env {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+.footer-env-title {
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  white-space: nowrap;
+}
+.footer-note {
+  line-height: 1.7;
+}
+
 /* ========= ボトムナビゲーション ========= */
 .bottom-nav { display: none; } /* デスクトップでは非表示 */
 

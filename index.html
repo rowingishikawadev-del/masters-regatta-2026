@@ -20,7 +20,15 @@
 
 <header class="site-header">
   <div class="site-header-inner">
-    <div class="site-header-label">BOAT RACE RESULTS</div>
+    <div class="site-header-top-row">
+      <div class="site-header-label">BOAT RACE RESULTS</div>
+      <!-- 文字サイズ変更ボタン -->
+      <div class="font-size-ctrl" aria-label="文字サイズ変更">
+        <button class="fs-btn" onclick="setFontSize('small')" title="小">小</button>
+        <button class="fs-btn fs-btn-active" onclick="setFontSize('normal')" title="標準">中</button>
+        <button class="fs-btn" onclick="setFontSize('large')" title="大">大</button>
+      </div>
+    </div>
     <div class="cover-tournament-name" id="cover-tournament-name">速報サイト</div>
     <div class="cover-meta" id="cover-meta"></div>
   </div>
@@ -34,8 +42,11 @@
   <!-- ローディング・エラー表示 -->
   <div id="loading" class="loading">
     <span class="loading-spinner"></span>データを読み込んでいます...
+    <div id="loading-slow" style="display:none;margin-top:12px;font-size:12px;color:var(--text-muted)">
+      読み込みに時間がかかっています。<br>インターネット接続をご確認ください。
+    </div>
   </div>
-  <div id="error-message" style="display:none; padding:16px; background:#ffe0e0; color:#e03e3e; border-radius:6px; margin-bottom:16px;"></div>
+  <div id="error-message" style="display:none;"></div>
 
   <!-- ビュー切替タブ -->
   <div class="view-tabs">
@@ -124,6 +135,20 @@
 
 <!-- ステータスバー -->
 <div class="update-bar"></div>
+
+<!-- 動作環境フッター -->
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-env">
+      <span class="footer-env-title">動作環境</span>
+      <span>iPhone: iOS 14以上　Android: Android 9以上　PC: Chrome / Edge / Safari（Internet Explorer非対応）</span>
+    </div>
+    <div class="footer-note">
+      文字を大きくしたい場合はページ上部の「大」ボタンをご利用ください。<br>
+      お困りの場合は会場の運営スタッフにお声がけください。
+    </div>
+  </div>
+</footer>
 
 <!-- ボトムナビゲーション（モバイル用） -->
 <nav class="bottom-nav" id="bottom-nav">
