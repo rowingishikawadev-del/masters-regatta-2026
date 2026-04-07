@@ -1071,6 +1071,8 @@ function setupRefreshTimer() {
   if (timers.refresh) clearInterval(timers.refresh);
   if (timers.highlight) clearInterval(timers.highlight);
 
+  // 同時アクセス時のリクエスト集中を分散させるためランダムジッターを付加（±15秒）
+  const jitter = Math.floor(Math.random() * 30000);
   timers.refresh = setInterval(async () => {
     if (isOffline || isUpdating) return; // オフライン中・更新中はスキップ
     isUpdating = true;
@@ -1091,7 +1093,7 @@ function setupRefreshTimer() {
     } finally {
       isUpdating = false;
     }
-  }, CONFIG.REFRESH_INTERVAL);
+  }, CONFIG.REFRESH_INTERVAL + jitter);
 
   // 実施中レース判定タイマー（独立管理）
   timers.highlight = setInterval(highlightCurrentRace, 60000);

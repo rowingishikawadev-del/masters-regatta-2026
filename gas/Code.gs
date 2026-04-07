@@ -242,8 +242,8 @@ function processPendingCSVs(startTime) {
       const raceNo = parseInt(match[1], 10);
       const filePoint = match[2];
 
-      if (filePoint !== point) {
-        Logger.log('[processPendingCSVs] ポイント不一致のためスキップ: ' + fileName);
+      if (filePoint.toLowerCase() !== point.toLowerCase()) {
+        Logger.log('[processPendingCSVs] ポイント不一致のためスキップ: ' + fileName + ' (期待: ' + point + ', 実際: ' + filePoint + ')');
         continue;
       }
 
@@ -732,6 +732,17 @@ function importMasterData() {
         entry.age_group = row.age_group.trim();
       }
       entriesByRace[raceNo].push(entry);
+    }
+
+    // R-4: 整合性チェック — entries.csv に schedule.csv に存在しないrace_noが含まれていないか確認
+    const scheduleRaceNos = new Set(scheduleRows.map(r => parseInt(r.race_no, 10)));
+    const orphanEntryRaceNos = Object.keys(entriesByRace)
+      .map(n => parseInt(n, 10))
+      .filter(n => !scheduleRaceNos.has(n));
+    if (orphanEntryRaceNos.length > 0) {
+      Logger.log('[importMasterData] ⚠ 警告: entries.csv に schedule.csv に存在しない race_no があります: ' + orphanEntryRaceNos.join(', ') + ' — エントリー情報が表示されない可能性があります');
+    } else {
+      Logger.log('[importMasterData] 整合性チェック OK: entries の race_no はすべて schedule に存在します');
     }
 
     // スケジュールをマージ

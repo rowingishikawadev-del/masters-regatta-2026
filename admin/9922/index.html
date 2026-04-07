@@ -431,6 +431,15 @@
         <div class="cl-step">
           <div class="cl-step-num">3</div>
           <div class="cl-step-body">
+            <div class="checklist-item" id="ci-token">
+              <input type="checkbox" id="c-token" onchange="onCheck(this)">
+              <label for="c-token">GitHub Personal Access Token の有効期限を確認した<span class="item-note"><a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> を開き、使用中のトークンが「Expired」または期限切れ間近でないか確認。期限切れの場合は再生成してGASの saveSetup() を再実行する</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="cl-step">
+          <div class="cl-step-num">4</div>
+          <div class="cl-step-body">
             <div class="checklist-item" id="ci-drive">
               <input type="checkbox" id="c-drive" onchange="onCheck(this)">
               <label for="c-drive">Google Drive の CSV投入フォルダが空になっている<span class="item-note">race_csv/500m/ と race_csv/1000m/ に前回大会のファイルが残っていないか確認</span></label>
@@ -445,7 +454,7 @@
       <div class="cl-phase-label">当日 — 開会前</div>
       <div class="cl-steps">
         <div class="cl-step">
-          <div class="cl-step-num">4</div>
+          <div class="cl-step-num">5</div>
           <div class="cl-step-body">
             <div class="checklist-item" id="ci-gas-trigger">
               <input type="checkbox" id="c-gas-trigger" onchange="onCheck(this)">
@@ -454,7 +463,7 @@
           </div>
         </div>
         <div class="cl-step">
-          <div class="cl-step-num">5</div>
+          <div class="cl-step-num">6</div>
           <div class="cl-step-body">
             <div class="checklist-item" id="ci-gas-ok">
               <input type="checkbox" id="c-gas-ok" onchange="onCheck(this)">
@@ -463,7 +472,7 @@
           </div>
         </div>
         <div class="cl-step">
-          <div class="cl-step-num">6</div>
+          <div class="cl-step-num">7</div>
           <div class="cl-step-body">
             <div class="checklist-item" id="ci-staff">
               <input type="checkbox" id="c-staff" onchange="onCheck(this)">
@@ -472,7 +481,7 @@
           </div>
         </div>
         <div class="cl-step">
-          <div class="cl-step-num">7</div>
+          <div class="cl-step-num">8</div>
           <div class="cl-step-body">
             <div class="checklist-item" id="ci-test-csv">
               <input type="checkbox" id="c-test-csv" onchange="onCheck(this)">
@@ -488,7 +497,7 @@
       <div class="cl-phase-label">競技中</div>
       <div class="cl-steps">
         <div class="cl-step">
-          <div class="cl-step-num">8</div>
+          <div class="cl-step-num">9</div>
           <div class="cl-step-body">
             <div class="checklist-item" id="ci-monitor">
               <input type="checkbox" id="c-monitor" onchange="onCheck(this)">
@@ -504,7 +513,7 @@
       <div class="cl-phase-label">大会終了後</div>
       <div class="cl-steps">
         <div class="cl-step">
-          <div class="cl-step-num">9</div>
+          <div class="cl-step-num">10</div>
           <div class="cl-step-body">
             <div class="checklist-item" id="ci-all-done">
               <input type="checkbox" id="c-all-done" onchange="onCheck(this)">
@@ -513,7 +522,7 @@
           </div>
         </div>
         <div class="cl-step">
-          <div class="cl-step-num">10</div>
+          <div class="cl-step-num">11</div>
           <div class="cl-step-body">
             <div class="checklist-item" id="ci-gas-off">
               <input type="checkbox" id="c-gas-off" onchange="onCheck(this)">
@@ -522,7 +531,7 @@
           </div>
         </div>
         <div class="cl-step">
-          <div class="cl-step-num">11</div>
+          <div class="cl-step-num">12</div>
           <div class="cl-step-body">
             <div class="checklist-item" id="ci-csv-clean">
               <input type="checkbox" id="c-csv-clean" onchange="onCheck(this)">
