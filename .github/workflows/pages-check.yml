@@ -1,9 +1,11 @@
 name: サイト疎通確認
 
 on:
-  workflow_dispatch:       # 手動実行（大会当日に使う）
-  # schedule:              # ← Cloudflare URLを設定したらコメント解除
-  #   - cron: '*/10 * * * *'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'  # 通常時: 毎日 09:00 JST
+    # 大会当日は以下に切り替え（大会前日夜に手動で変更）:
+    # - cron: '*/10 * * * *'
 
 jobs:
   health-check:

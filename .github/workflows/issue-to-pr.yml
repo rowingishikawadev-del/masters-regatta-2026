@@ -1,0 +1,63 @@
+name: Issue → PR 自動作成
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  create-pr:
+    if: github.event.label.name == 'auto-implement'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ブランチ作成 & 実装メモ追加
+        run: |
+          BRANCH="auto-implement/issue-${{ github.event.issue.number }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$BRANCH"
+
+          mkdir -p .github/implementation-notes
+          cat > ".github/implementation-notes/issue-${{ github.event.issue.number }}.md" << 'EOF'
+          # Issue #${{ github.event.issue.number }}: ${{ github.event.issue.title }}
+
+          ## 概要
+          ${{ github.event.issue.body }}
+
+          ## 実装TODO
+          - [ ] Issue内容を確認して実装
+          - [ ] テスト確認
+          - [ ] PRをApprove → Merge
+          EOF
+
+          git add .
+          git commit -m "auto: Issue #${{ github.event.issue.number }} 実装メモ追加"
+          git push origin "$BRANCH"
+
+      - name: PR作成
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branch = `auto-implement/issue-${{ github.event.issue.number }}`;
+            const pr = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[auto] ${{ github.event.issue.title }}`,
+              body: `Closes #${{ github.event.issue.number }}\n\n自動生成PR。実装内容を確認してApproveしてください。`,
+              head: branch,
+              base: 'main',
+            });
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: `PR作成完了: ${pr.data.html_url}\n\nApprove → Mergeするだけです。`,
+            });
