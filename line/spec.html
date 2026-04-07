@@ -101,25 +101,36 @@
 
   <!-- 2. 配信種別 -->
   <section>
-    <h2>2. 配信種別</h2>
+    <h2>2. アカウント運用方針</h2>
+    <p>LINE公式アカウントは<strong>石川県ボート協会の継続運用アカウント</strong>として、複数大会を跨いで使用する。友だち登録者は累積で増え続け、大会ごとに配信内容を切り替える2層構造で運用する。</p>
+    <table>
+      <tr><th>層</th><th>対象</th><th>大会終了後</th></tr>
+      <tr><td>友だち（フォロワー）</td><td>全登録者</td><td>そのまま維持・累積</td></tr>
+      <tr><td>レース結果通知登録</td><td>大会ごとに登録したユーザー</td><td>大会終了後にリセット</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>3. 配信種別</h2>
 
     <h3>① 自動配信：レース結果通知</h3>
-    <p>速報サイト（masters-regatta-2026）のデータ更新をトリガーに、登録済みユーザーへ自動Push通知する。</p>
+    <p>大会ごとに事前登録したユーザーへ、該当レースの結果が確定した時点で自動Push通知する。</p>
     <table>
       <tr><th>項目</th><th>内容</th></tr>
-      <tr><td>対象</td><td>事前登録済みユーザーのみ（登録チーム・レース番号に紐づく）</td></tr>
+      <tr><td>対象</td><td>その大会でレース番号を登録済みのユーザーのみ</td></tr>
+      <tr><td>登録単位</td><td>団体名 ＋ レース番号（複数登録可の想定）</td></tr>
       <tr><td>トリガー</td><td>GAS がレース結果を更新した時点</td></tr>
       <tr><td>登録方法</td><td>LINE上でキーワード送信（仕様検討中）</td></tr>
-      <tr><td>登録単位</td><td>団体名 ＋ レース番号（複数登録可の想定）</td></tr>
+      <tr><td>登録リセット</td><td>大会終了後にスプレッドシートのアクティブシートを切り替え</td></tr>
       <tr><td>実装</td><td>GAS ＋ LINE Messaging API（Push）</td></tr>
       <tr><td>ステータス</td><td><span class="badge badge-tbd">未実装</span></td></tr>
     </table>
     <div class="note">
-      登録フロー・キーワード形式は別途確定。スプレッドシートまたはGASプロパティでuserIdと登録情報を管理予定。
+      登録データは大会ごとにスプレッドシートのシートを分けて管理。GASの <code>ACTIVE_REGISTRATION_SHEET</code> プロパティで切り替える。
     </div>
 
     <h3>② 手動一斉配信：アナウンス</h3>
-    <p>全登録者に向けた情報発信。Claude Codeで文面を作成し、LINE管理画面またはGAS経由で配信する。</p>
+    <p>全フォロワーへの情報発信。Claude Codeで文面を作成し、LINE管理画面またはGAS経由で配信する。</p>
     <table>
       <tr><th>配信種別</th><th>タイミング</th><th>頻度</th></tr>
       <tr><td>前日挨拶</td><td>大会前日夜</td><td>1〜2回</td></tr>
@@ -130,9 +141,9 @@
     </table>
   </section>
 
-  <!-- 3. 登録フロー -->
+  <!-- 4. 登録フロー -->
   <section>
-    <h2>3. ユーザー登録フロー（レース結果通知）</h2>
+    <h2>4. ユーザー登録フロー（レース結果通知）</h2>
     <div class="note">
       ⚠ このセクションは未確定。フロー・キーワード形式・データ保存先は今後決定する。
     </div>
@@ -154,9 +165,9 @@
     </ul>
   </section>
 
-  <!-- 4. システム構成 -->
+  <!-- 5. システム構成 -->
   <section>
-    <h2>4. システム構成</h2>
+    <h2>5. システム構成</h2>
     <pre style="background:#f4f4f4; padding:16px; border-radius:6px; font-size:13px; line-height:1.8; overflow-x:auto;">
 Claude Code
 ├── 配信文面の作成・管理（templates/）
@@ -182,9 +193,9 @@ LINE Messaging API
     </table>
   </section>
 
-  <!-- 5. 配信テンプレート -->
+  <!-- 6. 配信テンプレート -->
   <section>
-    <h2>5. 配信文面テンプレート</h2>
+    <h2>6. 配信文面テンプレート</h2>
     <p>詳細は <code>line/templates/</code> を参照。</p>
     <table>
       <tr><th>ファイル</th><th>用途</th></tr>
@@ -193,9 +204,9 @@ LINE Messaging API
     </table>
   </section>
 
-  <!-- 6. 運用ルール -->
+  <!-- 7. 運用ルール -->
   <section>
-    <h2>6. 運用ルール</h2>
+    <h2>7. 運用ルール</h2>
     <ul>
       <li>個別問い合わせへの返信は行わない（自動応答で案内文のみ）</li>
       <li>配信前に文面をClaude Codeで確認・生成する</li>
@@ -204,9 +215,9 @@ LINE Messaging API
     </ul>
   </section>
 
-  <!-- 7. 今後の課題 -->
+  <!-- 8. 今後の課題 -->
   <section>
-    <h2>7. 今後の課題・未決定事項</h2>
+    <h2>8. 今後の課題・未決定事項</h2>
     <ul>
       <li>LINE公式アカウント名・プロフィール画像の確定</li>
       <li>登録キーワードフォーマットの確定</li>
