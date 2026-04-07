@@ -458,7 +458,7 @@
           <div class="cl-step-body">
             <div class="checklist-item" id="ci-gas-trigger">
               <input type="checkbox" id="c-gas-trigger" onchange="onCheck(this)">
-              <label for="c-gas-trigger">GAS のトリガーを有効にした<span class="item-note"><a href="https://script.google.com" target="_blank">script.google.com</a> → プロジェクトを開く → 左メニュー「トリガー」→ onTrigger が2分間隔で設定されているか確認。なければ追加</span></label>
+              <label for="c-gas-trigger">GAS のトリガーを有効にした（前日から有効化 OK）<span class="item-note"><a href="https://script.google.com" target="_blank">script.google.com</a> → プロジェクトを開く → 左メニュー「トリガー」→ onTrigger が2分間隔で設定されているか確認。なければ追加。前日から有効にしておくと当日の疎通確認になる。実行時間の消費は1日あたり約30〜40分で90分上限に対して余裕あり</span></label>
             </div>
           </div>
         </div>
@@ -526,7 +526,7 @@
           <div class="cl-step-body">
             <div class="checklist-item" id="ci-gas-off">
               <input type="checkbox" id="c-gas-off" onchange="onCheck(this)">
-              <label for="c-gas-off">GAS のトリガーを停止した<span class="item-note"><a href="https://script.google.com" target="_blank">script.google.com</a> → トリガー → onTrigger の右メニュー「削除」または「無効化」。GASの実行時間は90分/日の上限があるため不要な稼働は止める</span></label>
+              <label for="c-gas-off">GAS のトリガーを停止した（大会最終日の終了後に必ず実施）<span class="item-note"><a href="https://script.google.com" target="_blank">script.google.com</a> → トリガー → onTrigger の右メニュー「削除」または「無効化」。翌日以降も稼働し続けると無駄な実行時間を消費するため、最終日のレース終了後に必ず停止する</span></label>
             </div>
           </div>
         </div>
@@ -1119,17 +1119,26 @@ function renderPipeline() {
     ng:   `<span class="badge badge-ng"><span class="dot dot-ng"></span>要確認</span>`,
     idle: `<span class="badge badge-idle"><span class="dot dot-none"></span>非運用期間</span>`,
   };
-  // GAS実行時間残量の警告（90分/日上限）
+  // GAS実行時間残量の表示（90分/日上限）
+  // 実測値ベース: ハートビートのみ実行 ≈ 5秒/回、CSV処理あり ≈ 20秒/回
+  // 10時間稼働・1時間3レース処理を仮定すると平均約7秒/回 → 0.12分/回
   const gasTimeWarning = (() => {
-    if (periodStatus !== 'active') return '';
     const now = new Date();
     const jst = new Date(now.getTime() + 9*3600000);
-    const elapsedMin = jst.getHours() * 60 + jst.getMinutes(); // 0時からの経過分
-    const estimatedRuns = Math.floor(elapsedMin / 2); // 2分間隔
-    const estimatedUsed = estimatedRuns * 0.5; // 1回あたり約30秒と仮定
+    const elapsedMin = jst.getHours() * 60 + jst.getMinutes();
+    const estimatedRuns = Math.floor(elapsedMin / 2);
+    const estimatedUsed = Math.round(estimatedRuns * 0.12); // 1回あたり約7秒（0.12分）
     const remaining = Math.max(0, 90 - estimatedUsed);
-    if (remaining < 20) return `<span style="color:#C0392B;font-weight:600">⚠ 本日のGAS実行時間残り約${Math.floor(remaining)}分 — 上限（90分/日）に近づいています</span>`;
-    return '';
+    const pct = Math.min(100, Math.round(estimatedUsed / 90 * 100));
+    const barColor = remaining < 20 ? '#C0392B' : remaining < 40 ? '#B8860B' : '#2D7A2D';
+    const status = remaining < 20
+      ? `<span style="color:#C0392B;font-weight:600">⚠ 残り約${remaining}分 — 上限に近づいています。GASトリガーの停止も検討してください</span>`
+      : `残り約${remaining}分（推定使用: ${estimatedUsed}分 / 90分）`;
+    if (periodStatus !== 'active') return '';
+    return `<span style="font-size:11px;color:#888">GAS実行時間: ${status}
+      <span style="display:inline-block;width:120px;height:6px;background:#eee;border-radius:3px;vertical-align:middle;margin-left:6px">
+        <span style="display:block;width:${pct}%;height:100%;background:${barColor};border-radius:3px"></span>
+      </span></span>`;
   })();
 
   const steps = [

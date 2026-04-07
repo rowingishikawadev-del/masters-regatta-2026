@@ -971,10 +971,10 @@ const remaining = Math.max(0, 90 - estimatedUsed);  <span class="comment">// 無
     <thead><tr><th>#</th><th>問題</th><th>影響</th><th>改善提案</th></tr></thead>
     <tbody>
       <tr>
-        <td>R-1</td>
-        <td><strong>GAS実行時間の枯渇</strong><br>無料枠90分/日。大会規模によっては不足する可能性がある</td>
-        <td>CSVが処理されなくなる。当日の結果更新が止まる</td>
-        <td>GAS有料プランへの移行（月$10程度）または、GitHub Actions（無料枠2000分/月）でポーリングする代替アーキテクチャへの移行を検討</td>
+        <td><del>R-1</del><br><span class="badge badge-ok">解決済</span></td>
+        <td><strong>GAS実行時間の枯渇</strong><br>無料枠90分/日。当初は懸念していたが実際の使用量を試算したところ問題なし。</td>
+        <td>実測値ベース: ハートビートのみ実行≈5秒/回、CSV処理≈20秒/回。10時間稼働・1時間3レース処理で約32〜40分/日の消費。90分上限に対して余裕がある。<br>運用ルール: トリガーは大会前日から有効化し、最終日終了後に停止（チェックリストに明記）。管理画面でリアルタイム残量をプログレスバー表示するよう改善済み。</td>
+        <td>現状の運用ルールで対処可能。改修不要。</td>
       </tr>
       <tr>
         <td>R-2</td>
