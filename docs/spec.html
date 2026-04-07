@@ -105,6 +105,24 @@
   /* アンカー */
   .anchor { display: block; height: 0; margin-top: -80px; padding-top: 80px; }
 
+  /* フローチャート（SVGスタイル） */
+  .flowchart-wrap { overflow-x: auto; margin: 16px 0; }
+  .lane-chart { display: grid; gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .lane-row { display: grid; grid-template-columns: 120px 1fr; }
+  .lane-label { background: var(--green); color: #fff; font-size: 11px; font-weight: 600; padding: 0 12px; display: flex; align-items: center; letter-spacing: 0.05em; writing-mode: horizontal-tb; }
+  .lane-body { background: #fff; padding: 12px 16px; border-left: 2px solid var(--green-light); display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+  .lane-row + .lane-row .lane-label { background: #3d6b3b; }
+  .lane-row + .lane-row + .lane-row .lane-label { background: #5a8a58; }
+  .lane-row + .lane-row + .lane-row + .lane-row .lane-label { background: #1967d2; }
+  .lane-row + .lane-row + .lane-row + .lane-row + .lane-row .lane-label { background: #444; }
+  .fc-box { background: #f4f4f2; border: 1px solid #ddd; border-radius: 6px; padding: 6px 12px; font-size: 12px; white-space: nowrap; text-align: center; min-width: 80px; }
+  .fc-box-ok { background: var(--ok-bg); border-color: var(--ok-border); }
+  .fc-box-warn { background: var(--warn-bg); border-color: var(--warn-border); }
+  .fc-box-blue { background: #e8f0fe; border-color: #8ab4f8; }
+  .fc-box-green { background: var(--green); color: #fff; border: none; }
+  .fc-arrow { color: var(--muted); font-size: 14px; flex-shrink: 0; }
+  .fc-time { font-size: 10px; color: var(--muted); text-align: center; display: block; margin-top: 2px; }
+
   /* フロー図 */
   .flow { display: flex; align-items: center; gap: 0; flex-wrap: wrap; margin: 14px 0; }
   .flow-node { background: #fff; border: 2px solid var(--green); border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; color: var(--green); text-align: center; white-space: nowrap; }
@@ -146,6 +164,13 @@
   <h2>目次</h2>
   <ol>
     <li><a href="#s1">システム概要・アーキテクチャ</a></li>
+    <li><a href="#s0">更新フロー・作業フロー可視化</a>
+      <ol>
+        <li><a href="#s0-1">大会当日の更新フロー（レーン図）</a></li>
+        <li><a href="#s0-2">大会前セットアップフロー</a></li>
+        <li><a href="#s0-3">GAS内部処理フロー</a></li>
+      </ol>
+    </li>
     <li><a href="#s2">データフロー詳細</a>
       <ol>
         <li><a href="#s2-1">CSVファイル仕様</a></li>
@@ -166,6 +191,7 @@
     <li><a href="#s6">運用マニュアル体系</a></li>
     <li><a href="#s7">既知の制約・リスク</a></li>
     <li><a href="#s8">セットアップ手順</a></li>
+    <li><a href="#s9">不完全な点・リスク・改善提案（レビュー対象）</a></li>
   </ol>
 </div>
 
@@ -217,10 +243,163 @@
   </ul>
 </div>
 
-<!-- ===== 2. データフロー ===== -->
+<!-- ===== フロー可視化 ===== -->
+<div class="section">
+  <span class="anchor" id="s0"></span>
+  <h2 class="section-title">2. 更新フロー・作業フロー可視化</h2>
+
+  <span class="anchor" id="s0-1"></span>
+  <h3>2.1 大会当日の更新フロー（担当者別レーン図）</h3>
+  <p>1レースあたりの一連の流れ。<strong>スタッフが③を実行するだけ</strong>で、④〜⑧は自動。</p>
+
+  <div class="lane-chart" style="margin-top:14px;">
+    <div class="lane-row">
+      <div class="lane-label">計測システム<br>（自動）</div>
+      <div class="lane-body">
+        <div class="fc-box">レース開始</div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box">RowingTimerWebが<br>タイム計測</div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box fc-box-ok">CSV書き出し<br>（R001_500m.csv等）</div>
+      </div>
+    </div>
+    <div class="lane-row">
+      <div class="lane-label">計測スタッフ<br>（手動）</div>
+      <div class="lane-body">
+        <div class="fc-box fc-box-warn">ファイル名を確認<br>（500m or 1000m？）</div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box fc-box-warn">Google Drive の<br>正しいフォルダへアップ</div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box">500m + 1000m<br>両方アップ完了</div>
+      </div>
+    </div>
+    <div class="lane-row">
+      <div class="lane-label">GAS<br>（自動・2分）</div>
+      <div class="lane-body">
+        <div class="fc-box">Drive監視<br>（2分間隔）</div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box">両ポイント揃い検知</div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box">CSVパース・<br>JSON組み立て</div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box fc-box-ok">GitHub Contents API<br>でPush</div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box">CSVをprocessed/<br>へ移動</div>
+      </div>
+    </div>
+    <div class="lane-row">
+      <div class="lane-label">Cloudflare<br>（自動）</div>
+      <div class="lane-body">
+        <div class="fc-box">GitHub Pushを検知</div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box fc-box-ok">自動デプロイ<br>（30〜60秒）</div>
+      </div>
+    </div>
+    <div class="lane-row">
+      <div class="lane-label">観客・参加者<br>（閲覧）</div>
+      <div class="lane-body">
+        <div class="fc-box">速報サイトを開く</div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box fc-box-blue">120秒ごとに<br>JSONを自動fetch</div>
+        <div class="fc-arrow">→</div>
+        <div class="fc-box fc-box-ok">結果が表示<br>（トーストで通知）</div>
+      </div>
+    </div>
+  </div>
+
+  <table style="margin-top:16px;">
+    <thead><tr><th>フェーズ</th><th>担当</th><th>所要時間</th><th>備考</th></tr></thead>
+    <tbody>
+      <tr><td>① CSV生成〜アップロード</td><td>計測スタッフ</td><td>1〜2分</td><td>フォルダ・ファイル名の確認が重要</td></tr>
+      <tr><td>② GASがCSV検知〜Push</td><td>GAS（自動）</td><td>0〜2分</td><td>GASトリガーのタイミングによる</td></tr>
+      <tr><td>③ Cloudflareデプロイ</td><td>Cloudflare（自動）</td><td>30〜60秒</td><td>—</td></tr>
+      <tr><td><strong>合計（最短〜最大）</strong></td><td>—</td><td><strong>2〜4分</strong></td><td>CSVアップ直後にGASが動けば最短。最悪2分弱待ち</td></tr>
+    </tbody>
+  </table>
+
+  <hr>
+  <span class="anchor" id="s0-2"></span>
+  <h3>2.2 大会前セットアップフロー（1回限り）</h3>
+
+  <div style="display:flex;flex-direction:column;gap:6px;margin:14px 0;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+      <div style="flex:1;"><strong>GitHubリポジトリ作成・push</strong> → Cloudflare Pages にデプロイ設定</div>
+      <div class="fc-box fc-box-ok" style="flex-shrink:0;">エンジニア</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+      <div style="flex:1;"><strong>Google Driveにフォルダ作成</strong>: race_csv/500m・1000m/ と master/ を用意。スタッフと共有</div>
+      <div class="fc-box fc-box-ok" style="flex-shrink:0;">エンジニア</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+      <div style="flex:1;"><strong>GASセットアップ</strong>: Code.gsをコピー → saveSetup()実行 → setupAll()実行 → 2分トリガー設定</div>
+      <div class="fc-box fc-box-ok" style="flex-shrink:0;">エンジニア</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+      <div style="flex:1;"><strong>大会データ投入</strong>: schedule.csvとentries.csvをmaster/フォルダに投入 → runImportMaster()実行</div>
+      <div class="fc-box fc-box-warn" style="flex-shrink:0;">事務局 + エンジニア</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</div>
+      <div style="flex:1;"><strong>疎通テスト</strong>: テストCSVをDriveに投入 → 2〜3分後にサイト反映確認 → 管理画面で「正常」を確認</div>
+      <div class="fc-box fc-box-ok" style="flex-shrink:0;">エンジニア</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">6</div>
+      <div style="flex:1;"><strong>スタッフへ当日マニュアルを配布</strong>: docs/day-manual.html のURLをLINE等で送付。アクセス確認済み</div>
+      <div class="fc-box fc-box-warn" style="flex-shrink:0;">管理者</div>
+    </div>
+  </div>
+
+  <hr>
+  <span class="anchor" id="s0-3"></span>
+  <h3>2.3 GAS内部処理フロー（onTrigger実行ごと）</h3>
+
+  <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:14px 0;font-size:13px;">
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:#f4f4f2;border-bottom:1px solid var(--border);">
+      <div style="width:22px;height:22px;border-radius:50%;background:#888;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">S</div>
+      <strong>onTrigger() 開始</strong><span style="color:var(--muted);font-size:11px;margin-left:8px">2分間隔でGASが呼び出す</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);">
+      <div style="width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+      <div><strong>LockService</strong>でロック取得 → 失敗したら即終了（二重実行防止）</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);">
+      <div style="width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+      <div>GitHub <strong>APIレート制限フラグ</strong>チェック → フラグあり(15分未満)ならスキップ</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);background:#fef9e7;">
+      <div style="width:22px;height:22px;border-radius:50%;background:#b8860b;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+      <div><strong>processPendingCSVs()</strong><br>
+        ① race_csv/500m/ と race_csv/1000m/ を走査<br>
+        ② ファイル名を正規表現でマッチ<br>
+        ③ 全ポイント揃ったレースを特定（揃っていないレースはスキップ）<br>
+        ④ buildAndPushRaceJSON() → pushToGitHub() → CSVをprocessed/へ移動
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);">
+      <div style="width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+      <div><strong>updateTriggerHeartbeat_()</strong> — master.json の last_trigger_at を更新（管理画面の死活監視用）</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:#f4f4f2;">
+      <div style="width:22px;height:22px;border-radius:50%;background:#888;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">E</div>
+      <strong>ロック解放・終了</strong><span style="color:var(--muted);font-size:11px;margin-left:8px">次の実行は2分後</span>
+    </div>
+  </div>
+
+  <div class="callout callout-warn">
+    <div class="callout-icon">⚠️</div>
+    <div>実行時間が<strong>4分</strong>（CONFIG.maxExecutionMs）を超えると processPendingCSVs() 内でループを強制終了。処理途中のレースはスキップされ、次の2分後のトリガーで再試行される。</div>
+  </div>
+</div>
+
+<!-- ===== 3. データフロー ===== -->
 <div class="section">
   <span class="anchor" id="s2"></span>
-  <h2 class="section-title">2. データフロー詳細</h2>
+  <h2 class="section-title">3. データフロー詳細</h2>
 
   <span class="anchor" id="s2-1"></span>
   <h3>2.1 CSVファイル仕様</h3>
@@ -779,6 +958,123 @@ const remaining = Math.max(0, 90 - estimatedUsed);  <span class="comment">// 無
   <div class="callout callout-ok">
     <div class="callout-icon">✅</div>
     <div>前日セットアップが完了していれば、当日は計測スタッフがCSVをアップするだけでサイトは自動更新される。エンジニアの当日常駐は不要（リモートバックアップ推奨）。</div>
+  </div>
+</div>
+
+<!-- ===== 問題点・改善点 ===== -->
+<div class="section">
+  <span class="anchor" id="s9"></span>
+  <h2 class="section-title">9. 不完全な点・リスク・改善提案（レビュー対象）</h2>
+
+  <h3>🔴 高リスク（本番障害につながる可能性）</h3>
+  <table>
+    <thead><tr><th>#</th><th>問題</th><th>影響</th><th>改善提案</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>R-1</td>
+        <td><strong>GAS実行時間の枯渇</strong><br>無料枠90分/日。大会規模によっては不足する可能性がある</td>
+        <td>CSVが処理されなくなる。当日の結果更新が止まる</td>
+        <td>GAS有料プランへの移行（月$10程度）または、GitHub Actions（無料枠2000分/月）でポーリングする代替アーキテクチャへの移行を検討</td>
+      </tr>
+      <tr>
+        <td>R-2</td>
+        <td><strong>GitHub Personal Access Tokenの有効期限</strong><br>トークンに有効期限を設定している場合、大会直前に失効する可能性</td>
+        <td>GASがGitHub APIにアクセスできなくなり、結果が反映されない</td>
+        <td>セットアップ時にexpiration: neverのトークンを使用する、または大会前日にトークン有効期限を確認するチェックリスト項目を追加</td>
+      </tr>
+      <tr>
+        <td>R-3</td>
+        <td><strong>計測ポイントが揃わない場合に永続的にスキップ</strong><br>片方のCSVが投入されないと、そのレースは永遠に処理されない</td>
+        <td>結果の欠損</td>
+        <td>500mのみ / 1000mのみのコースの場合も扱えるよう、master.jsonの種目ごとにcourse_typeを設定する設計が必要。現状は全種目が同一計測ポイントセットと仮定している</td>
+      </tr>
+      <tr>
+        <td>R-4</td>
+        <td><strong>master.jsonの整合性チェックなし</strong><br>schedule.csvとentries.csvのrace_noが一致しない場合にGASはエラーを出さない</td>
+        <td>エントリー情報が欠損した状態で結果が表示される（選手名が空欄）</td>
+        <td>importMasterData()実行時にrace_noの整合性チェックを追加し、不一致をGASログに警告</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:20px;">🟡 中リスク（運用で回避可能だが設計上の課題）</h3>
+  <table>
+    <thead><tr><th>#</th><th>問題</th><th>影響</th><th>改善提案</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>M-1</td>
+        <td><strong>CSVファイル名のケース非感知の不統一</strong><br>正規表現パターンに <code>/i</code> フラグがあるが、フォルダ内一致チェック（<code>filePoint !== point</code>）は大文字小文字を区別する</td>
+        <td>「R001_500M.csv」（Mが大文字）はパターンマッチは通るが、フォルダ一致チェックで失敗してスキップされる</td>
+        <td><code>filePoint.toLowerCase() !== point.toLowerCase()</code> に統一</td>
+      </tr>
+      <tr>
+        <td>M-2</td>
+        <td><strong>管理者画面に認証なし</strong><br>URLが漏洩した場合、誰でも管理画面にアクセス可能</td>
+        <td>大会スケジュール・エントリー情報が閲覧される</td>
+        <td>Cloudflare Access（無料枠あり）でメール認証を追加するか、Cloudflare Pagesの「Protected Pages」機能（有料）を利用する</td>
+      </tr>
+      <tr>
+        <td>M-3</td>
+        <td><strong>Content-Security-Policyに unsafe-inline を許可</strong><br>インラインJSが多数あるため止むを得ないが、XSSリスクが増加する</td>
+        <td>外部攻撃者がCSPをバイパスしやすくなる</td>
+        <td>インラインJSをすべて外部ファイルに移動し、<code>script-src 'self'</code>のみに変更する。またはCSP nonceを導入する</td>
+      </tr>
+      <tr>
+        <td>M-4</td>
+        <td><strong>自動更新間隔が120秒に固定</strong><br>画面を常時表示していても、更新タイミングにランダム性がない</td>
+        <td>全ユーザーが同時にfetchするためサーバー（Cloudflare）への同時リクエストが集中する可能性</td>
+        <td>初回ロード時にランダムなオフセットを加算する: <code>REFRESH_INTERVAL + Math.random() * 30000</code></td>
+      </tr>
+      <tr>
+        <td>M-5</td>
+        <td><strong>GASハートビートがGitHub APIの無駄なPushを発生させる</strong><br>CSVがなくてもトリガーごとにmaster.jsonをPushする</td>
+        <td>Cloudflare Pagesのビルド回数消費（月500回上限）。100レースの大会で最大数十回の余分なデプロイが発生</td>
+        <td>ハートビートのみの更新はGitHub Contents APIではなく、GASスクリプトプロパティへの保存で代替し、管理画面はGASのwebapp経由で取得する設計に変更</td>
+      </tr>
+      <tr>
+        <td>M-6</td>
+        <td><strong>resultsCache のメモリ増大</strong><br>長時間閲覧しているとresultsCacheにレース数分のJSONが蓄積される</td>
+        <td>古いブラウザやメモリの少ないデバイスでページが重くなる可能性</td>
+        <td>レース数が多い大会（100件以上）では問題になりうる。LRUキャッシュ（最新50件のみ保持）の導入を検討</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:20px;">🟢 低リスク（改善でUXが向上する）</h3>
+  <table>
+    <thead><tr><th>#</th><th>問題</th><th>改善提案</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>L-1</td>
+        <td><strong>エラー時のリトライロジックなし</strong><br>fetchが失敗した場合、次の自動更新（120秒後）まで待つしかない</td>
+        <td>指数バックオフリトライ（1回目失敗→10秒後、2回目→30秒後）を実装する</td>
+      </tr>
+      <tr>
+        <td>L-2</td>
+        <td><strong>data/results/のファイルが削除されても検知できない</strong><br>誤ってGitHub上のJSONを削除した場合、そのレースの結果がサイトから消える</td>
+        <td>GASのrunNow()を再実行すれば復元可能。CSVがprocessed/に移動済みのため再処理はできない点を引き継ぎ書に明記すべき</td>
+      </tr>
+      <tr>
+        <td>L-3</td>
+        <td><strong>タイムゾーンが明示的に設定されていない</strong><br>GASのDate()はスクリプトのタイムゾーン設定（appsscript.jsonのtimeZone）に依存</td>
+        <td>appsscript.jsonの<code>"timeZone": "Asia/Tokyo"</code>を確認済みであれば問題なし。設定漏れに注意</td>
+      </tr>
+      <tr>
+        <td>L-4</td>
+        <td><strong>テスト自動化なし</strong><br>e2e_test.pyはあるが、GASのユニットテストは存在しない</td>
+        <td>GASのローカルテスト環境（clasp + jest）の導入、またはGASWebApp経由でのAPIテストを検討</td>
+      </tr>
+      <tr>
+        <td>L-5</td>
+        <td><strong>processed/フォルダの定期清掃フローなし</strong><br>大会ごとにprocessed/にCSVが蓄積される</td>
+        <td>大会終了後の運用手順書（site-checklist.htmlの終了後チェック）に「processed/を空にする」手順を明記する</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-ok" style="margin-top:16px;">
+    <div class="callout-icon">ℹ️</div>
+    <div>上記のうち、<strong>本番運用前に対処すべき最優先項目は R-1・R-2・M-1</strong> の3件。特にR-2（トークン有効期限）は大会前日チェックリストへの追加で即対応可能。</div>
   </div>
 </div>
 
