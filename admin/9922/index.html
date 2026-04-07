@@ -653,28 +653,44 @@
       <table class="links-table">
         <thead><tr><th>ファイル名</th><th>内容</th><th>投入先</th></tr></thead>
         <tbody>
-          <tr><td><a href="../../test/master/schedule_template.csv" download>schedule_template.csv</a></td><td class="link-use">スケジュール <strong>テンプレート</strong>（ヘッダー行のみ・記入用）</td><td class="link-use">master/</td></tr>
-          <tr><td><a href="../../test/master/schedule_sample.csv" download>schedule_sample.csv</a></td><td class="link-use">スケジュール <strong>記入例</strong>（10レース分サンプルデータ入り）</td><td class="link-use">master/</td></tr>
-          <tr><td><a href="../../test/master/entries_template.csv" download>entries_template.csv</a></td><td class="link-use">エントリー <strong>テンプレート</strong>（ヘッダー行のみ・記入用）</td><td class="link-use">master/</td></tr>
-          <tr><td><a href="../../test/master/entries_sample.csv" download>entries_sample.csv</a></td><td class="link-use">エントリー <strong>記入例</strong>（10レース分サンプルデータ入り）</td><td class="link-use">master/</td></tr>
+          <tr><td><a href="../../test/master/schedule_template.csv" download>schedule_template.csv</a></td><td class="link-use">スケジュール <strong>テンプレート</strong>（ヘッダー行のみ・記入用）<br><span style="font-size:10px;color:#888">カラム: race_no, event_code, event_name, category, age_group, round, date, time, course_length</span></td><td class="link-use">master/</td></tr>
+          <tr><td><a href="../../test/master/schedule_sample.csv" download>schedule_sample.csv</a></td><td class="link-use">スケジュール <strong>記入例</strong>（10レース・複数カテゴリー合同レース含む）<br><span style="font-size:10px;color:#888">R7(W1X DEF合同), R8(Mix2X GH合同), R9(M8+ JKLMN合同), R10(MKF 500m)含む</span></td><td class="link-use">master/</td></tr>
+          <tr><td><a href="../../test/master/entries_template.csv" download>entries_template.csv</a></td><td class="link-use">エントリー <strong>テンプレート</strong>（ヘッダー行のみ・記入用）<br><span style="font-size:10px;color:#888">カラム: race_no, lane, crew_name, affiliation, category</span></td><td class="link-use">master/</td></tr>
+          <tr><td><a href="../../test/master/entries_sample.csv" download>entries_sample.csv</a></td><td class="link-use">エントリー <strong>記入例</strong>（複数カテゴリー合同レースのcategory列入力例含む）<br><span style="font-size:10px;color:#888">R7のレーン1-5にD/D/E/E/F、R8のレーン1-4にG/G/H/H、R9にJ/K/L/M を記入済み</span></td><td class="link-use">master/</td></tr>
         </tbody>
       </table>
     </div>
 
     <!-- レース結果CSV -->
-    <div style="font-size:11px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px">レース結果CSV（計測システム出力・疎通確認用）</div>
+    <div style="font-size:11px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px">レース結果CSV（計測システム出力形式・疎通確認用）</div>
+    <p style="font-size:11px;color:var(--text-muted);margin-bottom:10px">
+      ダウンロード後、<strong>そのままファイル名を変えず</strong>に対応フォルダへ投入してください（2分以内に自動更新されます）。
+    </p>
     <div class="links-table-wrapper">
       <table class="links-table">
         <thead><tr><th>ファイル名</th><th>内容</th><th>投入先</th></tr></thead>
         <tbody>
-          <tr><td><a href="../../test/csv/20250607_070000_R001_500m.csv" download>R001_500m.csv</a></td><td class="link-use">R001 500m計測サンプル（4レーン）</td><td class="link-use">race_csv/500m/</td></tr>
-          <tr><td><a href="../../test/csv/20250607_070800_R001_1000m.csv" download>R001_1000m.csv</a></td><td class="link-use">R001 1000m計測サンプル（4レーン）</td><td class="link-use">race_csv/1000m/</td></tr>
-          <tr><td><a href="../../test/csv/20250607_071600_R002_500m.csv" download>R002_500m.csv</a></td><td class="link-use">R002 500m計測サンプル</td><td class="link-use">race_csv/500m/</td></tr>
-          <tr><td><a href="../../test/csv/20250607_072400_R002_1000m.csv" download>R002_1000m.csv</a></td><td class="link-use">R002 1000m計測サンプル</td><td class="link-use">race_csv/1000m/</td></tr>
-          <tr><td><a href="../../test/csv/20250607_073200_R003_500m.csv" download>R003_500m.csv</a></td><td class="link-use">R003 500m計測サンプル</td><td class="link-use">race_csv/500m/</td></tr>
-          <tr><td><a href="../../test/csv/20250607_074000_R003_1000m.csv" download>R003_1000m.csv</a></td><td class="link-use">R003 1000m計測サンプル</td><td class="link-use">race_csv/1000m/</td></tr>
+          <tr><td colspan="3" style="background:#f8f8f8;font-size:10px;color:#888;padding:4px 8px">■ 基本テスト（R001〜R003）</td></tr>
+          <tr><td><a href="../../test/csv/20250607_070000_R001_500m.csv" download>R001_500m.csv</a></td><td class="link-use">R001 500m計測（4レーン・標準完走）</td><td class="link-use">race_csv/500m/</td></tr>
+          <tr><td><a href="../../test/csv/20250607_070800_R001_1000m.csv" download>R001_1000m.csv</a></td><td class="link-use">R001 1000m計測（4レーン）</td><td class="link-use">race_csv/1000m/</td></tr>
+          <tr><td><a href="../../test/csv/20250607_071600_R002_500m.csv" download>R002_500m.csv</a></td><td class="link-use">R002 500m計測（4レーン）</td><td class="link-use">race_csv/500m/</td></tr>
+          <tr><td><a href="../../test/csv/20250607_072400_R002_1000m.csv" download>R002_1000m.csv</a></td><td class="link-use">R002 1000m計測（4レーン）</td><td class="link-use">race_csv/1000m/</td></tr>
+          <tr><td><a href="../../test/csv/20250607_073200_R003_500m.csv" download>R003_500m.csv</a></td><td class="link-use">R003 500m計測（同着・フォトフィニッシュ判定含む）</td><td class="link-use">race_csv/500m/</td></tr>
+          <tr><td><a href="../../test/csv/20250607_074000_R003_1000m.csv" download>R003_1000m.csv</a></td><td class="link-use">R003 1000m計測（同着・フォトフィニッシュ判定含む）</td><td class="link-use">race_csv/1000m/</td></tr>
+          <tr><td colspan="3" style="background:#f0f7ff;font-size:10px;color:#1a5276;padding:4px 8px">■ 複数カテゴリー合同テスト（R007〜R008）</td></tr>
+          <tr><td><a href="../../test/csv/R007_500m.csv" download>R007_500m.csv</a></td><td class="link-use">R007 500m計測（W1X DEF合同・5レーン） ★カテゴリー別順位確認用★</td><td class="link-use">race_csv/500m/</td></tr>
+          <tr><td><a href="../../test/csv/R007_1000m.csv" download>R007_1000m.csv</a></td><td class="link-use">R007 1000m計測（W1X DEF合同・5レーン）</td><td class="link-use">race_csv/1000m/</td></tr>
+          <tr><td><a href="../../test/csv/R008_500m.csv" download>R008_500m.csv</a></td><td class="link-use">R008 500m計測（Mix2X GH合同・4レーン）</td><td class="link-use">race_csv/500m/</td></tr>
+          <tr><td><a href="../../test/csv/R008_1000m.csv" download>R008_1000m.csv</a></td><td class="link-use">R008 1000m計測（Mix2X GH合同・4レーン）</td><td class="link-use">race_csv/1000m/</td></tr>
         </tbody>
       </table>
+    </div>
+    <div style="margin-top:10px;padding:10px 12px;background:#fff8e1;border:1px solid #f0c040;border-radius:6px;font-size:11px">
+      <strong>R007・R008 テストの期待表示</strong><br>
+      R007(W1X DEF合同): 区分列に +D / +E / +F が表示され、カテゴリー内順位も併記されること<br>
+      R007 全体順位: 1位レーン3(E) / 2位レーン1(D) / 3位レーン5(F) / 4位レーン4(E) / 5位レーン2(D)<br>
+      R007 D内: 1位レーン1 / 2位レーン2　E内: 1位レーン3 / 2位レーン4　F内: 1位レーン5（1艇）<br>
+      R008(Mix2X GH合同): 区分列に +G / +H が表示。全体1位レーン2(G) / G内1位レーン2 / H内1位レーン4
     </div>
   </section>
 

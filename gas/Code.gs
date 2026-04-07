@@ -57,6 +57,26 @@ function runTest1to5() { createTestCSVs(); }
 /** テスト用: R006（棄権・途中棄権）のCSVをDriveに生成 */
 function runTest006() { createTestRace006(); }
 
+/** テスト用: master/フォルダにtournament.csv/schedule.csv/entries.csv(category列付き)を生成 */
+function runTestMasterData() { createTestMasterFiles(); }
+
+/** テスト用: R007(W1X DEF 複数カテゴリー) + R008(Mix2X GH 混成複数カテゴリー) の結果CSVを生成 */
+function runTestMultiCategory() { createTestMultiCategoryCSVs(); }
+
+/** テスト用: 全テストをまとめて実行（マスター作成→importMaster→全CSV生成） */
+function runTestAll() {
+  Logger.log('=== 全テスト実行開始 ===');
+  createTestMasterFiles();
+  Utilities.sleep(2000);
+  importMasterData();
+  Utilities.sleep(2000);
+  createTestCSVs();
+  createTestRace006();
+  createTestMultiCategoryCSVs();
+  Logger.log('=== 全テスト実行完了 ===');
+  Logger.log('2分以内に onTrigger が自動実行してJSONを生成します');
+}
+
 /** テスト用: マスターデータをGitHubにPush */
 function runImportMaster() { importMasterData(); }
 
@@ -1539,5 +1559,253 @@ function createTestRace006() {
 
   Logger.log('[createTestRace006] 完了');
   Logger.log('  レーン1〜3: 完走 / レーン4: 途中棄権（500mのみ） / レーン5: 棄権（CSVなし）');
+  Logger.log('2分以内に onTrigger が自動実行します');
+}
+
+// ============================================================
+// テスト用マスターデータ作成（category 対応完全版）
+// ============================================================
+
+/**
+ * テスト用: master/ フォルダに tournament.csv / schedule.csv / entries.csv を作成する
+ *
+ * R001〜R006 は既存テストCSV（createTestCSVs / createTestRace006）と対応。
+ * R007（W1X DEF: 複数カテゴリー合同・1000m）
+ * R008（Mix2X GH: 混成複数カテゴリー・1000m）を追加。
+ *
+ * 実行後に runImportMaster() → runTestAll() の順で全テストを完結できる。
+ */
+function runTestMasterData() { createTestMasterFiles(); }
+
+/** テスト用: R007（多カテゴリー）+ R008（混成多カテゴリー）の結果CSVを生成 */
+function runTestMultiCategory() { createTestMultiCategoryCSVs(); }
+
+/**
+ * 全テストをまとめて実行するショートカット
+ * 1. master CSV をDriveに作成
+ * 2. importMasterData() でmaster.jsonを生成
+ * 3. R001〜R006 の結果CSV を生成
+ * 4. R007・R008 の複数カテゴリー結果CSV を生成
+ */
+function runTestAll() {
+  Logger.log('=== 全テスト実行開始 ===');
+  createTestMasterFiles();
+  Utilities.sleep(2000);
+  importMasterData();
+  Utilities.sleep(2000);
+  createTestCSVs();
+  createTestRace006();
+  createTestMultiCategoryCSVs();
+  Logger.log('=== 全テスト実行完了 ===');
+  Logger.log('2分以内に onTrigger が自動実行してJSONを生成します');
+  Logger.log('確認URL: https://masters-regatta-2026-3ha.pages.dev');
+}
+
+/**
+ * master/ フォルダに tournament.csv / schedule.csv / entries.csv を作成する
+ *
+ * schedule.csv のカラム:
+ *   race_no, event_code, event_name, category, age_group, round, date, time, course_length
+ *
+ * entries.csv のカラム（新形式）:
+ *   race_no, lane, crew_name, affiliation, category
+ *   ※ category は複数カテゴリー合同レースでのみ記入（単一カテゴリーレースは空欄可）
+ */
+function createTestMasterFiles() {
+  Logger.log('[createTestMasterFiles] 開始');
+
+  const props = PropertiesService.getScriptProperties();
+  const rootId = props.getProperty(CONFIG.props.driveFolderId);
+  if (!rootId) {
+    Logger.log('[createTestMasterFiles] エラー: DRIVE_ROOT_FOLDER_ID が未設定です');
+    return;
+  }
+  const masterFolder = getOrCreateFolder(rootId, CONFIG.folders.master);
+
+  // ----------------------------------------------------------------
+  // tournament.csv
+  // ----------------------------------------------------------------
+  const tournamentCsv =
+    'key,value\n' +
+    'race_name,第17回全日本マスターズレガッタ石川県復興特別大会（テスト）\n' +
+    'venue,石川県津幡漕艇競技場\n' +
+    'course_length,1000\n' +
+    'youtube_url,\n';
+
+  // ----------------------------------------------------------------
+  // schedule.csv
+  // R001〜R006 は既存テストCSV（createTestCSVs/createTestRace006）と対応
+  // R007: W1X DEF    複数カテゴリー合同（女子シングル D・E・F）1000m
+  // R008: Mix2X GH   混成ダブルスカル G・H 合同 1000m
+  // ----------------------------------------------------------------
+  const scheduleCsv =
+    'race_no,event_code,event_name,category,age_group,round,date,time,course_length\n' +
+    '1,M1X,男子シングルスカル,M,G,FA,2026-05-23,07:00,\n' +
+    '2,M2X,男子ダブルスカル,M,E,FA,2026-05-23,07:08,\n' +
+    '3,M4+,男子舵手つきフォア,M,F,FA,2026-05-23,07:16,\n' +
+    '4,W1X,女子シングルスカル,W,D,FA,2026-05-23,07:24,\n' +
+    '5,W2X,女子ダブルスカル,W,G,FA,2026-05-23,07:32,\n' +
+    '6,M1X,男子シングルスカル,M,H,FA,2026-05-23,07:40,\n' +
+    // R007: age_group=DEF → categories:["D","E","F"] に自動変換
+    '7,W1X,女子シングルスカル,W,DEF,FA,2026-05-23,08:28,\n' +
+    // R008: age_group=GH → categories:["G","H"] に自動変換
+    '8,Mix2X,混成ダブルスカル,Mix,GH,FA,2026-05-23,09:00,\n';
+
+  // ----------------------------------------------------------------
+  // entries.csv
+  // category 列: 複数カテゴリー合同レース（R007, R008）は必ず記入
+  //              単一カテゴリーレース（R001〜R006）は空欄
+  // ----------------------------------------------------------------
+  const entriesCsv =
+    'race_no,lane,crew_name,affiliation,category\n' +
+    // R001: M1X G（単一カテゴリー）
+    '1,1,田中 太郎,東京ローイングクラブ,\n' +
+    '1,2,鈴木 次郎,大阪漕艇協会,\n' +
+    '1,3,佐藤 三郎,名古屋ボートクラブ,\n' +
+    '1,4,高橋 四郎,福岡漕艇,\n' +
+    // R002: M2X E（単一カテゴリー）
+    '2,1,山田 太郎,横浜ボートクラブ,\n' +
+    '2,2,中村 次郎,神戸漕艇,\n' +
+    '2,3,小林 三郎,京都ローイング,\n' +
+    '2,4,加藤 四郎,広島ボート,\n' +
+    // R003: M4+ F（単一カテゴリー・同着あり）
+    '3,1,伊藤 一郎,仙台ボートクラブ,\n' +
+    '3,2,渡辺 二郎,新潟漕艇,\n' +
+    '3,3,松本 三郎,長野ボート,\n' +
+    '3,4,井上 四郎,静岡ローイング,\n' +
+    // R004: W1X D（単一カテゴリー）
+    '4,1,田中 花子,東京女子ローイング,\n' +
+    '4,2,山田 桃子,大阪女子漕艇,\n' +
+    '4,3,鈴木 春子,名古屋女子ボート,\n' +
+    // R005: W2X G（単一カテゴリー）
+    '5,1,佐藤 夏子,福岡女子漕艇,\n' +
+    '5,2,高橋 秋子,横浜女子ローイング,\n' +
+    '5,3,中村 冬子,神戸女子漕艇,\n' +
+    // R006: M1X H（DNS/DNF テスト・5エントリー）
+    '6,1,木村 一郎,秋田ボートクラブ,\n' +
+    '6,2,林 二郎,青森漕艇,\n' +
+    '6,3,清水 三郎,岩手ボート,\n' +
+    '6,4,山口 四郎,宮城ローイング,\n' +
+    '6,5,阿部 五郎,山形漕艇,\n' +  // レーン5: 棄権（DNS）
+    // R007: W1X DEF（複数カテゴリー合同）★category列必須★
+    // レーン1〜2: カテゴリーD、レーン3〜4: カテゴリーE、レーン5: カテゴリーF
+    '7,1,田中 花子,東京女子ローイング,D\n' +
+    '7,2,山田 桃子,大阪女子漕艇,D\n' +
+    '7,3,鈴木 春子,名古屋女子ボート,E\n' +
+    '7,4,佐藤 夏子,福岡女子漕艇,E\n' +
+    '7,5,高橋 秋子,横浜女子ローイング,F\n' +
+    // R008: Mix2X GH（混成・複数カテゴリー合同）★category列必須★
+    // レーン1〜2: カテゴリーG（混成G）、レーン3〜4: カテゴリーH（混成H）
+    '8,1,木村 太郎,秋田混成クラブ,G\n' +
+    '8,2,林 次郎,青森混成漕艇,G\n' +
+    '8,3,清水 三郎,岩手混成ボート,H\n' +
+    '8,4,山口 四郎,宮城混成ローイング,H\n';
+
+  // Drive に保存（既存があれば上書き）
+  const files = {
+    'tournament.csv': tournamentCsv,
+    'schedule.csv': scheduleCsv,
+    'entries.csv': entriesCsv,
+  };
+  Object.entries(files).forEach(([name, content]) => {
+    const existing = masterFolder.getFilesByName(name);
+    while (existing.hasNext()) existing.next().setTrashed(true);
+    masterFolder.createFile(name, content, MimeType.PLAIN_TEXT);
+    Logger.log('[createTestMasterFiles] 作成: master/' + name);
+  });
+
+  Logger.log('[createTestMasterFiles] 完了');
+  Logger.log('次のステップ: runImportMaster() を実行してmaster.jsonを生成してください');
+}
+
+/**
+ * テスト用: R007（W1X DEF 複数カテゴリー合同）と
+ *           R008（Mix2X GH 混成複数カテゴリー）の結果CSVをDriveに生成する
+ *
+ * R007 検証ポイント:
+ *   - カテゴリーD（レーン1,2）・E（レーン3,4）・F（レーン5）が混在
+ *   - 全体順位とカテゴリー内順位が両方表示されること
+ *   - カテゴリーFはレーン5の1艇のみ → カテゴリー内1位
+ *
+ * R008 検証ポイント:
+ *   - 混成（Mix）種目でもカテゴリー列が機能すること
+ *   - カテゴリーG（レーン1,2）・H（レーン3,4）
+ */
+function createTestMultiCategoryCSVs() {
+  Logger.log('[createTestMultiCategoryCSVs] 開始');
+
+  const props = PropertiesService.getScriptProperties();
+  const rootId = props.getProperty(CONFIG.props.driveFolderId);
+  const raceCsvFolder = getOrCreateFolder(rootId, CONFIG.folders.raceCsv);
+  const folder500 = getOrCreateFolder(raceCsvFolder.getId(), '500m');
+  const folder1000 = getOrCreateFolder(raceCsvFolder.getId(), '1000m');
+  const header = 'measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,note\n';
+
+  const csvData = [
+    // ----------------------------------------------------------------
+    // R007: W1X DEF（女子シングル D・E・F 合同）
+    // 全体順位: レーン3(E) > レーン1(D) > レーン5(F) > レーン4(E) > レーン2(D)
+    // カテゴリーD内順位: レーン1(1位) > レーン2(2位)
+    // カテゴリーE内順位: レーン3(1位) > レーン4(2位)
+    // カテゴリーF内順位: レーン5(1位・1艇のみ)
+    // ----------------------------------------------------------------
+    {
+      name: 'R007_500m.csv', folder: folder500,
+      content: header +
+        '500m,1,1,126800,2:06.800,7,,,\n' +  // D
+        '500m,2,1,131200,2:11.200,7,,,\n' +  // D
+        '500m,3,1,123500,2:03.500,7,,,\n' +  // E ← 全体1位
+        '500m,4,1,129800,2:09.800,7,,,\n' +  // E
+        '500m,5,1,128100,2:08.100,7,,,\n'    // F
+    },
+    {
+      name: 'R007_1000m.csv', folder: folder1000,
+      content: header +
+        '1000m,1,1,256400,4:16.400,7,,,\n' + // D  ← D内1位
+        '1000m,2,1,265800,4:25.800,7,,,\n' + // D  ← D内2位
+        '1000m,3,1,248900,4:08.900,7,,,\n' + // E  ← 全体1位・E内1位
+        '1000m,4,1,262100,4:22.100,7,,,\n' + // E  ← E内2位
+        '1000m,5,1,259300,4:19.300,7,,,\n'   // F  ← F内1位（1艇のみ）
+    },
+    // ----------------------------------------------------------------
+    // R008: Mix2X GH（混成ダブルスカル G・H 合同）
+    // 全体順位: レーン2(G) > レーン4(H) > レーン1(G) > レーン3(H)
+    // カテゴリーG内順位: レーン2(1位) > レーン1(2位)
+    // カテゴリーH内順位: レーン4(1位) > レーン3(2位)
+    // ----------------------------------------------------------------
+    {
+      name: 'R008_500m.csv', folder: folder500,
+      content: header +
+        '500m,1,1,222400,3:42.400,8,,,\n' +  // G
+        '500m,2,1,218700,3:38.700,8,,,\n' +  // G ← G内1位
+        '500m,3,1,228100,3:48.100,8,,,\n' +  // H
+        '500m,4,1,220300,3:40.300,8,,,\n'    // H ← H内1位
+    },
+    {
+      name: 'R008_1000m.csv', folder: folder1000,
+      content: header +
+        '1000m,1,1,448600,7:28.600,8,,,\n' + // G  ← G内2位
+        '1000m,2,1,441200,7:21.200,8,,,\n' + // G  ← 全体1位・G内1位
+        '1000m,3,1,459800,7:39.800,8,,,\n' + // H  ← H内2位
+        '1000m,4,1,445500,7:25.500,8,,,\n'   // H  ← H内1位
+    },
+  ];
+
+  csvData.forEach(({ name, folder, content }) => {
+    const existing = folder.getFilesByName(name);
+    while (existing.hasNext()) existing.next().setTrashed(true);
+    folder.createFile(name, content, MimeType.PLAIN_TEXT);
+    Logger.log('[createTestMultiCategoryCSVs] 作成: ' + name);
+  });
+
+  Logger.log('[createTestMultiCategoryCSVs] 完了');
+  Logger.log('期待される結果:');
+  Logger.log('  R007 全体順位: 3位レーン3(E) 2位レーン1(D) 3位レーン5(F) 4位レーン4(E) 5位レーン2(D)');
+  Logger.log('  R007 D内: 1位レーン1 / 2位レーン2');
+  Logger.log('  R007 E内: 1位レーン3 / 2位レーン4');
+  Logger.log('  R007 F内: 1位レーン5（1艇のみ）');
+  Logger.log('  R008 全体順位: 1位レーン2(G) 2位レーン4(H) 3位レーン1(G) 4位レーン3(H)');
+  Logger.log('  R008 G内: 1位レーン2 / 2位レーン1');
+  Logger.log('  R008 H内: 1位レーン4 / 2位レーン3');
   Logger.log('2分以内に onTrigger が自動実行します');
 }
