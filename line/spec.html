@@ -37,6 +37,50 @@
 
 <main>
 
+  <!-- 0. ログイン・認証情報 -->
+  <section>
+    <h2>0. ログイン・認証情報管理</h2>
+    <div class="note">
+      ⚠ このセクションには実際の認証情報は記載しない。保管場所のみ記録する。
+    </div>
+
+    <h3>LINE公式アカウント ログイン情報</h3>
+    <table>
+      <tr><th>項目</th><th>内容</th><th>ステータス</th></tr>
+      <tr><td>ログインメールアドレス</td><td>（作成後に記載）</td><td><span class="badge badge-tbd">未作成</span></td></tr>
+      <tr><td>パスワード</td><td>保管場所：〇〇（例: 1Password / Notion 非公開ページ）</td><td><span class="badge badge-tbd">未作成</span></td></tr>
+      <tr><td>管理画面URL</td><td>https://manager.line.biz/</td><td>—</td></tr>
+      <tr><td>アカウント管理者</td><td>石川県ボート協会（担当者：〇〇）</td><td><span class="badge badge-tbd">未確定</span></td></tr>
+    </table>
+
+    <h3>LINE Messaging API 認証情報</h3>
+    <table>
+      <tr><th>項目</th><th>内容</th><th>ステータス</th></tr>
+      <tr><td>Channel ID</td><td>（作成後に記載）</td><td><span class="badge badge-tbd">未作成</span></td></tr>
+      <tr><td>Channel Secret</td><td>保管場所：GASスクリプトプロパティ</td><td><span class="badge badge-tbd">未作成</span></td></tr>
+      <tr><td>Channel Access Token</td><td>保管場所：GASスクリプトプロパティ</td><td><span class="badge badge-tbd">未作成</span></td></tr>
+      <tr><td>Webhook URL</td><td>GASデプロイURL（作成後に記載）</td><td><span class="badge badge-tbd">未作成</span></td></tr>
+    </table>
+
+    <h3>アカウント作成手順（未実施）</h3>
+    <ol>
+      <li>LINE Business ID を作成（https://account.line.biz/）</li>
+      <li>LINE Official Account Manager でアカウント作成</li>
+      <li>Messaging API を有効化（チャネル作成）</li>
+      <li>Channel Access Token を発行</li>
+      <li>GAS スクリプトプロパティに Token を登録</li>
+      <li>Webhook URL を GAS デプロイURLに設定</li>
+    </ol>
+
+    <h3>GASスクリプトプロパティ一覧（設定予定）</h3>
+    <table>
+      <tr><th>プロパティ名</th><th>値</th></tr>
+      <tr><td>LINE_CHANNEL_SECRET</td><td>（Messaging API チャネルシークレット）</td></tr>
+      <tr><td>LINE_ACCESS_TOKEN</td><td>（Messaging API アクセストークン）</td></tr>
+      <tr><td>REGISTRATION_SHEET_ID</td><td>（登録者管理スプレッドシートのID）</td></tr>
+    </table>
+  </section>
+
   <!-- 1. 概要 -->
   <section>
     <h2>1. 概要・方針</h2>
