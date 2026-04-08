@@ -23,6 +23,21 @@ const SETUP_MEASUREMENT_POINTS = '500,1000';
 // ============================================================
 
 /**
+ * 全角文字を半角に変換する
+ * @param {string} str
+ * @return {string}
+ */
+function normalizeFullWidth_(str) {
+  if (typeof str !== 'string') return str;
+  return str
+    .replace(/[！-～]/g, function(c) {
+      return String.fromCharCode(c.charCodeAt(0) - 0xFEE0);
+    })
+    .replace(/　/g, ' ')  // 全角スペース→半角
+    .trim();
+}
+
+/**
  * 上記の値をスクリプトプロパティに保存する
  * ★最初に1回だけこの関数を実行してください★
  */
@@ -724,8 +739,9 @@ function importMasterData() {
       }
       const entry = {
         lane: parseInt(row.lane, 10),
-        crew_name: row.crew_name || '',
-        affiliation: row.affiliation || '',
+        crew_name: normalizeFullWidth_(row.crew_name || ''),
+        affiliation: normalizeFullWidth_(row.affiliation || ''),
+        category: normalizeFullWidth_(row.category || ''),
       };
       // age_group が指定されている場合のみ追加（レースのage_groupと異なる場合に使用）
       if (row.age_group && row.age_group.trim()) {
@@ -742,8 +758,9 @@ function importMasterData() {
       const result = {
         race_no: raceNo,
         event_code: row.event_code || '',
-        event_name: row.event_name || '',
+        event_name: normalizeFullWidth_(row.event_name || ''),
         category: row.category || '',
+        categories: row.categories ? row.categories.split(',').map(s => s.trim()) : [],
         age_group: row.age_group || '',
         round: row.round || '',
         date: formatDateValue_(row.date),
