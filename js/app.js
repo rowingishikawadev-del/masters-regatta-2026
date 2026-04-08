@@ -421,6 +421,25 @@ function renderRaceBlock(race) {
 }
 
 /**
+ * エントリー一覧からカテゴリー内順位マップを返す
+ * key: entry.bib または entry.crew_name、value: カテゴリー内順位（1始まり）
+ */
+function calcCategoryRank_(entries) {
+  const rankMap = {};
+  const catEntries = {};
+  entries.forEach(e => {
+    const cat = e.category || e.age_group || '';
+    if (!catEntries[cat]) catEntries[cat] = [];
+    catEntries[cat].push(e);
+  });
+  Object.values(catEntries).forEach(group => {
+    group.sort((a, b) => (a.rank || 999) - (b.rank || 999));
+    group.forEach((e, i) => { rankMap[e.bib != null ? e.bib : e.crew_name] = i + 1; });
+  });
+  return rankMap;
+}
+
+/**
  * レース結果テーブルHTMLを返す
  */
 function renderResultTable(race, result) {
@@ -437,6 +456,10 @@ function renderResultTable(race, result) {
   // エントリー情報をlaneで引く
   const entryMap = {};
   (race.entries || []).forEach(e => { entryMap[e.lane] = e; });
+
+  // 合同レース判定: エントリーにcategoryまたはage_groupが複数種類あるか
+  const entryCategories = new Set((race.entries || []).map(e => e.category || e.age_group || ''));
+  const isJointRace = entryCategories.size > 1;
 
   // エントリーにあるが結果にないレーン → 棄権（DNS）として追加
   const resultsList = result?.results || [];
@@ -460,6 +483,16 @@ function renderResultTable(race, result) {
       tieGroupCounts[r.tie_group] = (tieGroupCounts[r.tie_group] || 0) + 1;
     }
   });
+
+  // カテゴリー内順位を計算（合同レースのみ）
+  let categoryRankMap = {};
+  if (isJointRace) {
+    const entriesWithRank = sorted.map(r => {
+      const entry = entryMap[r.lane] || {};
+      return { ...entry, rank: r.rank };
+    });
+    categoryRankMap = calcCategoryRank_(entriesWithRank);
+  }
 
   const rows = sorted.map(r => {
     const entry = entryMap[r.lane] || {};
@@ -490,10 +523,18 @@ function renderResultTable(race, result) {
     // エントリー個別のage_groupがある場合（混合レース）はクラス名を表示
     const entryAgeLabel = entry.age_group ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
 
+    // 合同レース: 区分列とカテゴリー内順位
+    const entryCategory = entry.category || entry.age_group || '';
+    const catCell = isJointRace ? `<td class="entry-category">${h(entryCategory) || '-'}</td>` : '';
+    const catKey = entry.bib != null ? entry.bib : entry.crew_name;
+    const catRank = isJointRace && categoryRankMap[catKey] ? categoryRankMap[catKey] : null;
+    const catRankDisplay = catRank ? `<span class="cat-rank">(${h(entryCategory)}内${catRank}位)</span>` : '';
+
     return `
       <tr class="${rankClass}${isDns || isDnf ? ' row-retired' : ''}">
-        <td>${rankDisplay}</td>
+        <td>${rankDisplay}${catRankDisplay}</td>
         <td>${r.lane}</td>
+        ${catCell}
         <td>${h(entry.affiliation) || '-'}</td>
         <td class="crew-name">${h(entry.crew_name) || '-'}${entryAgeLabel}</td>
         <td class="hide-mobile">${isDns ? '-' : midTime}</td>
@@ -507,6 +548,8 @@ function renderResultTable(race, result) {
     : '';
   const finishHeader = `${raceCourseLength}m`;
 
+  const catHeader = isJointRace ? `<th style="min-width:60px">区分</th>` : '';
+
   return `
     <div class="result-table-wrapper">
     <table class="result-table">
@@ -514,6 +557,7 @@ function renderResultTable(race, result) {
         <tr>
           <th style="width:36px">順位</th>
           <th style="width:28px">B</th>
+          ${catHeader}
           <th style="min-width:100px">所属</th>
           <th style="min-width:120px">クルー</th>
           ${midHeader}
@@ -1058,6 +1102,8 @@ function setupRefreshTimer() {
   if (timers.refresh) clearInterval(timers.refresh);
   if (timers.highlight) clearInterval(timers.highlight);
 
+  // ランダムジッター ±15秒（同時アクセスによるサーバー集中を防ぐ）
+  const jitter = Math.random() * 30000 - 15000;
   timers.refresh = setInterval(async () => {
     if (isOffline || isUpdating) return; // オフライン中・更新中はスキップ
     isUpdating = true;
@@ -1078,7 +1124,7 @@ function setupRefreshTimer() {
     } finally {
       isUpdating = false;
     }
-  }, CONFIG.REFRESH_INTERVAL);
+  }, CONFIG.REFRESH_INTERVAL + jitter);
 
   // 実施中レース判定タイマー（独立管理）
   timers.highlight = setInterval(highlightCurrentRace, 60000);
