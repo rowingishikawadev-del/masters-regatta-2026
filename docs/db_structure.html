@@ -467,6 +467,11 @@ code {
         <span class="prop-type">string[]</span>
         <span class="prop-desc">計測ポイント一覧（例: ["500m","1000m"]）</span>
       </div>
+      <div class="prop-row">
+        <span class="prop-key key-tourn">age_categories{}</span>
+        <span class="prop-type">object</span>
+        <span class="prop-desc">年齢区分コードと説明のマッピング（A=27〜35歳、B=36〜42歳、C=43〜49歳、D=50〜54歳、E=55〜59歳、F=60〜64歳、G=65〜69歳、H=70〜74歳、I=75〜79歳、J=80〜84歳、K=85〜89歳、L=90〜91歳、N=92歳以上・2026年新設）<span class="prop-opt">任意</span></span>
+      </div>
     </div>
   </div>
 
@@ -501,7 +506,7 @@ code {
       <div class="prop-row">
         <span class="prop-key key-race">age_group</span>
         <span class="prop-type">string</span>
-        <span class="prop-desc">年齢区分（A〜H、J=ジュニア）<span class="prop-opt">任意</span> 未使用時は列非表示</span>
+        <span class="prop-desc">年齢区分（A〜N、Nは92歳以上・2026年新設）<span class="prop-opt">任意</span> 未使用時は列非表示</span>
       </div>
       <div class="prop-row">
         <span class="prop-key key-race">round</span>
