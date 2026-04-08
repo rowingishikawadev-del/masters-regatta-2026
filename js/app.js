@@ -290,6 +290,14 @@ function renderYoutube() {
 function renderFilterOptions() {
   const dates = [...new Set((masterData?.schedule || []).map(r => r.date))].sort();
 
+  // 当日の日付タブを自動選択（初回のみ: filterState.date が 'all' のとき）
+  if (filterState.date === 'all') {
+    const todayStr = new Date().toISOString().slice(0, 10);
+    if (dates.includes(todayStr)) {
+      filterState.date = todayStr;
+    }
+  }
+
   // 日別タブを生成（日数に関わらず常に表示）
   const dayTabs = document.getElementById('day-tabs');
   if (dayTabs) {
@@ -377,8 +385,8 @@ function renderToggleView() {
     toggleEl.innerHTML = `
       <div class="toggle-header" onclick="this.parentElement.classList.toggle('open')">
         <span class="toggle-arrow">▶</span>
-        <span class="toggle-title">${eventName}</span>
-        <span class="toggle-code">${displayCode(eventCode)}</span>
+        <span class="toggle-title">${h(eventName)}</span>
+        <span class="toggle-code">${h(displayCode(eventCode))}</span>
         <span class="toggle-count">${totalCount}レース</span>
         ${statusBadge}
       </div>
@@ -946,6 +954,23 @@ function updateFilterCount() {
   const visible = document.querySelectorAll('#view-toggle-content .toggle:not([style*="display: none"])').length;
   const total = document.querySelectorAll('#view-toggle-content .toggle').length;
   el.textContent = `${visible}/${total}種目 表示中`;
+
+  // 0件フィルター時のemptyステート表示
+  const container = document.getElementById('view-toggle-content');
+  if (!container) return;
+  const emptyId = 'filter-empty-state';
+  let emptyEl = document.getElementById(emptyId);
+  if (visible === 0 && total > 0) {
+    if (!emptyEl) {
+      emptyEl = document.createElement('div');
+      emptyEl.id = emptyId;
+      emptyEl.className = 'filter-empty-state';
+      emptyEl.textContent = '条件に合う種目はありません。フィルターを変更してください。';
+      container.appendChild(emptyEl);
+    }
+  } else {
+    if (emptyEl) emptyEl.remove();
+  }
 }
 
 /**
@@ -1343,7 +1368,7 @@ function showError(msg) {
       <div class="error-card">
         <div class="error-icon">⚠</div>
         <div class="error-title">データを読み込めませんでした</div>
-        <div class="error-body">${msg || 'しばらく待ってから画面を更新してください'}</div>
+        <div class="error-body">${h(msg) || 'しばらく待ってから画面を更新してください'}</div>
         <button onclick="location.reload()">再読み込み</button>
       </div>`;
     el.style.display = 'block';

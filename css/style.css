@@ -13,8 +13,9 @@ body {
   --card:       #FFFFFF;
   --border:     #D9D4CA;
   --text:       #3D3B38;
-  --text-sub:   #7A7570;
-  --text-muted: #B0AAA3;
+  /* コントラスト改善: WCAG AA準拠のため暗くする */
+  --text-sub:   #5A5552;
+  --text-muted: #6E6962;
   --accent:     #5C8A5A;
   --accent-bg:  #EBF1EA;
   --gold:       #A08C5B;
@@ -33,6 +34,12 @@ body {
 .site-header-inner {
   max-width: 1170px;
   margin: 0 auto;
+}
+.site-header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
 }
 .site-header-label {
   font-size: 10px;
@@ -153,8 +160,10 @@ h1.page-title {
   font-weight: 400;
   letter-spacing: 0.05em;
 }
+/* タップターゲット拡大: モバイルで44px以上を確保 */
 .filter-select {
-  padding: 5px 10px;
+  padding: 10px 12px;
+  min-height: 44px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-size: 13px;
@@ -299,6 +308,10 @@ h1.page-title {
 }
 .result-table tr:hover td { background: #FAF8F4; }
 
+/* 1位の視覚的強調: 薄いゴールド背景と左ボーダー */
+.rank-1 td {
+  background: #FDFBF2;
+}
 /* 1位行: 左に gold の 3px ボーダー */
 .rank-1 td:first-child {
   color: var(--gold);
@@ -306,6 +319,7 @@ h1.page-title {
   border-left: 3px solid var(--gold);
   padding-left: 7px;
 }
+.rank-1 .rank-badge { font-weight: 700; }
 .rank-2 td:first-child { color: var(--silver); }
 .rank-3 td:first-child { color: var(--bronze); }
 
@@ -795,7 +809,8 @@ td.age-group-cell { text-align: center; }
 
   /* スケジュールビュー: コンパクト */
   .schedule-table { font-size: 12px; }
-  .sc-event-name { max-width: 90px; }
+  /* SP時の種目名切断修正: 折り返し許可 */
+  .sc-event-name { max-width: none; white-space: normal; line-height: 1.3; }
 
   /* ステータスバー */
   .update-bar { padding: 6px 12px; font-size: 11px; }
@@ -852,4 +867,16 @@ td.age-group-cell { text-align: center; }
 }
 .day-tab:hover:not(.active) {
   color: var(--text);
+}
+
+/* ========= 0件フィルター時のemptyステート ========= */
+.filter-empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+  font-size: 14px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  margin-top: 8px;
 }
