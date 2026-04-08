@@ -1374,3 +1374,28 @@ function showError(msg) {
     el.style.display = 'block';
   }
 }
+
+// ========= フォントサイズ切替（標準/大） =========
+
+/**
+ * フォントサイズを切替する（標準 / 大）
+ * @param {'normal'|'large'} size
+ */
+function setFontSize(size) {
+  document.body.classList.toggle('font-large', size === 'large');
+  try { localStorage.setItem('fontSizePref', size); } catch(e) {}
+  document.querySelectorAll('.font-size-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.size === size);
+  });
+}
+
+/**
+ * ページ読み込み時にlocalStorageからフォントサイズ設定を復元する
+ */
+function restoreFontSizePref() {
+  let pref = 'normal';
+  try { pref = localStorage.getItem('fontSizePref') || 'normal'; } catch(e) {}
+  setFontSize(pref);
+}
+
+document.addEventListener('DOMContentLoaded', restoreFontSizePref);

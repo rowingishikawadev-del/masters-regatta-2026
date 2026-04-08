@@ -20,7 +20,17 @@
 
 <header class="site-header">
   <div class="site-header-inner">
-    <div class="site-header-label">BOAT RACE RESULTS</div>
+    <div class="site-header-top-row">
+      <div class="site-header-label">BOAT RACE RESULTS</div>
+      <div class="font-size-toggle" id="font-size-toggle-header">
+        <button class="font-size-btn active" data-size="normal" onclick="setFontSize('normal')" aria-label="標準サイズ">
+          <span class="font-btn-label-normal">標準</span>
+        </button>
+        <button class="font-size-btn" data-size="large" onclick="setFontSize('large')" aria-label="大きいサイズ（60代向け）">
+          <span class="font-btn-label-large">大</span>
+        </button>
+      </div>
+    </div>
     <div class="cover-tournament-name" id="cover-tournament-name">速報サイト</div>
     <div class="cover-meta" id="cover-meta"></div>
   </div>
@@ -128,6 +138,6 @@
 <!-- トースト通知コンテナ -->
 <div id="toast-container"></div>
 
-<script src="js/app.js?v=20260408a"></script>
+<script src="js/app.js?v=20260409a"></script>
 </body>
 </html>
