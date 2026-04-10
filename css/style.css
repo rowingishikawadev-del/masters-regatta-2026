@@ -1,54 +1,64 @@
 /* ========= リセット・ベース ========= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', sans-serif;
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ========= カラー変数 ========= */
 :root {
-  --bg:         #F5F2EC;
+  --bg:         #F4F1EB;
   --card:       #FFFFFF;
   --border:     #DDD8CE;
-  --text:       #2A2825;
-  --text-sub:   #706B66;
-  --text-muted: #ADA79F;
-  --accent:     #2D6B2B;
-  --accent-light:#4A8C48;
-  --accent-bg:  #E8F3E8;
-  --gold:       #B8952A;
-  --gold-bg:    #FDF8EC;
-  --silver:     #7A8FA0;
-  --silver-bg:  #F0F4F7;
-  --bronze:     #A0673A;
-  --bronze-bg:  #FBF3EE;
-  --live:       #D63031;
-  --live-bg:    #FEF0EF;
-  --radius:     4px;
-  --radius-lg:  8px;
-  --shadow-sm:  0 1px 3px rgba(0,0,0,0.07);
-  --shadow-md:  0 4px 12px rgba(0,0,0,0.09);
+  --text:       #252220;
+  --text-sub:   #6B6560;
+  --text-muted: #A8A19A;
+  --accent:     #24602A;
+  --accent-light:#3A7E40;
+  --accent-bg:  #E4F0E5;
+  --gold:       #A8831E;
+  --gold-bg:    #FBF6E8;
+  --silver:     #6A7F90;
+  --silver-bg:  #EDF2F5;
+  --bronze:     #8F5A2E;
+  --bronze-bg:  #F8EFE8;
+  --live:       #C0392B;
+  --live-bg:    #FDEEEC;
+  --radius:     6px;
+  --radius-lg:  10px;
+  --shadow-sm:  0 1px 4px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
 }
 
 /* ========= カバーエリア（site-header） ========= */
 .site-header {
-  background: linear-gradient(135deg, #1A3A19 0%, #2D4F2C 60%, #3A6438 100%);
+  background: linear-gradient(160deg, #162E16 0%, #1E4020 45%, #274F2A 75%, #2E5C32 100%);
   padding: 36px 40px 30px;
   position: relative;
   overflow: hidden;
+}
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(80,160,80,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 80% at 0% 100%, rgba(20,80,20,0.15) 0%, transparent 60%);
+  pointer-events: none;
 }
 .site-header::after {
   content: '';
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
-    -45deg,
+    -55deg,
     transparent,
-    transparent 40px,
-    rgba(255,255,255,0.015) 40px,
-    rgba(255,255,255,0.015) 80px
+    transparent 60px,
+    rgba(255,255,255,0.012) 60px,
+    rgba(255,255,255,0.012) 120px
   );
   pointer-events: none;
 }
@@ -68,10 +78,11 @@ body {
 }
 .cover-tournament-name {
   font-size: 26px;
-  font-weight: 600;
+  font-weight: 700;
   color: #fff;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   line-height: 1.3;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.25);
 }
 .cover-meta {
   font-size: 13px;
@@ -256,14 +267,15 @@ h1.page-title {
 .toggle {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   background: var(--card);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 .toggle.open {
   border-left: 3px solid var(--accent);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
 }
 .toggle-header {
   display: flex;
@@ -440,7 +452,7 @@ h1.page-title {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #3D3B38;
+  background: #1E2820;
   color: #fff;
   padding: 0 24px;
   height: 44px;
@@ -450,6 +462,7 @@ h1.page-title {
   align-items: center;
   z-index: 100;
   gap: 8px;
+  border-top: 1px solid rgba(255,255,255,0.07);
 }
 .update-bar-left {
   display: flex;
@@ -1126,7 +1139,7 @@ body.fs-large .schedule-table td { font-size: 16px; }
 
 /* ========= フッター ========= */
 .site-footer {
-  background: #2A2825;
+  background: #1E2820;
   color: rgba(255,255,255,0.55);
   font-size: 11px;
   padding: 16px 24px 100px; /* モバイルのボトムナビ分の余白 */
@@ -1174,10 +1187,10 @@ body.fs-large .schedule-table td { font-size: 16px; }
 .rank-dns, .rank-dnf { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
 .status-dns, .status-dnf { font-size: 12px; color: var(--text-muted); letter-spacing: 0.05em; }
 /* エントリー個別の年齢区分（混合レース用） */
-.entry-age-group { display: inline-block; margin-left: 5px; font-size: 10px; color: #555; background: #f0f0f0; border: 1px solid #ccc; border-radius: 3px; padding: 0 4px; vertical-align: middle; }
+.entry-age-group { display: inline-block; margin-left: 5px; font-size: 10px; color: var(--text-sub); background: #EEEBE5; border: 1px solid var(--border); border-radius: 3px; padding: 0 4px; vertical-align: middle; }
 /* 複数カテゴリー合同レース用 区分列 */
-.entry-category { display: inline-block; font-size: 11px; font-weight: 600; color: #1a5276; background: #d6eaf8; border: 1px solid #a9cce3; border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
-.cat-rank { display: inline-block; margin-left: 4px; font-size: 10px; color: #666; }
+.entry-category { display: inline-block; font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-bg); border: 1px solid rgba(36,96,42,0.25); border-radius: 4px; padding: 1px 6px; vertical-align: middle; }
+.cat-rank { display: inline-block; margin-left: 4px; font-size: 10px; color: var(--text-muted); }
 .cat-col { text-align: center; white-space: nowrap; }
 
 /* 日別タブ */
