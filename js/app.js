@@ -919,6 +919,35 @@ function sortDbTable(thEl) {
   // 全レース一覧はトグル形式のため、ソートは無効
 }
 
+// ========= 固定検索バー =========
+
+/**
+ * 固定検索バーとフィルタバーを同期して検索を適用する
+ */
+function syncStickySearch(value) {
+  const crewEl = document.getElementById('filter-crew');
+  if (crewEl) crewEl.value = value;
+  const clearBtn = document.getElementById('sticky-search-clear');
+  if (clearBtn) clearBtn.style.display = value ? 'flex' : 'none';
+  applyFilters();
+}
+
+/**
+ * 固定検索バーをクリアする
+ */
+function clearStickySearch() {
+  const stickyEl = document.getElementById('sticky-search-input');
+  if (stickyEl) stickyEl.value = '';
+  syncStickySearch('');
+  stickyEl?.focus();
+}
+
+// スクロールで影を強くする
+window.addEventListener('scroll', () => {
+  const bar = document.getElementById('sticky-search-bar');
+  if (bar) bar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
 // ========= フィルタ =========
 
 /**
@@ -928,7 +957,13 @@ function applyFilters() {
   filterState.category = document.getElementById('filter-cat')?.value || 'all';
   filterState.round = document.getElementById('filter-round')?.value || 'all';
   filterState.date = document.getElementById('filter-day')?.value || 'all';
-  filterState.crew = (document.getElementById('filter-crew')?.value || '').toLowerCase();
+  const crewValue = document.getElementById('filter-crew')?.value || '';
+  filterState.crew = crewValue.toLowerCase();
+  // 固定検索バーと同期
+  const stickyEl = document.getElementById('sticky-search-input');
+  if (stickyEl && stickyEl !== document.activeElement) stickyEl.value = crewValue;
+  const clearBtn = document.getElementById('sticky-search-clear');
+  if (clearBtn) clearBtn.style.display = crewValue ? 'flex' : 'none';
   filterState.status = document.getElementById('filter-status')?.value || 'all';
 
   document.querySelectorAll('#view-toggle-content .toggle').forEach(toggle => {
@@ -973,6 +1008,10 @@ function resetFilters() {
   });
   const crewEl = document.getElementById('filter-crew');
   if (crewEl) crewEl.value = '';
+  const stickyEl = document.getElementById('sticky-search-input');
+  if (stickyEl) stickyEl.value = '';
+  const clearBtn = document.getElementById('sticky-search-clear');
+  if (clearBtn) clearBtn.style.display = 'none';
   Object.assign(filterState, { category: 'all', round: 'all', date: 'all', crew: '', status: 'all' });
 
   document.querySelectorAll('#view-toggle-content .toggle').forEach(t => {
