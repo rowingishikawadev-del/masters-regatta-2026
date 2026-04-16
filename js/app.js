@@ -412,7 +412,7 @@ function renderRaceBlock(race) {
   return `
     <div class="race-header" id="race-${race.race_no}">
       <div>
-        <span class="race-label">${h(race.event_name)}${ageLabel} ${roundName}</span>
+        <span class="race-label">${h(race.event_name)}${ageLabel}</span>
         ${statusBadge}
       </div>
       <div class="race-info">Race No.${race.race_no} | ${dateStr} ${race.scheduled_time || '-'}</div>
@@ -623,7 +623,6 @@ function renderScheduleView() {
   html += '<th class="sc-time">時刻</th>';
   html += '<th class="sc-no">Race No.</th>';
   html += '<th class="sc-event">種目名</th>';
-  html += '<th class="sc-round hide-mobile">ラウンド</th>';
   html += '<th class="sc-status">状態</th>';
   html += '<th class="sc-winner">1位クルー</th>';
   html += '</tr></thead><tbody>';
@@ -635,12 +634,11 @@ function renderScheduleView() {
       lastDate = race.date;
       const dayIdx = uniqueDates.indexOf(race.date) + 1;
       html += `<tr class="schedule-date-sep">
-        <td colspan="6">── ${dayIdx}日目 (${formatDate(race.date)}) ──</td>
+        <td colspan="5">── ${dayIdx}日目 (${formatDate(race.date)}) ──</td>
       </tr>`;
     }
 
     const result = resultsCache[race.race_no];
-    const roundName = CONFIG.ROUND_NAMES[race.round] || race.round;
     const ageLabel = (usedProps.hasAgeGroup && race.age_group) ? ` (${race.age_group})` : '';
     const isNext = race.race_no === nextRaceNo;
 
@@ -672,7 +670,6 @@ function renderScheduleView() {
       <td class="sc-time">${formatRaceTime(race.time)}</td>
       <td class="sc-no">${race.race_no}</td>
       <td class="sc-event"><span class="sc-event-name">${h(race.event_name)}${ageLabel}</span></td>
-      <td class="sc-round hide-mobile">${roundName}</td>
       <td class="sc-status">${statusBadge}</td>
       <td class="sc-winner">${winnerHtml}</td>
     </tr>`;
@@ -766,7 +763,6 @@ function renderTableView() {
     const result = resultsCache[race.race_no];
     const entryMap = {};
     (race.entries || []).forEach(e => { entryMap[e.lane] = e; });
-    const roundName = CONFIG.ROUND_NAMES[race.round] || race.round;
     const hasResult = !!result;
 
     // ヘッダー情報
@@ -774,7 +770,7 @@ function renderTableView() {
       ? `<span class="badge badge-done">結果あり</span>`
       : `<span class="badge badge-pending">未実施</span>`;
     const agePart = usedProps.hasAgeGroup && race.age_group ? ` (${race.age_group})` : '';
-    const title = `Race ${race.race_no}｜${race.event_name}${agePart}　${roundName}`;
+    const title = `Race ${race.race_no}｜${race.event_name}${agePart}`;
 
     // テーブル内容
     let tableBody = '';

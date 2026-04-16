@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LINE公式アカウント 活用提案 — 第17回全日本マスターズレガッタ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Inter', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+  background: #F2F4F8;
+  color: #0F1C35;
+  line-height: 1.75;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ===== DESIGN TOKENS ===== */
+:root {
+  --navy:       #0F1C35;
+  --navy-mid:   #1A2E52;
+  --navy-light: #2C4578;
+  --gold:       #C9A84C;
+  --gold-light: #F0D68A;
+  --line-green: #06C755;
+  --teal:       #00A6A0;
+  --white:      #FFFFFF;
+  --bg:         #F2F4F8;
+  --bg-card:    #FFFFFF;
+  --border:     #E2E6EE;
+  --text:       #0F1C35;
+  --text-sub:   #4A5568;
+  --text-muted: #8A9BB5;
+  --ok:         #1B8A4E;
+  --warn:       #B77A0A;
+  --danger:     #BE3030;
+  --radius-sm:  4px;
+  --radius:     8px;
+  --radius-lg:  12px;
+  --shadow:     0 2px 12px rgba(15,28,53,0.08);
+  --shadow-lg:  0 8px 32px rgba(15,28,53,0.14);
+}
+
+/* ===== LAYOUT ===== */
+.page { max-width: 960px; margin: 0 auto; padding: 0 0 100px; }
+
+/* ===== COVER ===== */
+.cover {
+  background: linear-gradient(135deg, #0F1C35 0%, #1A3060 50%, #0D2550 100%);
+  padding: 64px 56px 56px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  right: -80px; top: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  left: -40px; bottom: -60px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(6,199,85,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.cover-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+  color: var(--gold-light);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+.cover-badge svg { width: 14px; height: 14px; }
+.cover-eyebrow {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.cover-title {
+  font-size: 30px; font-weight: 800; line-height: 1.3;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+.cover-title span { color: var(--gold-light); }
+.cover-subtitle {
+  font-size: 14px; font-weight: 400;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 40px;
+}
+.cover-meta {
+  display: flex; gap: 32px; flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 24px;
+}
+.cover-meta-item { }
+.cover-meta-label {
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 4px;
+}
+.cover-meta-value {
+  font-size: 12px; font-weight: 500;
+  color: rgba(255,255,255,0.75);
+}
+
+/* ===== BODY PADDING ===== */
+.body-content { padding: 48px 56px 0; }
+
+/* ===== DIVIDER ===== */
+.divider {
+  height: 1px; background: var(--border);
+  margin: 48px 0;
+}
+
+/* ===== SECTION HEADER ===== */
+.section { margin-bottom: 56px; }
+.section-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 24px;
+}
+.section-num {
+  width: 28px; height: 28px;
+  background: var(--navy);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.section-title {
+  font-size: 16px; font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.2px;
+}
+.section-title-en {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-left: 4px;
+}
+
+/* ===== EXEC SUMMARY KPI ===== */
+.kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 22px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--navy-mid);
+}
+.kpi-card.highlight::before { background: var(--gold); }
+.kpi-card.green::before { background: var(--line-green); }
+.kpi-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.kpi-value {
+  font-size: 28px; font-weight: 800;
+  color: var(--navy);
+  line-height: 1.1;
+  margin-bottom: 6px;
+  letter-spacing: -1px;
+}
+.kpi-value sup { font-size: 14px; font-weight: 600; letter-spacing: 0; }
+.kpi-note { font-size: 11px; color: var(--text-sub); }
+
+/* ===== INSIGHT BOX ===== */
+.insight {
+  background: linear-gradient(135deg, #EEF2FB 0%, #E8EEFA 100%);
+  border: 1px solid #C8D3EE;
+  border-left: 3px solid var(--navy-mid);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: 13px; line-height: 1.7;
+  color: var(--navy);
+}
+.insight strong { font-weight: 700; }
+.insight-warn {
+  background: linear-gradient(135deg, #FDF8EC 0%, #FBF3E0 100%);
+  border-color: #E8D080; border-left-color: var(--gold);
+  color: #5A3F00;
+}
+.insight-ok {
+  background: linear-gradient(135deg, #EDFBF2 0%, #E2F7EB 100%);
+  border-color: #9ADBB8; border-left-color: var(--ok);
+  color: #0A3D22;
+}
+.insight-danger {
+  background: linear-gradient(135deg, #FEF0F0 0%, #FCEAEA 100%);
+  border-color: #F0AAAA; border-left-color: var(--danger);
+  color: #5A1010;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.card-body { padding: 22px 26px; }
+.card-title {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--navy);
+  margin-bottom: 14px;
+}
+
+/* ===== TABLE ===== */
+.tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.tbl thead th {
+  padding: 10px 16px;
+  background: #F7F9FC;
+  border-bottom: 2px solid var(--border);
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-muted);
+  text-align: left;
+}
+.tbl tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #EEF0F5;
+  vertical-align: top;
+  color: var(--text);
+}
+.tbl tbody tr:last-child td { border-bottom: none; }
+.tbl tbody tr:hover td { background: #FAFBFD; }
+.tbl .num { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tbl .rec td { background: #F0FFF6; }
+.tbl .subtotal td {
+  background: #F7F9FC;
+  border-top: 2px solid var(--border);
+  font-weight: 700;
+}
+.tbl .total td {
+  background: var(--navy);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+}
+.tbl .total td.num { color: var(--gold-light); font-size: 15px; }
+
+/* ===== BADGE ===== */
+.badge {
+  display: inline-block; border-radius: 4px;
+  padding: 2px 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+}
+.badge-navy { background: var(--navy); color: #fff; }
+.badge-gold { background: #FFF0C0; color: #6B4A00; border: 1px solid #E0C060; }
+.badge-green { background: #D4F0E4; color: #0A4D2A; }
+.badge-warn { background: #FEF3D0; color: #7A4A00; }
+.badge-muted { background: #EEF0F5; color: var(--text-sub); }
+.badge-danger { background: #FFEAEA; color: #8B0000; }
+
+/* ===== BULLET LIST ===== */
+.blist { list-style: none; padding: 0; margin: 0; }
+.blist li {
+  padding: 7px 0 7px 20px;
+  position: relative;
+  font-size: 13px;
+  border-bottom: 1px solid #F2F4F8;
+  color: var(--text);
+}
+.blist li:last-child { border-bottom: none; }
+.blist li::before {
+  content: '';
+  position: absolute; left: 0; top: 16px;
+  width: 6px; height: 6px;
+  border-radius: 50%; background: var(--navy-mid);
+}
+.blist li .note {
+  font-size: 11px; color: var(--text-muted);
+  margin-top: 3px; display: block;
+}
+
+/* ===== STEPS ===== */
+.steps { list-style: none; padding: 0; }
+.step { display: flex; gap: 16px; margin-bottom: 16px; }
+.step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--navy); color: #fff;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.step-body { flex: 1; font-size: 13px; }
+.step-note { font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.6; }
+
+/* ===================================================
+   iPhone 16 モックアップ
+   実機仕様: 390 × 844 pt (logical) / 19.5:9
+   表示スケール: 0.62x → 幅 242px / 高さ 524px
+   Dynamic Island: 126×37pt → 78×23px
+   ステータスバー高: 54pt → 33px
+   ナビバー高: 44pt → 27px
+   =================================================== */
+.mock-wrap {
+  display: flex; gap: 32px;
+  align-items: flex-start; flex-wrap: wrap;
+  margin: 20px 0 36px;
+}
+.mock-phone { width: 242px; flex-shrink: 0; }
+.mock-phone-label {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text-muted);
+  text-align: center; margin-bottom: 12px;
+}
+
+/* ── 外枠 ── */
+.iphone16 {
+  width: 242px;
+  background: linear-gradient(155deg,
+    #3a3a3c 0%, #1c1c1e 30%, #141416 70%, #0e0e10 100%);
+  border-radius: 52px;
+  padding: 14px 10px 18px;
+  position: relative;
+  box-shadow:
+    /* アルミフレーム光沢 */
+    0 0 0 1.5px rgba(255,255,255,0.18),
+    0 0 0 3px rgba(0,0,0,0.6),
+    /* 立体影 */
+    0 28px 80px rgba(0,0,0,0.65),
+    0 10px 30px rgba(0,0,0,0.45),
+    /* 内側ハイライト */
+    inset 0 2px 0 rgba(255,255,255,0.2),
+    inset 0 -1px 0 rgba(255,255,255,0.06);
+}
+
+/* 電源ボタン（右） */
+.iphone16::before {
+  content: '';
+  position: absolute;
+  right: -4px; top: 108px;
+  width: 4px; height: 64px;
+  background: linear-gradient(180deg, #3e3e40, #2a2a2c, #3e3e40);
+  border-radius: 0 3px 3px 0;
+  box-shadow: 2px 0 4px rgba(0,0,0,0.5);
+}
+/* サイレントスイッチ（左） */
+.iphone16::after {
+  content: '';
+  position: absolute;
+  left: -4px; top: 96px;
+  width: 4px; height: 36px;
+  background: linear-gradient(180deg, #3e3e40, #2a2a2c, #3e3e40);
+  border-radius: 3px 0 0 3px;
+  box-shadow: -2px 0 4px rgba(0,0,0,0.5);
+}
+/* 音量ボタン（左） */
+.iphone16 .vol-btn {
+  position: absolute;
+  left: -4px; top: 150px;
+  width: 4px; height: 68px;
+  background: linear-gradient(180deg, #3e3e40, #2a2a2c, #3e3e40);
+  border-radius: 3px 0 0 3px;
+  box-shadow: -2px 0 4px rgba(0,0,0,0.5);
+}
+.iphone16 .vol-btn::after {
+  content: '';
+  position: absolute;
+  top: 38px; left: 0;
+  width: 4px; height: 30px;
+  background: linear-gradient(180deg, #3e3e40, #2a2a2c, #3e3e40);
+  border-radius: 3px 0 0 3px;
+}
+
+/* ── スクリーン ── */
+.iphone16-screen {
+  /* 390pt × 844pt を 0.62x スケール = 242px × 523px */
+  width: 222px;
+  height: 524px;
+  background: #000;
+  border-radius: 40px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── ステータスバー: 54pt → 33px ── */
+.ios-statusbar {
+  flex-shrink: 0;
+  height: 33px;
+  background: #06C755;
+  padding: 0 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: 4px;
+  position: relative;
+}
+
+/* ── Dynamic Island: 126×37pt → 78×23px ── */
+.dynamic-island {
+  position: absolute;
+  top: 6px;
+  left: 50%; transform: translateX(-50%);
+  width: 78px; height: 23px;
+  background: #000;
+  border-radius: 12px;
+  z-index: 20;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08),
+    inset 0 1px 2px rgba(255,255,255,0.04);
+}
+/* カメラドット */
+.dynamic-island::after {
+  content: '';
+  position: absolute;
+  right: 9px; top: 50%; transform: translateY(-50%);
+  width: 7px; height: 7px;
+  background: radial-gradient(circle at 35% 35%, #1e3a5f, #050a10);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    inset 0 0 4px rgba(0,120,255,0.2);
+}
+
+/* 時刻（左）・アイコン（右） */
+.ios-time {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.2px;
+  line-height: 1;
+}
+.ios-icons {
+  display: flex; align-items: center; gap: 5px;
+}
+.ios-icons svg { display: block; flex-shrink: 0; }
+
+/* ── LINE ナビゲーションバー: 44pt → 27px ── */
+.lh {
+  flex-shrink: 0;
+  height: 44px;
+  background: #06C755;
+  padding: 0 10px;
+  display: flex; align-items: center; gap: 7px;
+  border-bottom: 0.5px solid rgba(0,0,0,0.12);
+}
+.lh-back {
+  color: rgba(255,255,255,0.9);
+  font-size: 22px; font-weight: 200;
+  line-height: 1; margin-right: 0;
+  font-family: 'Inter', sans-serif;
+}
+.lh-icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.lh-info { flex: 1; overflow: hidden; }
+.lh-name {
+  color: #fff; font-size: 12px; font-weight: 700;
+  line-height: 1.2; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.lh-sub { color: rgba(255,255,255,0.7); font-size: 8.5px; }
+.lh-actions { display: flex; gap: 14px; flex-shrink: 0; }
+.lh-action-icon {
+  width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── チャット背景 ── */
+.lb {
+  flex: 1;
+  padding: 8px 8px 6px;
+  display: flex; flex-direction: column; gap: 5px;
+  background: #EFEFF4;
+  overflow: hidden;
+}
+
+/* 日時セパレータ */
+.lsep {
+  align-self: center;
+  font-size: 9px; font-weight: 500;
+  color: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.08);
+  border-radius: 10px;
+  padding: 2px 8px;
+  margin: 2px 0;
+}
+
+/* メッセージ行 */
+.lbw {
+  display: flex; align-items: flex-end; gap: 4px;
+}
+.lbw.r { flex-direction: row-reverse; }
+
+/* アイコン */
+.li-sm {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #06C755;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  align-self: flex-end;
+}
+
+/* 吹き出し: 17pt base → 10.5px at 0.62x */
+.bubble {
+  background: #fff;
+  border-radius: 14px 14px 14px 4px;
+  padding: 7px 10px;
+  font-size: 10.5px;
+  line-height: 1.5;
+  max-width: 152px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  color: #000;
+  word-break: break-word;
+}
+.bubble.g {
+  background: #06C755; color: #fff;
+  border-radius: 14px 14px 4px 14px;
+}
+
+/* タイムスタンプ */
+.lt {
+  font-size: 8px; color: rgba(0,0,0,0.38);
+  margin-top: 2px; white-space: nowrap;
+  align-self: flex-end;
+}
+
+/* リッチメッセージ */
+.rich {
+  background: #fff; border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  max-width: 162px;
+}
+.rich-img {
+  background: linear-gradient(135deg, #0F1C35 0%, #1e3a70 100%);
+  height: 80px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 9.5px; font-weight: 700;
+  text-align: center; padding: 8px; line-height: 1.45;
+}
+.rich-body { padding: 8px 10px 6px; }
+.rich-t { font-size: 10px; font-weight: 700; color: #1A1A18; }
+.rich-d { font-size: 8.5px; color: #6B6860; margin-top: 2px; line-height: 1.4; }
+.rich-btn {
+  background: #06C755; color: #fff;
+  text-align: center; padding: 8px 10px;
+  font-size: 10px; font-weight: 700;
+  border-top: 0.5px solid rgba(0,0,0,0.08);
+}
+
+/* ── ホームインジケーター: 5pt高 ── */
+.ios-home {
+  flex-shrink: 0;
+  height: 20px;
+  background: #EFEFF4;
+  display: flex; align-items: center; justify-content: center;
+}
+.ios-home-bar {
+  width: 112px; height: 4px;
+  background: rgba(0,0,0,0.22);
+  border-radius: 3px;
+}
+
+.mock-desc { flex: 1; min-width: 220px; }
+.mock-desc h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.mock-desc p { font-size: 12px; color: var(--text-sub); line-height: 1.7; }
+
+/* ===== PHASE CARDS ===== */
+.phase-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.phase-card { border-radius: var(--radius); padding: 20px 22px; border: 1px solid transparent; }
+.phase-card.p1 { background: #EEF2FB; border-color: #C0CCEE; }
+.phase-card.p2 { background: #EDF8F2; border-color: #A0D8B8; }
+.phase-label { font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+.phase-card.p1 .phase-label { color: var(--navy-mid); }
+.phase-card.p2 .phase-label { color: #0A4D2A; }
+.phase-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: var(--navy); }
+.phase-list { list-style: none; font-size: 12px; color: var(--text-sub); }
+.phase-list li { padding: 3px 0 3px 14px; position: relative; }
+.phase-list li::before { content: '›'; position: absolute; left: 0; color: var(--text-muted); font-weight: 700; }
+
+/* ===== ROLE GRID ===== */
+.role-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.role-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px;
+  border-top: 3px solid var(--navy);
+}
+.role-num { font-size: 9px; font-weight: 700; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; }
+.role-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.role-desc { font-size: 11px; color: var(--text-sub); line-height: 1.6; }
+
+/* ===== CHART ===== */
+.chart-wrap { padding: 24px 26px; }
+.chart-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 20px; }
+.chart-bars { display: flex; flex-direction: column; gap: 14px; }
+.chart-row { display: flex; align-items: center; gap: 12px; }
+.chart-label { width: 130px; font-size: 11px; color: var(--text-sub); flex-shrink: 0; text-align: right; line-height: 1.3; }
+.chart-bar-wrap { flex: 1; position: relative; height: 28px; background: #F2F4F8; border-radius: 4px; overflow: visible; }
+.chart-bar {
+  height: 100%; border-radius: 4px;
+  background: var(--navy-mid);
+  display: flex; align-items: center;
+  transition: width 0.4s ease;
+  position: relative;
+  min-width: 4px;
+}
+.chart-bar.gold { background: linear-gradient(90deg, var(--navy-mid), var(--gold)); }
+.chart-bar.green { background: linear-gradient(90deg, #0A4D2A, #1B8A4E); }
+.chart-bar-val { position: absolute; right: -50px; font-size: 11px; font-weight: 700; color: var(--navy); white-space: nowrap; }
+.chart-legend { display: flex; gap: 20px; margin-top: 16px; justify-content: flex-end; flex-wrap: wrap; }
+.chart-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-sub); }
+.legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+/* ===== SCENARIO COMPARE ===== */
+.scenario-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.scenario-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.scenario-card.featured {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 2px var(--navy), var(--shadow-lg);
+}
+.scenario-head {
+  padding: 16px 18px 14px;
+  background: #F7F9FC;
+  border-bottom: 1px solid var(--border);
+}
+.scenario-card.featured .scenario-head { background: var(--navy); }
+.scenario-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+.scenario-card.featured .scenario-tag { color: rgba(255,255,255,0.5); }
+.scenario-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+.scenario-card.featured .scenario-name { color: #fff; }
+.scenario-body { padding: 18px; }
+.scenario-metric { margin-bottom: 12px; }
+.scenario-metric-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+.scenario-metric-value { font-size: 18px; font-weight: 800; color: var(--navy); }
+.scenario-metric-unit { font-size: 11px; font-weight: 400; color: var(--text-sub); margin-left: 2px; }
+.scenario-metric.total .scenario-metric-value { font-size: 24px; color: var(--navy); }
+.scenario-card.featured .scenario-metric.total .scenario-metric-value { color: var(--gold); }
+.scenario-divider { height: 1px; background: var(--border); margin: 14px 0; }
+.scenario-line { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-sub); margin-bottom: 6px; }
+.scenario-line strong { color: var(--navy); font-weight: 600; }
+
+/* ===== CALENDAR VISUAL ===== */
+.cal-wrap { display: flex; flex-direction: column; gap: 2px; }
+.cal-row { display: flex; align-items: center; gap: 10px; }
+.cal-date { width: 90px; font-size: 11px; color: var(--text-muted); flex-shrink: 0; text-align: right; }
+.cal-bar {
+  flex: 1; height: 32px; border-radius: 4px;
+  display: flex; align-items: center; padding: 0 12px;
+  font-size: 11px; font-weight: 600;
+}
+.cal-bar.prep { background: #EEF2FB; color: var(--navy-mid); }
+.cal-bar.race { background: linear-gradient(90deg, #0F1C35, #2C4578); color: #fff; }
+.cal-bar.day1 { background: linear-gradient(90deg, #1B5C40, #2A8A60); color: #fff; }
+.cal-bar.day2 { background: linear-gradient(90deg, #1B5C40, #2A8A60); color: #fff; }
+.cal-bar.after { background: #F7F9FC; color: var(--text-sub); border: 1px solid var(--border); }
+.cal-count { width: 60px; font-size: 11px; font-weight: 700; color: var(--text-muted); text-align: right; }
+
+/* ===== FOOTER ===== */
+.doc-footer {
+  margin: 0 56px; padding: 24px 0;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-left { font-size: 11px; color: var(--text-muted); line-height: 1.7; }
+.footer-right { font-size: 10px; color: var(--text-muted); text-align: right; }
+.footer-conf {
+  display: inline-block;
+  background: var(--navy); color: rgba(255,255,255,0.7);
+  font-size: 9px; letter-spacing: 0.12em; padding: 3px 10px;
+  border-radius: 3px; margin-bottom: 4px; text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ===== TOC ===== */
+.toc-wrap {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 22px 26px;
+  margin-bottom: 48px; box-shadow: var(--shadow);
+}
+.toc-title { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; }
+.toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 32px; }
+.toc-item { display: flex; align-items: center; gap: 10px; padding: 5px 0; border-bottom: 1px solid #F2F4F8; }
+.toc-item:last-child, .toc-item:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+.toc-n { font-size: 10px; font-weight: 700; color: var(--text-muted); width: 16px; flex-shrink: 0; }
+.toc-link { font-size: 12px; color: var(--navy); font-weight: 500; }
+.toc-link:hover { color: var(--navy-light); text-decoration: underline; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+  .body-content { padding: 32px 24px 0; }
+  .cover { padding: 40px 28px 36px; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .scenario-grid { grid-template-columns: 1fr; }
+  .role-grid { grid-template-columns: 1fr 1fr; }
+  .toc-grid { grid-template-columns: 1fr; }
+  .phase-row { grid-template-columns: 1fr; }
+  .doc-footer { margin: 0 24px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ======== COVER ======== -->
+<div class="cover">
+  <div class="cover-badge">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.05 2 11.07c0 3.45 2.17 6.48 5.42 8.2-.13.48-.84 3.09-.88 3.31 0 0-.02.15.08.22.1.07.22.03.22.03.3-.04 3.42-2.24 4.02-2.64.37.05.75.07 1.14.07 5.52 0 10-4.05 10-9.07C22 6.05 17.52 2 12 2z"/></svg>
+    LINE Official Account Proposal
+  </div>
+  <div class="cover-eyebrow">運営本部長殿　提出資料 — Confidential</div>
+  <div class="cover-title">
+    <span>LINE公式アカウント</span><br>活用戦略・費用モデル提案
+  </div>
+  <div class="cover-subtitle">第17回全日本マスターズレガッタ石川県復興特別大会</div>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">大会日程</div>
+      <div class="cover-meta-value">2026年5月23日（土）〜 24日（日）</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">会場</div>
+      <div class="cover-meta-value">石川県津幡漕艇競技場</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">作成日</div>
+      <div class="cover-meta-value">2026年4月9日</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">資料区分</div>
+      <div class="cover-meta-value">意思決定用・予算承認申請</div>
+    </div>
+  </div>
+</div>
+
+<div class="body-content">
+
+<!-- ======== TOC ======== -->
+<div class="toc-wrap" style="margin-top:40px;">
+  <div class="toc-title">Contents</div>
+  <div class="toc-grid">
+    <div class="toc-item"><div class="toc-n">01</div><a class="toc-link" href="#summary">エグゼクティブサマリー</a></div>
+    <div class="toc-item"><div class="toc-n">05</div><a class="toc-link" href="#phase">導入フェーズ計画</a></div>
+    <div class="toc-item"><div class="toc-n">02</div><a class="toc-link" href="#what">LINEでできること</a></div>
+    <div class="toc-item"><div class="toc-n">06</div><a class="toc-link" href="#team">必要な運用体制</a></div>
+    <div class="toc-item"><div class="toc-n">03</div><a class="toc-link" href="#mockup">画面イメージ</a></div>
+    <div class="toc-item"><div class="toc-n">07</div><a class="toc-link" href="#actions">アクションプラン</a></div>
+    <div class="toc-item"><div class="toc-n">04</div><a class="toc-link" href="#cost">費用モデリング</a></div>
+    <div class="toc-item"><div class="toc-n">08</div><a class="toc-link" href="#decision">意思決定事項</a></div>
+  </div>
+</div>
+
+<!-- ======== 01 EXECUTIVE SUMMARY ======== -->
+<div class="section">
+  <span id="summary"></span>
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title">エグゼクティブサマリー <span class="section-title-en">Executive Summary</span></div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card highlight">
+      <div class="kpi-label">推奨プラン</div>
+      <div class="kpi-value" style="font-size:22px; padding-top:4px;">スタンダード</div>
+      <div class="kpi-note">月額 15,000円（税別）<br>30,000通/月 無料枠</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">大会活用期間 合計費用</div>
+      <div class="kpi-value">¥30,000<sup>〜</sup></div>
+      <div class="kpi-note">4〜5月の2ヶ月分（税別）<br>友だち800名以内なら追加費用ゼロ</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">想定 LINE友だち数</div>
+      <div class="kpi-value">300<sup>〜</sup>600</div>
+      <div class="kpi-note">選手・応援者・スタッフ合計<br>QR積極配布時の推計値</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <strong>結論：スタンダードプラン（月額15,000円）2ヶ月契約で全機能を活用可能。</strong>本大会規模（友だち300〜800名・月13配信）では無料枠30,000通を大幅に下回るため、追加メッセージ費用は一切発生しない。
+  </div>
+  <div class="insight insight-warn">
+    ⚠️ <strong>料金改定（2026年10月1日予定）</strong>：追加メッセージが「20万通まで3円/通」に変更予定。本大会は5月開催のため影響なし。将来継続運用時は再試算が必要。
+  </div>
+  <div class="insight insight-ok">
+    ✅ <strong>最優先アクション</strong>：エントリー完了メールへのQRコード掲載が友だち獲得の最大施策（全選手に届く唯一の確実な接点）。4月15日までのアカウント開設を推奨。
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ======== 02 WHAT YOU CAN DO ======== -->
+<div class="section">
+  <span id="what"></span>
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title">LINEでできること <span class="section-title-en">Capabilities</span></div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+    <div class="card" style="margin:0;">
+      <div class="card-body">
+        <div style="font-size:22px; margin-bottom:10px;">📢</div>
+        <div class="card-title">情報配信</div>
+        <ul class="blist" style="font-size:12px;">
+          <li>一斉配信（速報・案内・中止）</li>
+          <li>リッチメッセージ（ボタン付き）</li>
+          <li>ステップ配信（自動ウェルカム）</li>
+          <li>絞り込み配信（選手/応援者別）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin:0;">
+      <div class="card-body">
+        <div style="font-size:22px; margin-bottom:10px;">👥</div>
+        <div class="card-title">友だち獲得</div>
+        <ul class="blist" style="font-size:12px;">
+          <li>QRコード（会場看板・プログラム）</li>
+          <li>エントリー完了メール記載</li>
+          <li>速報サイトへのボタン埋込み</li>
+          <li>プレミアムID（任意）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin:0;">
+      <div class="card-body">
+        <div style="font-size:22px; margin-bottom:10px;">💬</div>
+        <div class="card-title">問い合わせ対応</div>
+        <ul class="blist" style="font-size:12px;">
+          <li>チャット問い合わせ受付</li>
+          <li>自動応答（24時間一次対応）</li>
+          <li>FAQ自動返答設定</li>
+          <li>チャットPro（任意・3,000円/月）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ======== 03 MOCKUP ======== -->
+<div class="section">
+  <span id="mockup"></span>
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title">画面イメージ <span class="section-title-en">UI Mockup</span></div>
+  </div>
+
+  <!-- Mock 1: 速報 -->
+  <div class="mock-wrap">
+    <div class="mock-phone">
+      <div class="mock-phone-label">① 当日速報メッセージ</div>
+      <div class="iphone16">
+        <div class="vol-btn"></div>
+        <div class="iphone16-screen">
+          <!-- ステータスバー -->
+          <div class="ios-statusbar">
+            <div class="dynamic-island"></div>
+            <div class="ios-time">9:41</div>
+            <div class="ios-icons">
+              <!-- Signal -->
+              <svg width="15" height="10" viewBox="0 0 17 12" fill="white" opacity="0.9"><rect x="0" y="6" width="3" height="6" rx="0.8"/><rect x="4.5" y="4" width="3" height="8" rx="0.8"/><rect x="9" y="2" width="3" height="10" rx="0.8"/><rect x="13.5" y="0" width="3" height="12" rx="0.8"/></svg>
+              <!-- WiFi -->
+              <svg width="13" height="10" viewBox="0 0 18 13" fill="white" opacity="0.9"><path d="M9 11.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/><path d="M5.2 8.3C6.2 7.3 7.5 6.7 9 6.7s2.8.6 3.8 1.6l1.5-1.5C12.9 5.3 11 4.5 9 4.5S5.1 5.3 3.7 6.8l1.5 1.5z" fill-rule="evenodd"/><path d="M1.6 4.7C3.2 3.1 5.5 2.1 9 2.1s5.8 1 7.4 2.6l1.5-1.5C15.9 1.2 12.7 0 9 0S2.1 1.2.1 3.2l1.5 1.5z" fill-rule="evenodd"/></svg>
+              <!-- Battery -->
+              <svg width="22" height="10" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="20" height="11" rx="3.5" stroke="white" stroke-opacity="0.5"/><rect x="2" y="2" width="14" height="8" rx="2" fill="white"/><path d="M22 4v4a2 2 0 000-4z" fill="white" opacity="0.4"/></svg>
+            </div>
+          </div>
+          <!-- LINE ヘッダー -->
+          <div class="lh">
+            <div class="lh-back">‹</div>
+            <div class="lh-icon">🚣</div>
+            <div class="lh-info">
+              <div class="lh-name">全日本マスターズレガッタ</div>
+              <div class="lh-sub">公式LINE</div>
+            </div>
+            <div class="lh-actions"><div class="lh-action-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.1 2.18 2 2 0 012.07 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div><div class="lh-action-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div></div>
+          </div>
+          <!-- チャット -->
+          <div class="lb">
+            <div class="lsep">2026年5月23日（土）</div>
+            <div class="lbw">
+              <div class="li-sm">🚣</div>
+              <div>
+                <div class="bubble">【速報】午前の部 結果<br><br>🥇 男子1X-G<br>　田中選手（愛知）3:44.1<br>🥇 女子1X-D<br>　山田選手（東京）4:12.8<br>🥇 男子2X-G<br>　横浜RC 3:51.6<br><br>▶ 速報サイトで全結果を確認</div>
+                <div class="lt">11:32　既読 287</div>
+              </div>
+            </div>
+          </div>
+          <!-- ホームインジケーター -->
+          <div class="ios-home"><div class="ios-home-bar"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="mock-desc">
+      <h4>速報配信のフロー</h4>
+      <p style="margin-bottom:12px;">計測スタッフがCSVをアップ → 速報サイトに自動反映（2〜4分）→ LINE担当が確認 → 手動配信（フェーズ1）</p>
+      <ul class="blist" style="font-size:12px;">
+        <li><strong>フェーズ1（即時開始）</strong>：速報サイトの内容をコピーして手動配信
+          <span class="note">事前テンプレートで誤配信リスクを最小化</span>
+        </li>
+        <li><strong>フェーズ2（5/10完成目標）</strong>：Webhook自動連携でデータ更新→即時配信
+          <span class="note">開発工数約40〜80時間。当日の人的ミスをゼロに</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mock 2: リッチメッセージ -->
+  <div class="mock-wrap">
+    <div class="mock-phone">
+      <div class="mock-phone-label">② リッチメッセージ（事前案内）</div>
+      <div class="iphone16">
+        <div class="vol-btn"></div>
+        <div class="iphone16-screen">
+          <div class="ios-statusbar">
+            <div class="dynamic-island"></div>
+            <div class="ios-time">9:41</div>
+            <div class="ios-icons">
+              <svg width="15" height="10" viewBox="0 0 17 12" fill="white" opacity="0.9"><rect x="0" y="6" width="3" height="6" rx="0.8"/><rect x="4.5" y="4" width="3" height="8" rx="0.8"/><rect x="9" y="2" width="3" height="10" rx="0.8"/><rect x="13.5" y="0" width="3" height="12" rx="0.8"/></svg>
+              <svg width="13" height="10" viewBox="0 0 18 13" fill="white" opacity="0.9"><path d="M9 11.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/><path d="M5.2 8.3C6.2 7.3 7.5 6.7 9 6.7s2.8.6 3.8 1.6l1.5-1.5C12.9 5.3 11 4.5 9 4.5S5.1 5.3 3.7 6.8l1.5 1.5z" fill-rule="evenodd"/><path d="M1.6 4.7C3.2 3.1 5.5 2.1 9 2.1s5.8 1 7.4 2.6l1.5-1.5C15.9 1.2 12.7 0 9 0S2.1 1.2.1 3.2l1.5 1.5z" fill-rule="evenodd"/></svg>
+              <svg width="22" height="10" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="20" height="11" rx="3.5" stroke="white" stroke-opacity="0.5"/><rect x="2" y="2" width="14" height="8" rx="2" fill="white"/><path d="M22 4v4a2 2 0 000-4z" fill="white" opacity="0.4"/></svg>
+            </div>
+          </div>
+          <div class="lh">
+            <div class="lh-back">‹</div>
+            <div class="lh-icon">🚣</div>
+            <div class="lh-info">
+              <div class="lh-name">全日本マスターズレガッタ</div>
+              <div class="lh-sub">公式LINE</div>
+            </div>
+            <div class="lh-actions"><div class="lh-action-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.1 2.18 2 2 0 012.07 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div><div class="lh-action-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div></div>
+          </div>
+          <div class="lb">
+            <div class="lsep">2026年5月20日（水）</div>
+            <div class="lbw">
+              <div class="li-sm">🚣</div>
+              <div>
+                <div class="rich">
+                  <div class="rich-img">📅 大会まであと3日<br>第17回全日本<br>マスターズレガッタ</div>
+                  <div class="rich-body">
+                    <div class="rich-t">5/23-24 津幡漕艇競技場</div>
+                    <div class="rich-d">タイムテーブル・アクセス掲載中</div>
+                  </div>
+                  <div class="rich-btn">▶ 速報サイトで確認する</div>
+                </div>
+                <div class="lt">09:00</div>
+              </div>
+            </div>
+          </div>
+          <div class="ios-home"><div class="ios-home-bar"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="mock-desc">
+      <h4>事前配信スケジュール（5月）</h4>
+      <ul class="blist" style="font-size:12px;">
+        <li>5月1日：大会案内・タイムテーブル公開</li>
+        <li>5月15日：スタートリスト・参加者名簿</li>
+        <li>5月20日：大会3日前・会場アクセス案内</li>
+        <li>5月22日：前日・受付時間・注意事項</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mock 3: ウェルカム -->
+  <div class="mock-wrap">
+    <div class="mock-phone">
+      <div class="mock-phone-label">③ ウェルカムメッセージ</div>
+      <div class="iphone16">
+        <div class="vol-btn"></div>
+        <div class="iphone16-screen">
+          <div class="ios-statusbar">
+            <div class="dynamic-island"></div>
+            <div class="ios-time">9:41</div>
+            <div class="ios-icons">
+              <svg width="15" height="10" viewBox="0 0 17 12" fill="white" opacity="0.9"><rect x="0" y="6" width="3" height="6" rx="0.8"/><rect x="4.5" y="4" width="3" height="8" rx="0.8"/><rect x="9" y="2" width="3" height="10" rx="0.8"/><rect x="13.5" y="0" width="3" height="12" rx="0.8"/></svg>
+              <svg width="13" height="10" viewBox="0 0 18 13" fill="white" opacity="0.9"><path d="M9 11.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/><path d="M5.2 8.3C6.2 7.3 7.5 6.7 9 6.7s2.8.6 3.8 1.6l1.5-1.5C12.9 5.3 11 4.5 9 4.5S5.1 5.3 3.7 6.8l1.5 1.5z" fill-rule="evenodd"/><path d="M1.6 4.7C3.2 3.1 5.5 2.1 9 2.1s5.8 1 7.4 2.6l1.5-1.5C15.9 1.2 12.7 0 9 0S2.1 1.2.1 3.2l1.5 1.5z" fill-rule="evenodd"/></svg>
+              <svg width="22" height="10" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="20" height="11" rx="3.5" stroke="white" stroke-opacity="0.5"/><rect x="2" y="2" width="14" height="8" rx="2" fill="white"/><path d="M22 4v4a2 2 0 000-4z" fill="white" opacity="0.4"/></svg>
+            </div>
+          </div>
+          <div class="lh">
+            <div class="lh-back">‹</div>
+            <div class="lh-icon">🚣</div>
+            <div class="lh-info">
+              <div class="lh-name">全日本マスターズレガッタ</div>
+              <div class="lh-sub">公式LINE</div>
+            </div>
+            <div class="lh-actions"><div class="lh-action-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.1 2.18 2 2 0 012.07 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div><div class="lh-action-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div></div>
+          </div>
+          <div class="lb">
+            <div class="lsep">友だち追加</div>
+            <div class="lbw">
+              <div class="li-sm">🚣</div>
+              <div>
+                <div class="bubble">ご登録ありがとうございます🎉<br><br>第17回全日本マスターズレガッタ（5/23〜24）公式LINEです。<br><br>✅ 大会速報<br>✅ タイムテーブル<br>✅ 会場案内<br><br>をお届けします。</div>
+                <div class="lt">自動送信</div>
+              </div>
+            </div>
+          </div>
+          <div class="ios-home"><div class="ios-home-bar"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="mock-desc">
+      <h4>QRコード掲載場所</h4>
+      <ul class="blist" style="font-size:12px;">
+        <li><strong>エントリー完了メール</strong>（最優先・全選手に届く）</li>
+        <li>大会プログラム表紙</li>
+        <li>会場エントランス看板</li>
+        <li>速報サイトトップページ</li>
+        <li>受付カウンター配布チラシ</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ======== 04 COST MODEL ======== -->
+<div class="section">
+  <span id="cost"></span>
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title">費用モデリング <span class="section-title-en">Cost Modeling</span></div>
+  </div>
+
+  <!-- 参加規模推計 -->
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">参加規模の推計（大会データより逆算）</div>
+      <table class="tbl">
+        <thead><tr><th>推計項目</th><th>根拠・計算式</th><th style="text-align:right;">推計値</th></tr></thead>
+        <tbody>
+          <tr><td>総レース数（2日間）</td><td>スケジュールCSV: 1日10種目 × 2日、年齢カテゴリーA〜N 13区分・合同レース含む</td><td class="num">約20〜30レース</td></tr>
+          <tr><td>総エントリー艇数</td><td>1レース平均4〜5艇 × 25レース</td><td class="num">約100〜125艇</td></tr>
+          <tr><td>参加選手数</td><td>1X多め → 平均1.8名/艇 × 125艇</td><td class="num">約225名</td></tr>
+          <tr><td>応援・帯同者</td><td>選手1名あたり平均2名（家族・チームメイト）</td><td class="num">約450名</td></tr>
+          <tr><td>役員・スタッフ</td><td>審判・計測・事務局・ボランティア</td><td class="num">約50〜80名</td></tr>
+          <tr class="subtotal"><td colspan="2"><strong>LINE登録可能人数（合計）</strong></td><td class="num"><strong>約725〜755名</strong></td></tr>
+          <tr class="total"><td colspan="2"><strong>想定LINE友だち数（登録率 40〜70%）</strong></td><td class="num"><strong>290〜530名</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 配信スケジュール -->
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">大会月（5月）配信スケジュール ── 計13回</div>
+      <div class="cal-wrap">
+        <div class="cal-row">
+          <div class="cal-date">5月1日</div>
+          <div class="cal-bar prep">大会案内・タイムテーブル公開</div>
+          <div class="cal-count">×1回</div>
+        </div>
+        <div class="cal-row">
+          <div class="cal-date">5月15日</div>
+          <div class="cal-bar prep">スタートリスト・参加者名簿公開</div>
+          <div class="cal-count">×1回</div>
+        </div>
+        <div class="cal-row">
+          <div class="cal-date">5月20日</div>
+          <div class="cal-bar prep">大会3日前リッチメッセージ（アクセス案内）</div>
+          <div class="cal-count">×1回</div>
+        </div>
+        <div class="cal-row">
+          <div class="cal-date">5月22日（前日）</div>
+          <div class="cal-bar prep">受付時間・最終確認・天気情報</div>
+          <div class="cal-count">×1回</div>
+        </div>
+        <div class="cal-row">
+          <div class="cal-date">5月23日（初日）</div>
+          <div class="cal-bar day1">大会開始 / 午前結果まとめ / 午後結果まとめ / 初日終了</div>
+          <div class="cal-count">×4回</div>
+        </div>
+        <div class="cal-row">
+          <div class="cal-date">5月24日（2日目）</div>
+          <div class="cal-bar day2">大会2日目開始 / 午前結果 / 午後結果 / 終了・お礼</div>
+          <div class="cal-count">×4回</div>
+        </div>
+        <div class="cal-row">
+          <div class="cal-date">5月25日</div>
+          <div class="cal-bar after">全結果まとめ・速報サイトURL・次回告知</div>
+          <div class="cal-count">×1回</div>
+        </div>
+      </div>
+      <div style="margin-top:12px; font-size:11px; color:var(--text-muted);">※ ウェルカムメッセージ・自動応答はLINE通数カウント対象外</div>
+    </div>
+  </div>
+
+  <!-- 通数バーチャート -->
+  <div class="card">
+    <div class="chart-wrap">
+      <div class="chart-title">月間送信通数 シナリオ比較（13配信・税別）</div>
+      <div class="chart-bars">
+        <div class="chart-row">
+          <div class="chart-label">保守<br>友だち300名</div>
+          <div class="chart-bar-wrap">
+            <div class="chart-bar" style="width:13%;">
+              <div class="chart-bar-val">3,900通</div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label" style="font-weight:700; color:var(--navy);">★ 標準<br>友だち500名</div>
+          <div class="chart-bar-wrap">
+            <div class="chart-bar gold" style="width:21.7%;">
+              <div class="chart-bar-val" style="font-weight:700;">6,500通</div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label">積極<br>友だち800名</div>
+          <div class="chart-bar-wrap">
+            <div class="chart-bar" style="width:34.7%;">
+              <div class="chart-bar-val">10,400通</div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label" style="color:var(--text-muted);">無料枠上限</div>
+          <div class="chart-bar-wrap" style="background:transparent; border: 2px dashed #C8D3EE;">
+            <div class="chart-bar" style="width:100%; background:transparent;">
+              <div class="chart-bar-val" style="color:var(--text-muted);">30,000通（スタンダード上限）</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-legend">
+        <div class="chart-legend-item"><div class="legend-dot" style="background:var(--navy-mid);"></div>通常シナリオ</div>
+        <div class="chart-legend-item"><div class="legend-dot" style="background:linear-gradient(90deg,var(--navy-mid),var(--gold));"></div>推奨シナリオ</div>
+        <div class="chart-legend-item"><div class="legend-dot" style="border:2px dashed #C8D3EE; background:transparent;"></div>無料枠上限</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3シナリオ比較カード -->
+  <div class="scenario-grid">
+    <div class="scenario-card">
+      <div class="scenario-head">
+        <div class="scenario-tag">Conservative</div>
+        <div class="scenario-name">保守シナリオ</div>
+      </div>
+      <div class="scenario-body">
+        <div class="scenario-metric">
+          <div class="scenario-metric-label">友だち数</div>
+          <div class="scenario-metric-value">300<span class="scenario-metric-unit">名</span></div>
+        </div>
+        <div class="scenario-divider"></div>
+        <div class="scenario-line"><span>月間通数</span><strong>3,900通</strong></div>
+        <div class="scenario-line"><span>無料枠比較</span><strong style="color:var(--ok);">枠内（13%）</strong></div>
+        <div class="scenario-line"><span>追加費用</span><strong>0円</strong></div>
+        <div class="scenario-divider"></div>
+        <div class="scenario-metric total">
+          <div class="scenario-metric-label">5月 合計費用</div>
+          <div class="scenario-metric-value">¥15,000<span class="scenario-metric-unit">税別</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="scenario-card featured">
+      <div class="scenario-head">
+        <div class="scenario-tag">★ Recommended</div>
+        <div class="scenario-name">標準シナリオ</div>
+      </div>
+      <div class="scenario-body">
+        <div class="scenario-metric">
+          <div class="scenario-metric-label">友だち数</div>
+          <div class="scenario-metric-value">500<span class="scenario-metric-unit">名</span></div>
+        </div>
+        <div class="scenario-divider"></div>
+        <div class="scenario-line"><span>月間通数</span><strong>6,500通</strong></div>
+        <div class="scenario-line"><span>無料枠比較</span><strong style="color:#06C755;">枠内（22%）</strong></div>
+        <div class="scenario-line"><span>追加費用</span><strong>0円</strong></div>
+        <div class="scenario-divider"></div>
+        <div class="scenario-metric total">
+          <div class="scenario-metric-label">5月 合計費用</div>
+          <div class="scenario-metric-value">¥15,000<span class="scenario-metric-unit">税別</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="scenario-card">
+      <div class="scenario-head">
+        <div class="scenario-tag">Aggressive</div>
+        <div class="scenario-name">積極シナリオ</div>
+      </div>
+      <div class="scenario-body">
+        <div class="scenario-metric">
+          <div class="scenario-metric-label">友だち数</div>
+          <div class="scenario-metric-value">800<span class="scenario-metric-unit">名</span></div>
+        </div>
+        <div class="scenario-divider"></div>
+        <div class="scenario-line"><span>月間通数</span><strong>10,400通</strong></div>
+        <div class="scenario-line"><span>無料枠比較</span><strong style="color:var(--ok);">枠内（35%）</strong></div>
+        <div class="scenario-line"><span>追加費用</span><strong>0円</strong></div>
+        <div class="scenario-divider"></div>
+        <div class="scenario-metric total">
+          <div class="scenario-metric-label">5月 合計費用</div>
+          <div class="scenario-metric-value">¥15,000<span class="scenario-metric-unit">税別</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- レースごと配信時の追加費用 -->
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">フェーズ2（レースごと自動配信）通数試算</div>
+      <table class="tbl">
+        <thead>
+          <tr><th>友だち数</th><th>レース配信（28回）</th><th>案内（5回）</th><th>月間合計</th><th>追加費用</th><th style="text-align:right;">5月 合計</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>300名</td><td class="num">8,400通</td><td class="num">1,500通</td><td class="num">9,900通</td><td class="num" style="color:var(--ok);">0円</td><td class="num"><strong>15,000円</strong></td></tr>
+          <tr class="rec"><td><strong>500名 ★</strong></td><td class="num"><strong>14,000通</strong></td><td class="num"><strong>2,500通</strong></td><td class="num"><strong>16,500通</strong></td><td class="num" style="color:var(--ok);"><strong>0円</strong></td><td class="num"><strong>15,000円</strong></td></tr>
+          <tr><td>800名</td><td class="num">22,400通</td><td class="num">4,000通</td><td class="num">26,400通</td><td class="num" style="color:var(--ok);">0円</td><td class="num"><strong>15,000円</strong></td></tr>
+          <tr><td>1,000名</td><td class="num">28,000通</td><td class="num">5,000通</td><td class="num">33,000通</td><td class="num" style="color:var(--warn);">9,000円</td><td class="num" style="color:var(--warn);"><strong>24,000円</strong></td></tr>
+          <tr><td>1,500名</td><td class="num">42,000通</td><td class="num">7,500通</td><td class="num">49,500通</td><td class="num" style="color:var(--danger);">58,500円</td><td class="num" style="color:var(--danger);"><strong>73,500円</strong></td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:10px; font-size:11px; color:var(--text-muted);">追加メッセージ単価: 50,000通まで3.0円/通（現行・税別）</div>
+    </div>
+  </div>
+
+  <!-- 年間費用サマリー -->
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">年間費用サマリー（標準シナリオ・友だち500名）</div>
+      <table class="tbl">
+        <thead><tr><th>月</th><th>配信内容</th><th>配信回数</th><th>月間通数</th><th style="text-align:right;">月額費用（税別）</th></tr></thead>
+        <tbody>
+          <tr><td>4月（準備月）</td><td>開設お知らせ・エントリー促進</td><td>3回</td><td class="num">1,500通</td><td class="num">15,000円</td></tr>
+          <tr class="rec"><td><strong>5月（大会月）</strong></td><td><strong>事前案内4回＋当日速報8回＋まとめ1回</strong></td><td><strong>13回</strong></td><td class="num"><strong>6,500通</strong></td><td class="num"><strong>15,000円</strong></td></tr>
+          <tr><td>6月以降</td><td>休止（解約またはコミュニケーションプランへ変更）</td><td>—</td><td class="num">—</td><td class="num">0〜5,000円</td></tr>
+          <tr class="total"><td colspan="4"><strong>大会活用期間（4〜5月）合計</strong></td><td class="num"><strong>¥30,000</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- プラン比較 -->
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">プラン比較（月額・税別）</div>
+      <table class="tbl">
+        <thead><tr><th>プラン</th><th>月額固定費</th><th>無料通数/月</th><th>追加配信</th><th>本大会評価</th></tr></thead>
+        <tbody>
+          <tr><td>コミュニケーション</td><td class="num">0円</td><td class="num">200通</td><td>不可</td><td><span class="badge badge-danger">通数不足・不適</span></td></tr>
+          <tr><td>ライト</td><td class="num">5,000円</td><td class="num">5,000通</td><td>不可</td><td><span class="badge badge-warn">400名超で不足</span></td></tr>
+          <tr class="rec"><td><strong>スタンダード ★推奨</strong></td><td class="num"><strong>15,000円</strong></td><td class="num"><strong>30,000通</strong></td><td><strong>可（従量）</strong></td><td><span class="badge badge-green">800名まで追加費用ゼロ</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ======== 05 PHASE ======== -->
+<div class="section">
+  <span id="phase"></span>
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title">導入フェーズ計画 <span class="section-title-en">Rollout Plan</span></div>
+  </div>
+
+  <div class="phase-row">
+    <div class="phase-card p1">
+      <div class="phase-label">Phase 1 — 即時開始</div>
+      <div class="phase-title">手動配信で確実にスタート</div>
+      <ul class="phase-list">
+        <li>公式アカウント開設・スタンダードプラン契約</li>
+        <li>ウェルカムメッセージ・自動応答設定</li>
+        <li>QRコード作成・各媒体への掲載</li>
+        <li>配信テンプレート13本作成</li>
+        <li>承認フロー（2名チェック）確立</li>
+        <li>テストアカウントでの検証</li>
+      </ul>
+    </div>
+    <div class="phase-card p2">
+      <div class="phase-label">Phase 2 — 5月10日完成目標</div>
+      <div class="phase-title">速報サイトとWebhook自動連携</div>
+      <ul class="phase-list">
+        <li>速報サイト更新イベントのWebhook化</li>
+        <li>LINE Messaging API連携実装</li>
+        <li>署名検証・エラーハンドリング実装</li>
+        <li>フェイルセーフ・監視設定</li>
+        <li>全レース分の自動配信テスト</li>
+        <li>当日緊急時の手動フォールバック確立</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">フェーズ1 開設ステップ</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">1</div><div class="step-body"><strong>LINE公式アカウント開設</strong><div class="step-note">business.line.me → 大会名・カテゴリー設定。初期は無料プランで開設。</div></div></li>
+        <li class="step"><div class="step-num">2</div><div class="step-body"><strong>スタンダードプランへ変更</strong><div class="step-note">設定画面からプラン変更。即日有効。月額15,000円（税別）。</div></div></li>
+        <li class="step"><div class="step-num">3</div><div class="step-body"><strong>プロフィール・ウェルカムメッセージ設定</strong><div class="step-note">大会ロゴ・カバー画像設定。友だち追加時の自動メッセージを作成。</div></div></li>
+        <li class="step"><div class="step-num">4</div><div class="step-body"><strong>QRコード取得・掲載準備</strong><div class="step-note">管理画面からQR画像DL → エントリー完了メール・プログラム印刷データに組込み。</div></div></li>
+        <li class="step"><div class="step-num">5</div><div class="step-body"><strong>配信テンプレート13本作成・運用ルール確定</strong><div class="step-note">全配信を事前作成。承認フロー（2名チェック）を文書化して誤配信ゼロを目指す。</div></div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ======== 06 TEAM ======== -->
+<div class="section">
+  <span id="team"></span>
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title">必要な運用体制 <span class="section-title-en">Operations Team</span></div>
+  </div>
+
+  <div class="role-grid">
+    <div class="role-card">
+      <div class="role-num">Role 01</div>
+      <div class="role-title">運用責任者</div>
+      <div class="role-desc">配信方針決定・最終承認・緊急時判断。配信内容のオーナー。</div>
+    </div>
+    <div class="role-card">
+      <div class="role-num">Role 02</div>
+      <div class="role-title">配信オペレーター</div>
+      <div class="role-desc">テンプレート作成・配信実行・ログ管理。当日は計測担当と連携。</div>
+    </div>
+    <div class="role-card">
+      <div class="role-num">Role 03</div>
+      <div class="role-title">CS対応担当</div>
+      <div class="role-desc">問い合わせ返信・FAQ更新・エスカレーション。自動応答でカバー外の問合せ対応。</div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <div class="insight insight-ok">
+      ✅ <strong>フェーズ2（Webhook連携後）</strong>は「バックエンド担当」と「QA/監視担当」を追加した5名体制を推奨。誤配信防止と障害対応を専任化。
+    </div>
+    <div class="insight insight-warn">
+      ⚠️ <strong>当日の誤配信防止必須ルール</strong>：送信前にテストアカウントで内容確認 → 承認者が2名目チェック → 配信実行。この3ステップを運用ルールに明文化すること。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ======== 07 ACTIONS ======== -->
+<div class="section">
+  <span id="actions"></span>
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div class="section-title">アクションプラン <span class="section-title-en">Action Plan</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-body" style="padding:0; overflow:hidden;">
+      <table class="tbl">
+        <thead>
+          <tr><th>No</th><th>アクション</th><th>期限</th><th>担当</th><th>完了条件</th><th>ステータス</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>KPI3指標（友だち数・開封率・CVR）定義と運用台帳登録</td><td>4/10</td><td>PM</td><td>算出式・取得元・更新頻度の文書化</td><td><span class="badge badge-warn">未着手</span></td></tr>
+          <tr><td>2</td><td>UTM命名規則・短縮URL運用ルール確定</td><td>4/12</td><td>開発</td><td>CVR集計に必要なURL設計完了</td><td><span class="badge badge-warn">未着手</span></td></tr>
+          <tr><td>3</td><td>LINE公式アカウント開設・スタンダードプラン契約</td><td>4/15</td><td>運用責任者</td><td>アカウント本公開・QR取得完了</td><td><span class="badge badge-warn">未着手</span></td></tr>
+          <tr><td>4</td><td>QRコードをエントリー完了メール・プログラムデータへ組込み</td><td>4/20</td><td>配信担当</td><td>全媒体にQR掲載確認</td><td><span class="badge badge-warn">未着手</span></td></tr>
+          <tr><td>5</td><td>配信テンプレート13本作成・承認フロー文書化</td><td>4/25</td><td>運用責任者</td><td>全テンプレート承認済み・ルール文書配布</td><td><span class="badge badge-warn">未着手</span></td></tr>
+          <tr><td>6</td><td>速報サイトWebhook連携 実装・テスト（Phase 2）</td><td>5/10</td><td>開発</td><td>全レース自動配信テスト合格</td><td><span class="badge badge-navy">Phase 2</span></td></tr>
+          <tr><td>7</td><td>当日オペレーション訓練（配信・CS・緊急対応）</td><td>5/20</td><td>全担当</td><td>ロールプレイ完了・手順書配布</td><td><span class="badge badge-muted">Phase 2</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ======== 08 DECISION ======== -->
+<div class="section">
+  <span id="decision"></span>
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <div class="section-title">意思決定事項 <span class="section-title-en">Decision Required</span></div>
+  </div>
+
+  <div class="insight insight-warn" style="font-size:13px; font-weight:600;">
+    以下4点について、本資料をもって承認をお願いします。
+  </div>
+
+  <div class="card">
+    <div class="card-body" style="padding:0; overflow:hidden;">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>確認事項</th><th>選択肢</th><th>影響</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>①</strong></td>
+            <td><strong>目標友だち数の設定</strong></td>
+            <td>300名 / 500名 / 800名</td>
+            <td>プラン・予算の前提。500名以上でもスタンダード固定費のみ</td>
+          </tr>
+          <tr>
+            <td><strong>②</strong></td>
+            <td><strong>当日速報の配信粒度</strong></td>
+            <td>まとめ配信（4回/日）<br>レースごと配信（28回/2日）</td>
+            <td>まとめ配信なら人的負荷が低い。レースごとはWebhook自動化が前提</td>
+          </tr>
+          <tr>
+            <td><strong>③</strong></td>
+            <td><strong>Webhook自動連携の今期実装可否</strong></td>
+            <td>Phase 1のみ（手動）<br>Phase 2まで（自動連携）</td>
+            <td>自動連携には開発工数40〜80時間。Phase 1のみでも大会運営は成立</td>
+          </tr>
+          <tr>
+            <td><strong>④</strong></td>
+            <td><strong>問い合わせ対応時間帯</strong></td>
+            <td>営業時間内のみ<br>24時間対応（自動応答活用）</td>
+            <td>24時間対応はチャットPro（3,000円/月）またはAI自動応答の検討が必要</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- /body-content -->
+
+<!-- ======== FOOTER ======== -->
+<div class="doc-footer">
+  <div class="footer-left">
+    <div class="footer-conf">Confidential</div><br>
+    第17回全日本マスターズレガッタ石川県復興特別大会　LINE公式アカウント活用提案<br>
+    作成日: 2026年4月9日　|　大会日程: 2026年5月23日〜24日　|　会場: 石川県津幡漕艇競技場
+  </div>
+  <div class="footer-right">
+    費用試算: LINEヤフー公式情報（2026年4月時点）<br>
+    2026年10月1日改定後は再試算が必要<br>
+    本資料は運営本部長への意思決定用資料です
+  </div>
+</div>
+
+</div><!-- /page -->
+</body>
+</html>

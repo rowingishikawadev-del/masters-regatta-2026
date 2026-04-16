@@ -12,7 +12,7 @@
 |------|------|
 | 開発リポジトリ | `RYUIYAMADA/masters-regatta-2026` |
 | 石川県用Fork | `rowingishikawadev-del/masters-regatta-2026` |
-| 本番URL | Cloudflare Pages（設定後に更新） |
+| 本番URL | https://masters-regatta-2026-3ha.pages.dev |
 | テストサイト | https://rowing-live-results.pages.dev |
 | ソースベース | rowing-live-results からコピー |
 
@@ -34,7 +34,7 @@
 - 2026-04-10: CLAUDE.md再開情報を整備
 
 ## 残作業（TODO）
-- [ ] Cloudflare Pages 本番デプロイ設定
+- [x] Cloudflare Pages 本番デプロイ設定済み（https://masters-regatta-2026-3ha.pages.dev）
 - [ ] GASプロジェクト本番用作成（GITHUB_REPOをこのリポジトリに向ける）
 - [ ] スケジュール・エントリーCSV入稿（大会確定後）
 - [ ] rowingishikawadev-del アカウントへのコラボレーター権限確認
