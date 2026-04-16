@@ -415,7 +415,7 @@ function renderRaceBlock(race) {
         <span class="race-label">${h(race.event_name)}${ageLabel} ${roundName}</span>
         ${statusBadge}
       </div>
-      <div class="race-info">Race No.${race.race_no} | ${dateStr} ${formatRaceTime(race.time)}</div>
+      <div class="race-info">Race No.${race.race_no} | ${dateStr} ${race.scheduled_time || '-'}</div>
     </div>
     ${tableHTML}`;
 }
@@ -525,7 +525,7 @@ function renderResultTable(race, result) {
       const cat = entry.category || '';
       const catRank = rankInCategoryMap[r.lane];
       const catRankStr = (!isDns && !isDnf && catRank) ? `<span class="cat-rank">${catRank}位</span>` : '';
-      categoryCell = `<td class="hide-mobile cat-col"><span class="entry-category">${cat ? '+' + cat : '-'}</span>${catRankStr}</td>`;
+      categoryCell = `<td class="hide-mobile cat-col"><span class="entry-category">${cat || '-'}</span>${catRankStr}</td>`;
     }
 
     // エントリー個別のage_groupがある場合（後方互換）はクルー名横に表示
