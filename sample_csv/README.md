@@ -20,7 +20,7 @@
 | category | M / W / Mix | 性別区分 |
 | age_group | G / DEF / JKLMN | 年齢カテゴリー。**複数カテゴリー合同レースは連続して記入**（例: DEF） |
 | round | FA | ラウンド（FA=決勝A, FB=決勝B, H=ヒートなど） |
-| date | 2026-05-23 | 開催日（YYYY-MM-DD） |
+| date | 2026/5/23 | 開催日（YYYY/M/DD） |
 | time | 07:00 | 発艇時刻（HH:MM） |
 | course_length | （空欄=1000m） | 500m種目のみ `500` と記入。空欄は大会デフォルト（1000m） |
 

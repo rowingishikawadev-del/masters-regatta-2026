@@ -122,7 +122,7 @@ Cloudflare Pages（CDN配信）
 | category | M / W / Mix | 性別区分 |
 | age_group | G / DEF / JKLMN | 年齢カテゴリー。**複数カテゴリー合同レースは連続記入**（例: `DEF`） |
 | round | FA | ラウンド（FA=決勝A等） |
-| date | 2026-05-23 | 開催日（YYYY-MM-DD） |
+| date | 2026/5/23 | 開催日（YYYY/M/DD） |
 | time | 07:00 | 発艇時刻（HH:MM） |
 | course_length | （空欄=1000m） | 500m種目は `500` と記入 |
 
@@ -184,7 +184,7 @@ measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,
       "event_name": "男子シングルスカル",
       "category": "M",
       "round": "FA",
-      "date": "2026-05-23",
+      "date": "2026/5/23",
       "time": "07:00",
       "age_group": "DEF",            // 複数カテゴリー合同レースは連続文字列
       "categories": ["D","E","F"],   // GASがage_groupから自動生成する配列
