@@ -142,6 +142,12 @@ async function loadAll() {
       throw new Error('MASTER_NOT_FOUND');
     }
 
+    // race_num を race_no にリネーム（master.json互換性のため）
+    masterData.schedule = masterData.schedule.map(race => ({
+      ...race,
+      race_no: race.race_num || race.race_no
+    }));
+
     // ページタイトルを大会名に動的更新
     document.title = (masterData.tournament?.race_name || '速報サイト') + ' 速報';
 
