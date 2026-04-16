@@ -107,745 +107,3688 @@
       "race_num": 1,
       "date": "2026/5/23",
       "scheduled_time": "7:00",
-      "event_name": "女子舵手付きクォドルプル"
+      "event_name": "女子舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "E.R.C.C",
+          "category": "D"
+        },
+        {
+          "lane": 2,
+          "affiliation": "愛知東郷ボートクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 3,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "RC神戸",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "F"
+        },
+        {
+          "lane": 6,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 2,
       "date": "2026/5/23",
       "scheduled_time": "7:08",
-      "event_name": "男子舵手付きフォア"
+      "event_name": "男子舵手付きフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "淡青会マスターズ",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 3,
       "date": "2026/5/23",
       "scheduled_time": "7:16",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "でん助・でん子",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "鶴見川マスターズローイングクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 5,
+          "affiliation": "富士山ローイングクラブ",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 4,
       "date": "2026/5/23",
       "scheduled_time": "7:24",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "勘八峡・昇龍ローイングクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "小野湖ローイングクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "レジェンド島根",
+          "category": "E"
+        },
+        {
+          "lane": 5,
+          "affiliation": "四神会",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 5,
       "date": "2026/5/23",
       "scheduled_time": "7:32",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "G"
+        },
+        {
+          "lane": 2,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "鵬RC",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "碧水会",
+          "category": "G"
+        },
+        {
+          "lane": 6,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 6,
       "date": "2026/5/23",
       "scheduled_time": "7:40",
-      "event_name": "男子舵手付きクォドルプル"
+      "event_name": "男子舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "鶴見川マスターズローイングクラブ",
+          "category": "J"
+        },
+        {
+          "lane": 3,
+          "affiliation": "諏訪マスターズ",
+          "category": "J"
+        },
+        {
+          "lane": 4,
+          "affiliation": "四神会",
+          "category": "K"
+        },
+        {
+          "lane": 5,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "K"
+        }
+      ]
     },
     {
       "race_num": 7,
       "date": "2026/5/23",
       "scheduled_time": "7:48",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "WKマスターズ",
+          "category": "H"
+        },
+        {
+          "lane": 2,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "四神会",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "H"
+        },
+        {
+          "lane": 5,
+          "affiliation": "米子漕艇クラブ",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 8,
       "date": "2026/5/23",
       "scheduled_time": "7:56",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "日本製鉄株式会社八幡ボート部",
+          "category": "H"
+        },
+        {
+          "lane": 2,
+          "affiliation": "濃青会鶴見川",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "パルテ会",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "パルテ会",
+          "category": "H"
+        },
+        {
+          "lane": 5,
+          "affiliation": "新貞山ローイングクラブ",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 9,
       "date": "2026/5/23",
       "scheduled_time": "8:04",
-      "event_name": "男子舵手付きクォドルプル"
+      "event_name": "男子舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "幾星霜",
+          "category": "A"
+        },
+        {
+          "lane": 2,
+          "affiliation": "旭丘漕友会",
+          "category": "A"
+        },
+        {
+          "lane": 3,
+          "affiliation": "ちばるたん",
+          "category": "A"
+        },
+        {
+          "lane": 4,
+          "affiliation": "横浜漕艇倶楽部埼玉",
+          "category": "B"
+        },
+        {
+          "lane": 5,
+          "affiliation": "E.R.C.C",
+          "category": "B"
+        }
+      ]
     },
     {
       "race_num": 10,
       "date": "2026/5/23",
       "scheduled_time": "8:12",
-      "event_name": "女子シングルスカル"
+      "event_name": "女子シングルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 2,
+          "affiliation": "キラーホエール",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 11,
       "date": "2026/5/23",
       "scheduled_time": "8:20",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "稲門艇友会",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "茨水会",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "新貞山ローイングクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "大阪公立大学紅臙会",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 12,
       "date": "2026/5/23",
       "scheduled_time": "8:28",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 2,
+          "affiliation": "淡青会マスターズ",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "ワイルドローバーローイングクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "WITH",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 13,
       "date": "2026/5/23",
       "scheduled_time": "8:36",
-      "event_name": "男子ダブルスカル"
+      "event_name": "男子ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 14,
       "date": "2026/5/23",
       "scheduled_time": "8:44",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "淡青会マスターズ",
+          "category": "J"
+        },
+        {
+          "lane": 2,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "J"
+        },
+        {
+          "lane": 3,
+          "affiliation": "四神会",
+          "category": "J"
+        },
+        {
+          "lane": 4,
+          "affiliation": "濃青会鶴見川",
+          "category": "J"
+        },
+        {
+          "lane": 5,
+          "affiliation": "WKマスターズ",
+          "category": "K"
+        },
+        {
+          "lane": 6,
+          "affiliation": "四神会",
+          "category": "L"
+        }
+      ]
     },
     {
       "race_num": 15,
       "date": "2026/5/23",
       "scheduled_time": "8:52",
-      "event_name": "男子舵手付きフォア"
+      "event_name": "男子舵手付きフォア",
+      "entries": [
+        {
+          "lane": 3,
+          "affiliation": "太田川ボートクラブ",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 16,
       "date": "2026/5/23",
       "scheduled_time": "9:00",
-      "event_name": "女子エイト"
+      "event_name": "女子エイト",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "E"
+        },
+        {
+          "lane": 2,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "RC神戸",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "鶴見川マスターズローイングクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 17,
       "date": "2026/5/23",
       "scheduled_time": "9:08",
-      "event_name": "男子ダブルスカル"
+      "event_name": "男子ダブルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "I"
+        },
+        {
+          "lane": 2,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "I"
+        },
+        {
+          "lane": 3,
+          "affiliation": "名古屋大学艇友会DE",
+          "category": "I"
+        },
+        {
+          "lane": 4,
+          "affiliation": "PENTA",
+          "category": "I"
+        },
+        {
+          "lane": 5,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "I"
+        }
+      ]
     },
     {
       "race_num": 18,
       "date": "2026/5/23",
       "scheduled_time": "9:16",
-      "event_name": "男子舵手付きフォア"
+      "event_name": "男子舵手付きフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "佐鳴漕友会(静岡大学)",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "パルテ会",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "稲門艇友会",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 19,
       "date": "2026/5/23",
       "scheduled_time": "9:24",
-      "event_name": "男子ダブルスカル"
+      "event_name": "男子ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "日本製鉄株式会社八幡ボート部",
+          "category": "D"
+        },
+        {
+          "lane": 3,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "富士山ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 5,
+          "affiliation": "御殿浜ローイングクラブ",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 20,
       "date": "2026/5/23",
       "scheduled_time": "9:32",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "四神会",
+          "category": "G"
+        },
+        {
+          "lane": 2,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "医王会ローイングクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "小野湖ローイングクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 6,
+          "affiliation": "櫂朋会",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 21,
       "date": "2026/5/23",
       "scheduled_time": "9:40",
-      "event_name": "女子エイト"
+      "event_name": "女子エイト",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "愛知東郷ボートクラブ",
+          "category": "B"
+        },
+        {
+          "lane": 3,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 4,
+          "affiliation": "パルテ会",
+          "category": "C"
+        },
+        {
+          "lane": 5,
+          "affiliation": "キラーホエール",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 22,
       "date": "2026/5/23",
       "scheduled_time": "9:48",
-      "event_name": "男子ダブルスカル"
+      "event_name": "男子ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "鵬RC",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "PENTA",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "学習院桜艇会",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "パルテ会",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 23,
       "date": "2026/5/23",
       "scheduled_time": "9:58",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "太田川ボートクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 2,
+          "affiliation": "三菱重工高砂",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "白山工業ローイングクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 5,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 24,
       "date": "2026/5/23",
       "scheduled_time": "10:08",
-      "event_name": "女子ダブルスカル"
+      "event_name": "女子ダブルスカル",
+      "entries": [
+        {
+          "lane": 3,
+          "affiliation": "インテック",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "E.R.C.C",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 25,
       "date": "2026/5/23",
       "scheduled_time": "10:18",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "松江ローイングクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "加賀梨RC",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "パルテ会",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 26,
       "date": "2026/5/23",
       "scheduled_time": "10:28",
-      "event_name": "男子舵手付きフォア"
+      "event_name": "男子舵手付きフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "四神会",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "九州照葉ローイングクラブ",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 27,
       "date": "2026/5/23",
       "scheduled_time": "10:38",
-      "event_name": "男子舵手付きフォア"
+      "event_name": "男子舵手付きフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "名古屋ローイングクラブ",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 28,
       "date": "2026/5/23",
       "scheduled_time": "10:48",
-      "event_name": "男子ダブルスカル"
+      "event_name": "男子ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "四神会",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "関東名島会",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "新貞山ローイングクラブ",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 29,
       "date": "2026/5/23",
       "scheduled_time": "10:58",
-      "event_name": "男子舵手付きクォドルプル"
+      "event_name": "男子舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "新潟大学漕艇部 緑悠会",
+          "category": "C"
+        },
+        {
+          "lane": 2,
+          "affiliation": "九州照葉ローイングクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 3,
+          "affiliation": "でん助・でん子",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "レガッタクラブフレンドシップ RCF",
+          "category": "E"
+        },
+        {
+          "lane": 5,
+          "affiliation": "パルテ会",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 30,
       "date": "2026/5/23",
       "scheduled_time": "11:10",
-      "event_name": "男子ダブルスカル"
+      "event_name": "男子ダブルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "J"
+        },
+        {
+          "lane": 2,
+          "affiliation": "岡井・柴原",
+          "category": "J"
+        },
+        {
+          "lane": 3,
+          "affiliation": "小野湖ローイングクラブ",
+          "category": "K"
+        },
+        {
+          "lane": 4,
+          "affiliation": "諏訪マスターズ",
+          "category": "K"
+        },
+        {
+          "lane": 5,
+          "affiliation": "四神会",
+          "category": "L"
+        },
+        {
+          "lane": 6,
+          "affiliation": "四神会",
+          "category": "M"
+        }
+      ]
     },
     {
       "race_num": 31,
       "date": "2026/5/23",
       "scheduled_time": "11:22",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 3,
+          "affiliation": "ちばるたん",
+          "category": "A"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ミネベアミツミ",
+          "category": "B"
+        }
+      ]
     },
     {
       "race_num": 32,
       "date": "2026/5/23",
       "scheduled_time": "11:34",
-      "event_name": "女子舵手付きクォドルプル"
+      "event_name": "女子舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "医王会ローイングクラブ",
+          "category": "A"
+        },
+        {
+          "lane": 2,
+          "affiliation": "ばらとDRCマスターズ",
+          "category": "B"
+        },
+        {
+          "lane": 3,
+          "affiliation": "パルテ会",
+          "category": "B"
+        },
+        {
+          "lane": 4,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "C"
+        },
+        {
+          "lane": 5,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 6,
+          "affiliation": "キラーホエール",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 33,
       "date": "2026/5/23",
       "scheduled_time": "11:46",
-      "event_name": "男子舵手付きフォア"
+      "event_name": "男子舵手付きフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "キラーホエール",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "レジェンド島根",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "茨水会",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "駿河・伊豆ローイングクラブ",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 34,
       "date": "2026/5/23",
       "scheduled_time": "11:56",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "新潟大学漕艇部 緑悠会",
+          "category": "A"
+        },
+        {
+          "lane": 2,
+          "affiliation": "愛知東郷ボートクラブ",
+          "category": "A"
+        },
+        {
+          "lane": 3,
+          "affiliation": "日本製鉄",
+          "category": "A"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ばらとDRCマスターズ",
+          "category": "A"
+        },
+        {
+          "lane": 5,
+          "affiliation": "橙紺会659",
+          "category": "A"
+        },
+        {
+          "lane": 6,
+          "affiliation": "湖猿ローイングチーム",
+          "category": "A"
+        }
+      ]
     },
     {
       "race_num": 35,
       "date": "2026/5/23",
       "scheduled_time": "12:06",
-      "event_name": "男子ダブルスカル"
+      "event_name": "男子ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "新潟大学漕艇部 緑悠会",
+          "category": "C"
+        },
+        {
+          "lane": 3,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 4,
+          "affiliation": "愛知東郷ボートクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 5,
+          "affiliation": "前川ローイングクラブ",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 36,
       "date": "2026/5/23",
       "scheduled_time": "12:16",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "愛知東郷ボートクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 2,
+          "affiliation": "駿台艇友会",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "RC神戸",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "WKマスターズ",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "パルテ会",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 37,
       "date": "2026/5/23",
       "scheduled_time": "12:26",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "ばらとDRCマスターズ",
+          "category": "G"
+        },
+        {
+          "lane": 2,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "櫂朋会",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "大阪公立大学紅臙会",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 38,
       "date": "2026/5/23",
       "scheduled_time": "12:36",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "矢切ローイングクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "PENTA",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ワイルドローバーローイングクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "四神会",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 39,
       "date": "2026/5/23",
       "scheduled_time": "12:46",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 40,
       "date": "2026/5/23",
       "scheduled_time": "12:56",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "J"
+        },
+        {
+          "lane": 2,
+          "affiliation": "小野湖ローイングクラブ",
+          "category": "K"
+        },
+        {
+          "lane": 3,
+          "affiliation": "WKマスターズ",
+          "category": "K"
+        },
+        {
+          "lane": 4,
+          "affiliation": "四神会",
+          "category": "K"
+        },
+        {
+          "lane": 5,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "L"
+        },
+        {
+          "lane": 6,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "N"
+        }
+      ]
     },
     {
       "race_num": 41,
       "date": "2026/5/23",
       "scheduled_time": "13:06",
-      "event_name": "女子舵手付きクォドルプル"
+      "event_name": "女子舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 42,
       "date": "2026/5/23",
       "scheduled_time": "13:16",
-      "event_name": "男子舵手付きクォドルプル"
+      "event_name": "男子舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "濃青会鶴見川",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "WKマスターズ",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 43,
       "date": "2026/5/23",
       "scheduled_time": "13:26",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "四神会",
+          "category": "H"
+        },
+        {
+          "lane": 2,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "碧水会",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "名古屋大学艇友会DE",
+          "category": "H"
+        },
+        {
+          "lane": 5,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 44,
       "date": "2026/5/23",
       "scheduled_time": "13:34",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "医王会ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 3,
+          "affiliation": "九州照葉ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 45,
       "date": "2026/5/23",
       "scheduled_time": "13:44",
-      "event_name": "女子シングルスカル"
+      "event_name": "女子シングルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "I"
+        },
+        {
+          "lane": 3,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "I"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "J"
+        },
+        {
+          "lane": 5,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "K"
+        }
+      ]
     },
     {
       "race_num": 46,
       "date": "2026/5/23",
       "scheduled_time": "13:54",
-      "event_name": "男子舵手付きクォドルプル"
+      "event_name": "男子舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "小野湖ローイングクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "RC神戸",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 47,
       "date": "2026/5/23",
       "scheduled_time": "14:02",
-      "event_name": "男子舵手付きクォドルプル"
+      "event_name": "男子舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ばらとDRCマスターズ",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "パルテ会",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 48,
       "date": "2026/5/23",
       "scheduled_time": "14:10",
-      "event_name": "女子舵手付きフォア"
+      "event_name": "女子舵手付きフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "四神会",
+          "category": "A"
+        },
+        {
+          "lane": 3,
+          "affiliation": "RC神戸",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 49,
       "date": "2026/5/23",
       "scheduled_time": "14:18",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "浜松ボートクラブ佐鳴会",
+          "category": "D"
+        },
+        {
+          "lane": 3,
+          "affiliation": "医王会ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "メンテックRC",
+          "category": "D"
+        },
+        {
+          "lane": 5,
+          "affiliation": "蔵前漕艇クラブH7",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 50,
       "date": "2026/5/23",
       "scheduled_time": "14:26",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "名古屋ローイングクラブ",
+          "category": "H"
+        },
+        {
+          "lane": 2,
+          "affiliation": "濃青会鶴見川",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "名古屋大学艇友会関西",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "大阪工業大学重吹会",
+          "category": "H"
+        },
+        {
+          "lane": 5,
+          "affiliation": "楠漕会",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 51,
       "date": "2026/5/23",
       "scheduled_time": "14:34",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "中川運河ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 3,
+          "affiliation": "黄門ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "中川運河ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 5,
+          "affiliation": "香川RC",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 52,
       "date": "2026/5/23",
       "scheduled_time": "14:42",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "愛知東郷ボートクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 2,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "関東楠漕会",
+          "category": "E"
+        },
+        {
+          "lane": 5,
+          "affiliation": "中川運河ローイングクラブ",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 53,
       "date": "2026/5/23",
       "scheduled_time": "14:50",
-      "event_name": "女子ダブルスカル"
+      "event_name": "女子ダブルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "パルテ会",
+          "category": "A"
+        },
+        {
+          "lane": 2,
+          "affiliation": "医王会ローイングクラブ",
+          "category": "A"
+        },
+        {
+          "lane": 3,
+          "affiliation": "ばらとDRCマスターズ",
+          "category": "B"
+        },
+        {
+          "lane": 4,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 5,
+          "affiliation": "唐津ボートクラブ",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 54,
       "date": "2026/5/23",
       "scheduled_time": "14:58",
-      "event_name": "男子舵手付きフォア"
+      "event_name": "男子舵手付きフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "矢切ローイングクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "WITH",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "PENTA",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 55,
       "date": "2026/5/23",
       "scheduled_time": "15:08",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "新潟大学漕艇部 緑悠会",
+          "category": "C"
+        },
+        {
+          "lane": 3,
+          "affiliation": "キラーホエール",
+          "category": "C"
+        },
+        {
+          "lane": 4,
+          "affiliation": "中電漕友会",
+          "category": "C"
+        },
+        {
+          "lane": 5,
+          "affiliation": "E.R.C.C",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 56,
       "date": "2026/5/23",
       "scheduled_time": "15:18",
-      "event_name": "男子エイト"
+      "event_name": "男子エイト",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "I"
+        },
+        {
+          "lane": 2,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "I"
+        },
+        {
+          "lane": 3,
+          "affiliation": "日本ボートマンクラブ",
+          "category": "I"
+        },
+        {
+          "lane": 4,
+          "affiliation": "WKマスターズ",
+          "category": "I"
+        },
+        {
+          "lane": 5,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "I"
+        }
+      ]
     },
     {
       "race_num": 57,
       "date": "2026/5/23",
       "scheduled_time": "15:28",
-      "event_name": "男子ダブルスカル"
+      "event_name": "男子ダブルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "H"
+        },
+        {
+          "lane": 2,
+          "affiliation": "ヤマハ発動機",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "小野湖ローイングクラブ",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ワイルドローバーローイングクラブ",
+          "category": "H"
+        },
+        {
+          "lane": 5,
+          "affiliation": "パルテ会",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 58,
       "date": "2026/5/23",
       "scheduled_time": "15:38",
-      "event_name": "男子舵手付きクォドルプル"
+      "event_name": "男子舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 2,
+          "affiliation": "名古屋ローイングクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 59,
       "date": "2026/5/23",
       "scheduled_time": "15:48",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 3,
+          "affiliation": "東京漕艇倶楽部",
+          "category": "C"
+        },
+        {
+          "lane": 4,
+          "affiliation": "パルテ会",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 60,
       "date": "2026/5/23",
       "scheduled_time": "15:56",
-      "event_name": "男子舵手付きクォドルプル"
+      "event_name": "男子舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "パルテ会",
+          "category": "G"
+        },
+        {
+          "lane": 2,
+          "affiliation": "碧水会",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "諏訪マスターズ",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "淡青会マスターズ",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "G"
+        },
+        {
+          "lane": 6,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 61,
       "date": "2026/5/23",
       "scheduled_time": "16:04",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "E.R.C.C",
+          "category": "D"
+        },
+        {
+          "lane": 3,
+          "affiliation": "九州照葉ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 62,
       "date": "2026/5/23",
       "scheduled_time": "16:14",
-      "event_name": "女子ダブルスカル"
+      "event_name": "女子ダブルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        },
+        {
+          "lane": 2,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "H"
+        },
+        {
+          "lane": 5,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "J"
+        }
+      ]
     },
     {
       "race_num": 63,
       "date": "2026/5/23",
       "scheduled_time": "16:24",
-      "event_name": "男子舵手付きフォア"
+      "event_name": "男子舵手付きフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "医王会ローイングクラブ",
+          "category": "A"
+        },
+        {
+          "lane": 2,
+          "affiliation": "ちばるたん",
+          "category": "A"
+        },
+        {
+          "lane": 3,
+          "affiliation": "黄門ローイングクラブ",
+          "category": "B"
+        },
+        {
+          "lane": 4,
+          "affiliation": "新潟大学漕艇部 緑悠会",
+          "category": "B"
+        },
+        {
+          "lane": 5,
+          "affiliation": "E.R.C.C",
+          "category": "B"
+        }
+      ]
     },
     {
       "race_num": 64,
       "date": "2026/5/23",
       "scheduled_time": "16:34",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "濃青会鶴見川",
+          "category": "I"
+        },
+        {
+          "lane": 3,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "I"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "I"
+        },
+        {
+          "lane": 5,
+          "affiliation": "名古屋大学艇友会DE",
+          "category": "I"
+        }
+      ]
     },
     {
       "race_num": 65,
       "date": "2026/5/23",
       "scheduled_time": "16:44",
-      "event_name": "男子舵手付きクォドルプル"
+      "event_name": "男子舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "鶴見川マスターズローイングクラブ",
+          "category": "I"
+        },
+        {
+          "lane": 2,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "I"
+        },
+        {
+          "lane": 3,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "I"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "I"
+        },
+        {
+          "lane": 5,
+          "affiliation": "SUWAKO",
+          "category": "I"
+        }
+      ]
     },
     {
       "race_num": 66,
       "date": "2026/5/23",
       "scheduled_time": "16:54",
-      "event_name": "男子ダブルスカル"
+      "event_name": "男子ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "恵那ローイング協会",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "愛知東郷ボートクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "E.R.C.C",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "佐鳴漕友会(静岡大学)",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 67,
       "date": "2026/5/23",
       "scheduled_time": "17:04",
-      "event_name": "男子ダブルスカル"
+      "event_name": "男子ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "PENTA",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "パルテ会",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "WKマスターズ",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 68,
       "date": "2026/5/23",
       "scheduled_time": "17:16",
-      "event_name": "男子シングルスカル"
+      "event_name": "男子シングルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "B"
+        },
+        {
+          "lane": 3,
+          "affiliation": "新潟大学漕艇部 緑悠会",
+          "category": "B"
+        },
+        {
+          "lane": 4,
+          "affiliation": "日本製鉄",
+          "category": "B"
+        },
+        {
+          "lane": 5,
+          "affiliation": "日本製鉄",
+          "category": "B"
+        }
+      ]
     },
     {
       "race_num": 69,
       "date": "2026/5/23",
       "scheduled_time": "17:28",
-      "event_name": "男子ダブルスカル"
+      "event_name": "男子ダブルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "ちばるたん",
+          "category": "A"
+        },
+        {
+          "lane": 2,
+          "affiliation": "新潟大学漕艇部 緑悠会",
+          "category": "A"
+        },
+        {
+          "lane": 3,
+          "affiliation": "日本製鉄",
+          "category": "B"
+        },
+        {
+          "lane": 4,
+          "affiliation": "黄門ローイングクラブ",
+          "category": "B"
+        },
+        {
+          "lane": 5,
+          "affiliation": "E.R.C.C",
+          "category": "B"
+        }
+      ]
     },
     {
       "race_num": 70,
       "date": "2026/5/23",
       "scheduled_time": "17:40",
-      "event_name": "女子シングルスカル"
+      "event_name": "女子シングルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "ちばるたん",
+          "category": "A"
+        },
+        {
+          "lane": 2,
+          "affiliation": "小野湖ローイングクラブ",
+          "category": "A"
+        },
+        {
+          "lane": 3,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "B"
+        },
+        {
+          "lane": 4,
+          "affiliation": "唐津ボートクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 5,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 6,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 71,
       "date": "2026/5/23",
       "scheduled_time": "17:50",
-      "event_name": "男子ダブルスカル"
+      "event_name": "男子ダブルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "H"
+        },
+        {
+          "lane": 2,
+          "affiliation": "神戸のJIIJII",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "H"
+        },
+        {
+          "lane": 5,
+          "affiliation": "医王会四神会連合",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 72,
       "date": "2026/5/23",
       "scheduled_time": "18:00",
-      "event_name": "男子舵手付きフォア"
+      "event_name": "男子舵手付きフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "香川RC",
+          "category": "D"
+        },
+        {
+          "lane": 2,
+          "affiliation": "レガッタクラブフレンドシップ RCF",
+          "category": "D"
+        },
+        {
+          "lane": 3,
+          "affiliation": "パルテ会",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 5,
+          "affiliation": "E.R.C.C",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 73,
       "date": "2026/5/24",
       "scheduled_time": "7:00",
-      "event_name": "混成ダブルスカル"
+      "event_name": "混成ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "PENTA",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "E.R.C.C",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "会津楽水会",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 74,
       "date": "2026/5/24",
       "scheduled_time": "7:12",
-      "event_name": "混成ダブルスカル"
+      "event_name": "混成ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "PENTA",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "パルテ会",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "阪神連合",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 75,
       "date": "2026/5/24",
       "scheduled_time": "7:24",
-      "event_name": "混成舵手付きクォドルプル"
+      "event_name": "混成舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "医王会ローイングクラブ",
+          "category": "A"
+        },
+        {
+          "lane": 3,
+          "affiliation": "愛知東郷ボートクラブ",
+          "category": "A"
+        },
+        {
+          "lane": 4,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "B"
+        },
+        {
+          "lane": 5,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "B"
+        }
+      ]
     },
     {
       "race_num": 76,
       "date": "2026/5/24",
       "scheduled_time": "7:36",
-      "event_name": "混成舵手付きクォドルプル"
+      "event_name": "混成舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 3,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 4,
+          "affiliation": "宮崎大学医学部漕艇部OB会",
+          "category": "C"
+        },
+        {
+          "lane": 5,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 77,
       "date": "2026/5/24",
       "scheduled_time": "7:51",
-      "event_name": "混成舵手付きクォドルプル"
+      "event_name": "混成舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "黄門ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 3,
+          "affiliation": "キラーホエール",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "愛知東郷ボートクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 5,
+          "affiliation": "唐津ボートクラブ",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 78,
       "date": "2026/5/24",
       "scheduled_time": "8:06",
-      "event_name": "混成ダブルスカル"
+      "event_name": "混成ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "諏訪マスターズ",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "神戸のJIIJII、BAABAA",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 79,
       "date": "2026/5/24",
       "scheduled_time": "8:21",
-      "event_name": "混成舵手付きクォドルプル"
+      "event_name": "混成舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "PENTA",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "I"
+        }
+      ]
     },
     {
       "race_num": 80,
       "date": "2026/5/24",
       "scheduled_time": "8:33",
-      "event_name": "混成舵手付きクォドルプル"
+      "event_name": "混成舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "RC神戸",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "Nittai Boat Club",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "E"
+        },
+        {
+          "lane": 5,
+          "affiliation": "パルテ会",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 81,
       "date": "2026/5/24",
       "scheduled_time": "8:45",
-      "event_name": "混成ダブルスカル"
+      "event_name": "混成ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "ちばるたん",
+          "category": "A"
+        },
+        {
+          "lane": 3,
+          "affiliation": "小野湖ローイングクラブ",
+          "category": "A"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ちばるたん",
+          "category": "A"
+        },
+        {
+          "lane": 5,
+          "affiliation": "ばらとDRCマスターズ",
+          "category": "A"
+        }
+      ]
     },
     {
       "race_num": 82,
       "date": "2026/5/24",
       "scheduled_time": "8:57",
-      "event_name": "混成エイト"
+      "event_name": "混成エイト",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "四神会",
+          "category": "A"
+        },
+        {
+          "lane": 2,
+          "affiliation": "漕門会",
+          "category": "A"
+        },
+        {
+          "lane": 3,
+          "affiliation": "医王会ローイングクラブ",
+          "category": "A"
+        },
+        {
+          "lane": 4,
+          "affiliation": "E.R.C.C",
+          "category": "C"
+        },
+        {
+          "lane": 5,
+          "affiliation": "鶴見川マスターズローイングクラブ",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 83,
       "date": "2026/5/24",
       "scheduled_time": "9:09",
-      "event_name": "混成エイト"
+      "event_name": "混成エイト",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        },
+        {
+          "lane": 2,
+          "affiliation": "TVBC",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ばらとDRCマスターズ",
+          "category": "H"
+        },
+        {
+          "lane": 5,
+          "affiliation": "鶴見川マスターズローイングクラブ",
+          "category": "J"
+        }
+      ]
     },
     {
       "race_num": 84,
       "date": "2026/5/24",
       "scheduled_time": "9:21",
-      "event_name": "混成ダブルスカル"
+      "event_name": "混成ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 3,
+          "affiliation": "パルテ会",
+          "category": "C"
+        },
+        {
+          "lane": 4,
+          "affiliation": "パルテ会",
+          "category": "C"
+        },
+        {
+          "lane": 5,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 85,
       "date": "2026/5/24",
       "scheduled_time": "9:33",
-      "event_name": "混成ダブルスカル"
+      "event_name": "混成ダブルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "RC神戸",
+          "category": "D"
+        },
+        {
+          "lane": 2,
+          "affiliation": "W服部",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "矢切ローイングクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 5,
+          "affiliation": "堤・太田",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 86,
       "date": "2026/5/24",
       "scheduled_time": "9:45",
-      "event_name": "混成舵手付きクォドルプル"
+      "event_name": "混成舵手付きクォドルプル",
+      "entries": [
+        {
+          "lane": 3,
+          "affiliation": "TKAM",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 87,
       "date": "2026/5/24",
       "scheduled_time": "9:57",
-      "event_name": "混成ダブルスカル"
+      "event_name": "混成ダブルスカル",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "パルテ会",
+          "category": "C"
+        },
+        {
+          "lane": 3,
+          "affiliation": "魚崎ローイングクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 4,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 88,
       "date": "2026/5/24",
       "scheduled_time": "10:12",
-      "event_name": "混成ダブルスカル"
+      "event_name": "混成ダブルスカル",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "H"
+        },
+        {
+          "lane": 2,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "本間・岡井",
+          "category": "I"
+        },
+        {
+          "lane": 5,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "I"
+        },
+        {
+          "lane": 6,
+          "affiliation": "三菱ボートクラブシニア",
+          "category": "L"
+        }
+      ]
     },
     {
       "race_num": 89,
       "date": "2026/5/24",
       "scheduled_time": "10:27",
-      "event_name": "混成エイト"
+      "event_name": "混成エイト",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "でん助・でん子",
+          "category": "D"
+        },
+        {
+          "lane": 2,
+          "affiliation": "NEXUS ROWING CLUB",
+          "category": "D"
+        },
+        {
+          "lane": 3,
+          "affiliation": "パルテ会",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "愛知東郷ボートクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 5,
+          "affiliation": "キラーホエール",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 90,
       "date": "2026/5/24",
       "scheduled_time": "10:42",
-      "event_name": "混成エイト"
+      "event_name": "混成エイト",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "インテック",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "鶴見川マスターズローイングクラブ",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "RC神戸",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "WITH",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 91,
       "date": "2026/5/24",
       "scheduled_time": "11:07",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "うのけボート部",
+          "category": "C"
+        },
+        {
+          "lane": 2,
+          "affiliation": "医王会ローイングクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 3,
+          "affiliation": "キラーホエール",
+          "category": "C"
+        },
+        {
+          "lane": 4,
+          "affiliation": "キャプテンブッケボートクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 5,
+          "affiliation": "九州照葉ローイングクラブ",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 92,
       "date": "2026/5/24",
       "scheduled_time": "11:15",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "湖猿ローイングチーム",
+          "category": "A"
+        },
+        {
+          "lane": 3,
+          "affiliation": "湖猿ローイングチーム",
+          "category": "A"
+        },
+        {
+          "lane": 4,
+          "affiliation": "新潟大学漕艇部 緑悠会",
+          "category": "A"
+        },
+        {
+          "lane": 5,
+          "affiliation": "ちばるたん",
+          "category": "A"
+        }
+      ]
     },
     {
       "race_num": 93,
       "date": "2026/5/24",
       "scheduled_time": "11:23",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "E.R.C.C",
+          "category": "B"
+        },
+        {
+          "lane": 3,
+          "affiliation": "浜松ボートクラブ佐鳴会",
+          "category": "B"
+        },
+        {
+          "lane": 4,
+          "affiliation": "黄門ローイングクラブ",
+          "category": "B"
+        },
+        {
+          "lane": 5,
+          "affiliation": "宮崎大学医学部漕艇部OB会",
+          "category": "B"
+        }
+      ]
     },
     {
       "race_num": 94,
       "date": "2026/5/24",
       "scheduled_time": "11:31",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "うのけボート部",
+          "category": "D"
+        },
+        {
+          "lane": 2,
+          "affiliation": "香川RC",
+          "category": "D"
+        },
+        {
+          "lane": 3,
+          "affiliation": "新潟大学漕艇部 緑悠会",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "勘八峡・昇龍ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 5,
+          "affiliation": "NEXUS ROWING CLUB",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 95,
       "date": "2026/5/24",
       "scheduled_time": "11:39",
-      "event_name": "混成ナックルフォア"
+      "event_name": "混成ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "E.R.C.C",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "RC神戸",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "でん助・でん子",
+          "category": "E"
+        },
+        {
+          "lane": 5,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 96,
       "date": "2026/5/24",
       "scheduled_time": "11:47",
-      "event_name": "混成ナックルフォア"
+      "event_name": "混成ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "CPRC",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "PENTA",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "I"
+        },
+        {
+          "lane": 5,
+          "affiliation": "鶴見川マスターズローイングクラブ",
+          "category": "K"
+        }
+      ]
     },
     {
       "race_num": 97,
       "date": "2026/5/24",
       "scheduled_time": "11:55",
-      "event_name": "混成ナックルフォア"
+      "event_name": "混成ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "RC神戸",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "RC神戸",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ヤバセJ1",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "茨水会",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 98,
       "date": "2026/5/24",
       "scheduled_time": "12:03",
-      "event_name": "混成ナックルフォア"
+      "event_name": "混成ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "黄門ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 2,
+          "affiliation": "パルテ会",
+          "category": "D"
+        },
+        {
+          "lane": 3,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "キラーホエール",
+          "category": "D"
+        },
+        {
+          "lane": 5,
+          "affiliation": "鶴見川マスターズローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 6,
+          "affiliation": "NEXUS ROWING CLUB",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 99,
       "date": "2026/5/24",
       "scheduled_time": "12:11",
-      "event_name": "混成ナックルフォア"
+      "event_name": "混成ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "レガッタクラブフレンドシップ RCF",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "鶴見川マスターズローイングクラブ",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 100,
       "date": "2026/5/24",
       "scheduled_time": "12:19",
-      "event_name": "混成ナックルフォア"
+      "event_name": "混成ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "RC神戸",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "RC神戸",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 101,
       "date": "2026/5/24",
       "scheduled_time": "12:27",
-      "event_name": "混成ナックルフォア"
+      "event_name": "混成ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "E.R.C.C",
+          "category": "C"
+        },
+        {
+          "lane": 2,
+          "affiliation": "愛知東郷ボートクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 3,
+          "affiliation": "レジェンド島根",
+          "category": "C"
+        },
+        {
+          "lane": 4,
+          "affiliation": "キラーホエール",
+          "category": "C"
+        },
+        {
+          "lane": 5,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "C"
+        },
+        {
+          "lane": 6,
+          "affiliation": "宮崎大学医学部漕艇部OB会",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 102,
       "date": "2026/5/24",
       "scheduled_time": "12:35",
-      "event_name": "混成ナックルフォア"
+      "event_name": "混成ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "WITH",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "CPRC",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 103,
       "date": "2026/5/24",
       "scheduled_time": "12:43",
-      "event_name": "混成ナックルフォア"
+      "event_name": "混成ナックルフォア",
+      "entries": [
+        {
+          "lane": 3,
+          "affiliation": "医王会ローイングクラブ",
+          "category": "A"
+        }
+      ]
     },
     {
       "race_num": 104,
       "date": "2026/5/24",
       "scheduled_time": "12:51",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "新潟大学漕艇部 緑悠会",
+          "category": "G"
+        },
+        {
+          "lane": 2,
+          "affiliation": "碧水会",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "小野湖ローイングクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "PENTA",
+          "category": "G"
+        },
+        {
+          "lane": 6,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 105,
       "date": "2026/5/24",
       "scheduled_time": "12:59",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "佐鳴漕友会(静岡大学)",
+          "category": "G"
+        },
+        {
+          "lane": 2,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "ワイルドローバーローイングクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "学習院桜艇会",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "諏訪マスターズ",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 106,
       "date": "2026/5/24",
       "scheduled_time": "13:07",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "G"
+        },
+        {
+          "lane": 2,
+          "affiliation": "新貞山ローイングクラブ",
+          "category": "G"
+        },
+        {
+          "lane": 3,
+          "affiliation": "駿台艇友会",
+          "category": "G"
+        },
+        {
+          "lane": 4,
+          "affiliation": "WKマスターズ",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "金沢大1981",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 107,
       "date": "2026/5/24",
       "scheduled_time": "13:15",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "I"
+        },
+        {
+          "lane": 2,
+          "affiliation": "碧水会",
+          "category": "I"
+        },
+        {
+          "lane": 3,
+          "affiliation": "白門艇友会",
+          "category": "I"
+        },
+        {
+          "lane": 4,
+          "affiliation": "済水会",
+          "category": "I"
+        },
+        {
+          "lane": 5,
+          "affiliation": "WKマスターズ",
+          "category": "I"
+        }
+      ]
     },
     {
       "race_num": 108,
       "date": "2026/5/24",
       "scheduled_time": "13:23",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "I"
+        },
+        {
+          "lane": 2,
+          "affiliation": "小野湖ローイングクラブ",
+          "category": "I"
+        },
+        {
+          "lane": 3,
+          "affiliation": "鶴見川マスターズローイングクラブ",
+          "category": "I"
+        },
+        {
+          "lane": 4,
+          "affiliation": "PENTA",
+          "category": "I"
+        },
+        {
+          "lane": 5,
+          "affiliation": "愛知東郷ボートクラブ",
+          "category": "I"
+        }
+      ]
     },
     {
       "race_num": 109,
       "date": "2026/5/24",
       "scheduled_time": "13:31",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "I"
+        },
+        {
+          "lane": 3,
+          "affiliation": "濃青会鶴見川",
+          "category": "I"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "I"
+        },
+        {
+          "lane": 5,
+          "affiliation": "大阪工業大学重吹会",
+          "category": "I"
+        }
+      ]
     },
     {
       "race_num": 110,
       "date": "2026/5/24",
       "scheduled_time": "13:39",
-      "event_name": "女子ナックルフォア"
+      "event_name": "女子ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "チームツバサ",
+          "category": "C"
+        },
+        {
+          "lane": 3,
+          "affiliation": "E.R.C.C",
+          "category": "C"
+        },
+        {
+          "lane": 4,
+          "affiliation": "うのけボート部",
+          "category": "C"
+        }
+      ]
     },
     {
       "race_num": 111,
       "date": "2026/5/24",
       "scheduled_time": "13:47",
-      "event_name": "女子ナックルフォア"
+      "event_name": "女子ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "インテック",
+          "category": "D"
+        },
+        {
+          "lane": 3,
+          "affiliation": "チームツバサ",
+          "category": "D"
+        },
+        {
+          "lane": 4,
+          "affiliation": "御殿浜ローイングクラブ",
+          "category": "D"
+        },
+        {
+          "lane": 5,
+          "affiliation": "会津楽水会",
+          "category": "D"
+        }
+      ]
     },
     {
       "race_num": 112,
       "date": "2026/5/24",
       "scheduled_time": "13:55",
-      "event_name": "女子ナックルフォア"
+      "event_name": "女子ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "れでぃばば",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "G"
+        },
+        {
+          "lane": 5,
+          "affiliation": "CPRC",
+          "category": "G"
+        }
+      ]
     },
     {
       "race_num": 113,
       "date": "2026/5/24",
       "scheduled_time": "14:03",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "京都ボートクラブ",
+          "category": "H"
+        },
+        {
+          "lane": 2,
+          "affiliation": "大阪工業大学重吹会",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "ワイルドローバーローイングクラブ",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "勘八峡・昇龍ローイングクラブ",
+          "category": "H"
+        },
+        {
+          "lane": 5,
+          "affiliation": "WKマスターズ",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 114,
       "date": "2026/5/24",
       "scheduled_time": "14:11",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "浜松ボートクラブ佐鳴会",
+          "category": "H"
+        },
+        {
+          "lane": 2,
+          "affiliation": "濃青会鶴見川",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "佐鳴漕友会(静岡大学)",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "H"
+        },
+        {
+          "lane": 5,
+          "affiliation": "大阪工業大学重吹会",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 115,
       "date": "2026/5/24",
       "scheduled_time": "14:19",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "楠漕会",
+          "category": "H"
+        },
+        {
+          "lane": 2,
+          "affiliation": "楠漕会",
+          "category": "H"
+        },
+        {
+          "lane": 3,
+          "affiliation": "名古屋大学艇友会関西",
+          "category": "H"
+        },
+        {
+          "lane": 4,
+          "affiliation": "矢切ローイングクラブ",
+          "category": "H"
+        },
+        {
+          "lane": 5,
+          "affiliation": "医王会ローイングクラブ",
+          "category": "H"
+        }
+      ]
     },
     {
       "race_num": 116,
       "date": "2026/5/24",
       "scheduled_time": "14:27",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "レジェンド島根",
+          "category": "E"
+        },
+        {
+          "lane": 2,
+          "affiliation": "金沢大学医王会",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "大阪工業大学重吹会",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "新貞山ローイングクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 5,
+          "affiliation": "御殿浜ローイングクラブ",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 117,
       "date": "2026/5/24",
       "scheduled_time": "14:35",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "会津楽水会",
+          "category": "E"
+        },
+        {
+          "lane": 2,
+          "affiliation": "E.R.C.C",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "茨戸87",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "WITH",
+          "category": "E"
+        },
+        {
+          "lane": 5,
+          "affiliation": "九州照葉ローイングクラブ",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 118,
       "date": "2026/5/24",
       "scheduled_time": "14:43",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "でん助・でん子",
+          "category": "E"
+        },
+        {
+          "lane": 3,
+          "affiliation": "医王会ローイングクラブ",
+          "category": "E"
+        },
+        {
+          "lane": 4,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "E"
+        }
+      ]
     },
     {
       "race_num": 119,
       "date": "2026/5/24",
       "scheduled_time": "14:51",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "WKマスターズ",
+          "category": "J"
+        },
+        {
+          "lane": 3,
+          "affiliation": "鶴見川マスターズローイングクラブ",
+          "category": "J"
+        },
+        {
+          "lane": 4,
+          "affiliation": "日本ボートマンクラブ",
+          "category": "J"
+        },
+        {
+          "lane": 5,
+          "affiliation": "諏訪マスターズ",
+          "category": "J"
+        }
+      ]
     },
     {
       "race_num": 120,
       "date": "2026/5/24",
       "scheduled_time": "14:59",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "SUWAKO",
+          "category": "J"
+        },
+        {
+          "lane": 3,
+          "affiliation": "名古屋大学艇友会関西",
+          "category": "J"
+        },
+        {
+          "lane": 4,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "J"
+        }
+      ]
     },
     {
       "race_num": 121,
       "date": "2026/5/24",
       "scheduled_time": "15:07",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 2,
+          "affiliation": "浜寺マスターズクラブ",
+          "category": "K"
+        },
+        {
+          "lane": 3,
+          "affiliation": "濃青会鶴見川",
+          "category": "K"
+        },
+        {
+          "lane": 4,
+          "affiliation": "WKマスターズ",
+          "category": "L"
+        },
+        {
+          "lane": 5,
+          "affiliation": "濃青会鶴見川",
+          "category": "M"
+        }
+      ]
     },
     {
       "race_num": 122,
       "date": "2026/5/24",
       "scheduled_time": "15:15",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "碧漕会",
+          "category": "F"
+        },
+        {
+          "lane": 2,
+          "affiliation": "ヤバセJ1",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "碧漕会",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "でん助・でん子",
+          "category": "F"
+        },
+        {
+          "lane": 6,
+          "affiliation": "茨水会",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 123,
       "date": "2026/5/24",
       "scheduled_time": "15:23",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "レガッタクラブフレンドシップ RCF",
+          "category": "F"
+        },
+        {
+          "lane": 2,
+          "affiliation": "茨戸87",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "ボート団塊号 (だんかいごう)",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "楠漕会",
+          "category": "F"
+        },
+        {
+          "lane": 6,
+          "affiliation": "名古屋大学艇友会57~61",
+          "category": "F"
+        }
+      ]
     },
     {
       "race_num": 124,
       "date": "2026/5/24",
       "scheduled_time": "15:31",
-      "event_name": "男子ナックルフォア"
+      "event_name": "男子ナックルフォア",
+      "entries": [
+        {
+          "lane": 1,
+          "affiliation": "RC神戸",
+          "category": "F"
+        },
+        {
+          "lane": 2,
+          "affiliation": "櫂朋会",
+          "category": "F"
+        },
+        {
+          "lane": 3,
+          "affiliation": "多摩川ローイングを楽しむ会",
+          "category": "F"
+        },
+        {
+          "lane": 4,
+          "affiliation": "瀬田漕艇クラブ",
+          "category": "F"
+        },
+        {
+          "lane": 5,
+          "affiliation": "津幡町議会",
+          "category": "F"
+        },
+        {
+          "lane": 6,
+          "affiliation": "ワイルドローバーローイングクラブ",
+          "category": "F"
+        }
+      ]
     }
   ]
 }
