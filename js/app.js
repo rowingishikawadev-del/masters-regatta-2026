@@ -129,11 +129,8 @@ async function loadAll() {
     // スケルトンUIを先に表示
     showSkeletonToggle();
 
-    masterData = await fetchJSON(CONFIG.MASTER_JSON).catch(e => {
-      // master.json 404 専用エラーメッセージ
-      if (e.message.startsWith('HTTP 404')) {
-        throw new Error('MASTER_NOT_FOUND');
-      }
+    masterData = await fetchJSONWithRetry(CONFIG.MASTER_JSON, 3, 20000).catch(e => {
+      if (e.message.startsWith('HTTP 404')) throw new Error('MASTER_NOT_FOUND');
       throw e;
     });
 
@@ -215,21 +212,44 @@ async function fetchJSON(path, timeoutMs = 20000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    // cache:'no-cache' で条件付きGET（304 Not Modified 活用）→ ?t= より通信量が少ない
     const res = await fetch(path, { signal: controller.signal, cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${path}`);
-    const text = await res.text();
-    try {
-      return JSON.parse(text);
-    } catch (parseErr) {
-      throw new Error(`JSONパースエラー: ${path}`);
-    }
+    return JSON.parse(await res.text());
   } catch (e) {
     if (e.name === 'AbortError') throw new Error(`タイムアウト: ${path}`);
     throw e;
   } finally {
     clearTimeout(timer);
   }
+}
+
+/**
+ * リトライ付きfetch（最大maxRetries回、失敗時はキャッシュなしで再試行）
+ */
+async function fetchJSONWithRetry(path, maxRetries = 3, timeoutMs = 20000) {
+  let lastError;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await fetchJSON(path, timeoutMs);
+    } catch (e) {
+      lastError = e;
+      // 404は即座に再送しない
+      if (e.message.includes('HTTP 404')) throw e;
+      if (attempt < maxRetries) {
+        // キャリアプロキシ回避のためフォールバック: クエリパラメータ方式
+        const fallbackPath = path + (path.includes('?') ? '&' : '?') + '_r=' + attempt;
+        try {
+          const ctrl = new AbortController();
+          const t = setTimeout(() => ctrl.abort(), timeoutMs);
+          const res = await fetch(fallbackPath, { signal: ctrl.signal });
+          clearTimeout(t);
+          if (res.ok) return JSON.parse(await res.text());
+        } catch (_) { /* フォールバックも失敗したら次のリトライへ */ }
+        await new Promise(r => setTimeout(r, 1000 * attempt)); // 1秒・2秒・3秒と待機
+      }
+    }
+  }
+  throw lastError;
 }
 
 // ========= 描画 =========
