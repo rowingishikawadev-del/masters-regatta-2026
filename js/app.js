@@ -136,7 +136,7 @@ async function loadAll() {
     // master.json取得（失敗時はlocalStorageキャッシュにフォールバック）
     let masterFromCache = false;
     try {
-      masterData = await fetchJSONWithRetry(CONFIG.MASTER_JSON, 3, 10000);
+      masterData = await fetchJSONWithRetry(CONFIG.MASTER_JSON, 3, 25000);
       if (!masterData || !masterData.schedule) throw new Error('MASTER_NOT_FOUND');
       // 成功したらキャッシュ保存
       try { localStorage.setItem(LS_MASTER_KEY, JSON.stringify({ d: masterData, t: Date.now() })); } catch(_) {}
@@ -204,16 +204,16 @@ async function loadAll() {
  * 全レースの結果JSONを並列 fetch する（存在しないものはスキップ）
  * 更新があった race_no のリストを返す
  */
-async function loadResults() {
+async function loadResults(cacheMode = 'default') {
   const raceNos = (masterData?.schedule || []).map(r => r.race_no);
   const newlyUpdated = [];
-  const BATCH_SIZE = 8; // モバイルの同時接続制限に配慮
+  const BATCH_SIZE = 6; // モバイルの同時接続制限に配慮
 
   for (let i = 0; i < raceNos.length; i += BATCH_SIZE) {
     const batch = raceNos.slice(i, i + BATCH_SIZE);
     await Promise.all(batch.map(async (no) => {
       try {
-        const data = await fetchJSON(CONFIG.RESULT_JSON(no));
+        const data = await fetchJSON(CONFIG.RESULT_JSON(no), 25000, cacheMode);
         if (!resultsCache[no]) newlyUpdated.push(no);
         resultsCache[no] = data;
         // 成功したらキャッシュ保存
@@ -245,12 +245,13 @@ async function loadResults() {
 
 /**
  * JSONをfetchしてパースする
+ * cacheMode: 初回ロードは 'default'（ブラウザキャッシュ利用）、強制更新は 'no-cache'
  */
-async function fetchJSON(path, timeoutMs = 10000) {
+async function fetchJSON(path, timeoutMs = 25000, cacheMode = 'default') {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const res = await fetch(path, { signal: controller.signal, cache: 'no-cache' });
+    const res = await fetch(path, { signal: controller.signal, cache: cacheMode });
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${path}`);
     return JSON.parse(await res.text());
   } catch (e) {
@@ -264,16 +265,17 @@ async function fetchJSON(path, timeoutMs = 10000) {
 /**
  * リトライ付きfetch（最大maxRetries回、失敗時はキャッシュなしで再試行）
  */
-async function fetchJSONWithRetry(path, maxRetries = 3, timeoutMs = 10000) {
+async function fetchJSONWithRetry(path, maxRetries = 3, timeoutMs = 25000, cacheMode = 'default') {
   let lastError;
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      return await fetchJSON(path, timeoutMs);
+      // 2回目以降は強制再フェッチ（キャリアプロキシ・CDNキャッシュ回避）
+      const mode = attempt > 1 ? 'no-cache' : cacheMode;
+      return await fetchJSON(path, timeoutMs, mode);
     } catch (e) {
       lastError = e;
-      if (e.message.includes('HTTP 404')) throw e;
+      if ((e.message || '').includes('HTTP 404')) throw e;
       if (attempt < maxRetries) {
-        // 指数バックオフ（1秒・2秒）
         await new Promise(r => setTimeout(r, 1000 * attempt));
       }
     }
@@ -1313,7 +1315,7 @@ function setupRefreshTimer() {
     if (isOffline || isUpdating) return; // オフライン中・更新中はスキップ
     isUpdating = true;
     try {
-      const newlyUpdated = await loadResults();
+      const newlyUpdated = await loadResults('no-cache');
       if (newlyUpdated.length > 0) {
         renderToggleView();
         renderTableView();
