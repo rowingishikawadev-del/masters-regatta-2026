@@ -1287,6 +1287,19 @@ body.fs-large .race-event-name { font-size: 20px; }
 }
 
 /* ========= タイム列・着順列 ========= */
+.col-times {
+  white-space: nowrap;
+  text-align: right;
+  vertical-align: middle;
+}
+.time-500-sub {
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  line-height: 1.2;
+}
+/* 後方互換 */
 .col-time {
   font-variant-numeric: tabular-nums;
   font-weight: 600;

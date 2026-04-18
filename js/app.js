@@ -552,25 +552,25 @@ function renderResultTable(race, result) {
     const isDns = r.status === 'dns';
     const isDnf = r.status === 'dnf';
 
-    const midTime = showMidpoint && r.times && r.times[pts[0]]
-      ? `<span class="time-split">${r.times[pts[0]].formatted}</span>`
-      : (isDns ? '-' : '-');
-
     const rankClass = r.rank !== null && r.rank <= 3 ? `rank-${r.rank}` : '';
     const photoMark = r.photo_flag ? '📷' : '';
     const note = r.note ? `<span style="color:#e03e3e;font-size:11px">${h(r.note)}</span>` : '';
     const isTie = r.tie_group && tieGroupCounts[r.tie_group] > 1;
 
-    let rankDisplay, finishDisplay;
+    // 500mスプリット（サブ表示）
+    const sub500 = (showMidpoint && r.times && r.times[pts[0]])
+      ? `<div class="time-500-sub">500m ${r.times[pts[0]].formatted}</div>` : '';
+
+    let rankDisplay, timesDisplay;
     if (isDns) {
       rankDisplay = `<span class="rank-dns">棄権</span>`;
-      finishDisplay = `<span class="status-dns">DNS</span>`;
+      timesDisplay = `<span class="status-dns">DNS</span>`;
     } else if (isDnf) {
       rankDisplay = `<span class="rank-dnf">途中棄権</span>`;
-      finishDisplay = `<span class="status-dnf">DNF</span>`;
+      timesDisplay = `<span class="status-dnf">DNF</span>${sub500}`;
     } else {
       rankDisplay = `<span class="rank rank-${r.rank}">${r.rank}${isTie ? '=' : ''}</span>`;
-      finishDisplay = `<span class="time-main">${r.finish ? r.finish.formatted : '-'}</span>${r.split ? `<div class="time-half">${r.split}</div>` : ''}`;
+      timesDisplay = `<span class="time-main">${r.finish ? r.finish.formatted : '-'}</span>${sub500}`;
     }
 
     // カテゴリー列（複数カテゴリー合同レースのみ表示）
@@ -593,16 +593,14 @@ function renderResultTable(race, result) {
         <td class="hide-mobile">${h(entry.affiliation) || '-'}</td>
         <td class="crew-name">${h(entry.crew_name) || '-'}${entryAgeLabel}</td>
         ${categoryCell}
-        <td class="col-time">${(isDns || isDnf) ? '-' : midTime}</td>
-        <td class="col-finish">${finishDisplay}</td>
+        <td class="col-times">${timesDisplay}</td>
         <td class="hide-mobile">${isDns ? '' : photoMark + note}</td>
       </tr>`;
   }).join('');
 
-  const midHeader = showMidpoint
-    ? `<th class="col-time" style="width:65px">${pts[0]}</th>`
-    : '';
-  const finishHeader = `${raceCourseLength}m`;
+  const timeHeader = showMidpoint
+    ? `<th class="col-times" style="width:110px">${raceCourseLength}m / 500m</th>`
+    : `<th class="col-times" style="width:90px">${raceCourseLength}m</th>`;
   const categoryHeader = showCategoryCol
     ? `<th class="hide-mobile cat-col" style="width:60px">区分</th>`
     : '';
@@ -617,8 +615,7 @@ function renderResultTable(race, result) {
           <th class="hide-mobile" style="min-width:90px">所属</th>
           <th style="min-width:110px">クルー</th>
           ${categoryHeader}
-          ${midHeader}
-          <th class="col-finish" style="width:80px">${finishHeader}</th>
+          ${timeHeader}
           <th class="hide-mobile" style="width:50px">備考</th>
         </tr>
       </thead>
@@ -875,18 +872,19 @@ function renderTableView() {
         const entry = entryMap[r.lane] || {};
         const isDns = r.status === 'dns';
         const isDnf = r.status === 'dnf';
-        const midTime = showMid && r.times && r.times[pts[0]] ? r.times[pts[0]].formatted : '-';
         const isTie = r.tie_group && tieGroupCounts[r.tie_group] > 1;
-        let rankCell, finishCell;
+        const sub500 = (showMid && r.times && r.times[pts[0]])
+          ? `<div class="time-500-sub">500m ${r.times[pts[0]].formatted}</div>` : '';
+        let rankCell, timesCell;
         if (isDns) {
           rankCell = `<span class="rank-dns">棄権</span>`;
-          finishCell = `<span class="status-dns">DNS</span>`;
+          timesCell = `<span class="status-dns">DNS</span>`;
         } else if (isDnf) {
           rankCell = `<span class="rank-dnf">途中棄権</span>`;
-          finishCell = `<span class="status-dnf">DNF</span>`;
+          timesCell = `<span class="status-dnf">DNF</span>${sub500}`;
         } else {
           rankCell = `<span class="rank rank-${r.rank}">${r.rank}${isTie ? '=' : ''}</span>`;
-          finishCell = `<span class="time-main">${r.finish ? r.finish.formatted : '-'}</span>${r.split ? `<div class="time-half">${r.split}</div>` : ''}`;
+          timesCell = `<span class="time-main">${r.finish ? r.finish.formatted : '-'}</span>${sub500}`;
         }
         const entryAgeLabel = (!isMultiCat && entry.age_group) ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
         const catCell = isMultiCat ? (() => {
@@ -901,8 +899,7 @@ function renderTableView() {
           <td class="hide-mobile">${h(entry.affiliation) || '-'}</td>
           <td class="crew-name">${h(entry.crew_name) || '-'}${entryAgeLabel}</td>
           ${catCell}
-          ${showMid ? `<td class="col-time">${(isDns || isDnf) ? '-' : midTime}</td>` : ''}
-          <td class="col-finish">${finishCell}</td>
+          <td class="col-times">${timesCell}</td>
           <td class="hide-mobile">${(!isDns && r.note) ? `<span style="color:#e03e3e;font-size:11px">${h(r.note)}</span>` : ''}</td>
         </tr>`;
       }).join('');
@@ -922,8 +919,9 @@ function renderTableView() {
 
     const isMultiCatFinal = (race.categories && race.categories.length > 1) ||
       (race.entries || []).some(e => e.category);
-    const midHeader = showMid ? `<th class="col-time" style="width:65px">${pts[0]}</th>` : '';
-    const finishHeader = `${raceCourseLength}m`;
+    const timeHeader = showMid
+      ? `<th class="col-times" style="width:110px">${raceCourseLength}m / 500m</th>`
+      : `<th class="col-times" style="width:90px">${raceCourseLength}m</th>`;
     const catHeader = isMultiCatFinal ? `<th class="hide-mobile cat-col" style="width:60px">区分</th>` : '';
 
     return `
@@ -942,8 +940,7 @@ function renderTableView() {
               <th class="col-lane" style="width:28px">B</th>
               <th class="hide-mobile" style="min-width:90px">所属</th><th style="min-width:110px">クルー</th>
               ${catHeader}
-              ${midHeader}
-              <th class="col-finish" style="width:80px">${finishHeader}</th>
+              ${timeHeader}
               <th class="hide-mobile" style="width:50px">備考</th>
             </tr></thead>
             <tbody>${tableBody}</tbody>
