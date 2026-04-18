@@ -1093,6 +1093,12 @@ function applyFilters() {
     }
 
     toggle.style.display = show ? 'block' : 'none';
+    // 検索ヒット時は自動展開・検索クリア時は閉じる
+    if (filterState.crew) {
+      if (show) toggle.classList.add('open');
+    } else {
+      toggle.classList.remove('open');
+    }
   });
 
   updateFilterCount();
@@ -1129,6 +1135,21 @@ function updateFilterCount() {
   const visible = document.querySelectorAll('#view-toggle-content .toggle:not([style*="display: none"])').length;
   const total = document.querySelectorAll('#view-toggle-content .toggle').length;
   el.textContent = `${visible}/${total}種目 表示中`;
+
+  // 0件のとき「見つかりません」メッセージを表示
+  let noResult = document.getElementById('filter-no-result');
+  if (visible === 0 && filterState.crew) {
+    if (!noResult) {
+      noResult = document.createElement('p');
+      noResult.id = 'filter-no-result';
+      noResult.style.cssText = 'text-align:center;padding:40px 16px;color:var(--text-sub);font-size:14px;';
+      document.getElementById('view-toggle-content')?.appendChild(noResult);
+    }
+    noResult.textContent = `「${filterState.crew}」に一致するクルーが見つかりません`;
+    noResult.style.display = 'block';
+  } else if (noResult) {
+    noResult.style.display = 'none';
+  }
 }
 
 /**
