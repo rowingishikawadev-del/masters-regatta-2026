@@ -547,7 +547,13 @@ function renderResultTable(race, result) {
     });
   }
 
-  const rows = sorted.map(r => {
+  // エントリーのないレーン（所属・クルー未登録）は表示しない
+  const validSorted = sorted.filter(r => {
+    const e = entryMap[r.lane] || {};
+    return e.crew_name || e.affiliation;
+  });
+
+  const rows = validSorted.map(r => {
     const entry = entryMap[r.lane] || {};
     const isDns = r.status === 'dns';
     const isDnf = r.status === 'dnf';
@@ -868,7 +874,10 @@ function renderTableView() {
         });
       }
 
-      tableBody = allResults.map(r => {
+      tableBody = allResults.filter(r => {
+        const e = entryMap[r.lane] || {};
+        return e.crew_name || e.affiliation;
+      }).map(r => {
         const entry = entryMap[r.lane] || {};
         const isDns = r.status === 'dns';
         const isDnf = r.status === 'dnf';
