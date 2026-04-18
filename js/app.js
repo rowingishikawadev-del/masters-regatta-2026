@@ -918,12 +918,9 @@ function renderTableView() {
         </tr>`).join('');
     }
 
-    const isMultiCatFinal = (race.categories && race.categories.length > 1) ||
-      (race.entries || []).some(e => e.category);
     const timeHeader = showMid
       ? `<th class="col-times" style="width:110px">${raceCourseLength}m / 500m</th>`
       : `<th class="col-times" style="width:90px">${raceCourseLength}m</th>`;
-    const catHeader = isMultiCatFinal ? `<th class="hide-mobile cat-col" style="width:60px">区分</th>` : '';
 
     return `
       <div class="toggle" data-race="${race.race_no}">
@@ -940,7 +937,6 @@ function renderTableView() {
               <th style="width:44px">着順</th>
               <th class="col-lane" style="width:28px">B</th>
               <th class="hide-mobile" style="min-width:90px">所属</th><th style="min-width:110px">クルー</th>
-              ${catHeader}
               ${timeHeader}
               <th class="hide-mobile" style="width:50px">備考</th>
             </tr></thead>
