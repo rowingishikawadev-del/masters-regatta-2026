@@ -351,13 +351,22 @@ function renderToggleView() {
   const container = document.getElementById('view-toggle-content');
   if (!container) return;
 
-  // 種目コードでグループ化
+  // 種目コードでグループ化 → コード内の数字昇順でソート
   const groups = groupByEventCode(masterData?.schedule || []);
+  groups.sort((a, b) => {
+    const na = parseInt((a.eventCode.match(/\d+/) || ['999'])[0], 10);
+    const nb = parseInt((b.eventCode.match(/\d+/) || ['999'])[0], 10);
+    if (na !== nb) return na - nb;
+    return a.eventCode.localeCompare(b.eventCode);
+  });
 
   container.innerHTML = '';
   groups.forEach(({ eventCode, eventName, category, races }) => {
     // フィルタ適用
     if (!matchesFilter(category, races)) return;
+
+    // レースをrace_no昇順にソート
+    races.sort((a, b) => a.race_no - b.race_no);
 
     const completedCount = races.filter(r => resultsCache[r.race_no]).length;
     const totalCount = races.length;
@@ -413,7 +422,7 @@ function renderRaceBlock(race) {
 
   const tableHTML = result
     ? renderResultTable(race, result)
-    : '<p class="no-result">結果は未投入です</p>';
+    : renderEntryTable(race);
 
   return `
     <div class="race-header" id="race-${race.race_no}">
@@ -424,6 +433,45 @@ function renderRaceBlock(race) {
       <div class="race-info">Race No.${race.race_no} | ${dateStr} ${race.time ? formatRaceTime(race.time) : '-'}</div>
     </div>
     ${tableHTML}`;
+}
+
+/**
+ * 結果未投入時のエントリー情報テーブルを返す
+ */
+function renderEntryTable(race) {
+  const entries = [...(race.entries || [])].sort((a, b) => a.lane - b.lane);
+  if (entries.length === 0) {
+    return '<p class="no-result">エントリー情報なし</p>';
+  }
+  const isMultiCategory = (race.categories && race.categories.length > 1) ||
+    entries.some(e => e.category);
+  const rows = entries.map(e => {
+    const catCell = isMultiCategory
+      ? `<td class="hide-mobile cat-col"><span class="entry-category">${h(e.category) || '-'}</span></td>`
+      : '';
+    return `<tr>
+      <td></td>
+      <td>${e.lane}</td>
+      <td>${h(e.affiliation) || '-'}</td>
+      <td class="crew-name">${h(e.crew_name) || '-'}</td>
+      ${catCell}
+    </tr>`;
+  }).join('');
+  const categoryHeader = isMultiCategory
+    ? `<th class="hide-mobile cat-col" style="width:60px">区分</th>` : '';
+  return `
+    <div class="result-table-wrapper">
+    <table class="result-table">
+      <thead><tr>
+        <th style="width:36px"></th>
+        <th style="width:28px">B</th>
+        <th style="min-width:100px">所属</th>
+        <th style="min-width:120px">クルー</th>
+        ${categoryHeader}
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    </div>`;
 }
 
 /**
