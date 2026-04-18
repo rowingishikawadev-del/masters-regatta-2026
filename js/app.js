@@ -587,14 +587,19 @@ function renderResultTable(race, result) {
     const entryAgeLabel = (!showCategoryCol && entry.age_group)
       ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
 
+    const affiliationSub = entry.affiliation
+      ? `<div class="crew-affiliation-sub">${h(entry.affiliation)}</div>` : '';
+    const noteInline = (!isDns && (r.photo_flag || r.note))
+      ? `<div class="note-inline">${photoMark}${note}</div>` : '';
+
     return `
       <tr class="${rankClass}${isDns || isDnf ? ' row-retired' : ''}">
         <td>${rankDisplay}</td>
         <td class="col-lane">${r.lane}</td>
         <td class="hide-mobile">${h(entry.affiliation) || '-'}</td>
-        <td class="crew-name">${h(entry.crew_name) || '-'}${entryAgeLabel}</td>
+        <td class="crew-name">${h(entry.crew_name) || '-'}${entryAgeLabel}${affiliationSub}</td>
         ${categoryCell}
-        <td class="col-times">${timesDisplay}</td>
+        <td class="col-times">${timesDisplay}${noteInline}</td>
         <td class="hide-mobile">${isDns ? '' : photoMark + note}</td>
       </tr>`;
   }).join('');
@@ -895,13 +900,17 @@ function renderTableView() {
           const crStr = (!isDns && !isDnf && cr) ? `<span class="cat-rank">${cr}位</span>` : '';
           return `<td class="hide-mobile cat-col"><span class="entry-category">${cat ? '+' + cat : '-'}</span>${crStr}</td>`;
         })() : '';
+        const affiliationSub = entry.affiliation
+          ? `<div class="crew-affiliation-sub">${h(entry.affiliation)}</div>` : '';
+        const noteInline = (!isDns && (r.photo_flag || r.note))
+          ? `<div class="note-inline">${r.photo_flag ? '📷' : ''}${r.note ? `<span style="color:#e03e3e;font-size:11px">${h(r.note)}</span>` : ''}</div>` : '';
         return `<tr class="${r.rank && r.rank <= 3 ? `rank-${r.rank}` : ''}${isDns || isDnf ? ' row-retired' : ''}">
           <td>${rankCell}</td>
           <td class="col-lane">${r.lane}</td>
           <td class="hide-mobile">${h(entry.affiliation) || '-'}</td>
-          <td class="crew-name">${h(entry.crew_name) || '-'}${entryAgeLabel}</td>
+          <td class="crew-name">${h(entry.crew_name) || '-'}${entryAgeLabel}${affiliationSub}</td>
           ${catCell}
-          <td class="col-times">${timesCell}</td>
+          <td class="col-times">${timesCell}${noteInline}</td>
           <td class="hide-mobile">${(!isDns && r.note) ? `<span style="color:#e03e3e;font-size:11px">${h(r.note)}</span>` : ''}</td>
         </tr>`;
       }).join('');
