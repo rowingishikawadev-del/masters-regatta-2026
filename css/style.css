@@ -9,6 +9,12 @@ body {
   line-break: strict;
   word-break: normal;
   overflow-wrap: anywhere;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.notion-page {
+  flex: 1;
 }
 
 /* ========= カラー変数 ========= */
