@@ -297,14 +297,22 @@ function processPendingCSVs(startTime) {
 
     const files = raceFiles[raceNo];
     const collectedPoints = Object.keys(files);
-    const allPointsReady = measurementPoints.every(p => collectedPoints.includes(p));
+    const lastPoint = measurementPoints[measurementPoints.length - 1];
+    const hasLastPoint = collectedPoints.includes(lastPoint);
 
-    if (!allPointsReady) {
-      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 計測ポイント未揃い: ' + collectedPoints.join(','));
+    // ゴールポイント（1000m）が未着の場合はスキップ
+    // 例: 500mのみ到着 → 処理しない
+    if (!hasLastPoint) {
+      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' ゴールポイント(' + lastPoint + ')未着のためスキップ: 取得済み=[' + collectedPoints.join(',') + ']');
       continue;
     }
 
-    Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 全ポイント揃い。処理開始');
+    // 中間ポイント（500m）未着でもゴールが揃えば処理する
+    if (collectedPoints.length < measurementPoints.length) {
+      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 中間ポイント未着だがゴール到着のため処理: 取得済み=[' + collectedPoints.join(',') + ']');
+    } else {
+      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 全ポイント揃い。処理開始');
+    }
 
     try {
       buildAndPushRaceJSON(parseInt(raceNo, 10), files, measurementPoints);
