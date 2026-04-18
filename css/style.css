@@ -466,7 +466,7 @@ h1.page-title {
 .time-main {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text);
   letter-spacing: 0.01em;
 }
@@ -1284,4 +1284,41 @@ body.fs-large .race-event-name { font-size: 20px; }
 }
 .day-tab:hover:not(.active) {
   color: var(--text);
+}
+
+/* ========= タイム列・着順列 ========= */
+.col-time {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-sub);
+  white-space: nowrap;
+  text-align: right;
+}
+.col-finish {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-align: right;
+}
+.col-lane {
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-sub);
+}
+.sc-winner-lane {
+  display: inline-block;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-right: 4px;
+}
+.sc-winner-time {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-size: 13px;
+  margin-left: 6px;
 }
