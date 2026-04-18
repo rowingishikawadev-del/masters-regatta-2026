@@ -300,7 +300,7 @@ function renderFilterOptions() {
   const dayTabs = document.getElementById('day-tabs');
   if (dayTabs) {
     const tabs = [{ value: 'all', label: 'すべて' }]
-      .concat(dates.map((d, i) => ({ value: d, label: `${i + 1}日目｜${formatDate(d)}` })));
+      .concat(dates.map(d => ({ value: d, label: formatDate(d) })));
     dayTabs.innerHTML = tabs.map(t =>
       `<button class="day-tab${filterState.date === t.value ? ' active' : ''}"
         onclick="selectDayTab('${t.value}')">${t.label}</button>`
@@ -315,7 +315,7 @@ function renderFilterOptions() {
     dates.forEach((d, i) => {
       const opt = document.createElement('option');
       opt.value = d;
-      opt.textContent = `${i + 1}日目 (${formatDate(d)})`;
+      opt.textContent = formatDate(d);
       daySelect.appendChild(opt);
     });
   }
@@ -688,7 +688,7 @@ function renderScheduleView() {
       lastDate = race.date;
       const dayIdx = uniqueDates.indexOf(race.date) + 1;
       html += `<tr class="schedule-date-sep">
-        <td colspan="5">── ${dayIdx}日目 (${formatDate(race.date)}) ──</td>
+        <td colspan="5">── ${formatDate(race.date)} ──</td>
       </tr>`;
     }
 
@@ -1431,9 +1431,12 @@ function formatRaceTime(timeStr) {
  */
 function formatDate(dateStr) {
   if (!dateStr || dateStr === 'all') return dateStr || '';
-  const parts = dateStr.split('-');
-  if (parts.length !== 3) return '';
-  return `${parseInt(parts[1], 10)}/${parseInt(parts[2], 10)}`;
+  const normalized = dateStr.replace(/\//g, '-');
+  const parts = normalized.split('-');
+  if (parts.length !== 3) return dateStr;
+  const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+  const days = ['日', '月', '火', '水', '木', '金', '土'];
+  return `${parseInt(parts[1], 10)}/${parseInt(parts[2], 10)}(${days[d.getDay()]})`;
 }
 
 /**

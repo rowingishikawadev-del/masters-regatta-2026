@@ -255,6 +255,10 @@ h1.page-title {
   gap: 0;
   border-bottom: 1px solid var(--border);
   margin-bottom: 24px;
+  position: sticky;
+  top: 56px;
+  z-index: 89;
+  background: #fff;
 }
 .view-tab {
   padding: 14px 28px;
