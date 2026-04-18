@@ -443,8 +443,7 @@ function renderEntryTable(race) {
   if (entries.length === 0) {
     return '<p class="no-result">エントリー情報なし</p>';
   }
-  const isMultiCategory = (race.categories && race.categories.length > 1) ||
-    entries.some(e => e.category);
+  const isMultiCategory = false;
   const rows = entries.map(e => {
     const catCell = isMultiCategory
       ? `<td class="hide-mobile cat-col"><span class="entry-category">${h(e.category) || '-'}</span></td>`
@@ -492,11 +491,7 @@ function renderResultTable(race, result) {
   const entryMap = {};
   (race.entries || []).forEach(e => { entryMap[e.lane] = e; });
 
-  // 複数カテゴリー合同レースの検知
-  // categories 配列が2以上、またはエントリーに category フィールドがある場合
-  const isMultiCategory = (race.categories && race.categories.length > 1) ||
-    (race.entries || []).some(e => e.category);
-  const showCategoryCol = isMultiCategory;
+  const showCategoryCol = false;
 
   // エントリーにあるが結果にないレーン → 棄権（DNS）として追加
   const resultsList = result?.results || [];
@@ -847,9 +842,7 @@ function renderTableView() {
         if (r.tie_group) tieGroupCounts[r.tie_group] = (tieGroupCounts[r.tie_group] || 0) + 1;
       });
 
-      // 複数カテゴリー合同レース検知
-      const isMultiCat = (race.categories && race.categories.length > 1) ||
-        (race.entries || []).some(e => e.category);
+      const isMultiCat = false;
 
       // カテゴリー内順位を計算
       const catRankMap = {};
@@ -913,8 +906,7 @@ function renderTableView() {
         </tr>`;
       }).join('');
     } else {
-      const isMultiCat = (race.categories && race.categories.length > 1) ||
-        (race.entries || []).some(e => e.category);
+      const isMultiCat = false;
       tableBody = (race.entries || []).map(e => `
         <tr class="row-retired">
           <td>-</td><td>${e.lane}</td>
