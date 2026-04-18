@@ -204,7 +204,7 @@ async function loadAll() {
  * 全レースの結果JSONを並列 fetch する（存在しないものはスキップ）
  * 更新があった race_no のリストを返す
  */
-async function loadResults(cacheMode = 'default') {
+async function loadResults(cacheMode = 'no-cache') {
   const raceNos = (masterData?.schedule || []).map(r => r.race_no);
   const newlyUpdated = [];
   const BATCH_SIZE = 6; // モバイルの同時接続制限に配慮
@@ -247,7 +247,7 @@ async function loadResults(cacheMode = 'default') {
  * JSONをfetchしてパースする
  * cacheMode: 初回ロードは 'default'（ブラウザキャッシュ利用）、強制更新は 'no-cache'
  */
-async function fetchJSON(path, timeoutMs = 25000, cacheMode = 'default') {
+async function fetchJSON(path, timeoutMs = 25000, cacheMode = 'no-cache') {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -263,15 +263,13 @@ async function fetchJSON(path, timeoutMs = 25000, cacheMode = 'default') {
 }
 
 /**
- * リトライ付きfetch（最大maxRetries回、失敗時はキャッシュなしで再試行）
+ * リトライ付きfetch（最大maxRetries回、失敗時は再試行）
  */
-async function fetchJSONWithRetry(path, maxRetries = 3, timeoutMs = 25000, cacheMode = 'default') {
+async function fetchJSONWithRetry(path, maxRetries = 3, timeoutMs = 25000) {
   let lastError;
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      // 2回目以降は強制再フェッチ（キャリアプロキシ・CDNキャッシュ回避）
-      const mode = attempt > 1 ? 'no-cache' : cacheMode;
-      return await fetchJSON(path, timeoutMs, mode);
+      return await fetchJSON(path, timeoutMs, 'no-cache');
     } catch (e) {
       lastError = e;
       if ((e.message || '').includes('HTTP 404')) throw e;
