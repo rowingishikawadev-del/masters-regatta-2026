@@ -6,6 +6,9 @@ body {
   color: var(--text);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 /* ========= カラー変数 ========= */

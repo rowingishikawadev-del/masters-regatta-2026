@@ -89,7 +89,8 @@
       <!-- モバイル用: 検索+トグルボタン行 -->
       <div class="filter-top-row">
         <input type="text" class="filter-search" id="filter-crew"
-          placeholder="🔍 所属・クルー名で検索" oninput="applyFilters()">
+          placeholder="🔍 所属・クルー名で検索" oninput="applyFilters()"
+          aria-label="所属・クルー名で検索">
         <button class="filter-toggle-btn" id="filter-toggle-btn"
           onclick="toggleFilterPanel()" aria-expanded="false">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -100,13 +101,13 @@
       </div>
       <!-- フィルタパネル（モバイルでは折りたたみ） -->
       <div class="filter-panel" id="filter-panel">
-        <select class="filter-select" id="filter-cat" onchange="applyFilters()">
+        <select class="filter-select" id="filter-cat" onchange="applyFilters()" aria-label="カテゴリフィルター">
           <option value="all">カテゴリ: すべて</option>
           <option value="M">男子</option>
           <option value="W">女子</option>
           <option value="X">混成</option>
         </select>
-        <select class="filter-select" id="filter-round" onchange="applyFilters()">
+        <select class="filter-select" id="filter-round" onchange="applyFilters()" aria-label="ラウンドフィルター">
           <option value="all">ラウンド: すべて</option>
           <option value="FA">決勝A</option>
           <option value="FB">決勝B</option>
@@ -115,10 +116,10 @@
           <option value="RK">順位決定</option>
           <option value="R">敗者復活</option>
         </select>
-        <select class="filter-select" id="filter-day" onchange="applyFilters()">
+        <select class="filter-select" id="filter-day" onchange="applyFilters()" aria-label="日程フィルター">
           <option value="all">日程: すべて</option>
         </select>
-        <select class="filter-select" id="filter-status" onchange="applyFilters()">
+        <select class="filter-select" id="filter-status" onchange="applyFilters()" aria-label="状態フィルター">
           <option value="all">状態: すべて</option>
           <option value="done">結果あり</option>
           <option value="upcoming">未実施</option>
