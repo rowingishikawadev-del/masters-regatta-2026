@@ -87,9 +87,9 @@ function runNow() { processPendingCSVs(); }
 // 設定オブジェクト
 // ============================================================
 const CONFIG = {
-  // GitHub リポジトリ情報
+  // GitHub リポジトリ情報（GITHUB_OWNER スクリプトプロパティで上書き可）
   github: {
-    owner: 'RYUIYAMADA',
+    owner: PropertiesService.getScriptProperties().getProperty('GITHUB_OWNER') || 'rowingishikawadev-del',
     repo: 'masters-regatta-2026',
     branch: 'main',
     resultsPath: 'data/results',
