@@ -192,7 +192,8 @@ async function loadAll() {
     if (e.message === 'MASTER_NOT_FOUND') {
       showError('大会データが見つかりません。管理者にお問い合わせください。');
     } else {
-      showError('データの読み込みに失敗しました。しばらく待ってから再試行してください。');
+      // 実際のエラー内容を技術情報として表示（診断用）
+      showError(e.message || 'unknown error');
     }
   } finally {
     showLoading(false);
