@@ -32,6 +32,10 @@ function h(str) {
     .replace(/"/g, '&quot;');
 }
 
+// ========= ローカルストレージキャッシュキー =========
+const LS_MASTER_KEY = 'regatta_master_v2';
+const LS_RESULT_PREFIX = 'regatta_result_v2_';
+
 // ========= グローバル状態 =========
 let masterData = null;       // master.json の内容
 let resultsCache = {};       // race_no → race_XXX.json の内容
@@ -129,14 +133,33 @@ async function loadAll() {
     // スケルトンUIを先に表示
     showSkeletonToggle();
 
-    masterData = await fetchJSONWithRetry(CONFIG.MASTER_JSON, 3, 20000).catch(e => {
-      if (e.message.startsWith('HTTP 404')) throw new Error('MASTER_NOT_FOUND');
-      throw e;
-    });
-
-    // 必須フィールドの存在チェック
-    if (!masterData || !masterData.schedule) {
-      throw new Error('MASTER_NOT_FOUND');
+    // master.json取得（失敗時はlocalStorageキャッシュにフォールバック）
+    let masterFromCache = false;
+    try {
+      masterData = await fetchJSONWithRetry(CONFIG.MASTER_JSON, 3, 10000);
+      if (!masterData || !masterData.schedule) throw new Error('MASTER_NOT_FOUND');
+      // 成功したらキャッシュ保存
+      try { localStorage.setItem(LS_MASTER_KEY, JSON.stringify({ d: masterData, t: Date.now() })); } catch(_) {}
+    } catch(netErr) {
+      if (netErr.message === 'MASTER_NOT_FOUND' || netErr.message.includes('HTTP 404')) {
+        throw new Error('MASTER_NOT_FOUND');
+      }
+      // ネットワーク失敗 → localStorageフォールバック
+      let usedCache = false;
+      try {
+        const raw = localStorage.getItem(LS_MASTER_KEY);
+        if (raw) {
+          const saved = JSON.parse(raw);
+          if (saved && saved.d && saved.d.schedule) {
+            masterData = saved.d;
+            masterFromCache = true;
+            usedCache = true;
+            const ageMin = Math.round((Date.now() - (saved.t || 0)) / 60000);
+            showCacheWarning(ageMin);
+          }
+        }
+      } catch(_) {}
+      if (!usedCache) throw netErr;
     }
 
     // race_num を race_no にリネーム（master.json互換性のため）
@@ -193,9 +216,24 @@ async function loadResults() {
         const data = await fetchJSON(CONFIG.RESULT_JSON(no));
         if (!resultsCache[no]) newlyUpdated.push(no);
         resultsCache[no] = data;
+        // 成功したらキャッシュ保存
+        try { localStorage.setItem(LS_RESULT_PREFIX + no, JSON.stringify({ d: data, t: Date.now() })); } catch(_) {}
       } catch (e) {
-        if (!e.message.includes('HTTP 404')) {
+        if (e.message.includes('HTTP 404')) {
+          // 結果未着は正常（スキップ）
+        } else {
           console.warn(`結果JSON取得失敗 race_no=${no}:`, e.message);
+          // localStorageフォールバック（キャッシュに結果あれば表示）
+          try {
+            const raw = localStorage.getItem(LS_RESULT_PREFIX + no);
+            if (raw) {
+              const saved = JSON.parse(raw);
+              if (saved && saved.d) {
+                if (!resultsCache[no]) newlyUpdated.push(no);
+                resultsCache[no] = saved.d;
+              }
+            }
+          } catch(_) {}
         }
       }
     }));
@@ -208,7 +246,7 @@ async function loadResults() {
 /**
  * JSONをfetchしてパースする
  */
-async function fetchJSON(path, timeoutMs = 20000) {
+async function fetchJSON(path, timeoutMs = 10000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -226,26 +264,17 @@ async function fetchJSON(path, timeoutMs = 20000) {
 /**
  * リトライ付きfetch（最大maxRetries回、失敗時はキャッシュなしで再試行）
  */
-async function fetchJSONWithRetry(path, maxRetries = 3, timeoutMs = 20000) {
+async function fetchJSONWithRetry(path, maxRetries = 3, timeoutMs = 10000) {
   let lastError;
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       return await fetchJSON(path, timeoutMs);
     } catch (e) {
       lastError = e;
-      // 404は即座に再送しない
       if (e.message.includes('HTTP 404')) throw e;
       if (attempt < maxRetries) {
-        // キャリアプロキシ回避のためフォールバック: クエリパラメータ方式
-        const fallbackPath = path + (path.includes('?') ? '&' : '?') + '_r=' + attempt;
-        try {
-          const ctrl = new AbortController();
-          const t = setTimeout(() => ctrl.abort(), timeoutMs);
-          const res = await fetch(fallbackPath, { signal: ctrl.signal });
-          clearTimeout(t);
-          if (res.ok) return JSON.parse(await res.text());
-        } catch (_) { /* フォールバックも失敗したら次のリトライへ */ }
-        await new Promise(r => setTimeout(r, 1000 * attempt)); // 1秒・2秒・3秒と待機
+        // 指数バックオフ（1秒・2秒）
+        await new Promise(r => setTimeout(r, 1000 * attempt));
       }
     }
   }
@@ -1547,6 +1576,21 @@ function showError(msg) {
       </div>`;
     el.style.display = 'block';
   }
+}
+
+/**
+ * キャッシュからデータを表示している旨を通知するバナーを表示
+ */
+function showCacheWarning(ageMin) {
+  const ageText = ageMin < 1 ? '1分未満' : `約${ageMin}分`;
+  let banner = document.getElementById('cache-warning-banner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'cache-warning-banner';
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#f59e0b;color:#fff;text-align:center;padding:8px 12px;font-size:13px;font-weight:600;';
+    document.body.prepend(banner);
+  }
+  banner.innerHTML = `⚡ 電波が不安定なため${ageText}前の保存データを表示しています。Wi-Fiで再読込すると最新に更新されます。<button onclick="location.reload()" style="margin-left:12px;padding:2px 10px;background:#fff;color:#92400e;border:none;border-radius:4px;cursor:pointer;font-size:12px">再読込</button>`;
 }
 
 // ========= 文字サイズ変更 =========
