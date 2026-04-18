@@ -882,12 +882,15 @@ td.age-group-cell { text-align: center; }
   .notion-page { padding: 16px 12px 124px; }
   h1.page-title { font-size: 20px; }
 
-  /* ======= タブ: スマホでもトップタブを表示 ======= */
-  .view-tabs { padding: 0; top: 56px; }
-  .view-tab { padding: 12px 18px; font-size: 13px; flex: 1; text-align: center; }
+  /* ======= タブ: スマホ表示 ======= */
+  .view-tabs {
+    display: flex !important;
+    padding: 0;
+    top: 56px;
+  }
+  .view-tab { padding: 12px 0; font-size: 14px; flex: 1; text-align: center; }
 
-  /* ======= ボトムナビ: 上タブと重複するため非表示 ======= */
-  .bottom-nav { display: none; }
+  /* ページ余白調整（ボトムナビなし） */
   .notion-page { padding: 16px 12px 40px; }
 
   /* ======= フィルタバー: モバイル用レイアウト ======= */
@@ -1099,52 +1102,8 @@ td.age-group-cell { text-align: center; }
   .update-bar-center { display: none; }
   #status-summary { font-size: 10px; }
 
-  /* ======= ボトムナビゲーション ======= */
-  .bottom-nav {
-    display: flex;
-    position: fixed;
-    bottom: 40px; /* ステータスバーの上 */
-    left: 0; right: 0;
-    height: 60px;
-    background: var(--card);
-    border-top: 1px solid var(--border);
-    z-index: 99;
-    box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
-  }
-  .bnav-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    border: none;
-    background: none;
-    color: var(--text-muted);
-    font-size: 10px;
-    font-family: inherit;
-    cursor: pointer;
-    padding: 6px 4px;
-    transition: color 0.15s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .bnav-item.active {
-    color: var(--accent);
-  }
-  .bnav-icon {
-    width: 22px;
-    height: 22px;
-    stroke: currentColor;
-  }
-  .bnav-label {
-    font-size: 10px;
-    letter-spacing: 0.02em;
-  }
-
-  /* toast もボトムナビ+ステータスバーの上に */
-  #toast-container {
-    bottom: 108px;
-  }
+  /* toast 位置 */
+  #toast-container { bottom: 24px; }
 
   /* SP専用非表示クラス */
   .hide-sp { display: none !important; }
