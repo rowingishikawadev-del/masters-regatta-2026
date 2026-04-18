@@ -569,7 +569,7 @@ function renderResultTable(race, result) {
   // 複数カテゴリー合同レースのカテゴリー内順位を計算
   // エントリーのcategoryをもとに、完走者をカテゴリーごとにグループ化して順位付け
   const rankInCategoryMap = {};
-  if (isMultiCategory) {
+  if (showCategoryCol) {
     const finishedByCategory = {};
     sorted.forEach(r => {
       if (r.status !== 'finish') return;
