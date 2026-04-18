@@ -1060,6 +1060,9 @@ function collapseAll() {
  * @param {HTMLElement} [tabEl] - クリックされたタブ要素（onclick="switchView('toggle', this)" 形式で渡す）
  */
 function switchView(id, tabEl) {
+  const viewTabs = document.querySelector('.view-tabs');
+  const tabsTopBefore = viewTabs ? viewTabs.getBoundingClientRect().top : 0;
+
   document.querySelectorAll('.view-content').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.bnav-item').forEach(t => t.classList.remove('active'));
@@ -1070,6 +1073,11 @@ function switchView(id, tabEl) {
   if (bnavItem) bnavItem.classList.add('active');
   // URLハッシュを更新（pushStateで履歴に残さない）
   history.replaceState(null, '', '#view-' + id);
+  // タブバーの位置を固定（コンテンツ高さ変化によるスクロールずれを補正）
+  if (viewTabs) {
+    const tabsTopAfter = viewTabs.getBoundingClientRect().top;
+    window.scrollBy(0, tabsTopAfter - tabsTopBefore);
+  }
 }
 
 // フィルターパネルの開閉（モバイル用）
