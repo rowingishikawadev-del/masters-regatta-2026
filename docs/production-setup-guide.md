@@ -9,6 +9,95 @@
 
 ---
 
+## 全体フロー図
+
+```mermaid
+graph TD
+    A["龍偉<br/>RYUIYAMADA"] -->|Step 2: 新規プロジェクト作成| B["Cloudflare Pages<br/>masters-regatta-2026-live"]
+    A -->|Step 3: コードコピー| C["RYUIYAMADA/<br/>masters-regatta-2026<br/>リポジトリ"]
+    C -->|自動デプロイ| B
+    B -->|Step 7: ドメイン設定| D["本番サイト<br/>masters-regatta-2026-3ha.pages.dev"]
+    
+    E["石川県協会<br/>rowingishikawadev-del"] -->|Step 5: フォルダ確認| F["Google Drive<br/>masters-regatta-2026"]
+    F -->|Step 6: GAS設定| G["Google Apps Script<br/>自動更新"]
+    G -->|CSV → JSON Push| C
+    
+    H["master.json<br/>schedule.csv<br/>entries.csv"] -->|Step 4: データ準備| C
+    
+    style B fill:#e1f5ff,stroke:#01579b,stroke-width:2px,color:#000
+    style D fill:#c8e6c9,stroke:#1b5e20,stroke-width:2px,color:#000
+    style F fill:#fff9c4,stroke:#f57f17,stroke-width:2px,color:#000
+    style G fill:#fff9c4,stroke:#f57f17,stroke-width:2px,color:#000
+```
+
+---
+
+## セットアップ実行順序図
+
+```mermaid
+timeline
+    title 本番サイトセットアップスケジュール
+    
+    section 龍偉（MBP）
+        Step 2 : Cloudflare Pages 新規作成
+        Step 3 : テストサイトからコピー
+        Step 7 : カスタムドメイン設定
+    
+    section 石川県協会
+        Step 1 : 古いプロジェクト削除
+        Step 5 : Google Drive 確認
+        Step 6 : GAS設定・トリガー
+    
+    section 確認
+        Step 8 : 本番サイト動作確認
+```
+
+---
+
+## Google Drive → GitHub 自動更新フロー
+
+```mermaid
+graph LR
+    A["Google Drive<br/>race_csv/500m/<br/>race_csv/1000m/"] -->|2分ごとに監視| B["Google Apps Script<br/>Code.gs"]
+    B -->|CSV読み込み| C["全ラップ揃い<br/>チェック"]
+    C -->|CSV → JSON変換| D["race_001.json<br/>race_002.json<br/>..."]
+    D -->|GitHub API| E["RYUIYAMADA/<br/>masters-regatta-2026<br/>data/results/"]
+    E -->|自動デプロイ| F["Cloudflare Pages<br/>masters-regatta-2026-live"]
+    F -->|約1分で反映| G["本番サイト<br/>レース結果表示"]
+    
+    style A fill:#fff9c4,stroke:#f57f17,stroke-width:2px,color:#000
+    style B fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000
+    style E fill:#e1f5ff,stroke:#01579b,stroke-width:2px,color:#000
+    style G fill:#c8e6c9,stroke:#1b5e20,stroke-width:2px,color:#000
+```
+
+---
+
+## フォルダ構成図
+
+```mermaid
+graph TD
+    A["masters-regatta-2026<br/>GitHub リポジトリ"] --> B["data/"]
+    A --> C["css/"]
+    A --> D["js/"]
+    A --> E["docs/"]
+    A --> F["gas/"]
+    A --> G["sample_csv/"]
+    
+    B --> B1["master.json<br/>スケジュール+エントリー"]
+    B --> B2["results/<br/>race_001.json<br/>race_002.json<br/>..."]
+    
+    G --> G1["schedule.csv"]
+    G --> G2["entries.csv"]
+    
+    style B1 fill:#e1f5ff,stroke:#01579b,stroke-width:2px,color:#000
+    style B2 fill:#fff9c4,stroke:#f57f17,stroke-width:2px,color:#000
+    style G1 fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000
+    style G2 fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000
+```
+
+---
+
 ## ステップ 1：Cloudflare Pages リセット（石川県協会）
 
 ### 1-1 古いプロジェクトの削除
