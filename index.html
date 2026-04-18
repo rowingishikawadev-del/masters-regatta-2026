@@ -37,23 +37,6 @@
   </div>
 </header>
 
-<!-- 固定検索バー（ヘッダー直下・スクロール追従） -->
-<div class="sticky-search-bar" id="sticky-search-bar">
-  <div class="sticky-search-inner">
-    <svg class="sticky-search-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
-      <circle cx="8.5" cy="8.5" r="5.5"/><path d="M15 15l-3.5-3.5" stroke-linecap="round"/>
-    </svg>
-    <input type="text" class="sticky-search-input" id="sticky-search-input"
-      placeholder="クルー名・所属で検索（例: 秋田、山田）"
-      oninput="syncStickySearch(this.value)"
-      autocomplete="off" autocorrect="off" spellcheck="false">
-    <button class="sticky-search-clear" id="sticky-search-clear" onclick="clearStickySearch()" style="display:none" aria-label="検索をクリア">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-        <path d="M5 5l10 10M15 5L5 15" stroke-linecap="round"/>
-      </svg>
-    </button>
-  </div>
-</div>
 
 <!-- ビュー切替タブ（sticky固定・notion-page外に配置） -->
 <div class="view-tabs">
