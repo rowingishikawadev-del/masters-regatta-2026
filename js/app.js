@@ -421,7 +421,7 @@ function renderRaceBlock(race) {
         <span class="race-label">${h(race.event_name)}${ageLabel}</span>
         ${statusBadge}
       </div>
-      <div class="race-info">Race No.${race.race_no} | ${dateStr} ${race.scheduled_time || '-'}</div>
+      <div class="race-info">Race No.${race.race_no} | ${dateStr} ${race.time ? formatRaceTime(race.time) : '-'}</div>
     </div>
     ${tableHTML}`;
 }
@@ -1073,10 +1073,12 @@ function switchView(id, tabEl) {
   if (bnavItem) bnavItem.classList.add('active');
   // URLハッシュを更新（pushStateで履歴に残さない）
   history.replaceState(null, '', '#view-' + id);
-  // タブバーの位置を固定（コンテンツ高さ変化によるスクロールずれを補正）
+  // タブバーの位置を固定（rAFでリフロー後に補正）
   if (viewTabs) {
-    const tabsTopAfter = viewTabs.getBoundingClientRect().top;
-    window.scrollBy(0, tabsTopAfter - tabsTopBefore);
+    requestAnimationFrame(() => {
+      const tabsTopAfter = viewTabs.getBoundingClientRect().top;
+      window.scrollBy(0, tabsTopAfter - tabsTopBefore);
+    });
   }
 }
 
