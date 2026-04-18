@@ -252,13 +252,13 @@ h1.page-title {
 /* ========= ビュー切替タブ ========= */
 .view-tabs {
   display: flex;
+  justify-content: center;
   gap: 0;
   border-bottom: 2px solid var(--border);
   position: sticky;
   top: 56px;
   z-index: 89;
   background: #fff;
-  padding: 0 32px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 .view-tab {
