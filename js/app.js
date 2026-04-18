@@ -634,12 +634,8 @@ function renderScheduleView() {
   const container = document.getElementById('schedule-table-container');
   if (!container || !masterData) return;
 
-  // 日付・時刻順にソート
-  const sorted = [...(masterData?.schedule || [])].sort((a, b) => {
-    const aStr = a.date + ' ' + a.time;
-    const bStr = b.date + ' ' + b.time;
-    return aStr.localeCompare(bStr);
-  });
+  // レースナンバー順にソート
+  const sorted = [...(masterData?.schedule || [])].sort((a, b) => a.race_no - b.race_no);
 
   // 日付ごとにグループ化（日付セパレーター挿入用）
   const uniqueDates = [...new Set(sorted.map(r => r.date))].sort();
@@ -648,7 +644,7 @@ function renderScheduleView() {
   const schedDayTabs = document.getElementById('schedule-day-tabs');
   if (schedDayTabs) {
     const tabs = [{ value: 'all', label: 'すべて' }]
-      .concat(uniqueDates.map((d, i) => ({ value: d, label: `${i + 1}日目｜${formatDate(d)}` })));
+      .concat(uniqueDates.map(d => ({ value: d, label: formatDate(d) })));
     schedDayTabs.innerHTML = tabs.map(t =>
       `<button class="day-tab${scheduleFilterDate === t.value ? ' active' : ''}"
         onclick="selectScheduleDayTab('${t.value}')">${t.label}</button>`

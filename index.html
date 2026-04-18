@@ -55,6 +55,13 @@
   </div>
 </div>
 
+<!-- ビュー切替タブ（sticky固定・notion-page外に配置） -->
+<div class="view-tabs">
+  <div class="view-tab active" onclick="switchView('toggle', this)">🏁 種目別</div>
+  <div class="view-tab" onclick="switchView('table', this)">📊 全レース一覧</div>
+  <div class="view-tab" onclick="switchView('schedule', this)">🕐 スケジュール</div>
+</div>
+
 <div class="notion-page">
 
   <!-- YouTube Live 埋め込み（youtube_url が設定されている場合のみ表示） -->
@@ -68,13 +75,6 @@
     </div>
   </div>
   <div id="error-message" style="display:none;"></div>
-
-  <!-- ビュー切替タブ -->
-  <div class="view-tabs">
-    <div class="view-tab active" onclick="switchView('toggle', this)">🏁 種目別</div>
-    <div class="view-tab" onclick="switchView('table', this)">📊 全レース一覧</div>
-    <div class="view-tab" onclick="switchView('schedule', this)">🕐 スケジュール</div>
-  </div>
 
   <!-- ================================================================ -->
   <!--                     VIEW 1: 種目別トグル表示                       -->
