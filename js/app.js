@@ -187,24 +187,23 @@ async function loadAll() {
 async function loadResults() {
   const raceNos = (masterData?.schedule || []).map(r => r.race_no);
   const newlyUpdated = [];
+  const BATCH_SIZE = 8; // モバイルの同時接続制限に配慮
 
-  const promises = raceNos.map(async (no) => {
-    try {
-      const data = await fetchJSON(CONFIG.RESULT_JSON(no));
-      // 以前キャッシュになかった場合は「新規更新」として記録
-      if (!resultsCache[no]) {
-        newlyUpdated.push(no);
+  for (let i = 0; i < raceNos.length; i += BATCH_SIZE) {
+    const batch = raceNos.slice(i, i + BATCH_SIZE);
+    await Promise.all(batch.map(async (no) => {
+      try {
+        const data = await fetchJSON(CONFIG.RESULT_JSON(no));
+        if (!resultsCache[no]) newlyUpdated.push(no);
+        resultsCache[no] = data;
+      } catch (e) {
+        if (!e.message.includes('HTTP 404')) {
+          console.warn(`結果JSON取得失敗 race_no=${no}:`, e.message);
+        }
       }
-      resultsCache[no] = data;
-    } catch (e) {
-      // 404は正常系（結果未投入）、それ以外は警告
-      if (!e.message.includes('HTTP 404')) {
-        console.warn(`結果JSON取得失敗 race_no=${no}:`, e.message);
-      }
-    }
-  });
+    }));
+  }
 
-  await Promise.all(promises);
   console.log(`結果JSON読み込み完了: ${Object.keys(resultsCache).length}/${raceNos.length}件`);
   return newlyUpdated;
 }
@@ -212,11 +211,12 @@ async function loadResults() {
 /**
  * JSONをfetchしてパースする
  */
-async function fetchJSON(path, timeoutMs = 10000) {
+async function fetchJSON(path, timeoutMs = 20000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const res = await fetch(path + '?t=' + Date.now(), { signal: controller.signal });
+    // cache:'no-cache' で条件付きGET（304 Not Modified 活用）→ ?t= より通信量が少ない
+    const res = await fetch(path, { signal: controller.signal, cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${path}`);
     const text = await res.text();
     try {
