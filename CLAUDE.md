@@ -12,7 +12,7 @@
 |------|------|
 | 開発リポジトリ | `RYUIYAMADA/masters-regatta-2026` |
 | 石川県用Fork | `rowingishikawadev-del/masters-regatta-2026` |
-| 本番URL | https://masters-regatta-2026ishikawa.pages.dev |
+| 本番URL | https://masters-regatta-2026-3ha.pages.dev |
 | テストサイト | https://rowing-live-results.pages.dev |
 | ソースベース | rowing-live-results からコピー |
 
@@ -32,11 +32,15 @@
 - 2026-04-08: LINE公式アカウント導入提案書(docs/line-proposal.html)作成
 - 2026-04-09: LINE提案書をプレゼン資料に全面リデザイン
 - 2026-04-10: CLAUDE.md再開情報を整備
+- 2026-04-19: YouTube表示バグ修正（aspect-ratio・HTML直書き・CSP設定）
+- 2026-04-19: GAS本番設定完了（GITHUB_TOKEN更新・runNow動作確認済）
+- 2026-04-19: テストデータ追加（race_001・race_002 CSV）
+- 2026-04-19: マニュアル類URL更新（本番URL確定: masters-regatta-2026-3ha.pages.dev）
 
 ## 残作業（TODO）
 - [x] Cloudflare Pages 本番デプロイ設定済み（https://masters-regatta-2026-3ha.pages.dev）
-- [ ] GASプロジェクト本番用作成（GITHUB_REPOをこのリポジトリに向ける）
-- [ ] スケジュール・エントリーCSV入稿（大会確定後）
+- [x] GASプロジェクト本番設定完了（GITHUB_TOKEN更新・GITHUB_REPO=RYUIYAMADA/masters-regatta-2026）
+- [x] スケジュール・エントリーCSV入稿済み
 - [ ] rowingishikawadev-del アカウントへのコラボレーター権限確認
 - [ ] 公開前チェックリスト22項目実施（docs/site-checklist.html）
 

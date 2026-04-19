@@ -250,7 +250,7 @@
     <h1>公開前 動作確認チェックリスト</h1>
     <p>ボート競技ライブリザルトサイト — 大会ごとに実施してください</p>
     <div class="meta">
-      <span>対象サイト: rowing-live-results.pages.dev</span>
+      <span>対象サイト: masters-regatta-2026-3ha.pages.dev</span>
       <span>所要時間の目安: 約20〜30分</span>
       <span>実施タイミング: データ準備完了後・公開前日または当日朝</span>
     </div>
@@ -307,10 +307,10 @@
           <span class="ts-arrow">▶</span> 確認コマンドとトラブル対処
         </div>
         <div class="cmd-block"><span class="comment"># ブラウザキャッシュをバイパスしてJSファイルを確認</span>
-curl -I "https://rowing-live-results.pages.dev/js/app.js?v=$(date +%Y%m%d)"
+curl -I "https://masters-regatta-2026-3ha.pages.dev/js/app.js?v=$(date +%Y%m%d)"
 
 <span class="comment"># index.html内のscriptタグのversionクエリを確認</span>
-curl -s https://rowing-live-results.pages.dev/ | grep app.js</div>
+curl -s https://masters-regatta-2026-3ha.pages.dev/ | grep app.js</div>
         <div class="ts-body">
           <p><strong>過去に発生した問題:</strong> <code>app.js</code> が古いバージョンでキャッシュされ、修正が反映されないことがあった。</p>
           <p><strong>対処法:</strong> <code>index.html</code> の <code>&lt;script src="js/app.js?v=YYYYMMDD"&gt;</code> の日付部分を今日の日付に更新してコミット・プッシュする。</p>
@@ -330,7 +330,7 @@ curl -s https://rowing-live-results.pages.dev/ | grep app.js</div>
           <span class="ts-arrow">▶</span> 確認コマンドとトラブル対処（過去発生）
         </div>
         <div class="cmd-block"><span class="comment"># レスポンスヘッダーでCSPを確認</span>
-curl -I https://rowing-live-results.pages.dev/ | grep -i content-security-policy
+curl -I https://masters-regatta-2026-3ha.pages.dev/ | grep -i content-security-policy
 
 <span class="comment"># 期待する出力（unsafe-inlineが含まれていること）:</span>
 <span class="comment"># content-security-policy: script-src 'self' 'unsafe-inline'; ...</span></div>
@@ -666,7 +666,7 @@ curl -I https://rowing-live-results.pages.dev/ | grep -i content-security-policy
 make pipeline
 
 <span class="comment"># サイト更新状態の確認</span>
-python3 tools/check_status.py --site https://rowing-live-results.pages.dev/</div>
+python3 tools/check_status.py --site https://masters-regatta-2026-3ha.pages.dev/</div>
         <div class="ts-body">
           <p><strong>テスト手順:</strong> ① <code>test/csv/</code> のテストCSV（500mと1000mの両方）をDriveの <code>race_csv/500m/</code> と <code>race_csv/1000m/</code> に投入 → ② 最大3分待つ → ③ サイトに反映されているか確認。</p>
           <p><strong>更新されない場合のチェック順:</strong></p>
