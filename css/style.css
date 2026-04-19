@@ -249,17 +249,54 @@ h1.page-title {
   color: var(--text-muted);
 }
 
+/* ========= ページ上部 sticky 固定エリア ========= */
+#sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+/* 進行中レースバナー */
+#current-race-bar {
+  background: var(--live-bg);
+  border-bottom: 1px solid #f5c6c3;
+  padding: 10px 20px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+#current-race-bar .crb-badge {
+  background: var(--live);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+#current-race-bar .crb-name {
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+  min-width: 0;
+}
+#current-race-bar .crb-time {
+  color: var(--text-sub);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
 /* ========= ビュー切替タブ ========= */
 .view-tabs {
   display: flex;
   justify-content: center;
   gap: 0;
   border-bottom: 2px solid var(--border);
-  position: sticky;
-  top: 56px;
-  z-index: 89;
   background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 .view-tab {
   padding: 14px 28px;
@@ -889,9 +926,9 @@ td.age-group-cell { text-align: center; }
   .view-tabs {
     display: flex !important;
     padding: 0;
-    top: 56px;
   }
   .view-tab { padding: 12px 0; font-size: 14px; flex: 1; text-align: center; }
+  #current-race-bar { font-size: 13px; padding: 8px 12px; gap: 8px; }
 
   /* ページ余白調整（ボトムナビなし） */
   .notion-page { padding: 16px 12px 40px; }

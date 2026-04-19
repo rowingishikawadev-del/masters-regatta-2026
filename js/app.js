@@ -849,6 +849,24 @@ function highlightCurrentRace() {
     const nextRow = document.querySelector(`#schedule-table-container [data-race="${currentRace.race_no}"]`);
     if (nextRow) nextRow.classList.add('schedule-next-race');
   }
+
+  // 進行中レースバナーを更新
+  updateCurrentRaceBar(currentRace);
+}
+
+function updateCurrentRaceBar(race) {
+  const bar = document.getElementById('current-race-bar');
+  if (!bar) return;
+  if (!race) {
+    bar.style.display = 'none';
+    return;
+  }
+  const time = formatRaceTime(race.time);
+  bar.innerHTML = `
+    <span class="crb-badge">実施中</span>
+    <span class="crb-name">R${race.race_no} ${h(race.event_name)}</span>
+    <span class="crb-time">${time} スタート</span>`;
+  bar.style.display = 'flex';
 }
 
 /**

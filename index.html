@@ -21,28 +21,32 @@
 </head>
 <body style="background: #F7F4EF">
 
-<header class="site-header">
-  <div class="site-header-inner">
-    <div class="site-header-top-row">
-      <div class="site-header-label">BOAT RACE RESULTS</div>
-      <!-- 文字サイズ変更ボタン -->
-      <div class="font-size-ctrl" aria-label="文字サイズ変更">
-        <button class="fs-btn" onclick="setFontSize('small')" title="小">小</button>
-        <button class="fs-btn fs-btn-active" onclick="setFontSize('normal')" title="標準">中</button>
-        <button class="fs-btn" onclick="setFontSize('large')" title="大">大</button>
+<!-- ページ上部 sticky 固定エリア -->
+<div id="sticky-top">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="site-header-top-row">
+        <div class="site-header-label">BOAT RACE RESULTS</div>
+        <div class="font-size-ctrl" aria-label="文字サイズ変更">
+          <button class="fs-btn" onclick="setFontSize('small')" title="小">小</button>
+          <button class="fs-btn fs-btn-active" onclick="setFontSize('normal')" title="標準">中</button>
+          <button class="fs-btn" onclick="setFontSize('large')" title="大">大</button>
+        </div>
       </div>
+      <div class="cover-tournament-name" id="cover-tournament-name">速報サイト</div>
+      <div class="cover-meta" id="cover-meta"></div>
     </div>
-    <div class="cover-tournament-name" id="cover-tournament-name">速報サイト</div>
-    <div class="cover-meta" id="cover-meta"></div>
+  </header>
+
+  <!-- ビュー切替タブ -->
+  <div class="view-tabs">
+    <div class="view-tab active" onclick="switchView('toggle', this)">🏁 種目別</div>
+    <div class="view-tab" onclick="switchView('table', this)">📊 全レース一覧</div>
+    <div class="view-tab" onclick="switchView('schedule', this)">🕐 スケジュール</div>
   </div>
-</header>
 
-
-<!-- ビュー切替タブ（sticky固定・notion-page外に配置） -->
-<div class="view-tabs">
-  <div class="view-tab active" onclick="switchView('toggle', this)">🏁 種目別</div>
-  <div class="view-tab" onclick="switchView('table', this)">📊 全レース一覧</div>
-  <div class="view-tab" onclick="switchView('schedule', this)">🕐 スケジュール</div>
+  <!-- 進行中レースバナー（JS側で更新） -->
+  <div id="current-race-bar" style="display:none;"></div>
 </div>
 
 <div class="notion-page">
