@@ -29,20 +29,21 @@
 - 2026-04-07: 仕様書(spec.html/SPEC.md)・GAS実行時間残量表示・バグ修正
 - 2026-04-07: GitHub Actions 半自動ループ追加
 - 2026-04-08: テストサイト改善を本番に反映（XSS対策・日付自動選択等）
-- 2026-04-08: LINE公式アカウント導入提案書(docs/line-proposal.html)作成
+- 2026-04-08: LINE公式アカウント導入提案書(staff/x8f24k/line-proposal.html)作成
 - 2026-04-09: LINE提案書をプレゼン資料に全面リデザイン
 - 2026-04-10: CLAUDE.md再開情報を整備
 - 2026-04-19: YouTube表示バグ修正（aspect-ratio・HTML直書き・CSP設定）
 - 2026-04-19: GAS本番設定完了（GITHUB_TOKEN更新・runNow動作確認済）
 - 2026-04-19: テストデータ追加（race_001・race_002 CSV）
 - 2026-04-19: マニュアル類URL更新（本番URL確定: masters-regatta-2026-3ha.pages.dev）
+- 2026-04-19: 運用ドキュメント類を docs/ → staff/x8f24k/ に移動（URL難読化）
 
 ## 残作業（TODO）
 - [x] Cloudflare Pages 本番デプロイ設定済み（https://masters-regatta-2026-3ha.pages.dev）
 - [x] GASプロジェクト本番設定完了（GITHUB_TOKEN更新・GITHUB_REPO=RYUIYAMADA/masters-regatta-2026）
 - [x] スケジュール・エントリーCSV入稿済み
 - [x] rowingishikawadev-del アカウントへのコラボレーター権限確認済み
-- [ ] 公開前チェックリスト22項目実施（docs/site-checklist.html）
+- [ ] 公開前チェックリスト22項目実施（staff/x8f24k/site-checklist.html）
 
 ## ディレクトリ構成
 ```
@@ -55,7 +56,8 @@ masters-regatta-2026/
 │   ├── master.json        ← 大会マスタ・スケジュール・エントリー情報
 │   └── results/           ← GASがPushするJSON（race_001.json等）
 ├── admin/9922/            ← 管理者ダッシュボード（URLを知る人のみ）
-├── docs/
+├── staff/x8f24k/          ← 運用ドキュメント一覧（URLを知る人のみ）
+│   ├── index.html              ← ドキュメント一覧ハブ
 │   ├── line-proposal.html      ← LINE公式アカウント提案書
 │   ├── day-manual.html         ← 当日担当者マニュアル
 │   ├── schedule_input_guide.html ← スケジュール入力ガイド
@@ -64,6 +66,7 @@ masters-regatta-2026/
 │   ├── handover.html           ← システム引継ぎ資料
 │   ├── spec.html               ← システム仕様書（公開用）
 │   └── csv_naming_rules.html   ← CSVファイル名ルール
+├── docs/                  ← 設計ドキュメント（.md のみ、非公開）
 ├── gas/
 │   ├── Code.gs                 ← GAS自動連携スクリプト
 │   ├── appsscript.json
@@ -78,10 +81,11 @@ masters-regatta-2026/
 |------|-----|------|
 | 観客・参加者 | / | 速報トップ |
 | 運営責任者 | /admin/9922/ | 管理者ダッシュボード |
-| 計測担当 | /docs/day-manual.html | 当日マニュアル |
-| 入稿担当 | /docs/schedule_input_guide.html | スケジュール入力ガイド |
-| システム担当 | /docs/site-checklist.html | 公開前チェックリスト |
-| システム担当 | /docs/db_structure.html | DB構造説明 |
+| 運用スタッフ全員 | /staff/x8f24k/ | ドキュメント一覧ハブ |
+| 計測担当 | /staff/x8f24k/day-manual.html | 当日マニュアル |
+| 入稿担当 | /staff/x8f24k/schedule_input_guide.html | スケジュール入力ガイド |
+| システム担当 | /staff/x8f24k/site-checklist.html | 公開前チェックリスト |
+| システム担当 | /staff/x8f24k/db_structure.html | DB構造説明 |
 
 ## 技術スタック
 - **フロントエンド**: HTML / CSS / JavaScript（静的サイト）
