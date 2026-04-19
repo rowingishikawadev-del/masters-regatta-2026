@@ -557,7 +557,7 @@ h1.page-title {
   padding: 20px 32px 0;
 }
 .youtube-section-card {
-  max-width: 800px;
+  max-width: 680px;
   margin: 0 auto 20px;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -568,7 +568,6 @@ h1.page-title {
 .youtube-wrapper {
   width: 100%;
   aspect-ratio: 16 / 9;
-  max-height: 450px;
   background: #000;
   display: block;
 }
