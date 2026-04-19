@@ -614,12 +614,18 @@ h1.page-title {
 }
 @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
 
+/* ========= YouTube埋め込みエリア（タブ外） ========= */
+#youtube-container {
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 16px 32px 0;
+}
 /* ========= YouTube埋め込み ========= */
 .youtube-wrapper {
   position: relative;
   width: 100%;
   max-width: 800px;
-  margin: 0 auto 24px;
+  margin: 0 auto;
   padding-bottom: min(56.25%, 450px);
   height: 0;
   overflow: hidden;
