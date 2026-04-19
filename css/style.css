@@ -526,13 +526,13 @@ h1.page-title {
 .db-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: 14px;
 }
 .db-table th {
-  padding: 9px 10px;
+  padding: 11px 12px;
   text-align: left;
   font-weight: 400;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.08em;
   color: var(--text-muted);
   border-bottom: 1px solid var(--border);
@@ -545,7 +545,7 @@ h1.page-title {
 .db-table th:hover { background: #F0EDE7; }
 .db-table th .sort-icon { font-size: 10px; margin-left: 2px; color: var(--text-muted); }
 .db-table td {
-  padding: 7px 10px;
+  padding: 10px 12px;
   border-bottom: 1px solid #F0EDE7;
   white-space: nowrap;
   color: var(--text);
@@ -774,10 +774,10 @@ h1.page-title {
 .schedule-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 15px;
 }
 .schedule-table th {
-  padding: 9px 12px;
+  padding: 11px 14px;
   text-align: left;
   font-weight: 400;
   font-size: 11px;
@@ -788,7 +788,7 @@ h1.page-title {
   white-space: nowrap;
 }
 .schedule-table td {
-  padding: 9px 12px;
+  padding: 11px 14px;
   border-bottom: 1px solid #F0EDE7;
   color: var(--text);
 }
@@ -1138,10 +1138,10 @@ td.age-group-cell { text-align: center; }
 
   /* テーブルビュー: 横スクロール */
   .db-table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .db-table { font-size: 11px; min-width: 580px; }
+  .db-table { font-size: 13px; min-width: 580px; }
 
   /* スケジュールビュー: コンパクト */
-  .schedule-table { font-size: 13px; }
+  .schedule-table { font-size: 14px; }
   .sc-event-name { max-width: 100px; overflow: hidden; text-overflow: ellipsis; }
 
   /* ステータスバー */
