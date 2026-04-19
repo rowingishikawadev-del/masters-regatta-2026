@@ -335,10 +335,6 @@ function renderYoutube() {
   container.style.display = 'block';
   container.innerHTML = `
     <div class="youtube-section-card">
-      <div class="youtube-section-header">
-        <span class="youtube-live-badge">● LIVE</span>
-        <span class="youtube-section-title">ライブ配信</span>
-      </div>
       <div class="youtube-wrapper">
         <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
