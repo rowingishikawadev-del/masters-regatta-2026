@@ -12,7 +12,7 @@
 |------|------|
 | 開発リポジトリ | `RYUIYAMADA/masters-regatta-2026` |
 | 石川県用Fork | `rowingishikawadev-del/masters-regatta-2026` |
-| 本番URL | https://masters-regatta-2026-3ha.pages.dev |
+| 本番URL | https://masters-regatta-2026ishikawa.pages.dev |
 | テストサイト | https://rowing-live-results.pages.dev |
 | ソースベース | rowing-live-results からコピー |
 
