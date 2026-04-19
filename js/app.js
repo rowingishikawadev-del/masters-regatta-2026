@@ -328,7 +328,7 @@ function renderYoutube() {
   if (!container) return;
   if (!url) { container.style.display = 'none'; return; }
 
-  // youtube.com/watch?v=ID または youtu.be/ID 形式に対応
+  // youtube.com/watch?v=ID, youtu.be/ID, /embed/ID 形式に対応
   const videoId = extractYoutubeId(url);
   if (!videoId) { container.style.display = 'none'; return; }
 
@@ -336,7 +336,10 @@ function renderYoutube() {
   container.innerHTML = `
     <div class="youtube-section-card">
       <div class="youtube-wrapper">
-        <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=0"
+        <iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=0"
+          title="YouTube Live"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen></iframe>
       </div>
@@ -1534,8 +1537,35 @@ function formatDate(dateStr) {
  * YouTube URL から動画IDを抽出する
  */
 function extractYoutubeId(url) {
-  const match = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-  return match ? match[1] : null;
+  if (!url) return null;
+  const input = String(url).trim();
+
+  // URLとして解釈できる場合は pathname/search から優先抽出
+  try {
+    const u = new URL(input);
+    const host = u.hostname.replace(/^www\./, '');
+
+    if (host === 'youtube.com') {
+      const v = u.searchParams.get('v');
+      if (v && /^[a-zA-Z0-9_-]{11}$/.test(v)) return v;
+
+      const parts = u.pathname.split('/').filter(Boolean);
+      const idx = parts.findIndex(p => ['embed', 'shorts', 'live'].includes(p));
+      if (idx >= 0 && parts[idx + 1] && /^[a-zA-Z0-9_-]{11}$/.test(parts[idx + 1])) {
+        return parts[idx + 1];
+      }
+    }
+
+    if (host === 'youtu.be') {
+      const id = u.pathname.split('/').filter(Boolean)[0];
+      if (id && /^[a-zA-Z0-9_-]{11}$/.test(id)) return id;
+    }
+  } catch (_) {
+    // URLパース失敗時は下の正規表現フォールバックへ
+  }
+
+  const fallback = input.match(/(?:v=|youtu\.be\/|embed\/|shorts\/|live\/)([a-zA-Z0-9_-]{11})/);
+  return fallback ? fallback[1] : null;
 }
 
 /**
