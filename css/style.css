@@ -449,11 +449,11 @@ h1.page-title {
   border-radius: var(--radius);
 }
 .race-label {
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 15px;
   color: var(--text);
 }
-.race-info { font-size: 12px; color: var(--text-sub); }
+.race-info { font-size: 13px; color: var(--text-sub); }
 
 .result-table-wrapper {
   overflow-x: auto;
