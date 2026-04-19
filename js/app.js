@@ -332,6 +332,7 @@ function renderYoutube() {
   const videoId = extractYoutubeId(url);
   if (!videoId) { container.style.display = 'none'; return; }
 
+  container.style.display = 'block';
   container.innerHTML = `
     <div class="youtube-wrapper">
       <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=0"
