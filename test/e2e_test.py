@@ -184,7 +184,7 @@ def test_pipeline(result: TestResult, verbose: bool) -> dict:
             )
             if verbose:
                 for r in race_json["results"]:
-                    finish_fmt = r.get("finish", {}).get("formatted", "---")
+                    finish_fmt = (r.get("finish") or {}).get("formatted", "---")
                     print(
                         f"  {C.GRAY}  {r['rank']:2d}位  レーン{r['lane']}  "
                         f"{finish_fmt}  {r.get('split','')}{C.RESET}"
@@ -258,7 +258,9 @@ def test_ranking(result: TestResult, generated: dict, verbose: bool) -> None:
         # フィニッシュタイム（time_ms）で最短を確認
         finish_times = []
         for r in results:
-            t = r.get("finish", {}).get("time_ms")
+            if r is None:
+                continue
+            t = (r.get("finish") or {}).get("time_ms")
             if t is not None:
                 finish_times.append(t)
 
@@ -269,7 +271,7 @@ def test_ranking(result: TestResult, generated: dict, verbose: bool) -> None:
         min_time = min(finish_times)
 
         # rank=1 の全艇が最短タイムと一致するか（同着考慮）
-        rank1_times = [r.get("finish", {}).get("time_ms") for r in rank1_boats]
+        rank1_times = [(r.get("finish") or {}).get("time_ms") for r in rank1_boats]
         if all(t == min_time for t in rank1_times):
             result.ok(
                 f"ランキング: Race {race_no} 順位が正しい",
@@ -432,14 +434,12 @@ def test_html_structure(result: TestResult, verbose: bool) -> None:
     content = html_path.read_text(encoding="utf-8")
 
     required_ids = [
-        "tournament-name",
+        "cover-tournament-name",
         "view-toggle",
-        "view-table",
-        "view-schedule",
         "filter-cat",
-        "filter-round",
         "filter-day",
-        "last-updated",
+        "filter-panel",
+        "loading",
     ]
     required_scripts = ["js/app.js"]
     required_css     = ["css/style.css"]
