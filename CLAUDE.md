@@ -41,7 +41,7 @@
 - [x] Cloudflare Pages 本番デプロイ設定済み（https://masters-regatta-2026-3ha.pages.dev）
 - [x] GASプロジェクト本番設定完了（GITHUB_TOKEN更新・GITHUB_REPO=RYUIYAMADA/masters-regatta-2026）
 - [x] スケジュール・エントリーCSV入稿済み
-- [ ] rowingishikawadev-del アカウントへのコラボレーター権限確認
+- [x] rowingishikawadev-del アカウントへのコラボレーター権限確認済み
 - [ ] 公開前チェックリスト22項目実施（docs/site-checklist.html）
 
 ## ディレクトリ構成
@@ -87,7 +87,7 @@ masters-regatta-2026/
 - **フロントエンド**: HTML / CSS / JavaScript（静的サイト）
 - **ホスティング**: Cloudflare Pages（GitHub連携自動デプロイ）
 - **自動連携**: Google Apps Script（Drive監視 → CSV→JSON変換 → GitHub Push）
-- **Google Drive**: フォルダID `1sCKohwJK8DWjINLxEfe_eO9Nm-DBshop`
+- **Google Drive**: フォルダID `1KeZTIobp23xXaQ-nQydDy7Ze_Lutb21D`（当日CSV投入フォルダ）
 
 ## 自動更新フロー
 ```

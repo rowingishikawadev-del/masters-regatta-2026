@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第17回全日本マスターズレガッタ 運用ドキュメント</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: #2D4F2C;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-break: strict;
+        }
+
+        header .subtitle {
+            font-size: 0.95rem;
+            font-weight: 400;
+            opacity: 0.95;
+            margin-bottom: 1.5rem;
+        }
+
+        header .link-button {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        header .link-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Section */
+        .doc-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2D4F2C;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #E8E3DB;
+            line-break: strict;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card */
+        .card {
+            background-color: #F7F4EF;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333333;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            border: 1px solid #E8E3DB;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(45, 79, 44, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2D4F2C;
+            line-break: strict;
+        }
+
+        .card-description {
+            font-size: 0.9rem;
+            color: #666666;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            line-break: strict;
+        }
+
+        .card-link {
+            font-size: 0.85rem;
+            color: #2D4F2C;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .card-link::after {
+            content: '→';
+            font-weight: 700;
+        }
+
+        .card:hover .card-link {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #F7F4EF;
+            border-top: 1px solid #E8E3DB;
+            padding: 2rem;
+            text-align: center;
+            color: #999999;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.4rem;
+            }
+
+            header .subtitle {
+                font-size: 0.85rem;
+            }
+
+            main {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>第17回全日本マスターズレガッタ<br>運用ドキュメント</h1>
+        <p class="subtitle">2026年5月23日(土)〜24日(日) ｜ 石川県津幡漕艇競技場</p>
+        <a href="https://masters-regatta-2026-3ha.pages.dev" class="link-button">本番サイトへ</a>
+    </header>
+
+    <main>
+        <!-- 観客・参加者向け -->
+        <section class="doc-section">
+            <h2 class="section-title">観客・参加者向け</h2>
+            <div class="cards-grid">
+                <a href="/" class="card">
+                    <div class="card-icon">🏁</div>
+                    <h3 class="card-title">速報サイト<wbr>（トップ）</h3>
+                    <p class="card-description">レース結果リアルタイム速報</p>
+                    <span class="card-link">サイトへ</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 運営スタッフ向け -->
+        <section class="doc-section">
+            <h2 class="section-title">運営スタッフ向け</h2>
+            <div class="cards-grid">
+                <a href="day-manual.html" class="card">
+                    <div class="card-icon">📋</div>
+                    <h3 class="card-title">当日担当者<wbr>マニュアル</h3>
+                    <p class="card-description">計測・CSV投入の手順</p>
+                    <span class="card-link">マニュアル</span>
+                </a>
+                <a href="schedule_input_guide.html" class="card">
+                    <div class="card-icon">📅</div>
+                    <h3 class="card-title">スケジュール<wbr>入力ガイド</h3>
+                    <p class="card-description">スケジュールCSV作成方法</p>
+                    <span class="card-link">ガイド</span>
+                </a>
+                <a href="/admin/9922/" class="card">
+                    <div class="card-icon">🔧</div>
+                    <h3 class="card-title">管理者<wbr>ダッシュボード</h3>
+                    <p class="card-description">GAS状態・更新状況確認</p>
+                    <span class="card-link">ダッシュボード</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- システム担当向け -->
+        <section class="doc-section">
+            <h2 class="section-title">システム担当向け</h2>
+            <div class="cards-grid">
+                <a href="site-checklist.html" class="card">
+                    <div class="card-icon">✅</div>
+                    <h3 class="card-title">公開前<wbr>チェックリスト</h3>
+                    <p class="card-description">大会前の22項目確認</p>
+                    <span class="card-link">チェックリスト</span>
+                </a>
+                <a href="handover.html" class="card">
+                    <div class="card-icon">📖</div>
+                    <h3 class="card-title">システム<wbr>引継ぎ資料</h3>
+                    <p class="card-description">GAS設定・全体構成の説明</p>
+                    <span class="card-link">資料</span>
+                </a>
+                <a href="db_structure.html" class="card">
+                    <div class="card-icon">🗄️</div>
+                    <h3 class="card-title">DB構造説明</h3>
+                    <p class="card-description">JSONデータ構造の詳細</p>
+                    <span class="card-link">構造説明</span>
+                </a>
+                <a href="csv_naming_rules.html" class="card">
+                    <div class="card-icon">📝</div>
+                    <h3 class="card-title">CSV<wbr>ファイル名ルール</h3>
+                    <p class="card-description">CSV命名規則</p>
+                    <span class="card-link">ルール</span>
+                </a>
+                <a href="spec.html" class="card">
+                    <div class="card-icon">📐</div>
+                    <h3 class="card-title">システム仕様書</h3>
+                    <p class="card-description">システム全体仕様</p>
+                    <span class="card-link">仕様書</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>RYUIYAMADA / masters-regatta-2026</p>
+        <p><a href="https://masters-regatta-2026-3ha.pages.dev" style="color: #666666; text-decoration: none;">https://masters-regatta-2026-3ha.pages.dev</a></p>
+    </footer>
+</body>
+</html>

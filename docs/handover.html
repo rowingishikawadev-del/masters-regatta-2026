@@ -547,6 +547,58 @@
     </div>
   </div>
 
+  <!-- ⑦-2 テストデータクリア -->
+  <div class="section">
+    <div id="s-clear" class="section-anchor"></div>
+    <h2>⑦-2 テストデータのクリア（大会前リセット）</h2>
+    <div class="card">
+      <h3>🗑️ clearAllResults() — レース結果を全削除してリセットする</h3>
+      <p>テストデータを本番前に削除し、サイトを「全レース未実施」の状態に戻す関数です。スケジュール・エントリー情報は削除されません。</p>
+      <table class="tbl">
+        <thead><tr><th>項目</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>対象</td><td>GitHub <code>data/results/race_*.json</code> を全削除</td></tr>
+          <tr><td>削除しないもの</td><td>スケジュール・エントリー・Google Drive内のCSV</td></tr>
+          <tr><td>アーカイブ先</td><td>Google Drive フォルダ（削除済データ保管用）にタイムスタンプ付きで退避</td></tr>
+          <tr><td>ファイル名形式</td><td><code>race_001_2026-05-22-09:00:00削除済.json</code></td></tr>
+        </tbody>
+      </table>
+      <h3 style="margin-top:20px">実行手順</h3>
+      <ul class="steps">
+        <li class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>GASエディタを開く</strong>
+            <div class="step-note">
+              ・<a href="https://script.google.com" target="_blank">script.google.com</a> → 「マスターズ石川県大会2026」を開く
+            </div>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>clearAllResults を実行する</strong>
+            <div class="step-note">
+              ・関数ドロップダウンで <code>clearAllResults</code> を選択 → 「実行」ボタンを押す<br>
+              ・ログに「削除OK: race_001.json」「完了」と表示されれば成功<br>
+              ・ファイル数に応じて1件あたり約0.5秒かかる（10件なら約5秒）
+            </div>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>サイトで確認する</strong>
+            <div class="step-note">
+              ・<a href="https://masters-regatta-2026-3ha.pages.dev" target="_blank">masters-regatta-2026-3ha.pages.dev</a> を開く<br>
+              ・全レースが「未実施」表示になっていればリセット完了（Cloudflare反映まで最大1〜2分）
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
   <!-- ⑧ トラブル対処 -->
   <div class="section">
     <div id="s-trouble" class="section-anchor"></div>
