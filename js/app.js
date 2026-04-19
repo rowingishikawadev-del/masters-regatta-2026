@@ -320,30 +320,25 @@ function renderTournamentHeader() {
 }
 
 /**
- * YouTube Live URLがあれば埋め込む
+ * YouTube Live URLがあれば埋め込む（HTMLのデフォルトiframeを更新する）
  */
 function renderYoutube() {
   const url = masterData?.tournament?.youtube_url;
   const container = document.getElementById('youtube-container');
   if (!container) return;
-  if (!url) { container.style.display = 'none'; return; }
 
-  // youtube.com/watch?v=ID, youtu.be/ID, /embed/ID 形式に対応
+  // URLがない場合でもHTMLに埋め込み済みのiframeはそのまま残す
+  if (!url) return;
+
   const videoId = extractYoutubeId(url);
-  if (!videoId) { container.style.display = 'none'; return; }
+  if (!videoId) return;
 
+  // 既存のiframe srcを更新（master.jsonのURLが変わった場合に対応）
+  const iframe = document.getElementById('youtube-iframe');
+  if (iframe) {
+    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=0`;
+  }
   container.style.display = 'block';
-  container.innerHTML = `
-    <div class="youtube-section-card">
-      <div class="youtube-wrapper">
-        <iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=0"
-          title="YouTube Live"
-          loading="lazy"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen></iframe>
-      </div>
-    </div>`;
 }
 
 /**
