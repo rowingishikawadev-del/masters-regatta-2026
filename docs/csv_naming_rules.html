@@ -63,6 +63,25 @@
       </tbody>
     </table>
 
+    <h3 style="margin-top:20px">CSVファイルの中身（テストデータ例）</h3>
+    <p class="note" style="margin-bottom:8px"><strong>R001_500m.csv</strong>（レース1・500m計測・6艇の例）</p>
+    <pre style="background:#f4f4f4;border:1px solid #ddd;border-radius:6px;padding:12px;font-size:12px;overflow-x:auto;line-height:1.6">measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,note
+500m,4,1,118340,1:58.34,1,,,
+500m,3,1,120150,2:00.15,1,,,
+500m,1,1,122880,2:02.88,1,,,
+500m,6,1,125600,2:05.60,1,,,
+500m,2,1,127340,2:07.34,1,,,
+500m,5,1,130120,2:10.12,1,,,</pre>
+    <p class="note" style="margin-bottom:8px;margin-top:12px"><strong>R001_1000m.csv</strong>（レース1・1000m計測・6艇の例）</p>
+    <pre style="background:#f4f4f4;border:1px solid #ddd;border-radius:6px;padding:12px;font-size:12px;overflow-x:auto;line-height:1.6">measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,note
+1000m,4,1,239820,3:59.82,1,,,
+1000m,3,1,243470,4:03.47,1,,,
+1000m,1,1,247930,4:07.93,1,,,
+1000m,6,1,253210,4:13.21,1,,,
+1000m,2,1,257680,4:17.68,1,,,
+1000m,5,1,263450,4:23.45,1,,,</pre>
+    <p class="note">※ <code>time_ms</code> はミリ秒。<code>formatted</code> は <code>分:秒.百分秒</code> 形式。<code>tie_group</code>・<code>photo_flag</code>・<code>note</code> は通常空欄でOK。</p>
+
     <h3 style="margin-top:20px">OK / NG 例</h3>
     <table>
       <thead><tr><th>ファイル名</th><th>判定</th><th>理由</th></tr></thead>
