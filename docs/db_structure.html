@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 <title>DB構造図 — ボート競技ライブリザルト</title>
 <style>
 :root {
+  /* デザインシステム: ハピネッツ色 */
+  --primary:    #2D4F2C;
   --bg:         #F7F4EF;
-  --card:       #FFFFFF;
-  --border:     #D9D4CA;
-  --text:       #3D3B38;
-  --text-sub:   #7A7570;
-  --text-muted: #B0AAA3;
-  --accent:     #5C8A5A;
-  --accent-bg:  #EBF1EA;
-  --gold:       #A08C5B;
-  --radius:     2px;
+  --border:     #E8E3DB;
+  --text:       #333333;
+  --text-muted: #666666;
+  --on-primary: #ffffff;
 
   /* エンティティカラー */
   --c-year:       #4A6FA5;
@@ -34,48 +34,68 @@
 
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
-  font-family: 'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic',sans-serif;
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
   font-size: 14px;
+  line-break: strict;
 }
+html { scroll-behavior: smooth; }
 
 /* ========= ヘッダー ========= */
 header {
-  background: #2D4F2C;
-  padding: 28px 40px 24px;
+  background: var(--primary);
+  padding: 2rem;
+  width: 100%;
 }
-.header-label {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 6px;
+header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
 }
-.header-title {
-  font-size: 20px;
-  font-weight: 300;
-  color: #fff;
-  letter-spacing: 0.05em;
+.header-back {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 14px;
+  color: var(--on-primary);
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.header-back:hover { opacity: 1; }
+.header-content {
+  text-align: center;
+  flex: 1;
+}
+header h1 {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--on-primary);
+  margin-bottom: 0.5rem;
 }
 .header-sub {
-  font-size: 12px;
-  color: rgba(255,255,255,0.6);
-  margin-top: 4px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+  font-weight: 400;
 }
 
 /* ========= ページ本体 ========= */
-.page { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
 
 h2.section-title {
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--text-sub);
-  text-transform: uppercase;
-  margin: 48px 0 20px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
+  color: var(--primary);
+  margin: 2rem 0 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
 }
 h2.section-title:first-child { margin-top: 0; }
 
@@ -126,8 +146,8 @@ h2.section-title:first-child { margin-top: 0; }
 .entity-card {
   flex: 1;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--card);
+  border-radius: 8px;
+  background: #ffffff;
   margin: 6px 0;
   overflow: hidden;
   position: relative;
@@ -249,30 +269,30 @@ h2.section-title:first-child { margin-top: 0; }
 .relation-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 14px;
 }
 .relation-table th {
-  padding: 8px 12px;
+  padding: 12px 16px;
   text-align: left;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  background: #FAF8F4;
+  color: var(--on-primary);
+  background: var(--primary);
   border-bottom: 1px solid var(--border);
 }
 .relation-table td {
-  padding: 8px 12px;
-  border-bottom: 1px solid #F0EDE7;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
   vertical-align: top;
 }
 .relation-table tr:last-child td { border-bottom: none; }
 code {
-  font-family: monospace;
-  font-size: 12px;
-  background: #F0EDE7;
-  padding: 1px 5px;
-  border-radius: 2px;
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+  font-size: 13px;
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 2px 6px;
 }
 
 /* ========= データフロー図 ========= */
@@ -325,11 +345,11 @@ code {
 
 /* ========= ファイル構成 ========= */
 .file-tree {
-  background: var(--card);
+  background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 8px;
   padding: 20px 24px;
-  font-family: monospace;
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
   font-size: 13px;
   line-height: 2;
 }
@@ -371,25 +391,61 @@ code {
 
 /* ========= 将来構成 ========= */
 .future-note {
-  background: var(--accent-bg);
-  border: 1px solid var(--accent);
-  border-radius: var(--radius);
-  padding: 14px 18px;
-  font-size: 13px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  font-size: 14px;
   color: var(--text);
-  margin-top: 16px;
+  margin-top: 1rem;
 }
-.future-note strong { color: var(--accent); }
+.future-note strong { color: var(--primary); }
 
-.divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+/* ========= フッター ========= */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+  color: #999999;
+  font-size: 13px;
+  margin-top: 2rem;
+}
+footer a {
+  color: var(--primary);
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+footer a:hover { text-decoration: underline; }
+
+/* ========= レスポンシブ ========= */
+@media (max-width: 768px) {
+  .page { padding: 1rem; }
+  header { padding: 1.5rem; }
+  header h1 { font-size: 24px; }
+  .header-sub { font-size: 12px; }
+  h2.section-title { font-size: 16px; margin: 1.5rem 0 1rem; }
+  .entity-props { grid-template-columns: 1fr; }
+  .relation-table { font-size: 12px; }
+  .relation-table th, .relation-table td { padding: 8px 12px; }
+  .file-tree { font-size: 11px; padding: 1rem; }
+}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="header-label">SYSTEM DOCUMENTATION</div>
-  <div class="header-title">DB 構造図</div>
-  <div class="header-sub">ボート競技ライブリザルト — データモデル & アーキテクチャ</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:2rem">
+    <a href="index.html" class="header-back">← ドキュメント一覧</a>
+    <div style="flex:1;text-align:center">
+      <h1>DB構造図</h1>
+      <div class="header-sub">ボート競技ライブリザルト — データモデル＆アーキテクチャ</div>
+    </div>
+    <div style="width:120px"></div>
+  </div>
 </header>
 
 <div class="page">
@@ -977,30 +1033,35 @@ code {
     <div style="font-size:13px;font-weight:600;color:var(--text-sub);letter-spacing:0.06em;margin-bottom:12px">
       CSVサンプル
     </div>
-    <div style="background:#2D3748;border-radius:var(--radius);padding:20px 24px;overflow-x:auto">
-      <div style="font-size:10px;letter-spacing:0.15em;color:rgba(255,255,255,0.4);margin-bottom:10px">
+    <div style="background:#1e1e1e;border-radius:6px;padding:16px;overflow-x:auto">
+      <div style="font-size:11px;letter-spacing:0.15em;color:rgba(255,255,255,0.5);margin-bottom:10px;font-family:'SF Mono','Monaco','Courier New',monospace">
         20260309_002304_R001_500m.csv
       </div>
-      <pre style="font-family:monospace;font-size:12px;line-height:1.9;color:#E2E8F0;margin:0"><span style="color:#68D391">measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,note</span>
+      <pre style="font-family:'SF Mono','Monaco','Courier New',monospace;font-size:12px;line-height:1.8;color:#d4d4d4;margin:0"><span style="color:#6ec86e">measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,note</span>
 500m,1,1,112834,1:52.834,1,,,
 500m,2,1,113201,1:53.201,1,,,
 500m,3,1,111490,1:51.490,1,,,
 500m,4,1,114560,1:54.560,1,,, </pre>
-      <div style="font-size:10px;letter-spacing:0.15em;color:rgba(255,255,255,0.4);margin:16px 0 10px">
+      <div style="font-size:11px;letter-spacing:0.15em;color:rgba(255,255,255,0.5);margin:12px 0 10px;font-family:'SF Mono','Monaco','Courier New',monospace">
         20260309_002304_R001_1000m.csv
       </div>
-      <pre style="font-family:monospace;font-size:12px;line-height:1.9;color:#E2E8F0;margin:0"><span style="color:#68D391">measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,note</span>
+      <pre style="font-family:'SF Mono','Monaco','Courier New',monospace;font-size:12px;line-height:1.8;color:#d4d4d4;margin:0"><span style="color:#6ec86e">measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,note</span>
 1000m,1,1,228410,3:48.410,1,,,
 1000m,2,1,231750,3:51.750,1,,,
 1000m,3,1,224880,3:44.880,1,,,
 1000m,4,1,235200,3:55.200,1,,,</pre>
-      <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:14px">
-        ※ 同着の例: tie_group に同じ値を入れる → <code style="color:#F6AD55">1000m,2,1,213760,3:33.760,3,A,,</code> / <code style="color:#F6AD55">1000m,4,1,213760,3:33.760,3,A,,</code>
+      <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:12px">
+        ※ 同着の例: tie_group に同じ値を入れる → <code style="color:#ce9e5d;background:#2d2d2d;border:1px solid #444;padding:1px 4px;border-radius:3px">1000m,2,1,213760,3:33.760,3,A,,</code> / <code style="color:#ce9e5d;background:#2d2d2d;border:1px solid #444;padding:1px 4px;border-radius:3px">1000m,4,1,213760,3:33.760,3,A,,</code>
       </div>
     </div>
   </div>
 
 </div>
+
+<footer>
+  <div>第17回全日本マスターズレガッタ 2026 | 運用ドキュメント</div>
+  <a href="index.html">← ドキュメント一覧に戻る</a>
+</footer>
 
 </body>
 </html>

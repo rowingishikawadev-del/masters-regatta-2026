@@ -4,53 +4,459 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>登録シート 全項目定義書</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  body { font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 1200px; margin: 40px auto; padding: 0 20px; color: #333; font-size: 14px; }
-  h1 { font-size: 22px; border-bottom: 3px solid #2D4F2C; padding-bottom: 8px; margin-bottom: 6px; }
-  .subtitle { color: #666; font-size: 13px; margin-bottom: 28px; }
-  h2 { font-size: 15px; background: #2D4F2C; color: #fff; padding: 7px 14px; border-radius: 4px; margin-top: 36px; margin-bottom: 0; display: flex; align-items: center; gap: 8px; }
-  h2 .file-label { font-family: monospace; font-size: 13px; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 3px; }
-  h2 .opt-label { font-size: 11px; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 10px; }
-  table { border-collapse: collapse; width: 100%; font-size: 13px; margin-top: 0; margin-bottom: 24px; border: 1px solid #c5d8c5; }
-  thead th { background: #e8f0e8; color: #2D4F2C; padding: 8px 10px; text-align: left; border: 1px solid #c5d8c5; white-space: nowrap; font-weight: bold; }
-  tbody td { border: 1px solid #dde; padding: 7px 10px; vertical-align: top; line-height: 1.6; }
-  tbody tr:hover { background: #f5fbf5; }
-  .prop { font-family: monospace; font-size: 12px; background: #f0f4ff; border: 1px solid #c0ccee; padding: 2px 6px; border-radius: 3px; white-space: nowrap; }
-  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; white-space: nowrap; }
-  .badge-req { background: #fde8e8; color: #c0392b; }
-  .badge-opt { background: #f0f0f0; color: #777; }
-  .type-tag { display: inline-block; font-size: 11px; color: #555; background: #f4f4f4; border: 1px solid #ddd; padding: 1px 6px; border-radius: 3px; white-space: nowrap; }
-  .fixed-values { margin-top: 4px; }
-  .val { display: inline-block; font-family: monospace; font-size: 11px; background: #fff8e1; border: 1px solid #e0c060; padding: 1px 6px; border-radius: 3px; margin: 1px; }
-  .example { color: #1a5c1a; font-size: 12px; }
-  .note { background: #fffbe6; border: 1px solid #f0c040; border-radius: 4px; padding: 10px 14px; font-size: 13px; margin: 12px 0 20px; }
-  .note-blue { background: #e8f0fe; border: 1px solid #8ab4f8; border-radius: 4px; padding: 10px 14px; font-size: 13px; margin: 12px 0 20px; }
-  .sample { background: #f4f8f4; border: 1px solid #b2d0b2; border-radius: 4px; padding: 12px 16px; font-family: monospace; font-size: 12px; white-space: pre; overflow-x: auto; margin: 8px 0 24px; line-height: 1.7; }
-  .sample .comment { color: #888; }
-  code { background: #f0f0f0; padding: 1px 5px; border-radius: 3px; font-size: 12px; font-family: monospace; }
-  /* ダウンロードセクション */
-  .dl-section { background: #f0f7f0; border: 2px solid #2D4F2C; border-radius: 8px; padding: 20px 24px; margin: 24px 0 32px; }
-  .dl-section h3 { font-size: 15px; color: #2D4F2C; margin: 0 0 6px; }
-  .dl-section p { font-size: 13px; color: #555; margin: 0 0 16px; }
-  .dl-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
-  .dl-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; border: none; text-decoration: none; transition: opacity 0.15s; }
-  .dl-btn:hover { opacity: 0.85; }
-  .dl-btn-primary { background: #2D4F2C; color: #fff; }
-  .dl-btn-secondary { background: #fff; color: #2D4F2C; border: 2px solid #2D4F2C; }
-  .dl-btn-icon { font-size: 18px; }
-  .dl-contents { margin-top: 12px; font-size: 12px; color: #666; }
-  .dl-contents span { display: inline-block; background: #e8f0fe; border: 1px solid #8ab4f8; border-radius: 3px; padding: 1px 7px; font-family: monospace; margin: 2px; }
-  .file-chip { display: inline-block; background: #e8f0fe; border: 1px solid #8ab4f8; border-radius: 4px; padding: 3px 10px; font-family: monospace; font-size: 12px; }
-  .section-desc { color: #555; font-size: 13px; margin: 10px 0 12px; padding-left: 4px; }
-  ol.steps { line-height: 2.2; font-size: 14px; padding-left: 20px; }
-  .warn { color: #c0392b; }
-  hr { margin: 40px 0; border: none; border-top: 1px solid #ddd; }
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    color: #333333;
+    background: #ffffff;
+    line-break: strict;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* ==================== HEADER ==================== */
+  header {
+    background: #2D4F2C;
+    color: #ffffff;
+    width: 100%;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  header a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  header a:hover {
+    opacity: 0.8;
+  }
+
+  header h1 {
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0.5rem 0 0;
+    letter-spacing: 0.5px;
+  }
+
+  header .subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 0.5rem;
+    opacity: 0.95;
+  }
+
+  /* ==================== TYPOGRAPHY ==================== */
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2D4F2C;
+    margin: 2rem 0 0.5rem;
+    padding-bottom: 0;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    background: #2D4F2C;
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  h2 .file-label {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+
+  h2 .opt-label {
+    font-size: 11px;
+    font-weight: 400;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2px 7px;
+    border-radius: 10px;
+  }
+
+  .subtitle {
+    color: #666666;
+    font-size: 15px;
+    margin: 1rem 0 2rem;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* ==================== TABLE ==================== */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+    margin: 1.5rem 0 2rem;
+    border: 1px solid #E8E3DB;
+  }
+
+  thead th {
+    background: #2D4F2C;
+    color: #ffffff;
+    padding: 12px 14px;
+    text-align: left;
+    border: 1px solid #E8E3DB;
+    font-weight: 600;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  tbody td {
+    border: 1px solid #E8E3DB;
+    padding: 10px 14px;
+    vertical-align: top;
+    line-height: 1.7;
+    font-size: 14px;
+  }
+
+  tbody tr:hover {
+    background: #F7F4EF;
+  }
+
+  /* ==================== COMPONENTS ==================== */
+  .prop {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .badge-req {
+    background: #fde8e8;
+    color: #c0392b;
+  }
+
+  .badge-opt {
+    background: #f0f0f0;
+    color: #777;
+  }
+
+  .type-tag {
+    display: inline-block;
+    font-size: 12px;
+    color: #555;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .fixed-values {
+    margin-top: 6px;
+  }
+
+  .val {
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    background: #fff8e1;
+    border: 1px solid #e0c060;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin: 2px 2px 2px 0;
+  }
+
+  .example {
+    color: #1a5c1a;
+    font-size: 13px;
+    display: block;
+    margin: 4px 0;
+  }
+
+  /* ==================== BOXES ==================== */
+  .note {
+    background: #fffbe6;
+    border-left: 4px solid #e67e22;
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-size: 14px;
+    margin: 1.5rem 0 2rem;
+    line-height: 1.6;
+  }
+
+  .note-blue {
+    background: #e8f0fe;
+    border-left: 4px solid #8ab4f8;
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-size: 14px;
+    margin: 1.5rem 0 2rem;
+    line-height: 1.6;
+  }
+
+  .sample {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 1rem 0 2rem;
+    line-height: 1.7;
+    color: #333;
+  }
+
+  .sample .comment {
+    color: #888;
+  }
+
+  code {
+    background: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+    color: #333;
+  }
+
+  /* ==================== DOWNLOAD SECTION ==================== */
+  .dl-section {
+    background: #F7F4EF;
+    border: 2px solid #2D4F2C;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 2rem 0 2.5rem;
+  }
+
+  .dl-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2D4F2C;
+    margin: 0 0 8px;
+  }
+
+  .dl-section p {
+    font-size: 14px;
+    color: #555;
+    margin: 0 0 16px;
+    line-height: 1.6;
+  }
+
+  .dl-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: opacity 0.15s;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+
+  .dl-btn:hover {
+    opacity: 0.85;
+  }
+
+  .dl-btn-primary {
+    background: #2D4F2C;
+    color: #ffffff;
+  }
+
+  .dl-btn-secondary {
+    background: #ffffff;
+    color: #2D4F2C;
+    border: 2px solid #2D4F2C;
+  }
+
+  .dl-btn-icon {
+    font-size: 18px;
+  }
+
+  .dl-contents {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #666;
+  }
+
+  .dl-contents span {
+    display: inline-block;
+    background: #e8f0fe;
+    border: 1px solid #8ab4f8;
+    border-radius: 3px;
+    padding: 2px 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    margin: 2px;
+  }
+
+  .file-chip {
+    display: inline-block;
+    background: #e8f0fe;
+    border: 1px solid #8ab4f8;
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+  }
+
+  .section-desc {
+    color: #666666;
+    font-size: 14px;
+    margin: 1rem 0 1.5rem;
+    padding-left: 4px;
+    line-height: 1.6;
+  }
+
+  ol.steps {
+    line-height: 2;
+    font-size: 14px;
+    padding-left: 24px;
+    margin: 1.5rem 0 2rem;
+  }
+
+  ol.steps li {
+    margin-bottom: 0.5rem;
+  }
+
+  .warn {
+    color: #c0392b;
+    font-weight: 600;
+  }
+
+  hr {
+    margin: 3rem 0;
+    border: none;
+    border-top: 1px solid #E8E3DB;
+  }
+
+  footer {
+    background: #F7F4EF;
+    border-top: 1px solid #E8E3DB;
+    padding: 2rem;
+    text-align: center;
+    font-size: 13px;
+    color: #999999;
+    margin-top: 3rem;
+  }
+
+  footer a {
+    color: #2D4F2C;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* ==================== RESPONSIVE ==================== */
+  @media (max-width: 768px) {
+    header {
+      padding: 1.5rem 1rem;
+    }
+
+    header h1 {
+      font-size: 24px;
+    }
+
+    header .subtitle {
+      font-size: 14px;
+    }
+
+    main {
+      padding: 1.5rem;
+    }
+
+    h2 {
+      font-size: 16px;
+      padding: 10px 14px;
+      flex-wrap: wrap;
+    }
+
+    table {
+      font-size: 12px;
+    }
+
+    thead th, tbody td {
+      padding: 8px 10px;
+    }
+
+    .dl-buttons {
+      flex-direction: column;
+    }
+
+    .dl-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    footer {
+      padding: 1.5rem;
+    }
+  }
 </style>
 </head>
 <body>
 
-<h1>📋 登録シート 全項目定義書</h1>
-<div class="subtitle">Google Drive の <code>master/</code> フォルダにアップロードする3つのCSVファイルの全項目を定義します。</div>
+<!-- ==================== HEADER ==================== -->
+<header>
+  <a href="index.html">← ドキュメント一覧</a>
+  <h1>📋 登録シート 全項目定義書</h1>
+  <p class="subtitle">Google Drive の <code>master/</code> フォルダにアップロードする3つのCSVファイルの全項目を定義します。</p>
+</header>
+
+<main>
 
 <!-- ============================================================ -->
 <!-- ダウンロードセクション -->
@@ -502,7 +908,13 @@ race_no,lane,crew_name,affiliation,age_group
 </div>
 
 <hr>
-<p style="font-size: 12px; color: #888; text-align: center;">ボート競技ライブリザルトシステム — 登録シート全項目定義書</p>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <p>第17回全日本マスターズレガッタ 2026 | 運用ドキュメント</p>
+  <a href="index.html">← ドキュメント一覧に戻る</a>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script>

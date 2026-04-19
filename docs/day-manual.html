@@ -4,103 +4,437 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>当日スタッフ マニュアル｜ボート競技速報サイト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --green: #2D4F2C;
-    --green-light: #e8f0e8;
-    --green-mid: #4a7a48;
-    --red: #c0392b;
-    --yellow: #f0c040;
-    --blue: #3b7dd8;
-    --text: #222;
-    --muted: #666;
-    --bg: #fff;
-    --border: #dde;
+    --primary: #2D4F2C;
+    --background: #F7F4EF;
+    --border: #E8E3DB;
+    --text: #333333;
+    --text-muted: #666666;
+    --on-primary: #ffffff;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f7f7f5; color: var(--text); font-size: 15px; line-height: 1.7; }
+  html {
+    line-break: strict;
+  }
+  body {
+    font-family: 'Noto Sans JP', -apple-system, 'Hiragino Sans', sans-serif;
+    background: var(--background);
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.7;
+  }
+  header {
+    background: var(--primary);
+    color: var(--on-primary);
+    padding: 2rem;
+    text-align: center;
+    width: 100%;
+  }
 
-  .page { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+  header a {
+    color: var(--on-primary);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
 
-  /* ヘッダー */
-  .hero { background: var(--green); color: #fff; border-radius: 10px; padding: 28px 32px; margin-bottom: 32px; }
-  .hero h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-  .hero p { font-size: 14px; opacity: 0.85; }
-  .hero .badge-list { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
-  .hero .badge { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 3px 12px; font-size: 12px; }
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0.5rem 0 0;
+  }
 
-  /* フロー図 */
-  .flow { display: flex; align-items: center; gap: 0; margin: 20px 0 28px; flex-wrap: wrap; }
-  .flow-step { background: var(--bg); border: 2px solid var(--green); border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 600; color: var(--green); white-space: nowrap; text-align: center; }
-  .flow-arrow { font-size: 18px; color: var(--green); padding: 0 6px; }
-  .flow-time { font-size: 11px; font-weight: normal; color: var(--muted); display: block; margin-top: 2px; }
+  header p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+  }
 
-  /* セクション */
-  .section { background: var(--bg); border-radius: 10px; padding: 24px 28px; margin-bottom: 20px; border: 1px solid var(--border); }
-  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-  .step-num { width: 36px; height: 36px; background: var(--green); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
-  .section h2 { font-size: 17px; color: var(--green); }
-  .section h3 { font-size: 14px; font-weight: 700; margin: 18px 0 8px; color: #333; border-left: 3px solid var(--green); padding-left: 8px; }
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 5rem;
+  }
 
-  /* 手順リスト */
-  ol.steps { padding-left: 20px; }
-  ol.steps li { margin-bottom: 10px; line-height: 1.6; }
-  ol.steps li strong { color: var(--green); }
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 5rem;
+  }
 
-  /* コールアウト */
-  .callout { display: flex; gap: 12px; border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 14px; }
-  .callout-ok  { background: #eafaf1; border: 1px solid #82e0aa; }
-  .callout-warn { background: #fef9e7; border: 1px solid var(--yellow); }
-  .callout-ng   { background: #fdedec; border: 1px solid #f1948a; }
-  .callout-icon { font-size: 20px; flex-shrink: 0; line-height: 1.4; }
-  .callout-body strong { display: block; margin-bottom: 4px; }
+  .hero {
+    background: var(--primary);
+    color: var(--on-primary);
+    border-radius: 8px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 2rem;
+  }
+  .hero h1 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .hero p {
+    font-size: 0.9375rem;
+    opacity: 0.9;
+  }
+  .hero .badge-list {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.875rem;
+  }
+  .hero .badge {
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+  }
+  .doc-back-link {
+    display: inline-block;
+    margin-bottom: 0.9rem;
+    color: var(--on-primary);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.65);
+  }
+  .doc-back-link:hover,
+  .doc-back-link:focus { text-decoration: underline; }
 
-  /* コード */
-  code { font-family: monospace; font-size: 13px; background: #f0f0f0; border: 1px solid #ddd; padding: 1px 6px; border-radius: 3px; }
-  pre { background: #1e2330; color: #d4d4d4; border-radius: 8px; padding: 16px; font-size: 13px; overflow-x: auto; margin: 10px 0; line-height: 1.7; }
-  pre .ok  { color: #6bcb77; }
-  pre .ng  { color: #ff6b6b; }
-  pre .hl  { color: #ffd166; }
+  .section {
+    background: var(--on-primary);
+    border-radius: 8px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--border);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .step-num {
+    width: 2.25rem;
+    height: 2.25rem;
+    background: var(--primary);
+    color: var(--on-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+  }
+  .section h3 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin: 1.125rem 0 0.5rem;
+    color: var(--text);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
 
-  /* フォルダパス */
-  .path { display: inline-block; font-family: monospace; font-size: 13px; background: #e8f0fe; border: 1px solid #8ab4f8; border-radius: 4px; padding: 2px 8px; }
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 1.25rem 0 1.75rem;
+    flex-wrap: wrap;
+  }
+  .flow-step {
+    background: var(--on-primary);
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    padding: 0.625rem 1rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--primary);
+    white-space: nowrap;
+    text-align: center;
+  }
+  .flow-arrow {
+    font-size: 1.125rem;
+    color: var(--primary);
+    padding: 0 0.375rem;
+  }
+  .flow-time {
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 0.125rem;
+  }
 
-  /* テーブル */
-  table { border-collapse: collapse; width: 100%; font-size: 13px; margin: 10px 0; }
-  th { background: var(--green-light); color: var(--green); padding: 7px 10px; border: 1px solid #c5d8c5; text-align: left; }
-  td { border: 1px solid var(--border); padding: 7px 10px; vertical-align: top; line-height: 1.6; }
-  tr:hover { background: #fafafa; }
+  ol.steps {
+    padding-left: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  ol.steps li {
+    margin-bottom: 0.625rem;
+    line-height: 1.6;
+  }
+  ol.steps li strong {
+    color: var(--primary);
+  }
 
-  /* ステータスバッジ */
-  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
-  .tag-ok   { background: #d5f5e3; color: #1a7a3e; }
-  .tag-warn { background: #fef9e7; color: #9a7d0a; }
-  .tag-ng   { background: #fdedec; color: var(--red); }
+  .callout {
+    display: flex;
+    gap: 0.75rem;
+    border-radius: 8px;
+    padding: 0.875rem 1rem;
+    margin: 0.875rem 0;
+    font-size: 0.875rem;
+  }
+  .callout-ok {
+    background: #eafaf1;
+    border: 1px solid #82e0aa;
+  }
+  .callout-warn {
+    background: #fef9e7;
+    border: 1px solid #f0c040;
+  }
+  .callout-ng {
+    background: #fdedec;
+    border: 1px solid #f1948a;
+  }
+  .callout-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    line-height: 1.4;
+  }
+  .callout-body strong {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
 
-  /* 大きいボタン */
-  .big-link { display: inline-block; background: var(--green); color: #fff; border-radius: 6px; padding: 10px 20px; font-size: 14px; font-weight: 600; text-decoration: none; margin: 6px 6px 6px 0; }
-  .big-link:hover { opacity: 0.85; }
-  .big-link-sub { background: #fff; color: var(--green); border: 2px solid var(--green); }
+  code {
+    font-family: monospace;
+    font-size: 0.8125rem;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+  }
 
-  /* チェックリスト */
-  .checklist { list-style: none; padding: 0; }
-  .checklist li { padding: 8px 10px; border-bottom: 1px solid #eee; font-size: 14px; display: flex; align-items: flex-start; gap: 10px; }
-  .checklist li:last-child { border-bottom: none; }
-  .checklist li::before { content: '☐'; font-size: 18px; color: var(--green); flex-shrink: 0; line-height: 1.2; }
+  pre {
+    background: #1e2330;
+    color: #d4d4d4;
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 0.8125rem;
+    overflow-x: auto;
+    margin: 0.625rem 0;
+    line-height: 1.7;
+  }
 
-  /* 重要度カラーバー */
-  .priority-high   { border-left: 4px solid var(--red); }
-  .priority-medium { border-left: 4px solid var(--yellow); }
-  .priority-low    { border-left: 4px solid #aaa; }
+  pre .ok {
+    color: #6bcb77;
+  }
 
-  hr { border: none; border-top: 1px solid #ddd; margin: 28px 0; }
-  footer { text-align: center; font-size: 12px; color: var(--muted); margin-top: 40px; }
+  pre .ng {
+    color: #ff6b6b;
+  }
+
+  pre .hl {
+    color: #ffd166;
+  }
+
+  .path {
+    display: inline-block;
+    font-family: monospace;
+    font-size: 0.8125rem;
+    background: #e8f0fe;
+    border: 1px solid #8ab4f8;
+    border-radius: 4px;
+    padding: 0.125rem 0.5rem;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.8125rem;
+    margin: 0.625rem 0;
+  }
+
+  th {
+    background: var(--primary);
+    color: var(--on-primary);
+    padding: 0.5rem 0.625rem;
+    border: 1px solid var(--border);
+    text-align: left;
+    font-weight: 600;
+  }
+
+  td {
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.625rem;
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  tr:hover {
+    background: #fafafa;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 0.125rem 0.5rem;
+    border-radius: 10px;
+  }
+
+  .tag-ok {
+    background: #d5f5e3;
+    color: #1a7a3e;
+  }
+
+  .tag-warn {
+    background: #fef9e7;
+    color: #9a7d0a;
+  }
+
+  .tag-ng {
+    background: #fdedec;
+    color: #c0392b;
+  }
+
+  .big-link {
+    display: inline-block;
+    background: var(--primary);
+    color: var(--on-primary);
+    border-radius: 6px;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin: 0.375rem 0.375rem 0.375rem 0;
+  }
+
+  .big-link:hover {
+    opacity: 0.85;
+  }
+
+  .big-link-sub {
+    background: var(--on-primary);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+
+  .checklist {
+    list-style: none;
+    padding: 0;
+  }
+
+  .checklist li {
+    padding: 0.5rem 0.625rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.875rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+  }
+
+  .checklist li:last-child {
+    border-bottom: none;
+  }
+
+  .checklist li::before {
+    content: '☐';
+    font-size: 1.125rem;
+    color: var(--primary);
+    flex-shrink: 0;
+    line-height: 1.2;
+  }
+
+  .priority-high {
+    border-left: 4px solid #c0392b;
+  }
+
+  .priority-medium {
+    border-left: 4px solid #f0c040;
+  }
+
+  .priority-low {
+    border-left: 4px solid #aaa;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.75rem 0;
+  }
+
+  footer {
+    background: var(--background);
+    border-top: 1px solid var(--border);
+    padding: 1.5rem;
+    text-align: center;
+    color: #999999;
+    margin-top: 2rem;
+  }
+
+  footer p {
+    margin-bottom: 0.5rem;
+  }
+
+  footer a {
+    color: var(--primary);
+  }
+
+  @media (max-width: 768px) {
+    .page {
+      padding: 1rem;
+    }
+
+    .hero {
+      padding: 1.25rem;
+    }
+
+    .section {
+      padding: 1rem;
+    }
+
+    .section h2 {
+      font-size: 1.1rem;
+    }
+
+    .flow {
+      flex-direction: column;
+    }
+
+    .flow-arrow {
+      transform: rotate(90deg);
+      margin: 0.5rem 0;
+    }
+  }
 </style>
 </head>
 <body>
+
+<header>
+  <a href="index.html">← ドキュメント一覧</a>
+  <h1>当日担当者マニュアル</h1>
+  <p>第17回全日本マスターズレガッタ 2026 / 計測・CSV投入担当向け</p>
+</header>
+
 <div class="page">
 
-  <!-- ヘッダー -->
+  <!-- ヒーローセクション -->
   <div class="hero">
     <h1>🚣 ボート競技速報サイト｜当日スタッフ マニュアル</h1>
     <p>計測終了後にCSVファイルをアップロードするだけで、サイトに自動反映されます。</p>
@@ -452,8 +786,14 @@
     <a class="big-link big-link-sub" href="../gas/セットアップガイド.html">⚙️ セットアップガイド（管理者向け）</a>
   </div>
 
-  <footer>ボート競技ライブリザルトシステム — 当日スタッフ マニュアル</footer>
+
 
 </div>
+
+<footer>
+  <p>第17回全日本マスターズレガッタ 2026 | 運用ドキュメント</p>
+  <p><a href="index.html">← ドキュメント一覧に戻る</a></p>
+</footer>
+
 </body>
 </html>

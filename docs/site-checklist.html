@@ -3,242 +3,602 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>公開前動作確認チェックリスト｜ボート競技速報サイト</title>
+<meta name="description" content="公開前動作確認チェックリスト | 第17回全日本マスターズレガッタ 2026">
+<title>公開前 動作確認チェックリスト｜全日本マスターズレガッタ 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --green: #2D4F2C;
-    --green-light: #e8f0e8;
-    --green-mid: #4a7a48;
-    --red: #c0392b;
-    --yellow: #f0c040;
-    --blue: #3b7dd8;
-    --orange: #e67e22;
-    --text: #222;
-    --muted: #666;
-    --bg: #fff;
-    --border: #dde;
+    --primary: #2D4F2C;
+    --bg: #F7F4EF;
+    --border: #E8E3DB;
+    --text: #333333;
+    --muted: #666666;
+    --on-primary: #ffffff;
+    --warn: #B8860B;
+    --error: #C0392B;
+    --info-bg: #e8f5e8;
+    --info-border: #a8d8a8;
+    --warn-bg: #fef9e7;
+    --warn-border: #e8d040;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    line-break: strict;
+  }
 
   body {
-    font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
-    background: #f7f7f5;
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
     color: var(--text);
     font-size: 15px;
     line-height: 1.7;
+    font-weight: 400;
   }
 
-  .page { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0;
+  }
 
   /* ヘッダー */
-  .hero {
-    background: var(--green);
-    color: #fff;
-    border-radius: 10px;
-    padding: 28px 32px;
-    margin-bottom: 28px;
+  .doc-header {
+    background: var(--primary);
+    color: var(--on-primary);
+    padding: 2rem;
+    text-align: center;
+    width: 100%;
   }
-  .hero h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-  .hero p { font-size: 14px; opacity: 0.85; }
-  .hero .meta { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; font-size: 13px; opacity: 0.8; }
-  .hero .meta span::before { content: "▸ "; }
+
+  .doc-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+
+  .doc-header p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+  }
+
+  .doc-header .meta {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    font-size: 13px;
+    opacity: 0.85;
+    justify-content: center;
+  }
+
+  .doc-header .meta span {
+    display: flex;
+    align-items: center;
+  }
+
+  .doc-header .meta span::before {
+    content: "▸ ";
+    margin-right: 0.35rem;
+  }
+
+  .doc-header-links {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .doc-header-link {
+    color: var(--on-primary);
+    text-decoration: none;
+    font-size: 13px;
+    opacity: 0.9;
+  }
+
+  .doc-header-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  /* メインコンテンツ */
+  .main {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
 
   /* 進捗バー */
   .progress-card {
-    background: var(--bg);
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin-bottom: 28px;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
     border: 1px solid var(--border);
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 1.25rem;
     flex-wrap: wrap;
   }
-  .progress-label { font-size: 14px; font-weight: 700; color: var(--green); white-space: nowrap; }
-  .progress-bar-wrap { flex: 1; min-width: 200px; }
-  .progress-bar-bg { background: #e8e8e8; border-radius: 8px; height: 14px; overflow: hidden; }
-  .progress-bar-fill { background: var(--green); height: 100%; border-radius: 8px; transition: width 0.4s; width: 0%; }
-  .progress-text { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  .progress-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+    white-space: nowrap;
+  }
+
+  .progress-bar-wrap {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .progress-bar-bg {
+    background: #e8e8e8;
+    border-radius: 8px;
+    height: 14px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    background: var(--primary);
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.4s;
+    width: 0%;
+  }
+
+  .progress-text {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 0.35rem;
+  }
+
   .reset-btn {
-    padding: 8px 18px;
+    padding: 0.5rem 1.125rem;
     background: #f5f5f5;
     border: 1px solid #ccc;
     border-radius: 6px;
     cursor: pointer;
     font-size: 13px;
     white-space: nowrap;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 500;
   }
-  .reset-btn:hover { background: #ebebeb; }
+
+  .reset-btn:hover {
+    background: #ebebeb;
+  }
 
   /* セクション */
   .section {
-    background: var(--bg);
-    border-radius: 10px;
-    padding: 24px 28px;
-    margin-bottom: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
     border: 1px solid var(--border);
   }
+
   .section-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 18px;
-    padding-bottom: 14px;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
     border-bottom: 1px solid var(--border);
   }
+
   .section-badge {
-    width: 36px; height: 36px;
-    background: var(--green);
-    color: #fff;
+    width: 36px;
+    height: 36px;
+    background: var(--primary);
+    color: var(--on-primary);
     border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px; font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
     flex-shrink: 0;
   }
-  .section h2 { font-size: 17px; color: var(--green); font-weight: 700; }
-  .section-count { margin-left: auto; font-size: 12px; color: var(--muted); background: #f0f0f0; border-radius: 12px; padding: 3px 10px; white-space: nowrap; }
 
-  /* チェック項目 */
-  .check-list { list-style: none; }
+  .section h2 {
+    font-size: 17px;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .section-count {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--muted);
+    background: #f0f0f0;
+    border-radius: 12px;
+    padding: 0.25rem 0.75rem;
+    white-space: nowrap;
+  }
+
+  /* チェックリスト */
+  .check-list {
+    list-style: none;
+  }
+
   .check-item {
     display: flex;
     flex-direction: column;
     gap: 0;
-    padding: 12px 0;
+    padding: 1rem 0;
     border-bottom: 1px solid #f0f0f0;
   }
-  .check-item:last-child { border-bottom: none; }
+
+  .check-item:last-child {
+    border-bottom: none;
+  }
 
   .check-row {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
+    gap: 0.75rem;
     cursor: pointer;
     user-select: none;
   }
-  .check-row:hover .check-label { color: var(--green); }
+
+  .check-row:hover .check-label {
+    color: var(--primary);
+  }
 
   .check-box {
-    width: 22px; height: 22px;
+    width: 22px;
+    height: 22px;
     border: 2px solid #bbb;
     border-radius: 5px;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
-    margin-top: 1px;
+    margin-top: 0.125rem;
     transition: all 0.15s;
     background: #fff;
   }
-  .check-box .check-mark { display: none; font-size: 14px; color: #fff; line-height: 1; }
+
+  .check-box .check-mark {
+    display: none;
+    font-size: 14px;
+    color: var(--on-primary);
+    line-height: 1;
+  }
 
   .check-item.done .check-box {
-    background: var(--green);
-    border-color: var(--green);
+    background: var(--primary);
+    border-color: var(--primary);
   }
-  .check-item.done .check-box .check-mark { display: block; }
-  .check-item.done .check-label { color: var(--muted); text-decoration: line-through; }
 
-  .check-label { font-size: 14px; line-height: 1.5; flex: 1; }
-  .check-label strong { color: var(--text); font-weight: 700; }
+  .check-item.done .check-box .check-mark {
+    display: block;
+  }
+
+  .check-item.done .check-label {
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+
+  .check-label {
+    font-size: 14px;
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .check-label strong {
+    color: var(--text);
+    font-weight: 600;
+  }
 
   /* コマンドブロック */
   .cmd-block {
-    margin-top: 8px;
+    margin-top: 0.5rem;
     background: #1e2330;
     color: #a8d8a8;
     border-radius: 6px;
-    padding: 10px 14px;
-    font-family: monospace;
-    font-size: 12.5px;
-    line-height: 1.7;
+    padding: 0.75rem;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.6;
     overflow-x: auto;
     display: none;
   }
-  .check-item.expanded .cmd-block { display: block; }
-  .cmd-block .comment { color: #6a8f6a; }
+
+  .check-item.expanded .cmd-block {
+    display: block;
+  }
+
+  .cmd-block .comment {
+    color: #6a8f6a;
+  }
 
   /* トラブルシューティングトグル */
   .ts-toggle {
-    margin-top: 6px;
+    margin-top: 0.5rem;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 0.4rem;
     font-size: 12px;
-    color: var(--blue);
+    color: #3b7dd8;
     cursor: pointer;
-    padding-left: 34px;
+    padding-left: 2.125rem;
   }
-  .ts-toggle:hover { text-decoration: underline; }
-  .ts-toggle .ts-arrow { transition: transform 0.2s; }
-  .check-item.expanded .ts-toggle .ts-arrow { transform: rotate(90deg); }
+
+  .ts-toggle:hover {
+    text-decoration: underline;
+  }
+
+  .ts-toggle .ts-arrow {
+    transition: transform 0.2s;
+  }
+
+  .check-item.expanded .ts-toggle .ts-arrow {
+    transform: rotate(90deg);
+  }
 
   .ts-body {
     display: none;
-    margin-top: 8px;
-    margin-left: 34px;
-    background: #fff8ed;
-    border: 1px solid #f5c97a;
+    margin-top: 0.5rem;
+    margin-left: 2.125rem;
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
     border-radius: 8px;
-    padding: 12px 14px;
+    padding: 0.75rem;
     font-size: 13px;
-    line-height: 1.7;
+    line-height: 1.6;
   }
-  .check-item.expanded .ts-body { display: block; }
-  .ts-body p { margin-bottom: 6px; }
-  .ts-body p:last-child { margin-bottom: 0; }
-  .ts-body strong { color: var(--orange); }
-  .ts-body code { font-family: monospace; font-size: 12px; background: #f0f0f0; border: 1px solid #ddd; padding: 1px 5px; border-radius: 3px; }
+
+  .check-item.expanded .ts-body {
+    display: block;
+  }
+
+  .ts-body p {
+    margin-bottom: 0.5rem;
+  }
+
+  .ts-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ts-body strong {
+    color: var(--warn);
+    font-weight: 600;
+  }
+
+  .ts-body code {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 0.15rem 0.35rem;
+    border-radius: 3px;
+  }
+
+  .ts-body a {
+    color: #3b7dd8;
+    text-decoration: none;
+  }
+
+  .ts-body a:hover {
+    text-decoration: underline;
+  }
 
   /* 過去の問題セクション */
   .incident-section {
-    background: var(--bg);
-    border-radius: 10px;
-    padding: 24px 28px;
-    margin-bottom: 20px;
-    border: 2px solid #f5c97a;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    border: 2px solid var(--warn-border);
   }
-  .incident-section .section-header { border-color: #f5c97a; }
-  .incident-section .section-badge { background: var(--orange); }
-  .incident-section h2 { color: var(--orange); }
 
-  .incident-list { list-style: none; }
+  .incident-section .section-header {
+    border-color: var(--warn-border);
+  }
+
+  .incident-section .section-badge {
+    background: var(--warn);
+  }
+
+  .incident-section h2 {
+    color: var(--warn);
+  }
+
+  .incident-list {
+    list-style: none;
+  }
+
   .incident-item {
     display: flex;
-    gap: 14px;
-    padding: 14px 0;
+    gap: 1rem;
+    padding: 1rem 0;
     border-bottom: 1px solid #f0ead8;
   }
-  .incident-item:last-child { border-bottom: none; }
-  .incident-num {
-    width: 28px; height: 28px;
-    background: var(--orange);
-    color: #fff;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 700;
-    flex-shrink: 0;
-    margin-top: 2px;
+
+  .incident-item:last-child {
+    border-bottom: none;
   }
-  .incident-body h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: var(--orange); }
-  .incident-body p { font-size: 13px; color: #555; margin-bottom: 4px; }
-  .incident-body .solution { font-size: 13px; color: #2a6e2a; font-weight: 600; }
-  .incident-body code { font-family: monospace; font-size: 12px; background: #f0f0f0; border: 1px solid #ddd; padding: 1px 5px; border-radius: 3px; }
+
+  .incident-num {
+    width: 28px;
+    height: 28px;
+    background: var(--warn);
+    color: var(--on-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .incident-body h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--warn);
+  }
+
+  .incident-body p {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 0.3rem;
+  }
+
+  .incident-body .solution {
+    font-size: 13px;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .incident-body code {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 0.15rem 0.35rem;
+    border-radius: 3px;
+  }
+
+  /* フッター */
+  .footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    margin-top: 2.5rem;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    width: 100%;
+  }
+
+  .footer-link {
+    color: var(--primary);
+    text-decoration: none;
+    margin: 0 0.35rem;
+  }
+
+  .footer-link:hover {
+    text-decoration: underline;
+  }
+
+  /* レスポンシブ */
+  @media (max-width: 768px) {
+    .main {
+      padding: 1.5rem 1rem;
+    }
+
+    .doc-header {
+      padding: 1.5rem 1rem;
+    }
+
+    .doc-header h1 {
+      font-size: 22px;
+    }
+
+    .doc-header .meta {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .progress-card {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .progress-label {
+      text-align: center;
+    }
+
+    .reset-btn {
+      width: 100%;
+    }
+
+    .section {
+      padding: 1rem;
+    }
+
+    .ts-body {
+      margin-left: 1.75rem;
+    }
+
+    .ts-toggle {
+      padding-left: 1.75rem;
+    }
+  }
 
   /* 印刷用 */
   @media print {
-    body { background: #fff; font-size: 12px; }
-    .page { padding: 0; max-width: 100%; }
-    .progress-card { display: none; }
-    .reset-btn { display: none; }
-    .ts-body { display: block !important; }
-    .cmd-block { display: block !important; background: #f5f5f5; color: #333; }
-    .section { break-inside: avoid; page-break-inside: avoid; }
-    .check-item.done .check-label { text-decoration: none; color: var(--text); }
-    .check-item.done .check-box { background: #fff; border-color: #bbb; }
-    .check-item.done .check-box .check-mark { display: none; }
-    .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .section-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body {
+      background: #fff;
+      font-size: 12px;
+    }
+
+    .page {
+      padding: 0;
+    }
+
+    .doc-header {
+      background: var(--primary);
+      color: var(--on-primary);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .main {
+      padding: 1rem;
+    }
+
+    .progress-card {
+      display: none;
+    }
+
+    .reset-btn {
+      display: none;
+    }
+
+    .ts-body {
+      display: block !important;
+    }
+
+    .cmd-block {
+      display: block !important;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    .section {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .check-item.done .check-label {
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .check-item.done .check-box {
+      background: #fff;
+      border-color: #bbb;
+    }
+
+    .check-item.done .check-box .check-mark {
+      display: none;
+    }
   }
 </style>
 </head>
@@ -246,577 +606,585 @@
 <div class="page">
 
   <!-- ヘッダー -->
-  <div class="hero">
-    <h1>公開前 動作確認チェックリスト</h1>
+  <div class="doc-header">
+    <h1>公開前 動作確認<br>チェックリスト</h1>
     <p>ボート競技ライブリザルトサイト — 大会ごとに実施してください</p>
     <div class="meta">
       <span>対象サイト: masters-regatta-2026-3ha.pages.dev</span>
       <span>所要時間の目安: 約20〜30分</span>
       <span>実施タイミング: データ準備完了後・公開前日または当日朝</span>
     </div>
+    <div class="doc-header-links">
+      <a href="../index.html" class="doc-header-link">← ドキュメント一覧に戻る</a>
+    </div>
   </div>
 
-  <!-- 進捗バー -->
-  <div class="progress-card">
-    <div class="progress-label">確認進捗</div>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="progressFill"></div>
+  <div class="main">
+
+    <!-- 進捗バー -->
+    <div class="progress-card">
+      <div class="progress-label">確認進捗</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">0 / 0 項目完了</div>
       </div>
-      <div class="progress-text" id="progressText">0 / 0 項目完了</div>
+      <button class="reset-btn" onclick="resetAll()">リセット</button>
     </div>
-    <button class="reset-btn" onclick="resetAll()">リセット</button>
-  </div>
 
-  <!-- ===== A. デプロイ確認 ===== -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-badge">A</div>
-      <h2>デプロイ確認</h2>
-      <div class="section-count" id="count-A">0/3</div>
-    </div>
-    <ul class="check-list" id="section-A">
+    <!-- ===== A. デプロイ確認 ===== -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-badge">A</div>
+        <h2>デプロイ確認</h2>
+        <div class="section-count" id="count-A">0/3</div>
+      </div>
+      <ul class="check-list" id="section-A">
 
-      <li class="check-item" data-section="A">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>Cloudflare Pages に最新コミットが反映されている</strong><br>
-            <span style="font-size:13px;color:var(--muted)">Deploymentsページで最新コミットの Status が「Success」になっていること</span>
+        <li class="check-item" data-section="A">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>Cloudflare Pages に最新コミットが反映されている</strong><br>
+              <span style="font-size:13px;color:var(--muted)">Deploymentsページで最新コミットの Status が「Success」になっていること</span>
+            </div>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 確認方法とトラブル対処
-        </div>
-        <div class="ts-body">
-          <p><strong>確認手順:</strong> <a href="https://dash.cloudflare.com" target="_blank" style="color:var(--blue)">dash.cloudflare.com</a> → Workers & Pages → rowing-live-results → Deployments で最新エントリーの Status が「Success」か確認。</p>
-          <p><strong>デプロイが止まっている場合:</strong> GitHub の <code>.github/workflows/</code> のActionsログを確認する。エラーがあれば赤字でメッセージが表示される。</p>
-          <p><strong>手動トリガー:</strong> Cloudflareダッシュボードの「Retry deployment」ボタンで再デプロイできる。</p>
-        </div>
-      </li>
-
-      <li class="check-item" data-section="A">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>app.js が最新バージョンになっている（キャッシュ確認）</strong><br>
-            <span style="font-size:13px;color:var(--muted)">URLに <code>?v=日付</code> クエリが付いているか。古いバージョンがキャッシュされていないか確認</span>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 確認方法とトラブル対処
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 確認コマンドとトラブル対処
-        </div>
-        <div class="cmd-block"><span class="comment"># ブラウザキャッシュをバイパスしてJSファイルを確認</span>
+          <div class="ts-body">
+            <p><strong>確認手順:</strong> <a href="https://dash.cloudflare.com" target="_blank">dash.cloudflare.com</a> → Workers & Pages → rowing-live-results → Deployments で最新エントリーの Status が「Success」か確認。</p>
+            <p><strong>デプロイが止まっている場合:</strong> GitHub の <code>.github/workflows/</code> のActionsログを確認する。エラーがあれば赤字でメッセージが表示される。</p>
+            <p><strong>手動トリガー:</strong> Cloudflareダッシュボードの「Retry deployment」ボタンで再デプロイできる。</p>
+          </div>
+        </li>
+
+        <li class="check-item" data-section="A">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>app.js が最新バージョンになっている（キャッシュ確認）</strong><br>
+              <span style="font-size:13px;color:var(--muted)">URLに <code>?v=日付</code> クエリが付いているか。古いバージョンがキャッシュされていないか確認</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 確認コマンドとトラブル対処
+          </div>
+          <div class="cmd-block"><span class="comment"># ブラウザキャッシュをバイパスしてJSファイルを確認</span>
 curl -I "https://masters-regatta-2026-3ha.pages.dev/js/app.js?v=$(date +%Y%m%d)"
 
 <span class="comment"># index.html内のscriptタグのversionクエリを確認</span>
 curl -s https://masters-regatta-2026-3ha.pages.dev/ | grep app.js</div>
-        <div class="ts-body">
-          <p><strong>過去に発生した問題:</strong> <code>app.js</code> が古いバージョンでキャッシュされ、修正が反映されないことがあった。</p>
-          <p><strong>対処法:</strong> <code>index.html</code> の <code>&lt;script src="js/app.js?v=YYYYMMDD"&gt;</code> の日付部分を今日の日付に更新してコミット・プッシュする。</p>
-          <p><strong>ブラウザ側での確認:</strong> Chromeは <kbd>Cmd+Shift+R</kbd>（Mac）/ <kbd>Ctrl+Shift+R</kbd>（Windows）でキャッシュクリア再読み込みができる。</p>
-        </div>
-      </li>
-
-      <li class="check-item" data-section="A">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>CSP（Content-Security-Policy）ヘッダーに <code>unsafe-inline</code> が含まれている</strong><br>
-            <span style="font-size:13px;color:var(--muted)">これがないとタブ切替・トグル・フィルターなどUIが一切動作しない</span>
+          <div class="ts-body">
+            <p><strong>過去に発生した問題:</strong> <code>app.js</code> が古いバージョンでキャッシュされ、修正が反映されないことがあった。</p>
+            <p><strong>対処法:</strong> <code>index.html</code> の <code>&lt;script src="js/app.js?v=YYYYMMDD"&gt;</code> の日付部分を今日の日付に更新してコミット・プッシュする。</p>
+            <p><strong>ブラウザ側での確認:</strong> Chromeは <kbd>Cmd+Shift+R</kbd>（Mac）/ <kbd>Ctrl+Shift+R</kbd>（Windows）でキャッシュクリア再読み込みができる。</p>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 確認コマンドとトラブル対処（過去発生）
-        </div>
-        <div class="cmd-block"><span class="comment"># レスポンスヘッダーでCSPを確認</span>
+        </li>
+
+        <li class="check-item" data-section="A">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>CSP（Content-Security-Policy）ヘッダーに <code>unsafe-inline</code> が含まれている</strong><br>
+              <span style="font-size:13px;color:var(--muted)">これがないとタブ切替・トグル・フィルターなどUIが一切動作しない</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 確認コマンドとトラブル対処（過去発生）
+          </div>
+          <div class="cmd-block"><span class="comment"># レスポンスヘッダーでCSPを確認</span>
 curl -I https://masters-regatta-2026-3ha.pages.dev/ | grep -i content-security-policy
 
 <span class="comment"># 期待する出力（unsafe-inlineが含まれていること）:</span>
 <span class="comment"># content-security-policy: script-src 'self' 'unsafe-inline'; ...</span></div>
-        <div class="ts-body">
-          <p><strong>過去の重大障害:</strong> <code>script-src 'self'</code>（<code>unsafe-inline</code> なし）のまま公開したところ、HTMLに書かれた <code>onclick</code> / <code>onchange</code> が全てCSPにブロックされ、タブ切替・トグル展開・フィルター機能が完全に無効になった。</p>
-          <p><strong>症状:</strong> ページは表示されるが、ボタンを押しても何も反応しない。ブラウザの開発者ツール（コンソール）に「Refused to execute inline event handler because it violates the following Content Security Policy directive」と表示される。</p>
-          <p><strong>対処法:</strong> プロジェクトルートの <code>_headers</code> ファイルを確認し、<code>Content-Security-Policy</code> の <code>script-src</code> に <code>'unsafe-inline'</code> が含まれているかチェック。含まれていなければ追加してデプロイする。</p>
-          <p><strong>確認先ファイル:</strong> <code>/_headers</code>（Cloudflare Pagesのヘッダー設定ファイル）</p>
-        </div>
-      </li>
+          <div class="ts-body">
+            <p><strong>過去の重大障害:</strong> <code>script-src 'self'</code>（<code>unsafe-inline</code> なし）のまま公開したところ、HTMLに書かれた <code>onclick</code> / <code>onchange</code> が全てCSPにブロックされ、タブ切替・トグル展開・フィルター機能が完全に無効になった。</p>
+            <p><strong>症状:</strong> ページは表示されるが、ボタンを押しても何も反応しない。ブラウザの開発者ツール（コンソール）に「Refused to execute inline event handler because it violates the following Content Security Policy directive」と表示される。</p>
+            <p><strong>対処法:</strong> プロジェクトルートの <code>_headers</code> ファイルを確認し、<code>Content-Security-Policy</code> の <code>script-src</code> に <code>'unsafe-inline'</code> が含まれているかチェック。含まれていなければ追加してデプロイする。</p>
+            <p><strong>確認先ファイル:</strong> <code>/_headers</code>（Cloudflare Pagesのヘッダー設定ファイル）</p>
+          </div>
+        </li>
 
-    </ul>
-  </div>
-
-  <!-- ===== B. 基本動作確認 ===== -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-badge">B</div>
-      <h2>基本動作確認（ブラウザ）</h2>
-      <div class="section-count" id="count-B">0/6</div>
+      </ul>
     </div>
-    <ul class="check-list" id="section-B">
 
-      <li class="check-item" data-section="B">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>ページが正常に読み込まれる</strong><br>
-            <span style="font-size:13px;color:var(--muted)">「データを読み込んでいます...」が消えてコンテンツが表示されること</span>
+    <!-- ===== B. 基本動作確認 ===== -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-badge">B</div>
+        <h2>基本動作確認（ブラウザ）</h2>
+        <div class="section-count" id="count-B">0/6</div>
+      </div>
+      <ul class="check-list" id="section-B">
+
+        <li class="check-item" data-section="B">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>ページが正常に読み込まれる</strong><br>
+              <span style="font-size:13px;color:var(--muted)">「データを読み込んでいます...」が消えてコンテンツが表示されること</span>
+            </div>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 読み込まれない場合の対処
-        </div>
-        <div class="ts-body">
-          <p><strong>ローディングが消えない場合:</strong> ブラウザの開発者ツール（F12）の「コンソール」タブを開いてエラーを確認する。</p>
-          <p><strong>よくある原因:</strong> ① <code>master.json</code> のJSONフォーマットが壊れている（カンマ抜け等）② <code>data/results/</code> 配下のJSONが存在しない ③ GitHubへのPushが失敗している</p>
-          <p><strong>確認コマンド:</strong> <code>python3 -m json.tool data/master.json</code> でJSONの構文チェックができる。</p>
-        </div>
-      </li>
-
-      <li class="check-item" data-section="B">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>大会名・日程がヘッダーに表示される</strong><br>
-            <span style="font-size:13px;color:var(--muted)"><code>master.json</code> の tournament.name / tournament.dates が正しく読み込まれていること</span>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 読み込まれない場合の対処
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 表示されない場合の対処（過去発生）
-        </div>
-        <div class="ts-body">
-          <p><strong>過去の重大障害:</strong> <code>master.json</code> の <code>tournament.dates</code> が <code>null</code> または未設定のままだと <code>renderTournamentHeader()</code> でクラッシュし、ページ全体が白紙になることがあった。</p>
-          <p><strong>確認箇所:</strong> <code>data/master.json</code> の <code>tournament</code> オブジェクトに <code>name</code>・<code>dates</code>（配列）・<code>venue</code> が設定されているか確認する。</p>
-          <p><strong>正しい形式の例:</strong><br>
-          <code>"dates": ["2026-06-07", "2026-06-08"]</code><br>
-          ※ <code>dates: null</code> や <code>dates: ""</code> は不可。必ず配列で。</p>
-        </div>
-      </li>
-
-      <li class="check-item" data-section="B">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>「種目別（トグル）」「全レース一覧」「スケジュール」タブが切り替わる</strong><br>
-            <span style="font-size:13px;color:var(--muted)">各タブをクリックして表示が切り替わること</span>
+          <div class="ts-body">
+            <p><strong>ローディングが消えない場合:</strong> ブラウザの開発者ツール（F12）の「コンソール」タブを開いてエラーを確認する。</p>
+            <p><strong>よくある原因:</strong> ① <code>master.json</code> のJSONフォーマットが壊れている（カンマ抜け等）② <code>data/results/</code> 配下のJSONが存在しない ③ GitHubへのPushが失敗している</p>
+            <p><strong>確認コマンド:</strong> <code>python3 -m json.tool data/master.json</code> でJSONの構文チェックができる。</p>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> タブが切り替わらない場合の対処
-        </div>
-        <div class="ts-body">
-          <p><strong>よくある原因:</strong> CSP（<code>unsafe-inline</code>）の問題が最も多い。項目A-3を先に確認すること。</p>
-          <p><strong>確認手順:</strong> ブラウザの開発者ツール → コンソールタブ → タブクリック時にエラーが出ていないか確認。</p>
-          <p><strong>二重描画の問題:</strong> 過去に <code>renderAll()</code> と <code>loadAll()</code> の両方でビューを描画するコードが存在し、表示が乱れることがあった。<code>app.js</code> で初期化処理が重複していないか確認する。</p>
-        </div>
-      </li>
+        </li>
 
-      <li class="check-item" data-section="B">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>トグルをクリックするとレース一覧が展開される</strong><br>
-            <span style="font-size:13px;color:var(--muted)">種目別タブで種目名をクリックしてレース一覧が開閉すること</span>
+        <li class="check-item" data-section="B">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>大会名・日程がヘッダーに表示される</strong><br>
+              <span style="font-size:13px;color:var(--muted)"><code>master.json</code> の tournament.name / tournament.dates が正しく読み込まれていること</span>
+            </div>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> トグルが動作しない場合の対処
-        </div>
-        <div class="ts-body">
-          <p><strong>よくある原因:</strong> CSPの問題（項目A-3）またはJSエラーによる処理停止。</p>
-          <p><strong>確認方法:</strong> Chromeの開発者ツール → Elementsタブ → トグル要素に <code>onclick</code> 属性が付いているか確認。付いているのに動かない場合はCSPが原因。</p>
-        </div>
-      </li>
-
-      <li class="check-item" data-section="B">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>フィルター（カテゴリ/ラウンド/検索）が動作する</strong><br>
-            <span style="font-size:13px;color:var(--muted)">フィルターを変更するとレース一覧が絞り込まれること</span>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 表示されない場合の対処（過去発生）
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> フィルターが動作しない場合の対処
-        </div>
-        <div class="ts-body">
-          <p><strong>よくある原因:</strong> CSPの <code>onchange</code> ブロック（項目A-3と同一の問題）。</p>
-          <p><strong>確認方法:</strong> セレクトボックスに <code>onchange</code> 属性があるか確認。CSPがブロックしている場合はコンソールに警告が出る。</p>
-        </div>
-      </li>
-
-      <li class="check-item" data-section="B">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>日別タブが表示され、切り替えられる</strong><br>
-            <span style="font-size:13px;color:var(--muted)">複数日大会の場合、日付タブが正しく表示されること</span>
+          <div class="ts-body">
+            <p><strong>過去の重大障害:</strong> <code>master.json</code> の <code>tournament.dates</code> が <code>null</code> または未設定のままだと <code>renderTournamentHeader()</code> でクラッシュし、ページ全体が白紙になることがあった。</p>
+            <p><strong>確認箇所:</strong> <code>data/master.json</code> の <code>tournament</code> オブジェクトに <code>name</code>・<code>dates</code>（配列）・<code>venue</code> が設定されているか確認する。</p>
+            <p><strong>正しい形式の例:</strong><br>
+            <code>"dates": ["2026-06-07", "2026-06-08"]</code><br>
+            ※ <code>dates: null</code> や <code>dates: ""</code> は不可。必ず配列で。</p>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 日別タブが表示されない場合の対処
-        </div>
-        <div class="ts-body">
-          <p><strong>確認箇所:</strong> <code>master.json</code> の <code>tournament.dates</code> に全開催日が入っているか確認する。</p>
-          <p><strong>1日大会の場合:</strong> 日別タブは表示されないことがあるが仕様として正常。</p>
-        </div>
-      </li>
+        </li>
 
-    </ul>
-  </div>
+        <li class="check-item" data-section="B">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>「種目別（トグル）」「全レース一覧」「スケジュール」タブが切り替わる</strong><br>
+              <span style="font-size:13px;color:var(--muted)">各タブをクリックして表示が切り替わること</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> タブが切り替わらない場合の対処
+          </div>
+          <div class="ts-body">
+            <p><strong>よくある原因:</strong> CSP（<code>unsafe-inline</code>）の問題が最も多い。項目A-3を先に確認すること。</p>
+            <p><strong>確認手順:</strong> ブラウザの開発者ツール → コンソールタブ → タブクリック時にエラーが出ていないか確認。</p>
+            <p><strong>二重描画の問題:</strong> 過去に <code>renderAll()</code> と <code>loadAll()</code> の両方でビューを描画するコードが存在し、表示が乱れることがあった。<code>app.js</code> で初期化処理が重複していないか確認する。</p>
+          </div>
+        </li>
 
-  <!-- ===== C. レース結果確認 ===== -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-badge">C</div>
-      <h2>レース結果確認</h2>
-      <div class="section-count" id="count-C">0/4</div>
+        <li class="check-item" data-section="B">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>トグルをクリックするとレース一覧が展開される</strong><br>
+              <span style="font-size:13px;color:var(--muted)">種目別タブで種目名をクリックしてレース一覧が開閉すること</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> トグルが動作しない場合の対処
+          </div>
+          <div class="ts-body">
+            <p><strong>よくある原因:</strong> CSPの問題（項目A-3）またはJSエラーによる処理停止。</p>
+            <p><strong>確認方法:</strong> Chromeの開発者ツール → Elementsタブ → トグル要素に <code>onclick</code> 属性が付いているか確認。付いているのに動かない場合はCSPが原因。</p>
+          </div>
+        </li>
+
+        <li class="check-item" data-section="B">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>フィルター（カテゴリ/ラウンド/検索）が動作する</strong><br>
+              <span style="font-size:13px;color:var(--muted)">フィルターを変更するとレース一覧が絞り込まれること</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> フィルターが動作しない場合の対処
+          </div>
+          <div class="ts-body">
+            <p><strong>よくある原因:</strong> CSPの <code>onchange</code> ブロック（項目A-3と同一の問題）。</p>
+            <p><strong>確認方法:</strong> セレクトボックスに <code>onchange</code> 属性があるか確認。CSPがブロックしている場合はコンソールに警告が出る。</p>
+          </div>
+        </li>
+
+        <li class="check-item" data-section="B">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>日別タブが表示され、切り替えられる</strong><br>
+              <span style="font-size:13px;color:var(--muted)">複数日大会の場合、日付タブが正しく表示されること</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 日別タブが表示されない場合の対処
+          </div>
+          <div class="ts-body">
+            <p><strong>確認箇所:</strong> <code>master.json</code> の <code>tournament.dates</code> に全開催日が入っているか確認する。</p>
+            <p><strong>1日大会の場合:</strong> 日別タブは表示されないことがあるが仕様として正常。</p>
+          </div>
+        </li>
+
+      </ul>
     </div>
-    <ul class="check-list" id="section-C">
 
-      <li class="check-item" data-section="C">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>結果ありのレースに「確定」バッジが表示される</strong><br>
-            <span style="font-size:13px;color:var(--muted)">JSONが存在するレースにバッジが付いていること</span>
+    <!-- ===== C. レース結果確認 ===== -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-badge">C</div>
+        <h2>レース結果確認</h2>
+        <div class="section-count" id="count-C">0/4</div>
+      </div>
+      <ul class="check-list" id="section-C">
+
+        <li class="check-item" data-section="C">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>結果ありのレースに「確定」バッジが表示される</strong><br>
+              <span style="font-size:13px;color:var(--muted)">JSONが存在するレースにバッジが付いていること</span>
+            </div>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> バッジが表示されない場合の対処
-        </div>
-        <div class="ts-body">
-          <p><strong>確認方法:</strong> <code>data/results/race_001.json</code> 等のファイルがGitHub上に存在するか確認する。</p>
-          <p><strong>GASが動いていない場合:</strong> GASのトリガー設定を確認（後述のE項目も参照）。</p>
-        </div>
-      </li>
-
-      <li class="check-item" data-section="C">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>結果テーブルに順位・タイム・クルー名・所属が表示される</strong><br>
-            <span style="font-size:13px;color:var(--muted)">「確定」バッジのあるレースをクリックして詳細を確認</span>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> バッジが表示されない場合の対処
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> データが欠けている場合の対処
-        </div>
-        <div class="ts-body">
-          <p><strong>クルー名・所属が空の場合:</strong> <code>master.json</code> の <code>entries</code> に <code>crew_name</code> / <code>affiliation</code> が入力されているか確認。</p>
-          <p><strong>タイムがおかしい場合:</strong> GASが変換したJSONの <code>finish.time_ms</code> が正しい値になっているか確認。テスト用CSVとJSONの対応を照合する。</p>
-        </div>
-      </li>
-
-      <li class="check-item" data-section="C">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>「全レース一覧」ビューでも結果が確認できる</strong><br>
-            <span style="font-size:13px;color:var(--muted)">タブ切替後も結果データが正しく表示されること</span>
+          <div class="ts-body">
+            <p><strong>確認方法:</strong> <code>data/results/race_001.json</code> 等のファイルがGitHub上に存在するか確認する。</p>
+            <p><strong>GASが動いていない場合:</strong> GASのトリガー設定を確認（後述のE項目も参照）。</p>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> ビュー切替で消える場合の対処
-        </div>
-        <div class="ts-body">
-          <p><strong>過去の問題:</strong> <code>renderAll()</code> と <code>loadAll()</code> の二重呼び出しにより、タブ切替時にデータが上書きされてしまうケースがあった。</p>
-          <p><strong>確認方法:</strong> コンソールログで <code>renderAll</code> の呼び出し回数を確認。2回以上呼ばれている場合は <code>app.js</code> の初期化処理を見直す。</p>
-        </div>
-      </li>
+        </li>
 
-      <li class="check-item" data-section="C">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>スケジュールビューで1位クルー名が表示される</strong><br>
-            <span style="font-size:13px;color:var(--muted)">結果確定済みのレースのスケジュール欄に優勝クルー名が出ること</span>
+        <li class="check-item" data-section="C">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>結果テーブルに順位・タイム・クルー名・所属が表示される</strong><br>
+              <span style="font-size:13px;color:var(--muted)">「確定」バッジのあるレースをクリックして詳細を確認</span>
+            </div>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 表示されない場合の確認
-        </div>
-        <div class="ts-body">
-          <p><strong>確認方法:</strong> スケジュールビューに切り替え、確定済みレースの行に優勝クルー名が表示されているか確認。</p>
-          <p><strong>データが正しい場合:</strong> <code>results</code> 配列内で <code>rank: 1</code> のエントリーに対応する <code>master.json</code> の <code>entries</code> が正しく紐付いているか確認。</p>
-        </div>
-      </li>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> データが欠けている場合の対処
+          </div>
+          <div class="ts-body">
+            <p><strong>クルー名・所属が空の場合:</strong> <code>master.json</code> の <code>entries</code> に <code>crew_name</code> / <code>affiliation</code> が入力されているか確認。</p>
+            <p><strong>タイムがおかしい場合:</strong> GASが変換したJSONの <code>finish.time_ms</code> が正しい値になっているか確認。テスト用CSVとJSONの対応を照合する。</p>
+          </div>
+        </li>
 
-    </ul>
-  </div>
+        <li class="check-item" data-section="C">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>「全レース一覧」ビューでも結果が確認できる</strong><br>
+              <span style="font-size:13px;color:var(--muted)">タブ切替後も結果データが正しく表示されること</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> ビュー切替で消える場合の対処
+          </div>
+          <div class="ts-body">
+            <p><strong>過去の問題:</strong> <code>renderAll()</code> と <code>loadAll()</code> の二重呼び出しにより、タブ切替時にデータが上書きされてしまうケースがあった。</p>
+            <p><strong>確認方法:</strong> コンソールログで <code>renderAll</code> の呼び出し回数を確認。2回以上呼ばれている場合は <code>app.js</code> の初期化処理を見直す。</p>
+          </div>
+        </li>
 
-  <!-- ===== D. モバイル確認 ===== -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-badge">D</div>
-      <h2>モバイル確認（iPhoneで）</h2>
-      <div class="section-count" id="count-D">0/4</div>
+        <li class="check-item" data-section="C">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>スケジュールビューで1位クルー名が表示される</strong><br>
+              <span style="font-size:13px;color:var(--muted)">結果確定済みのレースのスケジュール欄に優勝クルー名が出ること</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 表示されない場合の確認
+          </div>
+          <div class="ts-body">
+            <p><strong>確認方法:</strong> スケジュールビューに切り替え、確定済みレースの行に優勝クルー名が表示されているか確認。</p>
+            <p><strong>データが正しい場合:</strong> <code>results</code> 配列内で <code>rank: 1</code> のエントリーに対応する <code>master.json</code> の <code>entries</code> が正しく紐付いているか確認。</p>
+          </div>
+        </li>
+
+      </ul>
     </div>
-    <ul class="check-list" id="section-D">
 
-      <li class="check-item" data-section="D">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>フィルターバーが正しく表示される（グリッド2列）</strong><br>
-            <span style="font-size:13px;color:var(--muted)">フィルターが横に並びすぎず2列グリッドになっていること</span>
+    <!-- ===== D. モバイル確認 ===== -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-badge">D</div>
+        <h2>モバイル確認（iPhoneで）</h2>
+        <div class="section-count" id="count-D">0/4</div>
+      </div>
+      <ul class="check-list" id="section-D">
+
+        <li class="check-item" data-section="D">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>フィルターバーが正しく表示される（グリッド2列）</strong><br>
+              <span style="font-size:13px;color:var(--muted)">フィルターが横に並びすぎず2列グリッドになっていること</span>
+            </div>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> レイアウトが崩れている場合
-        </div>
-        <div class="ts-body">
-          <p><strong>確認方法:</strong> iPhoneのSafariまたはChromeで実機確認。Chromeの開発者ツールのモバイルエミュレーション（iPhone 12 Pro等）でも代替可能。</p>
-          <p><strong>崩れている場合:</strong> <code>css/style.css</code> のメディアクエリ（<code>@media (max-width: 600px)</code>）でフィルターグリッドが定義されているか確認。</p>
-        </div>
-      </li>
-
-      <li class="check-item" data-section="D">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>タップターゲットが十分な大きさ（44px以上）</strong><br>
-            <span style="font-size:13px;color:var(--muted)">ボタン・タブ・トグルがタップしやすい大きさであること</span>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> レイアウトが崩れている場合
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> タップしにくい場合の対処
-        </div>
-        <div class="ts-body">
-          <p><strong>確認方法:</strong> Chrome開発者ツール → Lighthouse → モバイルで「Tap targets are not sized appropriately」の警告がないか確認。</p>
-          <p><strong>対処法:</strong> <code>css/style.css</code> で該当要素に <code>min-height: 44px; min-width: 44px;</code> を追加する。</p>
-        </div>
-      </li>
-
-      <li class="check-item" data-section="D">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>横スクロールが発生しない</strong><br>
-            <span style="font-size:13px;color:var(--muted)">ページ全体が画面幅に収まっていること</span>
+          <div class="ts-body">
+            <p><strong>確認方法:</strong> iPhoneのSafariまたはChromeで実機確認。Chromeの開発者ツールのモバイルエミュレーション（iPhone 12 Pro等）でも代替可能。</p>
+            <p><strong>崩れている場合:</strong> <code>css/style.css</code> のメディアクエリ（<code>@media (max-width: 600px)</code>）でフィルターグリッドが定義されているか確認。</p>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 横スクロールが出る場合の対処
-        </div>
-        <div class="ts-body">
-          <p><strong>確認方法:</strong> iPhoneで左右にスクロールできてしまわないか確認。</p>
-          <p><strong>原因として多いもの:</strong> 固定幅の要素（テーブル等）が画面幅を超えている。<code>overflow-x: auto</code> をテーブルの親要素に設定することで対処できる。</p>
-        </div>
-      </li>
+        </li>
 
-      <li class="check-item" data-section="D">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>トースト通知がステータスバーと重ならない</strong><br>
-            <span style="font-size:13px;color:var(--muted)">「更新しました」等の通知が画面上部のノッチ・ステータスバーと被らないこと</span>
+        <li class="check-item" data-section="D">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>タップターゲットが十分な大きさ（44px以上）</strong><br>
+              <span style="font-size:13px;color:var(--muted)">ボタン・タブ・トグルがタップしやすい大きさであること</span>
+            </div>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 重なっている場合の対処
-        </div>
-        <div class="ts-body">
-          <p><strong>確認方法:</strong> 実機（iPhone）でページを開き、更新ボタンを押してトースト通知の表示位置を確認する。</p>
-          <p><strong>対処法:</strong> <code>css/style.css</code> のトースト要素に <code>top: env(safe-area-inset-top)</code> または適切な <code>padding-top</code> を追加する。</p>
-        </div>
-      </li>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> タップしにくい場合の対処
+          </div>
+          <div class="ts-body">
+            <p><strong>確認方法:</strong> Chrome開発者ツール → Lighthouse → モバイルで「Tap targets are not sized appropriately」の警告がないか確認。</p>
+            <p><strong>対処法:</strong> <code>css/style.css</code> で該当要素に <code>min-height: 44px; min-width: 44px;</code> を追加する。</p>
+          </div>
+        </li>
 
-    </ul>
-  </div>
+        <li class="check-item" data-section="D">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>横スクロールが発生しない</strong><br>
+              <span style="font-size:13px;color:var(--muted)">ページ全体が画面幅に収まっていること</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 横スクロールが出る場合の対処
+          </div>
+          <div class="ts-body">
+            <p><strong>確認方法:</strong> iPhoneで左右にスクロールできてしまわないか確認。</p>
+            <p><strong>原因として多いもの:</strong> 固定幅の要素（テーブル等）が画面幅を超えている。<code>overflow-x: auto</code> をテーブルの親要素に設定することで対処できる。</p>
+          </div>
+        </li>
 
-  <!-- ===== E. 自動更新フロー確認 ===== -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-badge">E</div>
-      <h2>自動更新フロー確認</h2>
-      <div class="section-count" id="count-E">0/3</div>
+        <li class="check-item" data-section="D">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>トースト通知がステータスバーと重ならない</strong><br>
+              <span style="font-size:13px;color:var(--muted)">「更新しました」等の通知が画面上部のノッチ・ステータスバーと被らないこと</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 重なっている場合の対処
+          </div>
+          <div class="ts-body">
+            <p><strong>確認方法:</strong> 実機（iPhone）でページを開き、更新ボタンを押してトースト通知の表示位置を確認する。</p>
+            <p><strong>対処法:</strong> <code>css/style.css</code> のトースト要素に <code>top: env(safe-area-inset-top)</code> または適切な <code>padding-top</code> を追加する。</p>
+          </div>
+        </li>
+
+      </ul>
     </div>
-    <ul class="check-list" id="section-E">
 
-      <li class="check-item" data-section="E">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>GASトリガーが設定されている（2分間隔）</strong><br>
-            <span style="font-size:13px;color:var(--muted)">Google Apps Script のトリガー管理画面で時間ベーストリガーが有効になっていること</span>
-          </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 確認方法とトラブル対処
-        </div>
-        <div class="ts-body">
-          <p><strong>確認手順:</strong> Google Apps Script のエディタ → 左メニューの「トリガー（時計アイコン）」→ メイン関数（<code>checkAndProcess</code> 等）に「2分ごと」のトリガーが設定されているか確認。</p>
-          <p><strong>トリガーがない場合:</strong> 「トリガーを追加」→ 実行する関数を選択 → 時間ベースのトリガー → 「分タイマー」→「2分おき」に設定してください。</p>
-          <p><strong>トリガーの総実行時間制限:</strong> 90分/日。大会が長時間にわたる場合は前日にリセットしておくこと。</p>
-        </div>
-      </li>
+    <!-- ===== E. 自動更新フロー確認 ===== -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-badge">E</div>
+        <h2>自動更新フロー確認</h2>
+        <div class="section-count" id="count-E">0/3</div>
+      </div>
+      <ul class="check-list" id="section-E">
 
-      <li class="check-item" data-section="E">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>テストCSVをDriveにアップして3分以内にサイトが更新される</strong><br>
-            <span style="font-size:13px;color:var(--muted)">エンドツーエンドの自動更新フローが正常に動作していること</span>
+        <li class="check-item" data-section="E">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>GASトリガーが設定されている（2分間隔）</strong><br>
+              <span style="font-size:13px;color:var(--muted)">Google Apps Script のトリガー管理画面で時間ベーストリガーが有効になっていること</span>
+            </div>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 更新フローの確認方法
-        </div>
-        <div class="cmd-block"><span class="comment"># テストCSVを使ったパイプライン確認（ローカル）</span>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 確認方法とトラブル対処
+          </div>
+          <div class="ts-body">
+            <p><strong>確認手順:</strong> Google Apps Script のエディタ → 左メニューの「トリガー（時計アイコン）」→ メイン関数（<code>checkAndProcess</code> 等）に「2分ごと」のトリガーが設定されているか確認。</p>
+            <p><strong>トリガーがない場合:</strong> 「トリガーを追加」→ 実行する関数を選択 → 時間ベースのトリガー → 「分タイマー」→「2分おき」に設定してください。</p>
+            <p><strong>トリガーの総実行時間制限:</strong> 90分/日。大会が長時間にわたる場合は前日にリセットしておくこと。</p>
+          </div>
+        </li>
+
+        <li class="check-item" data-section="E">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>テストCSVをDriveにアップして3分以内にサイトが更新される</strong><br>
+              <span style="font-size:13px;color:var(--muted)">エンドツーエンドの自動更新フローが正常に動作していること</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 更新フローの確認方法
+          </div>
+          <div class="cmd-block"><span class="comment"># テストCSVを使ったパイプライン確認（ローカル）</span>
 make pipeline
 
 <span class="comment"># サイト更新状態の確認</span>
 python3 tools/check_status.py --site https://masters-regatta-2026-3ha.pages.dev/</div>
-        <div class="ts-body">
-          <p><strong>テスト手順:</strong> ① <code>test/csv/</code> のテストCSV（500mと1000mの両方）をDriveの <code>race_csv/500m/</code> と <code>race_csv/1000m/</code> に投入 → ② 最大3分待つ → ③ サイトに反映されているか確認。</p>
-          <p><strong>更新されない場合のチェック順:</strong></p>
-          <p>1. GASトリガーが動いているか（実行ログを確認）</p>
-          <p>2. GitHub Personal Access Token が有効か（スクリプトプロパティ <code>GITHUB_TOKEN</code>）</p>
-          <p>3. Driveのフォルダ権限がGASのアカウントからアクセスできるか</p>
-          <p>4. CSVの両ファイル（500m + 1000m）が揃っているか（片方だけではPushされない）</p>
-        </div>
-      </li>
-
-      <li class="check-item" data-section="E">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>ステータスバーに「更新 〇〇:〇〇」が表示される</strong><br>
-            <span style="font-size:13px;color:var(--muted)">最終更新時刻がサイトのステータスバーに表示されていること</span>
+          <div class="ts-body">
+            <p><strong>テスト手順:</strong> ① <code>test/csv/</code> のテストCSV（500mと1000mの両方）をDriveの <code>race_csv/500m/</code> と <code>race_csv/1000m/</code> に投入 → ② 最大3分待つ → ③ サイトに反映されているか確認。</p>
+            <p><strong>更新されない場合のチェック順:</strong></p>
+            <p>1. GASトリガーが動いているか（実行ログを確認）</p>
+            <p>2. GitHub Personal Access Token が有効か（スクリプトプロパティ <code>GITHUB_TOKEN</code>）</p>
+            <p>3. Driveのフォルダ権限がGASのアカウントからアクセスできるか</p>
+            <p>4. CSVの両ファイル（500m + 1000m）が揃っているか（片方だけではPushされない）</p>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 表示されない場合の確認
-        </div>
-        <div class="ts-body">
-          <p><strong>表示されない場合:</strong> JSONファイルの <code>updated_at</code> フィールドが正しいISO 8601形式（例: <code>2026-06-07T08:30:00.000Z</code>）になっているか確認する。</p>
-          <p><strong>時刻がおかしい場合:</strong> GASのスクリプトで <code>new Date().toISOString()</code> を使っているか確認。サーバーのタイムゾーン設定はGASでは <code>JST</code> ではなく <code>UTC</code> ベースで出力されることに注意。</p>
-        </div>
-      </li>
+        </li>
 
-    </ul>
-  </div>
+        <li class="check-item" data-section="E">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>ステータスバーに「更新 〇〇:〇〇」が表示される</strong><br>
+              <span style="font-size:13px;color:var(--muted)">最終更新時刻がサイトのステータスバーに表示されていること</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 表示されない場合の確認
+          </div>
+          <div class="ts-body">
+            <p><strong>表示されない場合:</strong> JSONファイルの <code>updated_at</code> フィールドが正しいISO 8601形式（例: <code>2026-06-07T08:30:00.000Z</code>）になっているか確認する。</p>
+            <p><strong>時刻がおかしい場合:</strong> GASのスクリプトで <code>new Date().toISOString()</code> を使っているか確認。サーバーのタイムゾーン設定はGASでは <code>JST</code> ではなく <code>UTC</code> ベースで出力されることに注意。</p>
+          </div>
+        </li>
 
-  <!-- ===== F. エラー状態確認 ===== -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-badge">F</div>
-      <h2>エラー状態確認</h2>
-      <div class="section-count" id="count-F">0/2</div>
+      </ul>
     </div>
-    <ul class="check-list" id="section-F">
 
-      <li class="check-item" data-section="F">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>ネットワーク切断時に「オフライン」表示になる</strong><br>
-            <span style="font-size:13px;color:var(--muted)">Wi-Fiをオフにした状態でサイトにアクセスし、オフライン表示を確認</span>
+    <!-- ===== F. エラー状態確認 ===== -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-badge">F</div>
+        <h2>エラー状態確認</h2>
+        <div class="section-count" id="count-F">0/2</div>
+      </div>
+      <ul class="check-list" id="section-F">
+
+        <li class="check-item" data-section="F">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>ネットワーク切断時に「オフライン」表示になる</strong><br>
+              <span style="font-size:13px;color:var(--muted)">Wi-Fiをオフにした状態でサイトにアクセスし、オフライン表示を確認</span>
+            </div>
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 確認方法
-        </div>
-        <div class="ts-body">
-          <p><strong>確認手順:</strong> ① サイトを一度読み込む → ② Wi-Fiをオフにする（またはChromeの開発者ツール → Network → 「Offline」に設定）→ ③ サイトを再読み込みしてオフライン表示になるか確認。</p>
-          <p><strong>または:</strong> Chromeの開発者ツールで Network タブを開き、スロットリングを「Offline」に設定してページを操作する。</p>
-        </div>
-      </li>
-
-      <li class="check-item" data-section="F">
-        <div class="check-row" onclick="toggle(this)">
-          <div class="check-box"><span class="check-mark">✓</span></div>
-          <div class="check-label">
-            <strong>手動更新ボタン（更新アイコン）が動作する</strong><br>
-            <span style="font-size:13px;color:var(--muted)">更新ボタンを押すと最新データが取得されること</span>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 確認方法
           </div>
-        </div>
-        <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
-          <span class="ts-arrow">▶</span> 動作しない場合の対処
-        </div>
-        <div class="ts-body">
-          <p><strong>確認方法:</strong> 更新ボタンをクリックしてネットワークリクエストが発生しているか、Chromeの開発者ツール → Network タブで確認する。</p>
-          <p><strong>CSPの問題:</strong> onclick が動作しない場合は項目A-3を確認。</p>
-        </div>
-      </li>
+          <div class="ts-body">
+            <p><strong>確認手順:</strong> ① サイトを一度読み込む → ② Wi-Fiをオフにする（またはChromeの開発者ツール → Network → 「Offline」に設定）→ ③ サイトを再読み込みしてオフライン表示になるか確認。</p>
+            <p><strong>または:</strong> Chromeの開発者ツールで Network タブを開き、スロットリングを「Offline」に設定してページを操作する。</p>
+          </div>
+        </li>
 
-    </ul>
-  </div>
+        <li class="check-item" data-section="F">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>手動更新ボタン（更新アイコン）が動作する</strong><br>
+              <span style="font-size:13px;color:var(--muted)">更新ボタンを押すと最新データが取得されること</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 動作しない場合の対処
+          </div>
+          <div class="ts-body">
+            <p><strong>確認方法:</strong> 更新ボタンをクリックしてネットワークリクエストが発生しているか、Chromeの開発者ツール → Network タブで確認する。</p>
+            <p><strong>CSPの問題:</strong> onclick が動作しない場合は項目A-3を確認。</p>
+          </div>
+        </li>
 
-  <!-- ===== 過去の問題事例 ===== -->
-  <div class="incident-section">
-    <div class="section-header">
-      <div class="section-badge">!</div>
-      <h2>過去の問題事例（トラブルシューティング早見表）</h2>
+      </ul>
     </div>
-    <ul class="incident-list">
 
-      <li class="incident-item">
-        <div class="incident-num">1</div>
-        <div class="incident-body">
-          <h3>CSP（Content-Security-Policy）によるUI完全無効化</h3>
-          <p><strong>症状:</strong> ページは表示されるがタブ・トグル・フィルター・ボタンが一切反応しない。コンソールに「Refused to execute inline event handler」エラーが出る。</p>
-          <p><strong>原因:</strong> <code>_headers</code> ファイルの CSP が <code>script-src 'self'</code> のみで <code>'unsafe-inline'</code> が含まれていなかった。HTMLの <code>onclick</code> / <code>onchange</code> はインラインスクリプトとして扱われ全てブロックされた。</p>
-          <p class="solution">対処: <code>_headers</code> の <code>Content-Security-Policy</code> に <code>'unsafe-inline'</code> を追加してデプロイ。</p>
-        </div>
-      </li>
+    <!-- ===== 過去の問題事例 ===== -->
+    <div class="incident-section">
+      <div class="section-header">
+        <div class="section-badge">!</div>
+        <h2>過去の問題事例（トラブルシューティング早見表）</h2>
+      </div>
+      <ul class="incident-list">
 
-      <li class="incident-item">
-        <div class="incident-num">2</div>
-        <div class="incident-body">
-          <h3>tournament.dates が null でページ全体クラッシュ</h3>
-          <p><strong>症状:</strong> ページが白紙になる（何も表示されない）。コンソールに TypeError が出る。</p>
-          <p><strong>原因:</strong> <code>master.json</code> の <code>tournament.dates</code> が <code>null</code> のまま本番データとして使用され、<code>renderTournamentHeader()</code> 内で <code>dates.map()</code> を呼び出した際にクラッシュした。</p>
-          <p class="solution">対処: <code>tournament.dates</code> を必ず文字列の配列（例: <code>["2026-06-07"]</code>）で設定する。<code>null</code> や空文字列は不可。</p>
-        </div>
-      </li>
+        <li class="incident-item">
+          <div class="incident-num">1</div>
+          <div class="incident-body">
+            <h3>CSP（Content-Security-Policy）によるUI完全無効化</h3>
+            <p><strong>症状:</strong> ページは表示されるがタブ・トグル・フィルター・ボタンが一切反応しない。コンソールに「Refused to execute inline event handler」エラーが出る。</p>
+            <p><strong>原因:</strong> <code>_headers</code> ファイルの CSP が <code>script-src 'self'</code> のみで <code>'unsafe-inline'</code> が含まれていなかった。HTMLの <code>onclick</code> / <code>onchange</code> はインラインスクリプトとして扱われ全てブロックされた。</p>
+            <p class="solution">対処: <code>_headers</code> の <code>Content-Security-Policy</code> に <code>'unsafe-inline'</code> を追加してデプロイ。</p>
+          </div>
+        </li>
 
-      <li class="incident-item">
-        <div class="incident-num">3</div>
-        <div class="incident-body">
-          <h3>renderAll() と loadAll() の二重描画</h3>
-          <p><strong>症状:</strong> タブ切替時にデータが二重に描画される・または表示が上書きされて消える。</p>
-          <p><strong>原因:</strong> <code>app.js</code> の初期化処理で <code>renderAll()</code> と <code>loadAll()</code> の両方がビューを描画するコードになっており、どちらかが古い（空の）状態で上書きしてしまっていた。</p>
-          <p class="solution">対処: 初期化処理を1箇所に統一し、二重呼び出しを防ぐ。DOMContentLoaded イベント内での呼び出し順序を整理する。</p>
-        </div>
-      </li>
+        <li class="incident-item">
+          <div class="incident-num">2</div>
+          <div class="incident-body">
+            <h3>tournament.dates が null でページ全体クラッシュ</h3>
+            <p><strong>症状:</strong> ページが白紙になる（何も表示されない）。コンソールに TypeError が出る。</p>
+            <p><strong>原因:</strong> <code>master.json</code> の <code>tournament.dates</code> が <code>null</code> のまま本番データとして使用され、<code>renderTournamentHeader()</code> 内で <code>dates.map()</code> を呼び出した際にクラッシュした。</p>
+            <p class="solution">対処: <code>tournament.dates</code> を必ず文字列の配列（例: <code>["2026-06-07"]</code>）で設定する。<code>null</code> や空文字列は不可。</p>
+          </div>
+        </li>
 
-      <li class="incident-item">
-        <div class="incident-num">4</div>
-        <div class="incident-body">
-          <h3>ブラウザキャッシュによる古いJS読み込み</h3>
-          <p><strong>症状:</strong> コードを修正・デプロイしたはずなのに古い挙動のまま。自分のPCでは修正済みだが別の端末や別のブラウザでは古い動作をしている。</p>
-          <p><strong>原因:</strong> ブラウザが <code>app.js</code> をキャッシュしており、更新後のファイルを取得していなかった。</p>
-          <p class="solution">対処: <code>index.html</code> の <code>&lt;script src="js/app.js?v=YYYYMMDD"&gt;</code> の日付を更新してデプロイする（バージョンクエリによるキャッシュバスティング）。</p>
-        </div>
-      </li>
+        <li class="incident-item">
+          <div class="incident-num">3</div>
+          <div class="incident-body">
+            <h3>renderAll() と loadAll() の二重描画</h3>
+            <p><strong>症状:</strong> タブ切替時にデータが二重に描画される・または表示が上書きされて消える。</p>
+            <p><strong>原因:</strong> <code>app.js</code> の初期化処理で <code>renderAll()</code> と <code>loadAll()</code> の両方がビューを描画するコードになっており、どちらかが古い（空の）状態で上書きしてしまっていた。</p>
+            <p class="solution">対処: 初期化処理を1箇所に統一し、二重呼び出しを防ぐ。DOMContentLoaded イベント内での呼び出し順序を整理する。</p>
+          </div>
+        </li>
 
-    </ul>
+        <li class="incident-item">
+          <div class="incident-num">4</div>
+          <div class="incident-body">
+            <h3>ブラウザキャッシュによる古いJS読み込み</h3>
+            <p><strong>症状:</strong> コードを修正・デプロイしたはずなのに古い挙動のまま。自分のPCでは修正済みだが別の端末や別のブラウザでは古い動作をしている。</p>
+            <p><strong>原因:</strong> ブラウザが <code>app.js</code> をキャッシュしており、更新後のファイルを取得していなかった。</p>
+            <p class="solution">対処: <code>index.html</code> の <code>&lt;script src="js/app.js?v=YYYYMMDD"&gt;</code> の日付を更新してデプロイする（バージョンクエリによるキャッシュバスティング）。</p>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+
   </div>
 
-</div><!-- /page -->
+  <div class="footer">
+    第17回全日本マスターズレガッタ 2026 速報サイト — 公開前チェックリスト
+    <br><a href="../index.html" class="footer-link">← ドキュメント一覧に戻る</a>
+  </div>
+
+</div>
 
 <script>
-  // チェック状態の保存キー
   const STORAGE_KEY = 'rowing_checklist_v1';
 
-  // 初期化
   function init() {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    document.querySelectorAll('.check-item').forEach((item, idx) => {
+    document.querySelectorAll('.check-item').forEach((item) => {
       const key = getKey(item);
       if (saved[key]) item.classList.add('done');
     });
     updateProgress();
   }
 
-  // キー生成
   function getKey(item) {
     const label = item.querySelector('.check-label strong');
     return label ? label.textContent.trim().slice(0, 30) : '';
   }
 
-  // チェックトグル
   function toggle(row) {
     const item = row.closest('.check-item');
     item.classList.toggle('done');
@@ -824,12 +1192,10 @@ python3 tools/check_status.py --site https://masters-regatta-2026-3ha.pages.dev/
     updateProgress();
   }
 
-  // 詳細展開トグル（トラブルシューティング）
   function expandDetail(item) {
     item.classList.toggle('expanded');
   }
 
-  // 状態保存
   function saveState() {
     const state = {};
     document.querySelectorAll('.check-item').forEach(item => {
@@ -839,7 +1205,6 @@ python3 tools/check_status.py --site https://masters-regatta-2026-3ha.pages.dev/
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }
 
-  // 進捗更新
   function updateProgress() {
     const all = document.querySelectorAll('.check-item');
     const done = document.querySelectorAll('.check-item.done');
@@ -847,8 +1212,7 @@ python3 tools/check_status.py --site https://masters-regatta-2026-3ha.pages.dev/
     document.getElementById('progressFill').style.width = pct + '%';
     document.getElementById('progressText').textContent = done.length + ' / ' + all.length + ' 項目完了（' + pct + '%）';
 
-    // セクション別カウント更新
-    ['A','B','C','D','E','F'].forEach(sec => {
+    ['A', 'B', 'C', 'D', 'E', 'F'].forEach(sec => {
       const secAll = document.querySelectorAll('[data-section="' + sec + '"]');
       const secDone = document.querySelectorAll('[data-section="' + sec + '"].done');
       const el = document.getElementById('count-' + sec);
@@ -856,7 +1220,6 @@ python3 tools/check_status.py --site https://masters-regatta-2026-3ha.pages.dev/
     });
   }
 
-  // リセット
   function resetAll() {
     if (!confirm('全てのチェックをリセットしますか？')) return;
     document.querySelectorAll('.check-item').forEach(item => item.classList.remove('done'));
@@ -864,7 +1227,6 @@ python3 tools/check_status.py --site https://masters-regatta-2026-3ha.pages.dev/
     updateProgress();
   }
 
-  // 起動
   init();
 </script>
 </body>

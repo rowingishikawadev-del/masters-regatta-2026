@@ -143,8 +143,207 @@
     .section { break-inside: avoid; }
   }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #2D4F2C;
+    --background: #F7F4EF;
+    --border: #E8E3DB;
+    --text: #333333;
+    --muted: #666666;
+    --on-primary: #ffffff;
+
+    /* Backward-compatible aliases for existing styles */
+    --green: #2D4F2C;
+    --green-light: #E8E3DB;
+    --code-bg: #f4f4f4;
+    --warn-bg: #fff8f0;
+    --warn-border: #e67e22;
+    --ok-bg: #f0f7f0;
+    --ok-border: #2D4F2C;
+  }
+
+  body {
+    font-family: 'Noto Sans JP', -apple-system, 'Hiragino Sans', sans-serif;
+    line-break: strict;
+    background: var(--background);
+    color: var(--text);
+  }
+
+  .site-doc-header {
+    width: 100%;
+    background: var(--primary);
+    color: var(--on-primary);
+    padding: 2rem;
+  }
+
+  .site-doc-header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .site-doc-header-link {
+    color: var(--on-primary);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+  }
+
+  .site-doc-header-link:hover,
+  .site-doc-footer-link:hover {
+    text-decoration: underline;
+  }
+
+  .site-doc-header h1 {
+    text-align: center;
+    font-size: clamp(26px, 3.2vw, 40px);
+    line-height: 1.35;
+    margin: 0.25rem 0 0.5rem;
+    color: var(--on-primary);
+  }
+
+  .site-doc-subtitle {
+    text-align: center;
+    color: var(--on-primary);
+    opacity: 0.92;
+    margin: 0;
+  }
+
+  .page {
+    background: transparent;
+  }
+
+  /* Existing cover/footer are left in DOM but visually replaced by global header/footer */
+  .cover,
+  .page > footer {
+    display: none;
+  }
+
+  .toc,
+  .section,
+  .status-card,
+  .fc-box {
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  h2.section-title,
+  .toc h2 {
+    color: var(--primary);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+  }
+
+  thead th,
+  th {
+    background: var(--primary);
+    color: var(--on-primary);
+    border: 1px solid var(--border);
+  }
+
+  td {
+    border: 1px solid var(--border);
+  }
+
+  pre {
+    background: #f4f4f4;
+    color: #333333;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 12px;
+    overflow-x: auto;
+  }
+
+  code {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+  }
+
+  .callout {
+    border-left: 4px solid transparent;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+  }
+
+  .callout-warn {
+    border-left-color: #e67e22;
+    background: #fff8f0;
+    border-top: 1px solid #f2d2b2;
+    border-right: 1px solid #f2d2b2;
+    border-bottom: 1px solid #f2d2b2;
+  }
+
+  .callout-ok,
+  .callout-important {
+    border-left-color: #2D4F2C;
+    background: #f0f7f0;
+    border-top: 1px solid #cddfcd;
+    border-right: 1px solid #cddfcd;
+    border-bottom: 1px solid #cddfcd;
+  }
+
+  .site-doc-footer {
+    background: #F7F4EF;
+    border-top: 1px solid #E8E3DB;
+    padding: 2rem 1rem;
+    text-align: center;
+    color: #666666;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .site-doc-footer-link {
+    color: #666666;
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    .page {
+      padding: 24px 16px 60px;
+    }
+
+    .site-doc-header {
+      padding: 1.25rem 1rem;
+    }
+
+    .site-doc-header h1 {
+      font-size: 26px;
+    }
+
+    .status-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .lane-row {
+      grid-template-columns: 1fr;
+    }
+
+    .lane-label {
+      justify-content: center;
+      min-height: 40px;
+    }
+  }
+</style>
 </head>
 <body>
+<header class="site-doc-header" role="banner">
+  <div class="site-doc-header-inner">
+    <a class="site-doc-header-link" href="index.html">← ドキュメント一覧</a>
+    <h1>システム仕様書</h1>
+    <p class="site-doc-subtitle">第17回全日本マスターズレガッタ 2026 運用ドキュメント</p>
+  </div>
+</header>
 <div class="page">
 
 <!-- ===== 表紙 ===== -->
@@ -1084,5 +1283,9 @@ const remaining = Math.max(0, 90 - estimatedUsed);  <span class="comment">// 無
 </footer>
 
 </div>
+<footer class="site-doc-footer">
+  <div>第17回全日本マスターズレガッタ 2026 | 運用ドキュメント</div>
+  <div><a class="site-doc-footer-link" href="index.html">← ドキュメント一覧に戻る</a></div>
+</footer>
 </body>
 </html>

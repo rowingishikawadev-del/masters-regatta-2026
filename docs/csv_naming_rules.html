@@ -3,39 +3,287 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="第17回全日本マスターズレガッタ 2026 - CSVファイル命名ルール">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 <title>CSVファイル命名ルール — 全日本マスターズレガッタ 2026</title>
 <style>
-  body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif; background: #F7F4EF; color: #1A1A18; font-size: 14px; line-height: 1.7; margin: 0; }
-  .page { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
-  h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
-  h2 { font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: #9B9890; font-weight: 400; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #E8E4DC; }
-  h3 { font-size: 14px; font-weight: 600; margin: 20px 0 8px; }
-  .card { background: #fff; border: 1px solid #E8E4DC; border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
-  .rule-box { background: #F0EDE7; border-left: 4px solid #2D4F2C; border-radius: 0 6px 6px 0; padding: 14px 18px; font-size: 15px; font-family: monospace; margin: 12px 0; letter-spacing: 0.03em; }
-  .ok { color: #2D7A2D; font-weight: 600; }
-  .ng { color: #C0392B; font-weight: 600; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { padding: 8px 14px; text-align: left; font-size: 11px; color: #9B9890; font-weight: 400; border-bottom: 1px solid #E8E4DC; background: #FAF8F4; }
-  td { padding: 10px 14px; border-bottom: 1px solid #F0EDE7; vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  code { background: #F0EDE7; padding: 2px 6px; border-radius: 3px; font-family: monospace; font-size: 12px; }
-  .note { font-size: 12px; color: #6B6860; margin-top: 8px; }
-  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; }
-  .badge-ok { background: #e8f5e8; color: #2D7A2D; }
-  .badge-ng { background: #fce8e8; color: #C0392B; }
-  .file-list { list-style: none; padding: 0; margin: 0; }
-  .file-list li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #F0EDE7; font-size: 13px; }
-  .file-list li:last-child { border-bottom: none; }
-  .file-name { font-family: monospace; font-size: 12px; background: #F0EDE7; padding: 2px 8px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
-  .file-desc { color: #6B6860; }
-  a { color: #2D4F2C; }
+  * { box-sizing: border-box; }
+
+  html { line-break: strict; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #F7F4EF;
+    color: #333333;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  header {
+    background: #2D4F2C;
+    color: #ffffff;
+    padding: 2rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  header a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  header a:hover {
+    opacity: 0.9;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0.5rem 0 0;
+  }
+
+  .subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2D4F2C;
+    border-bottom: 2px solid #E8E3DB;
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  h2:first-of-type {
+    margin-top: 0;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333333;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .card {
+    background: #F7F4EF;
+    border: 1px solid #E8E3DB;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .rule-box {
+    background: #ffffff;
+    border: 1px solid #E8E3DB;
+    border-radius: 6px;
+    padding: 1rem;
+    font-size: 0.95rem;
+    font-family: 'Courier New', monospace;
+    font-weight: 500;
+    margin: 1rem 0;
+    color: #2D4F2C;
+    letter-spacing: 0.02em;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+  }
+
+  thead {
+    background: #2D4F2C;
+    color: #ffffff;
+  }
+
+  th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #E8E3DB;
+    vertical-align: top;
+    color: #333333;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  code {
+    background: #f4f4f4;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: #2D4F2C;
+  }
+
+  pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    line-height: 1.6;
+    color: #333333;
+  }
+
+  .note {
+    font-size: 0.9rem;
+    color: #666666;
+    margin-top: 0.5rem;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .badge-ok {
+    background: #2D4F2C;
+    color: #ffffff;
+  }
+
+  .badge-ng {
+    background: #c0392b;
+    color: #ffffff;
+  }
+
+  .file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .file-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #E8E3DB;
+    font-size: 0.95rem;
+  }
+
+  .file-list li:last-child {
+    border-bottom: none;
+  }
+
+  .file-name {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    background: #f4f4f4;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    color: #2D4F2C;
+  }
+
+  .file-desc {
+    color: #666666;
+    flex-grow: 1;
+  }
+
+  .file-desc a {
+    color: #2D4F2C;
+    text-decoration: none;
+  }
+
+  .file-desc a:hover {
+    text-decoration: underline;
+  }
+
+  a {
+    color: #2D4F2C;
+    text-decoration: none;
+  }
+
+  a:hover {
+    opacity: 0.8;
+  }
+
+  footer {
+    background: #F7F4EF;
+    border-top: 1px solid #E8E3DB;
+    padding: 1.5rem;
+    text-align: center;
+    color: #999999;
+    margin-top: 2rem;
+  }
+
+  footer a {
+    color: #2D4F2C;
+  }
+
+  @media (max-width: 768px) {
+    header {
+      padding: 1rem;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+    }
+
+    main {
+      padding: 1rem;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+    }
+
+    table {
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 0.5rem 0.75rem;
+    }
+
+    .file-list li {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
 </style>
 </head>
 <body>
-<div class="page">
+<header>
+  <a href="index.html">← ドキュメント一覧</a>
+  <h1>CSVファイル 命名ルール</h1>
+  <p class="subtitle">第17回全日本マスターズレガッタ 2026 / システム運用マニュアル</p>
+</header>
 
-  <h1>📄 CSVファイル 命名ルール</h1>
-  <p style="color:#6B6860;margin-bottom:32px">全日本マスターズレガッタ 2026 / システム運用マニュアル</p>
+<main>
 
   <!-- ===== レース結果CSV ===== -->
   <h2>① レース結果CSV（計測システム出力）</h2>
@@ -176,6 +424,12 @@
     </ul>
   </div>
 
-</div>
+</main>
+
+<footer>
+  <p>第17回全日本マスターズレガッタ 2026 | 運用ドキュメント</p>
+  <a href="index.html">← ドキュメント一覧に戻る</a>
+</footer>
+
 </body>
 </html>
