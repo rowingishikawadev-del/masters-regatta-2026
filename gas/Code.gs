@@ -1389,6 +1389,72 @@ function deleteFromGitHub_(path) {
 }
 
 /**
+ * data/results/ 配下の race_*.json を全削除する（スケジュール・エントリーは削除しない）
+ * テストデータのクリアや大会リセット時に使用する
+ */
+function clearAllResults() {
+  const props = PropertiesService.getScriptProperties();
+  const token = props.getProperty(CONFIG.props.githubToken);
+  const apiBase = CONFIG.github.apiBase;
+  const owner = CONFIG.github.owner;
+  const repo = CONFIG.github.repo;
+  const branch = CONFIG.github.branch;
+  const resultsPath = CONFIG.github.resultsPath;
+
+  const listUrl = apiBase + '/repos/' + owner + '/' + repo + '/contents/' + resultsPath + '?ref=' + branch;
+  const listRes = UrlFetchApp.fetch(listUrl, {
+    method: 'GET',
+    headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.v3+json' },
+    muteHttpExceptions: true,
+  });
+
+  if (listRes.getResponseCode() === 404) {
+    Logger.log('[clearAllResults] data/results/ フォルダが存在しません（削除不要）');
+    return;
+  }
+  if (listRes.getResponseCode() !== 200) {
+    Logger.log('[clearAllResults] フォルダ一覧取得失敗: HTTP ' + listRes.getResponseCode());
+    return;
+  }
+
+  const files = JSON.parse(listRes.getContentText());
+  const raceFiles = files.filter(f => f.type === 'file' && /^race_\d+\.json$/.test(f.name));
+
+  if (raceFiles.length === 0) {
+    Logger.log('[clearAllResults] 削除対象なし');
+    return;
+  }
+
+  Logger.log('[clearAllResults] 削除対象: ' + raceFiles.length + ' 件');
+  raceFiles.forEach(function(f) {
+    const delUrl = apiBase + '/repos/' + owner + '/' + repo + '/contents/' + f.path;
+    const payload = JSON.stringify({
+      message: 'Delete ' + f.name + ' [manual reset]',
+      sha: f.sha,
+      branch: branch,
+    });
+    const delRes = UrlFetchApp.fetch(delUrl, {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'token ' + token,
+        Accept: 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+      },
+      payload: payload,
+      muteHttpExceptions: true,
+    });
+    if (delRes.getResponseCode() === 200) {
+      Logger.log('[clearAllResults] 削除OK: ' + f.name);
+    } else {
+      Logger.log('[clearAllResults] 削除失敗: ' + f.name + ' HTTP ' + delRes.getResponseCode());
+    }
+    Utilities.sleep(500); // GitHub API レート制限対策
+  });
+
+  Logger.log('[clearAllResults] 完了');
+}
+
+/**
  * onTrigger を2分間隔で自動実行するトリガーを設定する
  * 既存のトリガーがある場合は重複して作成しない
  */
