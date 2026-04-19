@@ -759,8 +759,7 @@ function renderScheduleView() {
         (race.entries || []).forEach(e => { entryMap[e.lane] = e; });
         const entry = entryMap[winner.lane] || {};
         const timeStr = winner.finish ? winner.finish.formatted : '';
-        const laneStr = `<span class="sc-winner-lane">B${winner.lane}</span>`;
-        winnerHtml = `<span class="sc-winner-name">${laneStr} ${h(entry.crew_name) || '-'}${timeStr ? `<span class="sc-winner-time"> ${timeStr}</span>` : ''}</span>`;
+        winnerHtml = `<span class="sc-winner-name">${h(entry.crew_name) || '-'}${timeStr ? `<span class="sc-winner-time"> ${timeStr}</span>` : ''}</span>`;
       }
     }
 
