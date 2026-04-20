@@ -774,7 +774,7 @@ function timeAgo(iso) {
   return `${Math.floor(min/1440)}日前`;
 }
 function h(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 /* ===== 時計（JST確実表示） ===== */

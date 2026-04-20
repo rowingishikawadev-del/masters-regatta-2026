@@ -192,8 +192,7 @@ async function loadAll() {
     if (e.message === 'MASTER_NOT_FOUND') {
       showError('大会データが見つかりません。管理者にお問い合わせください。');
     } else {
-      // 実際のエラー内容を技術情報として表示（診断用）
-      showError(e.message || 'unknown error');
+      showError();
     }
   } finally {
     showLoading(false);
@@ -443,7 +442,7 @@ function renderToggleView() {
     toggleEl.innerHTML = `
       <div class="toggle-header" onclick="this.parentElement.classList.toggle('open')">
         <span class="toggle-arrow">▶</span>
-        <span class="toggle-title">${eventName}</span>
+        <span class="toggle-title">${h(eventName)}</span>
         <span class="toggle-code">${displayCode(eventCode)}</span>
         <span class="toggle-count">${totalCount}レース</span>
         ${statusBadge}
@@ -1635,7 +1634,7 @@ function showError(msg) {
         ① インターネットに接続されていますか？（Wi-Fi・モバイル通信）<br>
         ② ブラウザを一度閉じて、もう一度開いてみてください<br>
         ③ しばらく待ってから再度お試しください（数分で自動復旧することがあります）<br>
-        <span style="color:var(--text-muted);font-size:12px">技術情報: ${msg || '接続エラー'}</span>
+        <span style="color:var(--text-muted);font-size:12px">技術情報: 接続エラー</span>
       </div>
       <div class="error-msg-action">
         <button onclick="location.reload()">🔄 画面を再読み込みする</button>
