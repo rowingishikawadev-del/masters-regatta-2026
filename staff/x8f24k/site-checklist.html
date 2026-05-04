@@ -994,7 +994,7 @@ curl -I https://masters-regatta-2026-3ha.pages.dev/ | grep -i content-security-p
       <div class="section-header">
         <div class="section-badge">E</div>
         <h2>自動更新フロー確認</h2>
-        <div class="section-count" id="count-E">0/3</div>
+        <div class="section-count" id="count-E">0/4</div>
       </div>
       <ul class="check-list" id="section-E">
 
@@ -1056,6 +1056,30 @@ python3 tools/check_status.py --site https://masters-regatta-2026-3ha.pages.dev/
           <div class="ts-body">
             <p><strong>表示されない場合:</strong> JSONファイルの <code>updated_at</code> フィールドが正しいISO 8601形式（例: <code>2026-06-07T08:30:00.000Z</code>）になっているか確認する。</p>
             <p><strong>時刻がおかしい場合:</strong> GASのスクリプトで <code>new Date().toISOString()</code> を使っているか確認。サーバーのタイムゾーン設定はGASでは <code>JST</code> ではなく <code>UTC</code> ベースで出力されることに注意。</p>
+          </div>
+        </li>
+
+        <li class="check-item" data-section="E">
+          <div class="check-row" onclick="toggle(this)">
+            <div class="check-box"><span class="check-mark">✓</span></div>
+            <div class="check-label">
+              <strong>テストデータを削除してレース当日の状態にリセットする（clearAllResults実行）</strong><br>
+              <span style="font-size:13px;color:var(--muted)">テスト確認が完了したら、試合結果のみ削除してスケジュール・エントリーは残した状態にする</span>
+            </div>
+          </div>
+          <div class="ts-toggle" onclick="expandDetail(this.closest('.check-item'))">
+            <span class="ts-arrow">▶</span> 実行手順
+          </div>
+          <div class="ts-body">
+            <p><strong>実行タイミング:</strong> テスト確認が全て完了した後、大会当日の前日または当日朝に実施。</p>
+            <p><strong>手順:</strong></p>
+            <p>① Google Apps Script エディタを開く</p>
+            <p>② 関数一覧から <code>clearAllResults</code> を選択</p>
+            <p>③ ▶ 実行ボタンをクリック</p>
+            <p>④ 約1〜2分後にサイトを確認 → 全レースが「未実施」状態になっていればOK</p>
+            <p><strong>削除されるもの:</strong> <code>data/results/race_*.json</code>（試合結果のみ）</p>
+            <p><strong>残るもの:</strong> <code>data/master.json</code>（スケジュール・エントリー情報）</p>
+            <p><strong>バックアップ先:</strong> Google Drive <code>1mzLVFs0hch-ngHq9y770EYo21bB9kFpj</code> に日時付きで自動保存される</p>
           </div>
         </li>
 
