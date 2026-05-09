@@ -1483,6 +1483,35 @@ function deleteTriggers() {
   Logger.log('[OK] 全トリガーを削除しました');
 }
 
+/**
+ * 2分間隔トリガーの動作状況を確認する
+ * GASエディタで実行 → ログに結果が表示される
+ */
+function checkTriggerStatus() {
+  const triggers = ScriptApp.getProjectTriggers();
+  if (triggers.length === 0) {
+    Logger.log('❌ トリガーが設定されていません。setupTrigger() を実行してください。');
+    return;
+  }
+
+  triggers.forEach(t => {
+    const name = t.getHandlerFunction();
+    const type = t.getEventType();
+    const source = t.getTriggerSource();
+    Logger.log('✅ トリガー検出:');
+    Logger.log('   関数名: ' + name);
+    Logger.log('   種別: ' + source + ' / ' + type);
+  });
+
+  const props = PropertiesService.getScriptProperties();
+  const lastTrigger = props.getProperty('LAST_TRIGGER_AT') || '（記録なし）';
+  Logger.log('   最終実行: ' + lastTrigger);
+  Logger.log('');
+  Logger.log('トリガーが表示されていれば2分周期は動いています。');
+  Logger.log('「最終実行」が数時間以上前の場合はトリガーが止まっている可能性があります。');
+  Logger.log('その場合は deleteTriggers() → setupTrigger() の順に実行してください。');
+}
+
 // ============================================================
 // テスト用: サンプルCSVをDriveに生成する
 // ============================================================
