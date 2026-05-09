@@ -427,7 +427,7 @@ function renderToggleView() {
       ? '<span class="badge badge-done">確定</span>'
       : anyLive
       ? '<span class="badge badge-live">実施中</span>'
-      : '<span class="badge badge-upcoming">未実施</span>';
+      : '';
 
     const toggleEl = document.createElement('div');
     toggleEl.className = 'toggle';
@@ -468,7 +468,7 @@ function renderRaceBlock(race) {
 
   const statusBadge = result
     ? '<span class="badge badge-done">確定</span>'
-    : '<span class="badge badge-upcoming">未実施</span>';
+    : '';
 
   const tableHTML = result
     ? renderResultTable(race, result)
@@ -823,8 +823,7 @@ function highlightCurrentRace() {
 
   // 全トグルのliveバッジを一旦リセット
   document.querySelectorAll('#view-toggle-content .toggle .badge-live').forEach(badge => {
-    badge.className = 'badge badge-upcoming';
-    badge.textContent = '予定';
+    badge.remove();
   });
 
   // 該当レースだけliveに設定
