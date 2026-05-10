@@ -103,9 +103,10 @@ const CONFIG = {
     processed: 'processed',
   },
   // CSVファイル名の正規表現パターン
-  // 推奨形式: R001_500.csv / R001_1000.csv
-  // 旧形式（後方互換）: 20260309_002304_R001_500m.csv
-  csvPattern: /^(?:\d{8}_\d{6}_)?R(\d{3})_(.+)\.csv$/i,
+  // 基本形: R001_500m.csv / R001_1000m.csv
+  // プレフィックス付き（日付・時刻・管理番号など）: 任意文字列_R001_500m.csv
+  //   例: 20260523_070012_R001_500m.csv / 管理001_R001_500m.csv
+  csvPattern: /^(?:.+_)?R(\d{3})_(.+)\.csv$/i,
   // スクリプトプロパティキー
   props: {
     driveFolderId: 'DRIVE_ROOT_FOLDER_ID',
