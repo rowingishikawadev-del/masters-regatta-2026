@@ -1389,8 +1389,9 @@ function deleteFromGitHub_(path) {
 }
 
 /**
- * data/results/ 配下の race_*.json を全削除する（スケジュール・エントリーは削除しない）
- * テストデータのクリアや大会リセット時に使用する
+ * data/results/ 配下の race_*.json を tombstone JSON で上書きする
+ * ファイルが存在しない場合も master.json のスケジュールからレース番号を読んで強制プッシュ
+ * → Cloudflare CDN が古いキャッシュを更新し、app.js が cleared:true を検知して非表示にする
  */
 function clearAllResults() {
   const props = PropertiesService.getScriptProperties();
@@ -1401,40 +1402,60 @@ function clearAllResults() {
   const branch = CONFIG.github.branch;
   const resultsPath = CONFIG.github.resultsPath;
 
+  // results/ フォルダの既存ファイルを収集（フォルダが存在しなくても続行）
+  const existingRaceNos = [];
   const listUrl = apiBase + '/repos/' + owner + '/' + repo + '/contents/' + resultsPath + '?ref=' + branch;
   const listRes = UrlFetchApp.fetch(listUrl, {
     method: 'GET',
     headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.v3+json' },
     muteHttpExceptions: true,
   });
-
-  if (listRes.getResponseCode() === 404) {
-    Logger.log('[clearAllResults] data/results/ フォルダが存在しません（削除不要）');
-    return;
-  }
-  if (listRes.getResponseCode() !== 200) {
-    Logger.log('[clearAllResults] フォルダ一覧取得失敗: HTTP ' + listRes.getResponseCode());
-    return;
-  }
-
-  const files = JSON.parse(listRes.getContentText());
-  const raceFiles = files.filter(f => f.type === 'file' && /^race_\d+\.json$/.test(f.name));
-
-  if (raceFiles.length === 0) {
-    Logger.log('[clearAllResults] 削除対象なし');
-    return;
+  if (listRes.getResponseCode() === 200) {
+    const files = JSON.parse(listRes.getContentText());
+    files.filter(f => f.type === 'file' && /^race_\d+\.json$/.test(f.name))
+         .forEach(f => existingRaceNos.push(parseInt(f.name.replace('race_', '').replace('.json', ''), 10)));
+    Logger.log('[clearAllResults] results/ 既存ファイル: ' + existingRaceNos.length + ' 件');
+  } else {
+    Logger.log('[clearAllResults] results/ フォルダなし（既存0件）: HTTP ' + listRes.getResponseCode());
   }
 
-  Logger.log('[clearAllResults] 上書き対象: ' + raceFiles.length + ' 件');
-  raceFiles.forEach(function(f) {
-    // DELETEではなく tombstone JSON で上書き → Cloudflare CDNキャッシュが更新される
-    const raceNo = parseInt(f.name.replace('race_', '').replace('.json', ''), 10);
+  // master.json から全レース番号を取得（CDNキャッシュ残存分も含めて網羅するため）
+  const masterRaceNos = [];
+  try {
+    const masterUrl = apiBase + '/repos/' + owner + '/' + repo + '/contents/' + CONFIG.github.masterPath + '?ref=' + branch;
+    const masterRes = UrlFetchApp.fetch(masterUrl, {
+      method: 'GET',
+      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.v3+json' },
+      muteHttpExceptions: true,
+    });
+    if (masterRes.getResponseCode() === 200) {
+      const masterFile = JSON.parse(masterRes.getContentText());
+      const masterJson = JSON.parse(Utilities.newBlob(Utilities.base64Decode(masterFile.content.replace(/\n/g, ''))).getDataAsString('UTF-8'));
+      (masterJson.schedule || []).forEach(r => masterRaceNos.push(r.race_no));
+      Logger.log('[clearAllResults] master.json レース数: ' + masterRaceNos.length + ' 件');
+    }
+  } catch (e) {
+    Logger.log('[clearAllResults] master.json 読込失敗（スキップ）: ' + e.message);
+  }
+
+  // 既存ファイル ∪ スケジュール = 全対象（重複排除）
+  const allRaceNos = [...new Set([...existingRaceNos, ...masterRaceNos])].sort((a, b) => a - b);
+
+  if (allRaceNos.length === 0) {
+    Logger.log('[clearAllResults] 対象レースなし');
+    return;
+  }
+
+  Logger.log('[clearAllResults] tombstone 送信: ' + allRaceNos.length + ' 件 → ' + allRaceNos.join(', '));
+  allRaceNos.forEach(function(raceNo) {
+    const paddedNo = String(raceNo).padStart(3, '0');
+    const path = resultsPath + '/race_' + paddedNo + '.json';
     const tombstone = JSON.stringify({ race_no: raceNo, cleared: true, results: [] });
     try {
-      pushToGitHub(f.path, tombstone);
-      Logger.log('[clearAllResults] 上書きOK: ' + f.name);
+      pushToGitHub(path, tombstone);
+      Logger.log('[clearAllResults] tombstone OK: race_' + paddedNo + '.json');
     } catch (e) {
-      Logger.log('[clearAllResults] 上書き失敗: ' + f.name + ' ' + e.message);
+      Logger.log('[clearAllResults] tombstone 失敗: race_' + paddedNo + '.json ' + e.message);
     }
     Utilities.sleep(300);
   });
