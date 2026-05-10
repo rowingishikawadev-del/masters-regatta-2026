@@ -214,8 +214,9 @@ async function loadResults(cacheMode = 'no-cache') {
     await Promise.all(batch.map(async (no) => {
       try {
         const data = await fetchJSON(CONFIG.RESULT_JSON(no), 25000, cacheMode);
-        if (data.cleared) {
-          // tombstone: 結果クリア済み → キャッシュから除去
+        // tombstoneファイル または clearAllResults実行より前の古い結果は非表示
+        const lastClearedAt = masterData?.tournament?.last_cleared_at;
+        if (data.cleared || (lastClearedAt && data.updated_at && data.updated_at < lastClearedAt)) {
           delete resultsCache[no];
           try { localStorage.removeItem(LS_RESULT_PREFIX + no); } catch(_) {}
           return;

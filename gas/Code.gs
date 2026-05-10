@@ -1389,9 +1389,9 @@ function deleteFromGitHub_(path) {
 }
 
 /**
- * data/results/ 配下の race_*.json を tombstone JSON で上書きする
- * ファイルが存在しない場合も master.json のスケジュールからレース番号を読んで強制プッシュ
- * → Cloudflare CDN が古いキャッシュを更新し、app.js が cleared:true を検知して非表示にする
+ * 全レース結果をクリアする
+ * master.json に last_cleared_at を記録するだけ（コミット1件）
+ * → Cloudflare ビルドが1回で済み、app.js がタイムスタンプ比較で古い結果を非表示にする
  */
 function clearAllResults() {
   const props = PropertiesService.getScriptProperties();
@@ -1400,79 +1400,49 @@ function clearAllResults() {
   const owner = CONFIG.github.owner;
   const repo = CONFIG.github.repo;
   const branch = CONFIG.github.branch;
-  const resultsPath = CONFIG.github.resultsPath;
 
-  // results/ フォルダの既存ファイルを収集（フォルダが存在しなくても続行）
-  const existingRaceNos = [];
-  const listUrl = apiBase + '/repos/' + owner + '/' + repo + '/contents/' + resultsPath + '?ref=' + branch;
-  const listRes = UrlFetchApp.fetch(listUrl, {
+  // master.json を取得して last_cleared_at を追記し、1コミットで Push
+  const masterApiUrl = apiBase + '/repos/' + owner + '/' + repo + '/contents/' + CONFIG.github.masterPath;
+  const masterGetRes = UrlFetchApp.fetch(masterApiUrl + '?ref=' + branch, {
     method: 'GET',
     headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.v3+json' },
     muteHttpExceptions: true,
   });
-  if (listRes.getResponseCode() === 200) {
-    const files = JSON.parse(listRes.getContentText());
-    files.filter(f => f.type === 'file' && /^race_\d+\.json$/.test(f.name))
-         .forEach(f => existingRaceNos.push(parseInt(f.name.replace('race_', '').replace('.json', ''), 10)));
-    Logger.log('[clearAllResults] results/ 既存ファイル: ' + existingRaceNos.length + ' 件');
-  } else {
-    Logger.log('[clearAllResults] results/ フォルダなし（既存0件）: HTTP ' + listRes.getResponseCode());
-  }
 
-  // master.json から全レース番号を取得（CDNキャッシュ残存分も含めて網羅するため）
-  const masterRaceNos = [];
-  try {
-    const masterUrl = apiBase + '/repos/' + owner + '/' + repo + '/contents/' + CONFIG.github.masterPath + '?ref=' + branch;
-    const masterRes = UrlFetchApp.fetch(masterUrl, {
-      method: 'GET',
-      headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.v3+json' },
-      muteHttpExceptions: true,
-    });
-    if (masterRes.getResponseCode() === 200) {
-      const masterFile = JSON.parse(masterRes.getContentText());
-      const masterJson = JSON.parse(Utilities.newBlob(Utilities.base64Decode(masterFile.content.replace(/\n/g, ''))).getDataAsString('UTF-8'));
-      (masterJson.schedule || []).forEach(r => masterRaceNos.push(r.race_no));
-      Logger.log('[clearAllResults] master.json レース数: ' + masterRaceNos.length + ' 件');
-    }
-  } catch (e) {
-    Logger.log('[clearAllResults] master.json 読込失敗（スキップ）: ' + e.message);
-  }
-
-  // 既存ファイル ∪ スケジュール = 全対象（重複排除）
-  const allRaceNos = [...new Set([...existingRaceNos, ...masterRaceNos])].sort((a, b) => a - b);
-
-  if (allRaceNos.length === 0) {
-    Logger.log('[clearAllResults] 対象レースなし');
+  if (masterGetRes.getResponseCode() !== 200) {
+    Logger.log('[clearAllResults] master.json 取得失敗: HTTP ' + masterGetRes.getResponseCode());
     return;
   }
 
-  Logger.log('[clearAllResults] tombstone 送信: ' + allRaceNos.length + ' 件 → ' + allRaceNos.join(', '));
-  allRaceNos.forEach(function(raceNo) {
-    const paddedNo = String(raceNo).padStart(3, '0');
-    const path = resultsPath + '/race_' + paddedNo + '.json';
-    const tombstone = JSON.stringify({ race_no: raceNo, cleared: true, results: [] });
-    try {
-      pushToGitHub(path, tombstone);
-      Logger.log('[clearAllResults] tombstone OK: race_' + paddedNo + '.json');
-    } catch (e) {
-      Logger.log('[clearAllResults] tombstone 失敗: race_' + paddedNo + '.json ' + e.message);
-    }
-    Utilities.sleep(300);
+  const masterFileData = JSON.parse(masterGetRes.getContentText());
+  const masterJson = JSON.parse(
+    Utilities.newBlob(Utilities.base64Decode(masterFileData.content.replace(/\n/g, ''))).getDataAsString('UTF-8')
+  );
+
+  const clearedAt = new Date().toISOString();
+  masterJson.tournament.last_cleared_at = clearedAt;
+
+  const masterPutRes = UrlFetchApp.fetch(masterApiUrl, {
+    method: 'PUT',
+    headers: { Authorization: 'token ' + token, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    payload: JSON.stringify({
+      message: 'chore: clear all results [manual reset]',
+      content: Utilities.base64Encode(JSON.stringify(masterJson, null, 2), Utilities.Charset.UTF_8),
+      sha: masterFileData.sha,
+      branch: branch,
+    }),
+    muteHttpExceptions: true,
   });
 
-  Logger.log('[clearAllResults] 完了');
-
-  // Cloudflare Pages を強制再デプロイするためダミーファイルを更新
-  try {
-    const ts = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm:ss');
-    pushToGitHub('data/.cleared_at', ts + '\n');
-    Logger.log('[clearAllResults] 再デプロイトリガー送信OK');
-  } catch (e) {
-    Logger.log('[clearAllResults] 再デプロイトリガー失敗（無視）: ' + e.message);
+  if (masterPutRes.getResponseCode() === 200 || masterPutRes.getResponseCode() === 201) {
+    Logger.log('[clearAllResults] master.json last_cleared_at 設定: ' + clearedAt);
+    Logger.log('[clearAllResults] 完了（コミット1件のみ）');
+  } else {
+    Logger.log('[clearAllResults] master.json 更新失敗: HTTP ' + masterPutRes.getResponseCode());
+    return;
   }
 
   // processed/ の全CSVを「削除済」フォルダへ移動
-  // フォルダIDはスクリプトプロパティ DELETED_FOLDER_ID で上書き可（デフォルト固定ID）
   try {
     const deletedFolderId = props.getProperty('DELETED_FOLDER_ID') || '1DaFuSAZQxdYqqI0-_SvidMEfK8G1zUa4';
     const deletedFolder = DriveApp.getFolderById(deletedFolderId);
