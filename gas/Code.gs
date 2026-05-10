@@ -1452,6 +1452,15 @@ function clearAllResults() {
   });
 
   Logger.log('[clearAllResults] 完了');
+
+  // Cloudflare Pages を強制再デプロイするためダミーファイルを更新
+  try {
+    const ts = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm:ss');
+    pushToGitHub('data/.cleared_at', ts + '\n');
+    Logger.log('[clearAllResults] 再デプロイトリガー送信OK');
+  } catch (e) {
+    Logger.log('[clearAllResults] 再デプロイトリガー失敗（無視）: ' + e.message);
+  }
 }
 
 /**
