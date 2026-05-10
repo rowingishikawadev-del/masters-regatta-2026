@@ -296,7 +296,6 @@ function renderAll() {
   // 使用中プロパティを計算（未使用列の非表示判定に使用）
   usedProps = detectUsedProps();
   renderTournamentHeader();
-  renderYoutube();
   renderFilterOptions();
   renderToggleView();
   renderTableView();
@@ -324,27 +323,6 @@ function renderTournamentHeader() {
   if (coverMeta) coverMeta.textContent = `${dates} | ${t.venue || ''}`;
 }
 
-/**
- * YouTube Live URLがあれば埋め込む（HTMLのデフォルトiframeを更新する）
- */
-function renderYoutube() {
-  const url = masterData?.tournament?.youtube_url;
-  const container = document.getElementById('youtube-container');
-  if (!container) return;
-
-  // URLがない場合でもHTMLに埋め込み済みのiframeはそのまま残す
-  if (!url) return;
-
-  const videoId = extractYoutubeId(url);
-  if (!videoId) return;
-
-  // 既存のiframe srcを更新（master.jsonのURLが変わった場合に対応）
-  const iframe = document.getElementById('youtube-iframe');
-  if (iframe) {
-    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=0`;
-  }
-  container.style.display = 'block';
-}
 
 /**
  * 日別タブとフィルタの日程オプションをマスタから動的生成する
@@ -1532,40 +1510,6 @@ function formatDate(dateStr) {
   return `${parseInt(parts[1], 10)}/${parseInt(parts[2], 10)}(${days[d.getDay()]})`;
 }
 
-/**
- * YouTube URL から動画IDを抽出する
- */
-function extractYoutubeId(url) {
-  if (!url) return null;
-  const input = String(url).trim();
-
-  // URLとして解釈できる場合は pathname/search から優先抽出
-  try {
-    const u = new URL(input);
-    const host = u.hostname.replace(/^www\./, '');
-
-    if (host === 'youtube.com') {
-      const v = u.searchParams.get('v');
-      if (v && /^[a-zA-Z0-9_-]{11}$/.test(v)) return v;
-
-      const parts = u.pathname.split('/').filter(Boolean);
-      const idx = parts.findIndex(p => ['embed', 'shorts', 'live'].includes(p));
-      if (idx >= 0 && parts[idx + 1] && /^[a-zA-Z0-9_-]{11}$/.test(parts[idx + 1])) {
-        return parts[idx + 1];
-      }
-    }
-
-    if (host === 'youtu.be') {
-      const id = u.pathname.split('/').filter(Boolean)[0];
-      if (id && /^[a-zA-Z0-9_-]{11}$/.test(id)) return id;
-    }
-  } catch (_) {
-    // URLパース失敗時は下の正規表現フォールバックへ
-  }
-
-  const fallback = input.match(/(?:v=|youtu\.be\/|embed\/|shorts\/|live\/)([a-zA-Z0-9_-]{11})/);
-  return fallback ? fallback[1] : null;
-}
 
 /**
  * 種目コードの表示用変換（アンダースコアを除去）
