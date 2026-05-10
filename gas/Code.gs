@@ -1470,6 +1470,30 @@ function clearAllResults() {
   } catch (e) {
     Logger.log('[clearAllResults] 再デプロイトリガー失敗（無視）: ' + e.message);
   }
+
+  // processed/ の全CSVを「削除済」フォルダへ移動
+  // フォルダIDはスクリプトプロパティ DELETED_FOLDER_ID で上書き可（デフォルト固定ID）
+  try {
+    const deletedFolderId = props.getProperty('DELETED_FOLDER_ID') || '1DaFuSAZQxdYqqI0-_SvidMEfK8G1zUa4';
+    const deletedFolder = DriveApp.getFolderById(deletedFolderId);
+    const rootFolderId = props.getProperty(CONFIG.props.driveFolderId);
+    const measurementPoints = getMeasurementPoints();
+    const processedFolder = getOrCreateFolder(rootFolderId, CONFIG.folders.processed);
+    let movedCount = 0;
+    for (const point of measurementPoints) {
+      const processedPointFolder = getOrCreateFolder(processedFolder.getId(), point);
+      const files = processedPointFolder.getFiles();
+      while (files.hasNext()) {
+        const file = files.next();
+        file.moveTo(deletedFolder);
+        movedCount++;
+        Logger.log('[clearAllResults] 削除済フォルダへ移動: ' + file.getName());
+      }
+    }
+    Logger.log('[clearAllResults] 削除済フォルダ移動完了: ' + movedCount + ' 件');
+  } catch (e) {
+    Logger.log('[clearAllResults] 削除済フォルダ移動失敗（無視）: ' + e.message);
+  }
 }
 
 /**
