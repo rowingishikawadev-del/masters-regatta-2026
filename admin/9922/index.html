@@ -1196,7 +1196,7 @@ loadAll();
 setInterval(loadAll, 120000); // 2分ごと自動再取得
 
 function clearBrowserCache() {
-  const keys = Object.keys(localStorage).filter(k => k.startsWith('rr_result_') || k.startsWith('rr_master'));
+  const keys = Object.keys(localStorage).filter(k => k.startsWith('regatta_result_v2_') || k === 'regatta_master_v2');
   keys.forEach(k => localStorage.removeItem(k));
   document.getElementById('cache-clear-msg').style.display = 'inline';
   setTimeout(() => location.reload(), 1500);
