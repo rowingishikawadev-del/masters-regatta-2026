@@ -214,6 +214,12 @@ async function loadResults(cacheMode = 'no-cache') {
     await Promise.all(batch.map(async (no) => {
       try {
         const data = await fetchJSON(CONFIG.RESULT_JSON(no), 25000, cacheMode);
+        if (data.cleared) {
+          // tombstone: 結果クリア済み → キャッシュから除去
+          delete resultsCache[no];
+          try { localStorage.removeItem(LS_RESULT_PREFIX + no); } catch(_) {}
+          return;
+        }
         if (!resultsCache[no]) newlyUpdated.push(no);
         resultsCache[no] = data;
         // 成功したらキャッシュ保存

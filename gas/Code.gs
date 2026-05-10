@@ -1425,30 +1425,18 @@ function clearAllResults() {
     return;
   }
 
-  Logger.log('[clearAllResults] 削除対象: ' + raceFiles.length + ' 件');
+  Logger.log('[clearAllResults] 上書き対象: ' + raceFiles.length + ' 件');
   raceFiles.forEach(function(f) {
-    const delUrl = apiBase + '/repos/' + owner + '/' + repo + '/contents/' + f.path;
-    const payload = JSON.stringify({
-      message: 'Delete ' + f.name + ' [manual reset]',
-      sha: f.sha,
-      branch: branch,
-    });
-    const delRes = UrlFetchApp.fetch(delUrl, {
-      method: 'DELETE',
-      headers: {
-        Authorization: 'token ' + token,
-        Accept: 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json',
-      },
-      payload: payload,
-      muteHttpExceptions: true,
-    });
-    if (delRes.getResponseCode() === 200) {
-      Logger.log('[clearAllResults] 削除OK: ' + f.name);
-    } else {
-      Logger.log('[clearAllResults] 削除失敗: ' + f.name + ' HTTP ' + delRes.getResponseCode());
+    // DELETEではなく tombstone JSON で上書き → Cloudflare CDNキャッシュが更新される
+    const raceNo = parseInt(f.name.replace('race_', '').replace('.json', ''), 10);
+    const tombstone = JSON.stringify({ race_no: raceNo, cleared: true, results: [] });
+    try {
+      pushToGitHub(f.path, tombstone);
+      Logger.log('[clearAllResults] 上書きOK: ' + f.name);
+    } catch (e) {
+      Logger.log('[clearAllResults] 上書き失敗: ' + f.name + ' ' + e.message);
     }
-    Utilities.sleep(500); // GitHub API レート制限対策
+    Utilities.sleep(300);
   });
 
   Logger.log('[clearAllResults] 完了');
