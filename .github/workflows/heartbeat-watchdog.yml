@@ -1,0 +1,157 @@
+name: GAS heartbeat watchdog
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Issue/comment creationをスキップする'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      force_elapsed_minutes:
+        description: '検証用: 経過分を上書きする (空なら実測)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TZ: Asia/Tokyo
+    steps:
+      - name: Checkout main history
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Check heartbeat and notify
+        env:
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}
+          FORCE_ELAPSED_MINUTES: ${{ github.event_name == 'workflow_dispatch' && inputs.force_elapsed_minutes || '' }}
+        run: |
+          set -euo pipefail
+
+          LABEL="heartbeat-alert"
+          MESSAGE_PATTERN="heartbeat: update last_trigger_at"
+          EVENT_NAME="${{ github.event_name }}"
+
+          now_ts=$(date +%s)
+          now_jst=$(TZ=Asia/Tokyo date '+%Y/%m/%d %H:%M:%S JST')
+          period_start_ts=$(TZ=Asia/Tokyo date -d '2026-05-22 12:00:00' +%s)
+          period_end_ts=$(TZ=Asia/Tokyo date -d '2026-05-25 00:00:00' +%s)
+
+          if [ "$now_ts" -ge "$period_start_ts" ] && [ "$now_ts" -lt "$period_end_ts" ]; then
+            threshold_minutes=15
+            period_label="大会期間"
+          else
+            threshold_minutes=30
+            period_label="通常期間"
+          fi
+
+          last_ts=$(git log origin/main --grep="$MESSAGE_PATTERN" -1 --format=%at || true)
+          if [ -n "$last_ts" ]; then
+            last_jst=$(TZ=Asia/Tokyo date -d "@$last_ts" '+%Y/%m/%d %H:%M:%S JST')
+            elapsed_minutes=$(( (now_ts - last_ts) / 60 ))
+            elapsed_label="${elapsed_minutes}分前"
+          else
+            last_jst="未検出"
+            elapsed_minutes=999999
+            elapsed_label="${elapsed_minutes}分前"
+          fi
+
+          if [ -n "${FORCE_ELAPSED_MINUTES:-}" ]; then
+            elapsed_minutes="$FORCE_ELAPSED_MINUTES"
+            elapsed_label="${elapsed_minutes}分前"
+          fi
+
+          echo "event=${EVENT_NAME}"
+          echo "now_jst=${now_jst}"
+          echo "period=${period_label}"
+          echo "threshold_minutes=${threshold_minutes}"
+          echo "last_heartbeat_jst=${last_jst}"
+          echo "elapsed_minutes=${elapsed_minutes}"
+          echo "dry_run=${DRY_RUN}"
+
+          if [ "$elapsed_minutes" -le "$threshold_minutes" ]; then
+            echo "status=OK: heartbeat is within threshold"
+            exit 0
+          fi
+
+          title="⚠️ GAS heartbeat 途絶検知 (${elapsed_label})"
+          body=$(cat <<EOF
+          ## GAS heartbeat 途絶検知
+
+          | 項目 | 値 |
+          |---|---|
+          | 検知日時 | ${now_jst} |
+          | 判定期間 | ${period_label} |
+          | 閾値 | ${threshold_minutes}分 |
+          | 経過時間 | ${elapsed_label} |
+          | 直近heartbeat時刻 | ${last_jst} |
+          | 対象コミット | ${MESSAGE_PATTERN} |
+
+          ## 調査ガイド
+
+          1. GASエディタでトリガー実行履歴とエラーを確認してください。
+          2. GitHub PATの有効期限、repo権限、Actions実行対象リポジトリへの書き込み権限を確認してください。
+          3. Drive権限と対象スプレッドシート/ファイルへのアクセス権を確認してください。
+          4. GASからGitHub APIへ疎通できているか、直近のレスポンスコードを確認してください。
+          EOF
+          )
+
+          comment=$(cat <<EOF
+          ## 追加検知
+
+          | 項目 | 値 |
+          |---|---|
+          | 検知日時 | ${now_jst} |
+          | 判定期間 | ${period_label} |
+          | 閾値 | ${threshold_minutes}分 |
+          | 経過時間 | ${elapsed_label} |
+          | 直近heartbeat時刻 | ${last_jst} |
+
+          同種Open Issueが既に存在するため、spam防止としてコメントのみ追加しました。
+          EOF
+          )
+
+          echo "status=ALERT: heartbeat exceeded threshold"
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "dry_run=true: skip issue/comment creation"
+            echo "issue_title=${title}"
+            exit 0
+          fi
+
+          gh label create "$LABEL" \
+            --description "GAS heartbeat watchdog alert" \
+            --color "EA580C" \
+            --force
+
+          existing_issue=$(gh issue list \
+            --state open \
+            --label "$LABEL" \
+            --limit 1 \
+            --json number \
+            --jq '.[0].number // empty')
+
+          if [ -n "$existing_issue" ]; then
+            gh issue comment "$existing_issue" --body "$comment"
+            echo "commented_issue=${existing_issue}"
+          else
+            gh issue create \
+              --title "$title" \
+              --body "$body" \
+              --label "$LABEL"
+            echo "created_issue=true"
+          fi
