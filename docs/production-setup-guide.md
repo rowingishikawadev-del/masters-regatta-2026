@@ -166,13 +166,13 @@ git push origin main
 ### 4-1 master.json の確認
 - **ファイル:** `data/master.json`
 - **内容確認項目：**
-  - ✅ `schedule[]` に全124レースのデータが含まれているか
+  - ✅ `schedule[]` に全123レースのデータが含まれているか
   - ✅ 各レースに `race_num`, `date`, `scheduled_time`, `event_name`, `entries[]` が含まれているか
   - ✅ entries に `lane`, `affiliation`, `category` が含まれているか
 
 ### 4-2 schedule.csv の確認
 - **ファイル:** `sample_csv/schedule.csv`
-- **内容：** race_num, date, scheduled_time, event_name（124レース分）
+- **内容：** race_num, date, scheduled_time, event_name（123レース分）
 - **用途：** Google Drive へアップロード（参考用）
 
 ### 4-3 entries.csv の確認
@@ -262,7 +262,7 @@ https://masters-regatta-2026-3ha.pages.dev
 
 ### 8-2 確認項目
 - ✅ サイトが表示される
-- ✅ スケジュール表示（124レース）
+- ✅ スケジュール表示（123レース）
 - ✅ 時刻・種目名が正しく表示
 - ✅ ラウンド列がない（今回は採用しない）
 - ✅ Race No. が 1～124 で表示
