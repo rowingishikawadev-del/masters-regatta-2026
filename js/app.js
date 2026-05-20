@@ -478,11 +478,8 @@ function renderEntryTable(race) {
   if (entries.length === 0) {
     return '<p class="no-result">エントリー情報なし</p>';
   }
-  const isMultiCategory = false;
   const rows = entries.map(e => {
-    const catCell = isMultiCategory
-      ? `<td class="hide-mobile cat-col"><span class="entry-category">${h(e.category) || '-'}</span></td>`
-      : '';
+    const catCell = `<td class="cat-col"><span class="entry-category">${h(e.category) || '-'}</span></td>`;
     return `<tr>
       <td></td>
       <td>${e.lane}</td>
@@ -491,8 +488,7 @@ function renderEntryTable(race) {
       ${catCell}
     </tr>`;
   }).join('');
-  const categoryHeader = isMultiCategory
-    ? `<th class="hide-mobile cat-col" style="width:60px">区分</th>` : '';
+  const categoryHeader = `<th class="cat-col" style="width:48px">区分</th>`;
   return `
     <div class="result-table-wrapper">
     <table class="result-table">
@@ -609,14 +605,11 @@ function renderResultTable(race, result) {
       timesDisplay = `<span class="time-main">${r.finish ? r.finish.formatted : '-'}</span>${sub500}`;
     }
 
-    // カテゴリー列（複数カテゴリー合同レースのみ表示）
-    let categoryCell = '';
-    if (showCategoryCol) {
-      const cat = entry.category || '';
-      const catRank = rankInCategoryMap[r.lane];
-      const catRankStr = (!isDns && !isDnf && catRank) ? `<span class="cat-rank">${catRank}位</span>` : '';
-      categoryCell = `<td class="hide-mobile cat-col"><span class="entry-category">${cat || '-'}</span>${catRankStr}</td>`;
-    }
+    // カテゴリー列（全レース常時表示・アルファベット1文字）
+    const cat = entry.category || '';
+    const catRank = showCategoryCol ? rankInCategoryMap[r.lane] : null;
+    const catRankStr = (showCategoryCol && !isDns && !isDnf && catRank) ? `<span class="cat-rank">${catRank}位</span>` : '';
+    const categoryCell = `<td class="cat-col"><span class="entry-category">${cat || '-'}</span>${catRankStr}</td>`;
 
     // エントリー個別のage_groupがある場合（後方互換）はクルー名横に表示
     const entryAgeLabel = (!showCategoryCol && entry.age_group)
@@ -642,9 +635,7 @@ function renderResultTable(race, result) {
   const timeHeader = showMidpoint
     ? `<th class="col-times" style="width:110px">${raceCourseLength}m / 500m</th>`
     : `<th class="col-times" style="width:90px">${raceCourseLength}m</th>`;
-  const categoryHeader = showCategoryCol
-    ? `<th class="hide-mobile cat-col" style="width:60px">区分</th>`
-    : '';
+  const categoryHeader = `<th class="cat-col" style="width:48px">区分</th>`;
 
   return `
     <div class="result-table-wrapper">
@@ -945,12 +936,12 @@ function renderTableView() {
           timesCell = `<span class="time-main">${r.finish ? r.finish.formatted : '-'}</span>${sub500}`;
         }
         const entryAgeLabel = (!isMultiCat && entry.age_group) ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
-        const catCell = isMultiCat ? (() => {
+        const catCell = (() => {
           const cat = entry.category || '';
-          const cr = catRankMap[r.lane];
-          const crStr = (!isDns && !isDnf && cr) ? `<span class="cat-rank">${cr}位</span>` : '';
-          return `<td class="hide-mobile cat-col"><span class="entry-category">${cat ? '+' + cat : '-'}</span>${crStr}</td>`;
-        })() : '';
+          const cr = isMultiCat ? catRankMap[r.lane] : null;
+          const crStr = (isMultiCat && !isDns && !isDnf && cr) ? `<span class="cat-rank">${cr}位</span>` : '';
+          return `<td class="cat-col"><span class="entry-category">${cat || '-'}</span>${crStr}</td>`;
+        })();
         const affiliationSub = entry.affiliation
           ? `<div class="crew-affiliation-sub">${h(entry.affiliation)}</div>` : '';
         const noteInline = (!isDns && (r.photo_flag || r.note))
@@ -966,13 +957,12 @@ function renderTableView() {
         </tr>`;
       }).join('');
     } else {
-      const isMultiCat = false;
       tableBody = (race.entries || []).map(e => `
         <tr class="row-retired">
           <td>-</td><td>${e.lane}</td>
           <td>${h(e.affiliation)}</td>
           <td class="crew-name">${h(e.crew_name)}</td>
-          ${isMultiCat ? `<td class="hide-mobile cat-col"><span class="entry-category">${e.category ? '+' + e.category : '-'}</span></td>` : ''}
+          <td class="cat-col"><span class="entry-category">${e.category || '-'}</span></td>
           ${showMid ? `<td class="hide-mobile">-</td>` : ''}
           <td>-</td><td></td>
         </tr>`).join('');
@@ -997,6 +987,7 @@ function renderTableView() {
               <th style="width:44px">着順</th>
               <th class="col-lane" style="width:28px">B</th>
               <th class="hide-mobile" style="min-width:90px">所属</th><th style="min-width:110px">クルー</th>
+              <th class="cat-col" style="width:48px">区分</th>
               ${timeHeader}
               <th class="hide-mobile" style="width:50px">備考</th>
             </tr></thead>
