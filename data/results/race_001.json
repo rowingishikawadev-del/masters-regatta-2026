@@ -1,71 +1,71 @@
 {
   "race_no": 1,
-  "updated_at": "2026-05-20T08:45:10.999Z",
+  "updated_at": "2026-05-21T17:40:12.065Z",
   "results": [
     {
-      "lane": 4,
+      "lane": 6,
       "rank": 1,
       "times": {
         "500m": {
-          "time_ms": 98200,
-          "formatted": "1:38.20"
+          "time_ms": 130230,
+          "formatted": "2:10.23"
         },
         "1000m": {
-          "time_ms": 204500,
-          "formatted": "3:24.50"
+          "time_ms": 250340,
+          "formatted": "4:10.34"
         }
       },
       "finish": {
-        "time_ms": 204500,
-        "formatted": "3:24.50"
+        "time_ms": 250340,
+        "formatted": "4:10.34"
       },
-      "split": "(1:46.30)",
+      "split": "(2:00.11)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
       "status": "finish"
     },
     {
-      "lane": 2,
+      "lane": 3,
       "rank": 2,
       "times": {
         "500m": {
-          "time_ms": 102500,
-          "formatted": "1:42.50"
+          "time_ms": 130130,
+          "formatted": "2:10.13"
         },
         "1000m": {
-          "time_ms": 211200,
-          "formatted": "3:31.20"
+          "time_ms": 260450,
+          "formatted": "4:20.45"
         }
       },
       "finish": {
-        "time_ms": 211200,
-        "formatted": "3:31.20"
+        "time_ms": 260450,
+        "formatted": "4:20.45"
       },
-      "split": "(1:48.70)",
+      "split": "(2:10.32)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
       "status": "finish"
     },
     {
-      "lane": 5,
+      "lane": 4,
       "rank": 3,
       "times": {
         "500m": {
-          "time_ms": 104000,
-          "formatted": "1:44.00"
+          "time_ms": 130430,
+          "formatted": "2:10.43"
         },
         "1000m": {
-          "time_ms": 214800,
-          "formatted": "3:34.80"
+          "time_ms": 260620,
+          "formatted": "4:20.62"
         }
       },
       "finish": {
-        "time_ms": 214800,
-        "formatted": "3:34.80"
+        "time_ms": 260620,
+        "formatted": "4:20.62"
       },
-      "split": "(1:50.80)",
+      "split": "(2:10.19)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -76,65 +76,65 @@
       "rank": 4,
       "times": {
         "500m": {
-          "time_ms": 105300,
-          "formatted": "1:45.30"
+          "time_ms": 121110,
+          "formatted": "2:01.11"
         },
         "1000m": {
-          "time_ms": 218100,
-          "formatted": "3:38.10"
+          "time_ms": 261230,
+          "formatted": "4:21.23"
         }
       },
       "finish": {
-        "time_ms": 218100,
-        "formatted": "3:38.10"
+        "time_ms": 261230,
+        "formatted": "4:21.23"
       },
-      "split": "(1:52.80)",
+      "split": "(2:20.12)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
       "status": "finish"
     },
     {
-      "lane": 3,
+      "lane": 2,
       "rank": 5,
       "times": {
         "500m": {
-          "time_ms": 107100,
-          "formatted": "1:47.10"
+          "time_ms": 123230,
+          "formatted": "2:03.23"
         },
         "1000m": {
-          "time_ms": 222600,
-          "formatted": "3:42.60"
+          "time_ms": 263130,
+          "formatted": "4:23.13"
         }
       },
       "finish": {
-        "time_ms": 222600,
-        "formatted": "3:42.60"
+        "time_ms": 263130,
+        "formatted": "4:23.13"
       },
-      "split": "(1:55.50)",
+      "split": "(2:19.90)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
       "status": "finish"
     },
     {
-      "lane": 6,
+      "lane": 5,
       "rank": 6,
       "times": {
         "500m": {
-          "time_ms": 111800,
-          "formatted": "1:51.80"
+          "time_ms": 122320,
+          "formatted": "2:02.32"
         },
         "1000m": {
-          "time_ms": 228300,
-          "formatted": "3:48.30"
+          "time_ms": 268450,
+          "formatted": "4:28.45"
         }
       },
       "finish": {
-        "time_ms": 228300,
-        "formatted": "3:48.30"
+        "time_ms": 268450,
+        "formatted": "4:28.45"
       },
-      "split": "(1:56.50)",
+      "split": "(2:26.13)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
