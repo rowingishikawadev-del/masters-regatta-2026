@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-05-22T15:14:10.152Z",
-  "updated_at": "2026-05-22T15:14:10.152Z",
+  "generated_at": "2026-05-22T15:44:24.551Z",
+  "updated_at": "2026-05-22T15:44:24.551Z",
   "measurement_points": [
     "500m",
     "1000m"
@@ -13,8 +13,7 @@
     ],
     "venue": "",
     "course_length": 1000,
-    "youtube_url": "",
-    "last_cleared_at": "2026-05-22T15:18:05.451Z"
+    "youtube_url": ""
   },
   "age_categories": [
     {
@@ -108,7 +107,7 @@
       "event_code": "W4X+",
       "event_name": "女子舵手付きクォドルプル",
       "category": "W",
-      "age_group": "DEF",
+      "age_group": "D・E・F",
       "categories": [
         "D",
         "E",
@@ -126,25 +125,25 @@
         },
         {
           "lane": 2,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ Ｗ４Ｘ＋ Ｄ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C W4X+ D",
+          "affiliation": "E.R.C.C",
           "category": "D"
         },
         {
           "lane": 3,
           "crew_name": "宮ヶ瀬",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "E"
         },
         {
           "lane": 4,
-          "crew_name": "ＲＣ神戸 なでしこＯｈバーン",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸 なでしこOhバーン",
+          "affiliation": "RC神戸",
           "category": "F"
         },
         {
           "lane": 5,
-          "crew_name": "浜寺マスターズアマゾネスＢ",
+          "crew_name": "浜寺マスターズアマゾネスB",
           "affiliation": "浜寺マスターズクラブ",
           "category": "F"
         },
@@ -171,20 +170,20 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "浜寺マスターズクラブ６６",
+          "crew_name": "浜寺マスターズクラブ66",
           "affiliation": "浜寺マスターズクラブ",
           "category": "G"
         },
         {
           "lane": 3,
-          "crew_name": "三菱 Ｇ４＋",
+          "crew_name": "三菱 G4+",
           "affiliation": "三菱ボートクラブシニア",
           "category": "G"
         },
         {
           "lane": 4,
           "crew_name": "宮ヶ瀬 やまびこ",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "G"
         },
         {
@@ -210,7 +209,7 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "浜寺マスターズクラブ５６",
+          "crew_name": "浜寺マスターズクラブ56",
           "affiliation": "浜寺マスターズクラブ",
           "category": "E"
         },
@@ -228,7 +227,7 @@
         },
         {
           "lane": 5,
-          "crew_name": "ＴＭＲＣ はやて",
+          "crew_name": "TMRC はやて",
           "affiliation": "鶴見川マスターズローイングクラブ",
           "category": "E"
         }
@@ -294,8 +293,8 @@
         },
         {
           "lane": 2,
-          "crew_name": "川村(鵬ＲＣ)",
-          "affiliation": "鵬ＲＣ",
+          "crew_name": "川村(鵬RC)",
+          "affiliation": "鵬RC",
           "category": "G"
         },
         {
@@ -329,7 +328,7 @@
       "event_code": "M4X+",
       "event_name": "男子舵手付きクォドルプル",
       "category": "M",
-      "age_group": "JK",
+      "age_group": "J・K",
       "categories": [
         "J",
         "K"
@@ -340,7 +339,7 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "ＴＭＲＣ ひろせ",
+          "crew_name": "TMRC ひろせ",
           "affiliation": "鶴見川マスターズローイングクラブ",
           "category": "J"
         },
@@ -385,8 +384,8 @@
         },
         {
           "lane": 2,
-          "crew_name": "ソウル(ＷＫマスターズ)",
-          "affiliation": "ＷＫマスターズ",
+          "crew_name": "ソウル(WKマスターズ)",
+          "affiliation": "WKマスターズ",
           "category": "H"
         },
         {
@@ -459,7 +458,7 @@
       "event_code": "M4X+",
       "event_name": "男子舵手付きクォドルプル",
       "category": "M",
-      "age_group": "AB",
+      "age_group": "A・B",
       "categories": [
         "A",
         "B"
@@ -488,14 +487,14 @@
         },
         {
           "lane": 4,
-          "crew_name": "ドラちゃんズ２０２６",
+          "crew_name": "ドラちゃんズ2026",
           "affiliation": "横浜漕艇倶楽部埼玉",
           "category": "B"
         },
         {
           "lane": 5,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ Ｍ４Ｘ＋ Ｂ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C M4X+ B",
+          "affiliation": "E.R.C.C",
           "category": "B"
         }
       ]
@@ -505,7 +504,7 @@
       "event_code": "W1X",
       "event_name": "女子シングルスカル",
       "category": "W",
-      "age_group": "FGH",
+      "age_group": "F・G・H",
       "categories": [
         "F",
         "G",
@@ -614,13 +613,13 @@
         {
           "lane": 3,
           "crew_name": "ボート団塊号 玄武",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "F"
         },
         {
           "lane": 4,
-          "crew_name": "ＰＥＮＴＡ ＷＩＴＨ ＹＯＵ",
-          "affiliation": "ＷＩＴＨ ＹＯＵ",
+          "crew_name": "PENTA WITH YOU",
+          "affiliation": "WITH YOU",
           "category": "F"
         },
         {
@@ -646,7 +645,7 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "瀬田漕艇クラブＷＵ",
+          "crew_name": "瀬田漕艇クラブWU",
           "affiliation": "瀬田漕艇クラブ",
           "category": "E"
         },
@@ -669,7 +668,7 @@
       "event_code": "M8+",
       "event_name": "男子エイト",
       "category": "M",
-      "age_group": "JKL",
+      "age_group": "J・K・L",
       "categories": [
         "J",
         "K",
@@ -681,7 +680,7 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "一橋四神会Ｊ",
+          "crew_name": "一橋四神会J",
           "affiliation": "四神会",
           "category": "J"
         },
@@ -693,7 +692,7 @@
         },
         {
           "lane": 3,
-          "crew_name": "浜寺マスターズクラブ８１",
+          "crew_name": "浜寺マスターズクラブ81",
           "affiliation": "浜寺マスターズクラブ",
           "category": "J"
         },
@@ -705,13 +704,13 @@
         },
         {
           "lane": 5,
-          "crew_name": "ＷＫマスターズ ＫＩＮＧ",
-          "affiliation": "ＷＫマスターズ",
+          "crew_name": "WKマスターズ KING",
+          "affiliation": "WKマスターズ",
           "category": "K"
         },
         {
           "lane": 6,
-          "crew_name": "四神会三菱Ｌ",
+          "crew_name": "四神会三菱L",
           "affiliation": "四神会",
           "category": "L"
         }
@@ -722,7 +721,7 @@
       "event_code": "W8+",
       "event_name": "女子エイト",
       "category": "W",
-      "age_group": "EFG",
+      "age_group": "E・F・G",
       "categories": [
         "E",
         "F",
@@ -734,14 +733,14 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "多摩川ＲＣ（Ｅ）",
+          "crew_name": "多摩川RC(E)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "E"
         },
         {
           "lane": 2,
-          "crew_name": "ＲＣ神戸 なでしこＯｈバーン",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸 なでしこOhバーン",
+          "affiliation": "RC神戸",
           "category": "E"
         },
         {
@@ -752,13 +751,13 @@
         },
         {
           "lane": 4,
-          "crew_name": "ＴＭＲＣ つるみっこ",
+          "crew_name": "TMRC つるみっこ",
           "affiliation": "鶴見川マスターズローイングクラブ",
           "category": "F"
         },
         {
           "lane": 5,
-          "crew_name": "三菱 ＷＧ８＋",
+          "crew_name": "三菱 WG8+",
           "affiliation": "三菱ボートクラブシニア",
           "category": "G"
         }
@@ -779,32 +778,32 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "ペンタＢ＆Ｗ",
-          "affiliation": "ＰＥＮＴＡ ＲＯＷＩＮＧ ＣＬＵＢ（Ｊｒ．）",
+          "crew_name": "ペンタB&W",
+          "affiliation": "PENTA ROWING CLUB(Jr.)",
           "category": "I"
         },
         {
           "lane": 2,
-          "crew_name": "浜寺マスターズクラブ７８",
+          "crew_name": "浜寺マスターズクラブ78",
           "affiliation": "浜寺マスターズクラブ",
           "category": "I"
         },
         {
           "lane": 3,
           "crew_name": "ボート団塊号 澄川",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "I"
         },
         {
           "lane": 4,
           "crew_name": "名古屋大学艇友会",
-          "affiliation": "名古屋大学艇友会ＤＥ",
+          "affiliation": "名古屋大学艇友会DE",
           "category": "I"
         },
         {
           "lane": 5,
           "crew_name": "ボート団塊号 緋青",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "I"
         }
       ]
@@ -831,19 +830,19 @@
         {
           "lane": 3,
           "crew_name": "佐鳴漕友会",
-          "affiliation": "佐鳴漕友会（静岡大学）",
+          "affiliation": "佐鳴漕友会(静岡大学)",
           "category": "G"
         },
         {
           "lane": 4,
-          "crew_name": "パルテＧ",
+          "crew_name": "パルテG",
           "affiliation": "パルテ会",
           "category": "G"
         },
         {
           "lane": 5,
           "crew_name": "ボート団塊号 白河",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "G"
         }
       ]
@@ -863,7 +862,7 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "ボ～っとクラブ",
+          "crew_name": "ボ~っとクラブ",
           "affiliation": "日本製鉄株式会社八幡ボート部",
           "category": "D"
         },
@@ -943,7 +942,7 @@
       "event_code": "W8+",
       "event_name": "女子エイト",
       "category": "W",
-      "age_group": "BC",
+      "age_group": "B・C",
       "categories": [
         "B",
         "C"
@@ -972,7 +971,7 @@
         },
         {
           "lane": 5,
-          "crew_name": "パルテＣ",
+          "crew_name": "パルテC",
           "affiliation": "パルテ会",
           "category": "C"
         }
@@ -993,14 +992,14 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "パルテＧ",
+          "crew_name": "パルテG",
           "affiliation": "パルテ会",
           "category": "G"
         },
         {
           "lane": 3,
-          "crew_name": "秀司と浩巳２０２６",
-          "affiliation": "鵬ＲＣ",
+          "crew_name": "秀司と浩巳2026",
+          "affiliation": "鵬RC",
           "category": "G"
         },
         {
@@ -1012,7 +1011,7 @@
         {
           "lane": 5,
           "crew_name": "深井・山本ペア",
-          "affiliation": "ＰＥＮＴＡ ＲＯＷＩＮＧ ＣＬＵＢ（Ｊｒ．）",
+          "affiliation": "PENTA ROWING CLUB(Jr.)",
           "category": "G"
         }
       ]
@@ -1077,8 +1076,8 @@
       "entries": [
         {
           "lane": 3,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ Ｗ２Ｘ Ｄ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C W2X D",
+          "affiliation": "E.R.C.C",
           "category": "D"
         },
         {
@@ -1116,8 +1115,8 @@
         },
         {
           "lane": 4,
-          "crew_name": "奥村(加賀梨ＲＣ)",
-          "affiliation": "加賀梨ＲＣ",
+          "crew_name": "奥村(加賀梨RC)",
+          "affiliation": "加賀梨RC",
           "category": "F"
         },
         {
@@ -1144,7 +1143,7 @@
         {
           "lane": 2,
           "crew_name": "ボート団塊号 大心",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "E"
         },
         {
@@ -1177,13 +1176,13 @@
         {
           "lane": 2,
           "crew_name": "宮ヶ瀬 早戸",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "H"
         },
         {
           "lane": 3,
           "crew_name": "ボート団塊号 高杉",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "H"
         },
         {
@@ -1215,7 +1214,7 @@
         },
         {
           "lane": 3,
-          "crew_name": "名島１",
+          "crew_name": "名島1",
           "affiliation": "関東名島会",
           "category": "G"
         },
@@ -1238,7 +1237,7 @@
       "event_code": "M4X+",
       "event_name": "男子舵手付きクォドルプル",
       "category": "M",
-      "age_group": "CDE",
+      "age_group": "C・D・E",
       "categories": [
         "C",
         "D",
@@ -1268,13 +1267,13 @@
         },
         {
           "lane": 4,
-          "crew_name": "パルテＥ",
+          "crew_name": "パルテE",
           "affiliation": "パルテ会",
           "category": "E"
         },
         {
           "lane": 5,
-          "crew_name": "ＲＣＦ クオド",
+          "crew_name": "RCF クオド",
           "affiliation": "レガッタクラブフレンドシップ",
           "category": "E"
         }
@@ -1285,7 +1284,7 @@
       "event_code": "M2X",
       "event_name": "男子ダブルスカル",
       "category": "M",
-      "age_group": "JKLM",
+      "age_group": "J・K・L・M",
       "categories": [
         "J",
         "K",
@@ -1304,7 +1303,7 @@
         },
         {
           "lane": 2,
-          "crew_name": "多摩川ＲＣ（岡井・柴原）",
+          "crew_name": "多摩川RC(岡井・柴原)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "J"
         },
@@ -1339,7 +1338,7 @@
       "event_code": "M8+",
       "event_name": "男子エイト",
       "category": "M",
-      "age_group": "AB",
+      "age_group": "A・B",
       "categories": [
         "A",
         "B"
@@ -1378,7 +1377,7 @@
         {
           "lane": 2,
           "crew_name": "ペンタフォア",
-          "affiliation": "ＰＥＮＴＡ ＲＯＷＩＮＧ ＣＬＵＢ（Ｊｒ．）",
+          "affiliation": "PENTA ROWING CLUB(Jr.)",
           "category": "F"
         },
         {
@@ -1389,8 +1388,8 @@
         },
         {
           "lane": 4,
-          "crew_name": "ＷＩＴＨ ＹＯＵ 海鷹",
-          "affiliation": "ＷＩＴＨ ＹＯＵ",
+          "crew_name": "WITH YOU 海鷹",
+          "affiliation": "WITH YOU",
           "category": "F"
         },
         {
@@ -1406,7 +1405,7 @@
       "event_code": "W4X+",
       "event_name": "女子舵手付きクォドルプル",
       "category": "W",
-      "age_group": "ABC",
+      "age_group": "A・B・C",
       "categories": [
         "A",
         "B",
@@ -1424,19 +1423,19 @@
         },
         {
           "lane": 2,
-          "crew_name": "パルテＢ",
+          "crew_name": "パルテB",
           "affiliation": "パルテ会",
           "category": "B"
         },
         {
           "lane": 3,
-          "crew_name": "ばらとＤＲＣマスターズ",
-          "affiliation": "ばらとＤＲＣマスターズ",
+          "crew_name": "ばらとDRCマスターズ",
+          "affiliation": "ばらとDRCマスターズ",
           "category": "B"
         },
         {
           "lane": 4,
-          "crew_name": "多摩川ＲＣ（Ｃ）",
+          "crew_name": "多摩川RC(C)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "C"
         },
@@ -1448,7 +1447,7 @@
         },
         {
           "lane": 6,
-          "crew_name": "浜寺マスターズアマゾネスＡ",
+          "crew_name": "浜寺マスターズアマゾネスA",
           "affiliation": "浜寺マスターズクラブ",
           "category": "C"
         }
@@ -1459,8 +1458,11 @@
       "event_code": "M1X",
       "event_name": "男子シングルスカル",
       "category": "M",
-      "age_group": "パラ",
-      "categories": [],
+      "age_group": "A・Aパラ",
+      "categories": [
+        "A",
+        "A"
+      ],
       "round": "FA",
       "date": "2026/5/23",
       "time": "12:10",
@@ -1485,8 +1487,8 @@
         },
         {
           "lane": 4,
-          "crew_name": "萩原(ばらとＤＲＣマスターズ)",
-          "affiliation": "ばらとＤＲＣマスターズ",
+          "crew_name": "萩原(ばらとDRCマスターズ)",
+          "affiliation": "ばらとDRCマスターズ",
           "category": "A"
         },
         {
@@ -1497,8 +1499,8 @@
         },
         {
           "lane": 6,
-          "crew_name": "惣島(橙紺会６５９)",
-          "affiliation": "橙紺会６５９",
+          "crew_name": "惣島(橙紺会659)",
+          "affiliation": "橙紺会659",
           "category": "A"
         }
       ]
@@ -1530,13 +1532,13 @@
         },
         {
           "lane": 4,
-          "crew_name": "浜寺マスターズクラブ４７",
+          "crew_name": "浜寺マスターズクラブ47",
           "affiliation": "浜寺マスターズクラブ",
           "category": "C"
         },
         {
           "lane": 5,
-          "crew_name": "前川ＲＣ",
+          "crew_name": "前川RC",
           "affiliation": "前川ローイングクラブ",
           "category": "C"
         }
@@ -1557,7 +1559,7 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "パルテＧ",
+          "crew_name": "パルテG",
           "affiliation": "パルテ会",
           "category": "G"
         },
@@ -1569,14 +1571,14 @@
         },
         {
           "lane": 3,
-          "crew_name": "ＲＣ神戸",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸",
+          "affiliation": "RC神戸",
           "category": "G"
         },
         {
           "lane": 4,
-          "crew_name": "ＷＫマスターズ ＧＬＯＲＹ",
-          "affiliation": "ＷＫマスターズ",
+          "crew_name": "WKマスターズ GLORY",
+          "affiliation": "WKマスターズ",
           "category": "G"
         },
         {
@@ -1603,12 +1605,12 @@
         {
           "lane": 1,
           "crew_name": "ボート団塊号 朱雀",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "G"
         },
         {
           "lane": 2,
-          "crew_name": "三菱 Ｇ８＋",
+          "crew_name": "三菱 G8+",
           "affiliation": "三菱ボートクラブシニア",
           "category": "G"
         },
@@ -1620,8 +1622,8 @@
         },
         {
           "lane": 4,
-          "crew_name": "ばらとＤＲＣマスターズ",
-          "affiliation": "ばらとＤＲＣマスターズ",
+          "crew_name": "ばらとDRCマスターズ",
+          "affiliation": "ばらとDRCマスターズ",
           "category": "G"
         },
         {
@@ -1660,12 +1662,12 @@
         {
           "lane": 4,
           "crew_name": "ペンタエイト",
-          "affiliation": "ＰＥＮＴＡ ＲＯＷＩＮＧ ＣＬＵＢ（Ｊｒ．）",
+          "affiliation": "PENTA ROWING CLUB(Jr.)",
           "category": "G"
         },
         {
           "lane": 5,
-          "crew_name": "一橋四神会Ｇ",
+          "crew_name": "一橋四神会G",
           "affiliation": "四神会",
           "category": "G"
         }
@@ -1715,7 +1717,7 @@
       "event_code": "M1X",
       "event_name": "男子シングルスカル",
       "category": "M",
-      "age_group": "JKLN",
+      "age_group": "J・K・L・N",
       "categories": [
         "J",
         "K",
@@ -1734,8 +1736,8 @@
         },
         {
           "lane": 2,
-          "crew_name": "栄(ＷＫマスターズ)",
-          "affiliation": "ＷＫマスターズ",
+          "crew_name": "栄(WKマスターズ)",
+          "affiliation": "WKマスターズ",
           "category": "K"
         },
         {
@@ -1769,7 +1771,7 @@
       "event_code": "W4X+",
       "event_name": "女子舵手付きクォドルプル",
       "category": "W",
-      "age_group": "GH",
+      "age_group": "G・H",
       "categories": [
         "G",
         "H"
@@ -1780,7 +1782,7 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "三菱 ＷＧ４Ｘ＋",
+          "crew_name": "三菱 WG4X+",
           "affiliation": "三菱ボートクラブシニア",
           "category": "G"
         },
@@ -1792,7 +1794,7 @@
         },
         {
           "lane": 4,
-          "crew_name": "三菱 ＷＨ４Ｘ＋",
+          "crew_name": "三菱 WH4X+",
           "affiliation": "三菱ボートクラブシニア",
           "category": "H"
         }
@@ -1813,7 +1815,7 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "多摩川ＲＣ（Ｈ）",
+          "crew_name": "多摩川RC(H)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "H"
         },
@@ -1825,20 +1827,20 @@
         },
         {
           "lane": 3,
-          "crew_name": "一橋四神会Ｈ",
+          "crew_name": "一橋四神会H",
           "affiliation": "四神会",
           "category": "H"
         },
         {
           "lane": 4,
           "crew_name": "名古屋大学艇友会",
-          "affiliation": "名古屋大学艇友会ＤＥ",
+          "affiliation": "名古屋大学艇友会DE",
           "category": "H"
         },
         {
           "lane": 5,
           "crew_name": "宮ヶ瀬",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "H"
         }
       ]
@@ -1858,8 +1860,8 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "ＷＫマスターズ",
-          "affiliation": "ＷＫマスターズ",
+          "crew_name": "WKマスターズ",
+          "affiliation": "WKマスターズ",
           "category": "H"
         },
         {
@@ -1897,7 +1899,7 @@
         },
         {
           "lane": 3,
-          "crew_name": "医王会ローイングエイトＢ",
+          "crew_name": "医王会ローイングエイトB",
           "affiliation": "医王会ローイングクラブ",
           "category": "D"
         },
@@ -1914,7 +1916,7 @@
       "event_code": "W4+",
       "event_name": "女子舵手付きフォア",
       "category": "W",
-      "age_group": "AD",
+      "age_group": "A・D",
       "categories": [
         "A",
         "D"
@@ -1931,14 +1933,14 @@
         },
         {
           "lane": 3,
-          "crew_name": "多摩川ＲＣ（Ｄ）",
+          "crew_name": "多摩川RC(D)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "D"
         },
         {
           "lane": 4,
-          "crew_name": "ＲＣ神戸 国すぎて方！",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸 国すぎて方!",
+          "affiliation": "RC神戸",
           "category": "D"
         }
       ]
@@ -1964,19 +1966,19 @@
         },
         {
           "lane": 3,
-          "crew_name": "メンテックＲＣ",
-          "affiliation": "メンテックＲＣ",
+          "crew_name": "メンテックRC",
+          "affiliation": "メンテックRC",
           "category": "D"
         },
         {
           "lane": 4,
-          "crew_name": "蔵前漕艇クラブＨ７",
-          "affiliation": "蔵前漕艇クラブＨ７",
+          "crew_name": "蔵前漕艇クラブH7",
+          "affiliation": "蔵前漕艇クラブH7",
           "category": "D"
         },
         {
           "lane": 5,
-          "crew_name": "医王会ローイングエイトＡ",
+          "crew_name": "医王会ローイングエイトA",
           "affiliation": "医王会ローイングクラブ",
           "category": "D"
         }
@@ -1998,18 +2000,18 @@
         {
           "lane": 2,
           "crew_name": "日曜クラブ",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "F"
         },
         {
           "lane": 3,
-          "crew_name": "ＲＣ神戸",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸",
+          "affiliation": "RC神戸",
           "category": "F"
         },
         {
           "lane": 4,
-          "crew_name": "浜寺マスターズクラブ６３",
+          "crew_name": "浜寺マスターズクラブ63",
           "affiliation": "浜寺マスターズクラブ",
           "category": "F"
         },
@@ -2036,14 +2038,14 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "三菱 Ｆ４Ｘ＋",
+          "crew_name": "三菱 F4X+",
           "affiliation": "三菱ボートクラブシニア",
           "category": "F"
         },
         {
           "lane": 3,
-          "crew_name": "ばらとＤＲＣマスターズ",
-          "affiliation": "ばらとＤＲＣマスターズ",
+          "crew_name": "ばらとDRCマスターズ",
+          "affiliation": "ばらとDRCマスターズ",
           "category": "F"
         },
         {
@@ -2054,7 +2056,7 @@
         },
         {
           "lane": 5,
-          "crew_name": "パルテＦ",
+          "crew_name": "パルテF",
           "affiliation": "パルテ会",
           "category": "F"
         }
@@ -2126,8 +2128,8 @@
         },
         {
           "lane": 3,
-          "crew_name": "郡(香川ＲＣ)",
-          "affiliation": "香川ＲＣ",
+          "crew_name": "郡(香川RC)",
+          "affiliation": "香川RC",
           "category": "D"
         },
         {
@@ -2194,7 +2196,7 @@
       "event_code": "W2X",
       "event_name": "女子ダブルスカル",
       "category": "W",
-      "age_group": "ABC",
+      "age_group": "A・B・C",
       "categories": [
         "A",
         "B",
@@ -2212,14 +2214,14 @@
         },
         {
           "lane": 2,
-          "crew_name": "パルテＡ",
+          "crew_name": "パルテA",
           "affiliation": "パルテ会",
           "category": "A"
         },
         {
           "lane": 3,
-          "crew_name": "ばらとＤＲＣマスターズ刀根・大熊",
-          "affiliation": "ばらとＤＲＣマスターズ",
+          "crew_name": "ばらとDRCマスターズ刀根・大熊",
+          "affiliation": "ばらとDRCマスターズ",
           "category": "B"
         },
         {
@@ -2241,7 +2243,7 @@
       "event_code": "M4+",
       "event_name": "男子舵手付きフォア",
       "category": "M",
-      "age_group": "CF",
+      "age_group": "C・F",
       "categories": [
         "C",
         "F"
@@ -2258,7 +2260,7 @@
         },
         {
           "lane": 2,
-          "crew_name": "駿河伊豆ＲＣ",
+          "crew_name": "駿河伊豆RC",
           "affiliation": "駿河・伊豆ローイングクラブ",
           "category": "F"
         },
@@ -2303,8 +2305,8 @@
         },
         {
           "lane": 3,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ Ｍ８＋ Ｃ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C M8+ C",
+          "affiliation": "E.R.C.C",
           "category": "C"
         },
         {
@@ -2337,13 +2339,13 @@
         {
           "lane": 1,
           "crew_name": "ボート団塊号 青龍",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "I"
         },
         {
           "lane": 2,
           "crew_name": "ボート団塊号 春秋",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "I"
         },
         {
@@ -2354,14 +2356,14 @@
         },
         {
           "lane": 4,
-          "crew_name": "ＷＫマスターズ ＩＭＰＵＬＳＥ",
-          "affiliation": "ＷＫマスターズ",
+          "crew_name": "WKマスターズ IMPULSE",
+          "affiliation": "WKマスターズ",
           "category": "I"
         },
         {
           "lane": 5,
           "crew_name": "ボート団塊号 紫電改",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "I"
         }
       ]
@@ -2405,7 +2407,7 @@
         },
         {
           "lane": 5,
-          "crew_name": "パルテＨ",
+          "crew_name": "パルテH",
           "affiliation": "パルテ会",
           "category": "H"
         }
@@ -2426,25 +2428,25 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "三菱 Ｇ４Ｘ＋",
+          "crew_name": "三菱 G4X+",
           "affiliation": "三菱ボートクラブシニア",
           "category": "G"
         },
         {
           "lane": 2,
-          "crew_name": "浜寺マスターズクラブＷ",
+          "crew_name": "浜寺マスターズクラブW",
           "affiliation": "浜寺マスターズクラブ",
           "category": "G"
         },
         {
           "lane": 3,
-          "crew_name": "多摩川ＲＣ（Ｇ）",
+          "crew_name": "多摩川RC(G)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "G"
         },
         {
           "lane": 4,
-          "crew_name": "浜寺マスターズクラブ６５",
+          "crew_name": "浜寺マスターズクラブ65",
           "affiliation": "浜寺マスターズクラブ",
           "category": "G"
         },
@@ -2499,7 +2501,7 @@
         {
           "lane": 1,
           "crew_name": "ボート団塊号 宝剣",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "G"
         },
         {
@@ -2529,7 +2531,7 @@
         {
           "lane": 6,
           "crew_name": "宮ヶ瀬 大山",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "G"
         }
       ]
@@ -2549,8 +2551,8 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "坂本(Ｅ．Ｒ．Ｃ．Ｃ)",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "坂本(E.R.C.C)",
+          "affiliation": "E.R.C.C",
           "category": "D"
         },
         {
@@ -2572,7 +2574,7 @@
       "event_code": "W2X",
       "event_name": "女子ダブルスカル",
       "category": "W",
-      "age_group": "GHJ",
+      "age_group": "G・H・J",
       "categories": [
         "G",
         "H",
@@ -2584,31 +2586,31 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "瀬田漕艇クラブ ＭＫ",
+          "crew_name": "瀬田漕艇クラブ MK",
           "affiliation": "瀬田漕艇クラブ",
           "category": "G"
         },
         {
           "lane": 2,
-          "crew_name": "瀬田漕艇クラブ ＡｎＫｏ",
+          "crew_name": "瀬田漕艇クラブ AnKo",
           "affiliation": "瀬田漕艇クラブ",
           "category": "G"
         },
         {
           "lane": 3,
-          "crew_name": "瀬田漕艇クラブＫＮ",
+          "crew_name": "瀬田漕艇クラブKN",
           "affiliation": "瀬田漕艇クラブ",
           "category": "G"
         },
         {
           "lane": 4,
-          "crew_name": "瀬田漕艇クラブ ＮＫ",
+          "crew_name": "瀬田漕艇クラブ NK",
           "affiliation": "瀬田漕艇クラブ",
           "category": "H"
         },
         {
           "lane": 5,
-          "crew_name": "瀬田漕艇クラブ ＮＯ",
+          "crew_name": "瀬田漕艇クラブ NO",
           "affiliation": "瀬田漕艇クラブ",
           "category": "J"
         }
@@ -2619,7 +2621,7 @@
       "event_code": "M4+",
       "event_name": "男子舵手付きフォア",
       "category": "M",
-      "age_group": "AB",
+      "age_group": "A・B",
       "categories": [
         "A",
         "B"
@@ -2648,8 +2650,8 @@
         },
         {
           "lane": 4,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ Ｍ４＋ Ｂ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C M4+ B",
+          "affiliation": "E.R.C.C",
           "category": "B"
         },
         {
@@ -2675,20 +2677,20 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "稲垣(名古屋大学艇友会ＤＥ)",
-          "affiliation": "名古屋大学艇友会ＤＥ",
+          "crew_name": "稲垣(名古屋大学艇友会DE)",
+          "affiliation": "名古屋大学艇友会DE",
           "category": "I"
         },
         {
           "lane": 3,
-          "crew_name": "池田(ボート団塊号 （だんかいごう）)",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "crew_name": "池田(ボート団塊号 (だんかいごう))",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "I"
         },
         {
           "lane": 4,
-          "crew_name": "佐藤(ボート団塊号 （だんかいごう）)",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "crew_name": "佐藤(ボート団塊号 (だんかいごう))",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "I"
         },
         {
@@ -2721,24 +2723,24 @@
         {
           "lane": 2,
           "crew_name": "ボート団塊号 無限",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "I"
         },
         {
           "lane": 3,
-          "crew_name": "ＴＭＲＣ はくたか",
+          "crew_name": "TMRC はくたか",
           "affiliation": "鶴見川マスターズローイングクラブ",
           "category": "I"
         },
         {
           "lane": 4,
           "crew_name": "諏訪湖游漕会",
-          "affiliation": "ＳＵＷＡＫＯ 游漕会",
+          "affiliation": "SUWAKO 游漕会",
           "category": "I"
         },
         {
           "lane": 5,
-          "crew_name": "浜寺マスターズクラブ７９",
+          "crew_name": "浜寺マスターズクラブ79",
           "affiliation": "浜寺マスターズクラブ",
           "category": "I"
         }
@@ -2759,19 +2761,19 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "ＷＫマスターズ",
-          "affiliation": "ＷＫマスターズ",
+          "crew_name": "WKマスターズ",
+          "affiliation": "WKマスターズ",
           "category": "F"
         },
         {
           "lane": 3,
           "crew_name": "人見・下田ペア",
-          "affiliation": "ＰＥＮＴＡ ＲＯＷＩＮＧ ＣＬＵＢ（Ｊｒ．）",
+          "affiliation": "PENTA ROWING CLUB(Jr.)",
           "category": "F"
         },
         {
           "lane": 4,
-          "crew_name": "パルテＦ",
+          "crew_name": "パルテF",
           "affiliation": "パルテ会",
           "category": "F"
         },
@@ -2805,7 +2807,7 @@
         {
           "lane": 3,
           "crew_name": "佐鳴漕友会",
-          "affiliation": "佐鳴漕友会（静岡大学）",
+          "affiliation": "佐鳴漕友会(静岡大学)",
           "category": "F"
         },
         {
@@ -2816,8 +2818,8 @@
         },
         {
           "lane": 5,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ ＲＣ神戸混成 ２Ｘ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C RC神戸混成 2X",
+          "affiliation": "E.R.C.C",
           "category": "F"
         }
       ]
@@ -2866,7 +2868,7 @@
       "event_code": "M2X",
       "event_name": "男子ダブルスカル",
       "category": "M",
-      "age_group": "AB",
+      "age_group": "A・B",
       "categories": [
         "A",
         "B"
@@ -2895,8 +2897,8 @@
         },
         {
           "lane": 4,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ Ｍ２Ｘ Ｂ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C M2X B",
+          "affiliation": "E.R.C.C",
           "category": "B"
         },
         {
@@ -2912,7 +2914,7 @@
       "event_code": "W1X",
       "event_name": "女子シングルスカル",
       "category": "W",
-      "age_group": "ABCDE",
+      "age_group": "A・B・C・D・E",
       "categories": [
         "A",
         "B",
@@ -2977,13 +2979,13 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "ＲＣ神戸 （神戸のＪＩＩＪＩＩ）",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸 (神戸のJIIJII)",
+          "affiliation": "RC神戸",
           "category": "H"
         },
         {
           "lane": 2,
-          "crew_name": "浜寺マスターズクラブ７４",
+          "crew_name": "浜寺マスターズクラブ74",
           "affiliation": "浜寺マスターズクラブ",
           "category": "H"
         },
@@ -3012,7 +3014,7 @@
       "event_code": "W1X",
       "event_name": "女子シングルスカル",
       "category": "W",
-      "age_group": "IJK",
+      "age_group": "I・J・K",
       "categories": [
         "I",
         "J",
@@ -3063,19 +3065,19 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ Ｍ４＋ Ｄ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C M4+ D",
+          "affiliation": "E.R.C.C",
           "category": "D"
         },
         {
           "lane": 2,
-          "crew_name": "ＲＣＦ フォア",
+          "crew_name": "RCF フォア",
           "affiliation": "レガッタクラブフレンドシップ",
           "category": "D"
         },
         {
           "lane": 3,
-          "crew_name": "パルテＤ",
+          "crew_name": "パルテD",
           "affiliation": "パルテ会",
           "category": "D"
         },
@@ -3087,8 +3089,8 @@
         },
         {
           "lane": 5,
-          "crew_name": "香川大学ＯＢ",
-          "affiliation": "香川ＲＣ",
+          "crew_name": "香川大学OB",
+          "affiliation": "香川RC",
           "category": "D"
         }
       ]
@@ -3109,19 +3111,19 @@
         {
           "lane": 2,
           "crew_name": "カナニシ",
-          "affiliation": "ＰＥＮＴＡ ＲＯＷＩＮＧ ＣＬＵＢ（Ｊｒ．）",
+          "affiliation": "PENTA ROWING CLUB(Jr.)",
           "category": "F"
         },
         {
           "lane": 3,
-          "crew_name": "浜寺マスターズクラブ６０",
+          "crew_name": "浜寺マスターズクラブ60",
           "affiliation": "浜寺マスターズクラブ",
           "category": "F"
         },
         {
           "lane": 4,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ ＭＩＸ２Ｘ Ｆ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C MIX2X F",
+          "affiliation": "E.R.C.C",
           "category": "F"
         },
         {
@@ -3148,7 +3150,7 @@
         {
           "lane": 2,
           "crew_name": "深井・雨森ペア",
-          "affiliation": "ＰＥＮＴＡ ＲＯＷＩＮＧ ＣＬＵＢ（Ｊｒ．）",
+          "affiliation": "PENTA ROWING CLUB(Jr.)",
           "category": "F"
         },
         {
@@ -3170,7 +3172,7 @@
       "event_code": "X4X+",
       "event_name": "混成舵手付きクォドルプル",
       "category": "X",
-      "age_group": "AB",
+      "age_group": "A・B",
       "categories": [
         "A",
         "B"
@@ -3193,7 +3195,7 @@
         },
         {
           "lane": 4,
-          "crew_name": "多摩川ＲＣ（Ｂ）",
+          "crew_name": "多摩川RC(B)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "B"
         },
@@ -3220,7 +3222,7 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "浜寺マスターズクラブ４６",
+          "crew_name": "浜寺マスターズクラブ46",
           "affiliation": "浜寺マスターズクラブ",
           "category": "C"
         },
@@ -3233,7 +3235,7 @@
         {
           "lane": 4,
           "crew_name": "宮崎大学医学部漕艇部",
-          "affiliation": "宮崎大学医学部漕艇部ＯＢ会",
+          "affiliation": "宮崎大学医学部漕艇部OB会",
           "category": "C"
         },
         {
@@ -3259,7 +3261,7 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "キューティ唐津ＢＣ",
+          "crew_name": "キューティ唐津BC",
           "affiliation": "唐津ボートクラブ",
           "category": "D"
         },
@@ -3304,20 +3306,20 @@
         },
         {
           "lane": 3,
-          "crew_name": "瀬田漕艇クラブ ＫＭ",
+          "crew_name": "瀬田漕艇クラブ KM",
           "affiliation": "瀬田漕艇クラブ",
           "category": "G"
         },
         {
           "lane": 4,
-          "crew_name": "瀬田漕艇クラブ ＭＮ",
+          "crew_name": "瀬田漕艇クラブ MN",
           "affiliation": "瀬田漕艇クラブ",
           "category": "G"
         },
         {
           "lane": 5,
-          "crew_name": "ＲＣ神戸（神戸のＪＩＩＪＩＩ、ＢＡＡＢＡＡ）",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸(神戸のJIIJII、BAABAA)",
+          "affiliation": "RC神戸",
           "category": "G"
         }
       ]
@@ -3327,7 +3329,7 @@
       "event_code": "X4X+",
       "event_name": "混成舵手付きクォドルプル",
       "category": "X",
-      "age_group": "HI",
+      "age_group": "H・I",
       "categories": [
         "H",
         "I"
@@ -3338,19 +3340,19 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "ペンタラブラブ１号",
-          "affiliation": "ＰＥＮＴＡ ＲＯＷＩＮＧ ＣＬＵＢ（Ｊｒ．）",
+          "crew_name": "ペンタラブラブ1号",
+          "affiliation": "PENTA ROWING CLUB(Jr.)",
           "category": "H"
         },
         {
           "lane": 3,
-          "crew_name": "三菱 ＭＩＸＨ４Ｘ＋",
+          "crew_name": "三菱 MIXH4X+",
           "affiliation": "三菱ボートクラブシニア",
           "category": "H"
         },
         {
           "lane": 4,
-          "crew_name": "浜寺マスターズクラブ７５",
+          "crew_name": "浜寺マスターズクラブ75",
           "affiliation": "浜寺マスターズクラブ",
           "category": "I"
         }
@@ -3371,25 +3373,25 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "ＲＣ神戸",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸",
+          "affiliation": "RC神戸",
           "category": "E"
         },
         {
           "lane": 3,
-          "crew_name": "Ｎｉｔｔａｉ Ｂｏａｔ Ｃｌｕｂ",
-          "affiliation": "Ｎｉｔｔａｉ Ｂｏａｔ Ｃｌｕｂ",
+          "crew_name": "Nittai Boat Club",
+          "affiliation": "Nittai Boat Club",
           "category": "E"
         },
         {
           "lane": 4,
-          "crew_name": "多摩川ＲＣ（Ｅ）",
+          "crew_name": "多摩川RC(E)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "E"
         },
         {
           "lane": 5,
-          "crew_name": "パルテＥ",
+          "crew_name": "パルテE",
           "affiliation": "パルテ会",
           "category": "E"
         }
@@ -3422,8 +3424,8 @@
         },
         {
           "lane": 4,
-          "crew_name": "ばらとＤＲＣマスターズ萩原夫婦",
-          "affiliation": "ばらとＤＲＣマスターズ",
+          "crew_name": "ばらとDRCマスターズ萩原夫婦",
+          "affiliation": "ばらとDRCマスターズ",
           "category": "A"
         },
         {
@@ -3439,7 +3441,7 @@
       "event_code": "X8+",
       "event_name": "混成エイト",
       "category": "X",
-      "age_group": "AC",
+      "age_group": "A・C",
       "categories": [
         "A",
         "C"
@@ -3462,20 +3464,20 @@
         },
         {
           "lane": 3,
-          "crew_name": "医王会ローイングエイトＣ",
+          "crew_name": "医王会ローイングエイトC",
           "affiliation": "医王会ローイングクラブ",
           "category": "A"
         },
         {
           "lane": 4,
-          "crew_name": "ＴＭＲＣ こうはくＣ",
+          "crew_name": "TMRC こうはくC",
           "affiliation": "鶴見川マスターズローイングクラブ",
           "category": "C"
         },
         {
           "lane": 5,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ ＭＩＸ８＋ Ｃ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C MIX8+ C",
+          "affiliation": "E.R.C.C",
           "category": "C"
         }
       ]
@@ -3485,7 +3487,7 @@
       "event_code": "X8+",
       "event_name": "混成エイト",
       "category": "X",
-      "age_group": "GHJ",
+      "age_group": "G・H・J",
       "categories": [
         "G",
         "H",
@@ -3497,8 +3499,8 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "ＴＶＢＣ エレガンス",
-          "affiliation": "ＴＶＢＣ",
+          "crew_name": "TVBC エレガンス",
+          "affiliation": "TVBC",
           "category": "G"
         },
         {
@@ -3509,19 +3511,19 @@
         },
         {
           "lane": 3,
-          "crew_name": "三菱 ＭＩＸＨ８＋",
+          "crew_name": "三菱 MIXH8+",
           "affiliation": "三菱ボートクラブシニア",
           "category": "H"
         },
         {
           "lane": 4,
-          "crew_name": "ばらとＤＲＣ＆瀬田ＲＣ",
-          "affiliation": "ばらとＤＲＣマスターズ",
+          "crew_name": "ばらとDRC&瀬田RC",
+          "affiliation": "ばらとDRCマスターズ",
           "category": "H"
         },
         {
           "lane": 5,
-          "crew_name": "ＴＭＲＣ こうはくＪ",
+          "crew_name": "TMRC こうはくJ",
           "affiliation": "鶴見川マスターズローイングクラブ",
           "category": "J"
         }
@@ -3542,25 +3544,25 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "パルテＣ３",
+          "crew_name": "パルテC3",
           "affiliation": "パルテ会",
           "category": "C"
         },
         {
           "lane": 3,
-          "crew_name": "パルテＣ１",
+          "crew_name": "パルテC1",
           "affiliation": "パルテ会",
           "category": "C"
         },
         {
           "lane": 4,
           "crew_name": "小森ファミリー",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "C"
         },
         {
           "lane": 5,
-          "crew_name": "浜寺マスターズクラブ４７",
+          "crew_name": "浜寺マスターズクラブ47",
           "affiliation": "浜寺マスターズクラブ",
           "category": "C"
         }
@@ -3571,7 +3573,7 @@
       "event_code": "X2X",
       "event_name": "混成ダブルスカル",
       "category": "X",
-      "age_group": "DE",
+      "age_group": "D・E",
       "categories": [
         "D",
         "E"
@@ -3582,13 +3584,13 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "ＲＣ神戸 チカムラブレード",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸 チカムラブレード",
+          "affiliation": "RC神戸",
           "category": "D"
         },
         {
           "lane": 2,
-          "crew_name": "多摩川ＲＣ（堤・太田）",
+          "crew_name": "多摩川RC(堤・太田)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "E"
         },
@@ -3600,7 +3602,7 @@
         },
         {
           "lane": 4,
-          "crew_name": "多摩川ＲＣ（Ｗ服部）",
+          "crew_name": "多摩川RC(W服部)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "E"
         },
@@ -3627,14 +3629,14 @@
       "entries": [
         {
           "lane": 3,
-          "crew_name": "浜寺マスターズクラブ６０",
+          "crew_name": "浜寺マスターズクラブ60",
           "affiliation": "浜寺マスターズクラブ",
           "category": "F"
         },
         {
           "lane": 4,
-          "crew_name": "ＲＣ神戸（ＴＫＡＭ）",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸(TKAM)",
+          "affiliation": "RC神戸",
           "category": "F"
         }
       ]
@@ -3660,13 +3662,13 @@
         },
         {
           "lane": 3,
-          "crew_name": "浜寺マスターズクラブ４９",
+          "crew_name": "浜寺マスターズクラブ49",
           "affiliation": "浜寺マスターズクラブ",
           "category": "C"
         },
         {
           "lane": 4,
-          "crew_name": "パルテＣ２",
+          "crew_name": "パルテC2",
           "affiliation": "パルテ会",
           "category": "C"
         }
@@ -3677,7 +3679,7 @@
       "event_code": "X2X",
       "event_name": "混成ダブルスカル",
       "category": "X",
-      "age_group": "HIL",
+      "age_group": "H・I・L",
       "categories": [
         "H",
         "I",
@@ -3701,19 +3703,19 @@
         },
         {
           "lane": 3,
-          "crew_name": "瀬田漕艇クラブ ＳＫ",
+          "crew_name": "瀬田漕艇クラブ SK",
           "affiliation": "瀬田漕艇クラブ",
           "category": "H"
         },
         {
           "lane": 4,
-          "crew_name": "ばらとＤＲＣ・中川＆瀬田ＲＣ・長瀬",
+          "crew_name": "ばらとDRC・中川&瀬田RC・長瀬",
           "affiliation": "瀬田漕艇クラブ",
           "category": "I"
         },
         {
           "lane": 5,
-          "crew_name": "多摩川ＲＣ（本間・岡井）",
+          "crew_name": "多摩川RC(本間・岡井)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "I"
         },
@@ -3752,14 +3754,14 @@
         },
         {
           "lane": 3,
-          "crew_name": "パルテＤ",
+          "crew_name": "パルテD",
           "affiliation": "パルテ会",
           "category": "D"
         },
         {
           "lane": 4,
-          "crew_name": "ＮＥＸＵＳ ＲＯＷＩＮＧ ＣＬＵＢ",
-          "affiliation": "ＮＥＸＵＳ ＲＯＷＩＮＧ ＣＬＵＢ",
+          "crew_name": "NEXUS ROWING CLUB",
+          "affiliation": "NEXUS ROWING CLUB",
           "category": "D"
         },
         {
@@ -3775,7 +3777,7 @@
       "event_code": "X8+",
       "event_name": "混成エイト",
       "category": "X",
-      "age_group": "EF",
+      "age_group": "E・F",
       "categories": [
         "E",
         "F"
@@ -3792,20 +3794,20 @@
         },
         {
           "lane": 3,
-          "crew_name": "ＰＥＮＴＡ ＷＩＴＨ ＹＯＵ",
-          "affiliation": "ＷＩＴＨ ＹＯＵ",
+          "crew_name": "PENTA WITH YOU",
+          "affiliation": "WITH YOU",
           "category": "F"
         },
         {
           "lane": 4,
-          "crew_name": "ＴＭＲＣ こうはくＦ",
+          "crew_name": "TMRC こうはくF",
           "affiliation": "鶴見川マスターズローイングクラブ",
           "category": "F"
         },
         {
           "lane": 5,
-          "crew_name": "ＲＣ神戸 がんばろうＫＯＢＥ",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸 がんばろうKOBE",
+          "affiliation": "RC神戸",
           "category": "F"
         }
       ]
@@ -3825,13 +3827,13 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "医王会ローイングナックルＣ",
+          "crew_name": "医王会ローイングナックルC",
           "affiliation": "医王会ローイングクラブ",
           "category": "C"
         },
         {
           "lane": 2,
-          "crew_name": "九州照葉ローイングクラブＡ",
+          "crew_name": "九州照葉ローイングクラブA",
           "affiliation": "九州照葉ローイングクラブ",
           "category": "C"
         },
@@ -3860,8 +3862,11 @@
       "event_code": "MNF+",
       "event_name": "男子ナックルフォア",
       "category": "M",
-      "age_group": "パラ",
-      "categories": [],
+      "age_group": "A・Aパラ",
+      "categories": [
+        "A",
+        "A"
+      ],
       "round": "FA",
       "date": "2026/5/24",
       "time": "11:15",
@@ -3907,20 +3912,20 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ ＭＫＦ Ｂ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C MKF B",
+          "affiliation": "E.R.C.C",
           "category": "B"
         },
         {
           "lane": 3,
-          "crew_name": "浜松ボートクラブ佐鳴会Ｂ",
+          "crew_name": "浜松ボートクラブ佐鳴会B",
           "affiliation": "浜松ボートクラブ佐鳴会",
           "category": "B"
         },
         {
           "lane": 4,
           "crew_name": "宮崎大学医学部漕艇部",
-          "affiliation": "宮崎大学医学部漕艇部ＯＢ会",
+          "affiliation": "宮崎大学医学部漕艇部OB会",
           "category": "B"
         },
         {
@@ -3946,8 +3951,8 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "ＮＥＸＵＳ ＲＯＷＩＮＧ ＣＬＵＢ",
-          "affiliation": "ＮＥＸＵＳ ＲＯＷＩＮＧ ＣＬＵＢ",
+          "crew_name": "NEXUS ROWING CLUB",
+          "affiliation": "NEXUS ROWING CLUB",
           "category": "D"
         },
         {
@@ -3958,8 +3963,8 @@
         },
         {
           "lane": 3,
-          "crew_name": "香川大学ＯＢ",
-          "affiliation": "香川ＲＣ",
+          "crew_name": "香川大学OB",
+          "affiliation": "香川RC",
           "category": "D"
         },
         {
@@ -3991,20 +3996,20 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "浜寺マスターズクラブ５５",
+          "crew_name": "浜寺マスターズクラブ55",
           "affiliation": "浜寺マスターズクラブ",
           "category": "E"
         },
         {
           "lane": 3,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ ＭＩＸＫＦ Ｅ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C MIXKF E",
+          "affiliation": "E.R.C.C",
           "category": "E"
         },
         {
           "lane": 4,
-          "crew_name": "ＲＣ神戸",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸",
+          "affiliation": "RC神戸",
           "category": "E"
         },
         {
@@ -4020,7 +4025,7 @@
       "event_code": "XNF+",
       "event_name": "混成ナックルフォア",
       "category": "X",
-      "age_group": "HIK",
+      "age_group": "H・I・K",
       "categories": [
         "H",
         "I",
@@ -4032,14 +4037,14 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "ペンタラブラブ２号",
-          "affiliation": "ＰＥＮＴＡ ＲＯＷＩＮＧ ＣＬＵＢ（Ｊｒ．）",
+          "crew_name": "ペンタラブラブ2号",
+          "affiliation": "PENTA ROWING CLUB(Jr.)",
           "category": "H"
         },
         {
           "lane": 3,
-          "crew_name": "ＣＰＲＣミックスＢ",
-          "affiliation": "ＣＰＲＣ",
+          "crew_name": "CPRCミックスB",
+          "affiliation": "CPRC",
           "category": "H"
         },
         {
@@ -4050,7 +4055,7 @@
         },
         {
           "lane": 5,
-          "crew_name": "ＴＭＲＣ つた倶楽部",
+          "crew_name": "TMRC つた倶楽部",
           "affiliation": "鶴見川マスターズローイングクラブ",
           "category": "K"
         }
@@ -4071,14 +4076,14 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "ヤバセＪ２",
-          "affiliation": "ヤバセＪ１",
+          "crew_name": "ヤバセJ2",
+          "affiliation": "ヤバセJ1",
           "category": "F"
         },
         {
           "lane": 3,
-          "crew_name": "ＲＣ神戸",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸",
+          "affiliation": "RC神戸",
           "category": "F"
         },
         {
@@ -4089,8 +4094,8 @@
         },
         {
           "lane": 5,
-          "crew_name": "ＲＣ神戸 旭水",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸 旭水",
+          "affiliation": "RC神戸",
           "category": "F"
         }
       ]
@@ -4110,7 +4115,7 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "パルテＤ",
+          "crew_name": "パルテD",
           "affiliation": "パルテ会",
           "category": "D"
         },
@@ -4122,25 +4127,25 @@
         },
         {
           "lane": 3,
-          "crew_name": "多摩川ＲＣ（Ｄ）",
+          "crew_name": "多摩川RC(D)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "D"
         },
         {
           "lane": 4,
-          "crew_name": "キラーホエールＢ",
+          "crew_name": "キラーホエールB",
           "affiliation": "キラーホエール",
           "category": "D"
         },
         {
           "lane": 5,
-          "crew_name": "ＮＥＸＵＳ ＲＯＷＩＮＧ ＣＬＵＢ",
-          "affiliation": "ＮＥＸＵＳ ＲＯＷＩＮＧ ＣＬＵＢ",
+          "crew_name": "NEXUS ROWING CLUB",
+          "affiliation": "NEXUS ROWING CLUB",
           "category": "D"
         },
         {
           "lane": 6,
-          "crew_name": "ＴＭＲＣ かがやき",
+          "crew_name": "TMRC かがやき",
           "affiliation": "鶴見川マスターズローイングクラブ",
           "category": "D"
         }
@@ -4161,25 +4166,25 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "多摩川ＲＣ（Ｇ）",
+          "crew_name": "多摩川RC(G)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "G"
         },
         {
           "lane": 3,
-          "crew_name": "ＲＣＦ 混成",
+          "crew_name": "RCF 混成",
           "affiliation": "レガッタクラブフレンドシップ",
           "category": "G"
         },
         {
           "lane": 4,
-          "crew_name": "ＴＭＲＣ きらめき",
+          "crew_name": "TMRC きらめき",
           "affiliation": "鶴見川マスターズローイングクラブ",
           "category": "G"
         },
         {
           "lane": 5,
-          "crew_name": "浜寺マスターズクラブ６５",
+          "crew_name": "浜寺マスターズクラブ65",
           "affiliation": "浜寺マスターズクラブ",
           "category": "G"
         }
@@ -4200,20 +4205,20 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "ＲＣ神戸 ケセラセラ",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸 ケセラセラ",
+          "affiliation": "RC神戸",
           "category": "G"
         },
         {
           "lane": 3,
-          "crew_name": "瀬田漕艇クラブ ＭＯＯＯ",
+          "crew_name": "瀬田漕艇クラブ MOOO",
           "affiliation": "瀬田漕艇クラブ",
           "category": "G"
         },
         {
           "lane": 4,
-          "crew_name": "ＲＣ神戸 挑戦者",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸 挑戦者",
+          "affiliation": "RC神戸",
           "category": "G"
         }
       ]
@@ -4233,7 +4238,7 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "浜寺マスターズクラブ４９",
+          "crew_name": "浜寺マスターズクラブ49",
           "affiliation": "浜寺マスターズクラブ",
           "category": "C"
         },
@@ -4245,14 +4250,14 @@
         },
         {
           "lane": 3,
-          "crew_name": "キラーホエールＡ",
+          "crew_name": "キラーホエールA",
           "affiliation": "キラーホエール",
           "category": "C"
         },
         {
           "lane": 4,
           "crew_name": "宮崎大学医学部漕艇部",
-          "affiliation": "宮崎大学医学部漕艇部ＯＢ会",
+          "affiliation": "宮崎大学医学部漕艇部OB会",
           "category": "C"
         },
         {
@@ -4263,8 +4268,8 @@
         },
         {
           "lane": 6,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ ＭＩＸＫＦ Ｃ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C MIXKF C",
+          "affiliation": "E.R.C.C",
           "category": "C"
         }
       ]
@@ -4284,20 +4289,20 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "ＷＩＴＨ ＹＯＵ やよい",
-          "affiliation": "ＷＩＴＨ ＹＯＵ",
+          "crew_name": "WITH YOU やよい",
+          "affiliation": "WITH YOU",
           "category": "F"
         },
         {
           "lane": 3,
-          "crew_name": "多摩川ＲＣ（Ｆ）",
+          "crew_name": "多摩川RC(F)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "F"
         },
         {
           "lane": 4,
-          "crew_name": "ＣＰＲＣミックスＡ",
-          "affiliation": "ＣＰＲＣ",
+          "crew_name": "CPRCミックスA",
+          "affiliation": "CPRC",
           "category": "F"
         }
       ]
@@ -4317,7 +4322,7 @@
       "entries": [
         {
           "lane": 3,
-          "crew_name": "医王会ローイングナックルＤ",
+          "crew_name": "医王会ローイングナックルD",
           "affiliation": "医王会ローイングクラブ",
           "category": "A"
         }
@@ -4338,7 +4343,7 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "浜寺マスターズクラブ６５",
+          "crew_name": "浜寺マスターズクラブ65",
           "affiliation": "浜寺マスターズクラブ",
           "category": "G"
         },
@@ -4356,8 +4361,8 @@
         },
         {
           "lane": 4,
-          "crew_name": "ペンタ１号",
-          "affiliation": "ＰＥＮＴＡ ＲＯＷＩＮＧ ＣＬＵＢ（Ｊｒ．）",
+          "crew_name": "ペンタ1号",
+          "affiliation": "PENTA ROWING CLUB(Jr.)",
           "category": "G"
         },
         {
@@ -4368,8 +4373,8 @@
         },
         {
           "lane": 6,
-          "crew_name": "足蹴り３本",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "crew_name": "足蹴り3本",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "G"
         }
       ]
@@ -4390,7 +4395,7 @@
         {
           "lane": 1,
           "crew_name": "セントポール・淡青会連合",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "G"
         },
         {
@@ -4407,14 +4412,14 @@
         },
         {
           "lane": 4,
-          "crew_name": "ワイルドローバー ６６",
+          "crew_name": "ワイルドローバー 66",
           "affiliation": "ワイルドローバーローイングクラブ",
           "category": "G"
         },
         {
           "lane": 5,
           "crew_name": "佐鳴漕友会 富岳",
-          "affiliation": "佐鳴漕友会（静岡大学）",
+          "affiliation": "佐鳴漕友会(静岡大学)",
           "category": "G"
         }
       ]
@@ -4434,20 +4439,20 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "医王会１９８１",
-          "affiliation": "金沢大１９８１",
+          "crew_name": "医王会1981",
+          "affiliation": "金沢大1981",
           "category": "G"
         },
         {
           "lane": 2,
           "crew_name": "宮ヶ瀬 丹沢",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "G"
         },
         {
           "lane": 3,
-          "crew_name": "ＷＫマスターズ Ｇ",
-          "affiliation": "ＷＫマスターズ",
+          "crew_name": "WKマスターズ G",
+          "affiliation": "WKマスターズ",
           "category": "G"
         },
         {
@@ -4492,13 +4497,13 @@
         {
           "lane": 3,
           "crew_name": "ボート団塊号 輝",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "I"
         },
         {
           "lane": 4,
-          "crew_name": "ＷＫマスターズ Ｉ",
-          "affiliation": "ＷＫマスターズ",
+          "crew_name": "WKマスターズ I",
+          "affiliation": "WKマスターズ",
           "category": "I"
         },
         {
@@ -4525,7 +4530,7 @@
         {
           "lane": 1,
           "crew_name": "宮ヶ瀬 きび",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "I"
         },
         {
@@ -4542,13 +4547,13 @@
         },
         {
           "lane": 4,
-          "crew_name": "ペンタ２号",
-          "affiliation": "ＰＥＮＴＡ ＲＯＷＩＮＧ ＣＬＵＢ（Ｊｒ．）",
+          "crew_name": "ペンタ2号",
+          "affiliation": "PENTA ROWING CLUB(Jr.)",
           "category": "I"
         },
         {
           "lane": 5,
-          "crew_name": "ＴＭＲＣ あまこ",
+          "crew_name": "TMRC あまこ",
           "affiliation": "鶴見川マスターズローイングクラブ",
           "category": "I"
         }
@@ -4570,7 +4575,7 @@
         {
           "lane": 2,
           "crew_name": "ボート団塊号 蒼天",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "I"
         },
         {
@@ -4588,7 +4593,7 @@
         {
           "lane": 5,
           "crew_name": "ボート団塊号 日高",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "I"
         }
       ]
@@ -4614,8 +4619,8 @@
         },
         {
           "lane": 3,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ ＷＫＦ Ｃ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C WKF C",
+          "affiliation": "E.R.C.C",
           "category": "C"
         },
         {
@@ -4641,7 +4646,7 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "御殿浜ローソンズＬＥＭＯＮＳ",
+          "crew_name": "御殿浜ローソンズLEMONS",
           "affiliation": "御殿浜ローイングクラブ",
           "category": "D"
         },
@@ -4670,7 +4675,7 @@
       "event_code": "WNF+",
       "event_name": "女子ナックルフォア",
       "category": "W",
-      "age_group": "FG",
+      "age_group": "F・G",
       "categories": [
         "F",
         "G"
@@ -4687,7 +4692,7 @@
         },
         {
           "lane": 3,
-          "crew_name": "瀬田漕艇クラブ Ｆ",
+          "crew_name": "瀬田漕艇クラブ F",
           "affiliation": "瀬田漕艇クラブ",
           "category": "F"
         },
@@ -4699,8 +4704,8 @@
         },
         {
           "lane": 5,
-          "crew_name": "ＣＰＲＣウイメンズ",
-          "affiliation": "ＣＰＲＣ",
+          "crew_name": "CPRCウイメンズ",
+          "affiliation": "CPRC",
           "category": "G"
         }
       ]
@@ -4732,14 +4737,14 @@
         },
         {
           "lane": 3,
-          "crew_name": "ワイルドローバー ７０",
+          "crew_name": "ワイルドローバー 70",
           "affiliation": "ワイルドローバーローイングクラブ",
           "category": "H"
         },
         {
           "lane": 4,
-          "crew_name": "ＷＫマスターズ Ｈ",
-          "affiliation": "ＷＫマスターズ",
+          "crew_name": "WKマスターズ H",
+          "affiliation": "WKマスターズ",
           "category": "H"
         },
         {
@@ -4771,14 +4776,14 @@
         },
         {
           "lane": 2,
-          "crew_name": "浜松ボートクラブ佐鳴会Ｈ",
+          "crew_name": "浜松ボートクラブ佐鳴会H",
           "affiliation": "浜松ボートクラブ佐鳴会",
           "category": "H"
         },
         {
           "lane": 3,
           "crew_name": "佐鳴漕友会 曳馬",
-          "affiliation": "佐鳴漕友会（静岡大学）",
+          "affiliation": "佐鳴漕友会(静岡大学)",
           "category": "H"
         },
         {
@@ -4790,7 +4795,7 @@
         {
           "lane": 5,
           "crew_name": "滋賀大・立命館",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "H"
         }
       ]
@@ -4822,7 +4827,7 @@
         },
         {
           "lane": 3,
-          "crew_name": "医王会ローイングナックルＢ",
+          "crew_name": "医王会ローイングナックルB",
           "affiliation": "医王会ローイングクラブ",
           "category": "H"
         },
@@ -4879,7 +4884,7 @@
         },
         {
           "lane": 5,
-          "crew_name": "貞山８７",
+          "crew_name": "貞山87",
           "affiliation": "新貞山ローイングクラブ",
           "category": "E"
         }
@@ -4900,20 +4905,20 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "九州照葉ローイングクラブＢ",
+          "crew_name": "九州照葉ローイングクラブB",
           "affiliation": "九州照葉ローイングクラブ",
           "category": "E"
         },
         {
           "lane": 2,
-          "crew_name": "ＷＩＴＨ ＹＯＵ 神鷹",
-          "affiliation": "ＷＩＴＨ ＹＯＵ",
+          "crew_name": "WITH YOU 神鷹",
+          "affiliation": "WITH YOU",
           "category": "E"
         },
         {
           "lane": 3,
-          "crew_name": "茨戸８７Ｂ",
-          "affiliation": "茨戸８７",
+          "crew_name": "茨戸87B",
+          "affiliation": "茨戸87",
           "category": "E"
         },
         {
@@ -4924,8 +4929,8 @@
         },
         {
           "lane": 5,
-          "crew_name": "Ｅ．Ｒ．Ｃ．Ｃ ＭＫＦ Ｅ",
-          "affiliation": "Ｅ．Ｒ．Ｃ．Ｃ",
+          "crew_name": "E.R.C.C MKF E",
+          "affiliation": "E.R.C.C",
           "category": "E"
         }
       ]
@@ -4945,7 +4950,7 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "浜寺マスターズクラブ５９",
+          "crew_name": "浜寺マスターズクラブ59",
           "affiliation": "浜寺マスターズクラブ",
           "category": "E"
         },
@@ -4957,7 +4962,7 @@
         },
         {
           "lane": 4,
-          "crew_name": "医王会ローイングナックルＡ",
+          "crew_name": "医王会ローイングナックルA",
           "affiliation": "医王会ローイングクラブ",
           "category": "E"
         }
@@ -4984,13 +4989,13 @@
         },
         {
           "lane": 3,
-          "crew_name": "ＷＫマスターズ Ｊ",
-          "affiliation": "ＷＫマスターズ",
+          "crew_name": "WKマスターズ J",
+          "affiliation": "WKマスターズ",
           "category": "J"
         },
         {
           "lane": 4,
-          "crew_name": "ＴＭＲＣ ひろせ",
+          "crew_name": "TMRC ひろせ",
           "affiliation": "鶴見川マスターズローイングクラブ",
           "category": "J"
         },
@@ -5017,14 +5022,14 @@
       "entries": [
         {
           "lane": 2,
-          "crew_name": "多摩川ＲＣ（Ｊ）",
+          "crew_name": "多摩川RC(J)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "J"
         },
         {
           "lane": 3,
           "crew_name": "諏訪湖游漕会",
-          "affiliation": "ＳＵＷＡＫＯ 游漕会",
+          "affiliation": "SUWAKO 游漕会",
           "category": "J"
         },
         {
@@ -5040,7 +5045,7 @@
       "event_code": "MNF+",
       "event_name": "男子ナックルフォア",
       "category": "M",
-      "age_group": "KLM",
+      "age_group": "K・L・M",
       "categories": [
         "K",
         "L",
@@ -5064,8 +5069,8 @@
         },
         {
           "lane": 4,
-          "crew_name": "ＷＫマスターズ Ｌ",
-          "affiliation": "ＷＫマスターズ",
+          "crew_name": "WKマスターズ L",
+          "affiliation": "WKマスターズ",
           "category": "L"
         },
         {
@@ -5097,13 +5102,13 @@
         },
         {
           "lane": 2,
-          "crew_name": "鹿児島大学碧漕会Ａ",
+          "crew_name": "鹿児島大学碧漕会A",
           "affiliation": "碧漕会",
           "category": "F"
         },
         {
           "lane": 3,
-          "crew_name": "鹿児島大学碧漕会Ｂ",
+          "crew_name": "鹿児島大学碧漕会B",
           "affiliation": "碧漕会",
           "category": "F"
         },
@@ -5115,14 +5120,14 @@
         },
         {
           "lane": 5,
-          "crew_name": "ヤバセＪ１",
-          "affiliation": "ヤバセＪ１",
+          "crew_name": "ヤバセJ1",
+          "affiliation": "ヤバセJ1",
           "category": "F"
         },
         {
           "lane": 6,
           "crew_name": "ワイルドローバー関東",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "F"
         }
       ]
@@ -5149,25 +5154,25 @@
         {
           "lane": 2,
           "crew_name": "日曜クラブ",
-          "affiliation": "ボート団塊号 （だんかいごう）",
+          "affiliation": "ボート団塊号 (だんかいごう)",
           "category": "F"
         },
         {
           "lane": 3,
-          "crew_name": "ＲＣＦ",
+          "crew_name": "RCF",
           "affiliation": "レガッタクラブフレンドシップ",
           "category": "F"
         },
         {
           "lane": 4,
-          "crew_name": "茨戸８７Ａ",
-          "affiliation": "茨戸８７",
+          "crew_name": "茨戸87A",
+          "affiliation": "茨戸87",
           "category": "F"
         },
         {
           "lane": 5,
-          "crew_name": "名古屋大学艇友会６１．６",
-          "affiliation": "名古屋大学艇友会５７～６１",
+          "crew_name": "名古屋大学艇友会61.6",
+          "affiliation": "名古屋大学艇友会57~61",
           "category": "F"
         },
         {
@@ -5193,8 +5198,8 @@
       "entries": [
         {
           "lane": 1,
-          "crew_name": "ＲＣ神戸",
-          "affiliation": "ＲⅭ神戸",
+          "crew_name": "RC神戸",
+          "affiliation": "RC神戸",
           "category": "F"
         },
         {
@@ -5205,7 +5210,7 @@
         },
         {
           "lane": 3,
-          "crew_name": "ワイルドローバー ６４",
+          "crew_name": "ワイルドローバー 64",
           "affiliation": "ワイルドローバーローイングクラブ",
           "category": "F"
         },
@@ -5217,7 +5222,7 @@
         },
         {
           "lane": 5,
-          "crew_name": "多摩川ＲＣ（Ｆ）",
+          "crew_name": "多摩川RC(F)",
           "affiliation": "多摩川ローイングを楽しむ会",
           "category": "F"
         },
@@ -5229,6 +5234,5 @@
         }
       ]
     }
-  ],
-  "last_trigger_at": "2026-05-22T15:40:10.585Z"
+  ]
 }
