@@ -1,14 +1,14 @@
 {
   "race_no": 14,
-  "updated_at": "2026-05-23T01:00:10.803Z",
+  "updated_at": "2026-05-23T01:25:20.800Z",
   "results": [
     {
       "lane": 4,
       "rank": 1,
       "times": {
         "500m": {
-          "time_ms": 147440,
-          "formatted": "2:27.44"
+          "time_ms": 0,
+          "formatted": "0:00.00"
         },
         "1000m": {
           "time_ms": 298460,
@@ -19,7 +19,7 @@
         "time_ms": 298460,
         "formatted": "4:58.46"
       },
-      "split": "(2:31.02)",
+      "split": "(4:58.46)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -30,8 +30,8 @@
       "rank": 2,
       "times": {
         "500m": {
-          "time_ms": 151960,
-          "formatted": "2:31.96"
+          "time_ms": 0,
+          "formatted": "0:00.00"
         },
         "1000m": {
           "time_ms": 299670,
@@ -42,7 +42,7 @@
         "time_ms": 299670,
         "formatted": "4:59.67"
       },
-      "split": "(2:27.71)",
+      "split": "(4:59.67)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -53,8 +53,8 @@
       "rank": 3,
       "times": {
         "500m": {
-          "time_ms": 153970,
-          "formatted": "2:33.97"
+          "time_ms": 0,
+          "formatted": "0:00.00"
         },
         "1000m": {
           "time_ms": 303240,
@@ -65,7 +65,7 @@
         "time_ms": 303240,
         "formatted": "5:03.24"
       },
-      "split": "(2:29.27)",
+      "split": "(5:03.24)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -76,8 +76,8 @@
       "rank": 4,
       "times": {
         "500m": {
-          "time_ms": 152620,
-          "formatted": "2:32.62"
+          "time_ms": 0,
+          "formatted": "0:00.00"
         },
         "1000m": {
           "time_ms": 307050,
@@ -88,7 +88,7 @@
         "time_ms": 307050,
         "formatted": "5:07.05"
       },
-      "split": "(2:34.43)",
+      "split": "(5:07.05)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -99,8 +99,8 @@
       "rank": 5,
       "times": {
         "500m": {
-          "time_ms": 150780,
-          "formatted": "2:30.78"
+          "time_ms": 0,
+          "formatted": "0:00.00"
         },
         "1000m": {
           "time_ms": 310930,
@@ -111,7 +111,7 @@
         "time_ms": 310930,
         "formatted": "5:10.93"
       },
-      "split": "(2:40.15)",
+      "split": "(5:10.93)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -122,8 +122,8 @@
       "rank": 6,
       "times": {
         "500m": {
-          "time_ms": 159750,
-          "formatted": "2:39.75"
+          "time_ms": 0,
+          "formatted": "0:00.00"
         },
         "1000m": {
           "time_ms": 311610,
@@ -134,7 +134,7 @@
         "time_ms": 311610,
         "formatted": "5:11.61"
       },
-      "split": "(2:31.86)",
+      "split": "(5:11.61)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
