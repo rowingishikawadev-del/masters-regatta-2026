@@ -1,14 +1,14 @@
 {
   "race_no": 12,
-  "updated_at": "2026-05-23T00:50:10.919Z",
+  "updated_at": "2026-05-23T01:25:10.800Z",
   "results": [
     {
       "lane": 2,
       "rank": 1,
       "times": {
         "500m": {
-          "time_ms": 109440,
-          "formatted": "1:49.44"
+          "time_ms": 0,
+          "formatted": "0:00.00"
         },
         "1000m": {
           "time_ms": 218200,
@@ -19,7 +19,7 @@
         "time_ms": 218200,
         "formatted": "3:38.20"
       },
-      "split": "(1:48.76)",
+      "split": "(3:38.20)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -30,8 +30,8 @@
       "rank": 2,
       "times": {
         "500m": {
-          "time_ms": 111150,
-          "formatted": "1:51.15"
+          "time_ms": 0,
+          "formatted": "0:00.00"
         },
         "1000m": {
           "time_ms": 224180,
@@ -42,7 +42,7 @@
         "time_ms": 224180,
         "formatted": "3:44.18"
       },
-      "split": "(1:53.03)",
+      "split": "(3:44.18)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -53,8 +53,8 @@
       "rank": 3,
       "times": {
         "500m": {
-          "time_ms": 112570,
-          "formatted": "1:52.57"
+          "time_ms": 0,
+          "formatted": "0:00.00"
         },
         "1000m": {
           "time_ms": 225750,
@@ -65,7 +65,7 @@
         "time_ms": 225750,
         "formatted": "3:45.75"
       },
-      "split": "(1:53.18)",
+      "split": "(3:45.75)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -76,8 +76,8 @@
       "rank": 4,
       "times": {
         "500m": {
-          "time_ms": 125190,
-          "formatted": "2:05.19"
+          "time_ms": 0,
+          "formatted": "0:00.00"
         },
         "1000m": {
           "time_ms": 238690,
@@ -88,7 +88,7 @@
         "time_ms": 238690,
         "formatted": "3:58.69"
       },
-      "split": "(1:53.50)",
+      "split": "(3:58.69)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -99,8 +99,8 @@
       "rank": 5,
       "times": {
         "500m": {
-          "time_ms": 122770,
-          "formatted": "2:02.77"
+          "time_ms": 0,
+          "formatted": "0:00.00"
         },
         "1000m": {
           "time_ms": 245530,
@@ -111,7 +111,7 @@
         "time_ms": 245530,
         "formatted": "4:05.53"
       },
-      "split": "(2:02.76)",
+      "split": "(4:05.53)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
