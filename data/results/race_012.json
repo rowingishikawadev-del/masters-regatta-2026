@@ -1,14 +1,14 @@
 {
   "race_no": 12,
-  "updated_at": "2026-05-22T23:45:12.477Z",
+  "updated_at": "2026-05-23T00:50:10.919Z",
   "results": [
     {
       "lane": 2,
       "rank": 1,
       "times": {
         "500m": {
-          "time_ms": 111150,
-          "formatted": "1:51.15"
+          "time_ms": 109440,
+          "formatted": "1:49.44"
         },
         "1000m": {
           "time_ms": 218200,
@@ -19,7 +19,7 @@
         "time_ms": 218200,
         "formatted": "3:38.20"
       },
-      "split": "(1:47.05)",
+      "split": "(1:48.76)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -30,8 +30,8 @@
       "rank": 2,
       "times": {
         "500m": {
-          "time_ms": 109440,
-          "formatted": "1:49.44"
+          "time_ms": 111150,
+          "formatted": "1:51.15"
         },
         "1000m": {
           "time_ms": 224180,
@@ -42,7 +42,7 @@
         "time_ms": 224180,
         "formatted": "3:44.18"
       },
-      "split": "(1:54.74)",
+      "split": "(1:53.03)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
