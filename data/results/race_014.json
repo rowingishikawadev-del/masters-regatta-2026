@@ -1,1 +1,144 @@
-{"race_no":14,"cleared":true,"results":[]}
+{
+  "race_no": 14,
+  "updated_at": "2026-05-23T00:35:11.010Z",
+  "results": [
+    {
+      "lane": 4,
+      "rank": 1,
+      "times": {
+        "500m": {
+          "time_ms": 150780,
+          "formatted": "2:30.78"
+        },
+        "1000m": {
+          "time_ms": 298460,
+          "formatted": "4:58.46"
+        }
+      },
+      "finish": {
+        "time_ms": 298460,
+        "formatted": "4:58.46"
+      },
+      "split": "(2:27.68)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 3,
+      "rank": 2,
+      "times": {
+        "500m": {
+          "time_ms": 151960,
+          "formatted": "2:31.96"
+        },
+        "1000m": {
+          "time_ms": 299670,
+          "formatted": "4:59.67"
+        }
+      },
+      "finish": {
+        "time_ms": 299670,
+        "formatted": "4:59.67"
+      },
+      "split": "(2:27.71)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 5,
+      "rank": 3,
+      "times": {
+        "500m": {
+          "time_ms": 153970,
+          "formatted": "2:33.97"
+        },
+        "1000m": {
+          "time_ms": 303240,
+          "formatted": "5:03.24"
+        }
+      },
+      "finish": {
+        "time_ms": 303240,
+        "formatted": "5:03.24"
+      },
+      "split": "(2:29.27)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 2,
+      "rank": 4,
+      "times": {
+        "500m": {
+          "time_ms": 147440,
+          "formatted": "2:27.44"
+        },
+        "1000m": {
+          "time_ms": 307050,
+          "formatted": "5:07.05"
+        }
+      },
+      "finish": {
+        "time_ms": 307050,
+        "formatted": "5:07.05"
+      },
+      "split": "(2:39.61)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 1,
+      "rank": 5,
+      "times": {
+        "500m": {
+          "time_ms": 152620,
+          "formatted": "2:32.62"
+        },
+        "1000m": {
+          "time_ms": 310930,
+          "formatted": "5:10.93"
+        }
+      },
+      "finish": {
+        "time_ms": 310930,
+        "formatted": "5:10.93"
+      },
+      "split": "(2:38.31)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 6,
+      "rank": 6,
+      "times": {
+        "500m": {
+          "time_ms": 159750,
+          "formatted": "2:39.75"
+        },
+        "1000m": {
+          "time_ms": 311610,
+          "formatted": "5:11.61"
+        }
+      },
+      "finish": {
+        "time_ms": 311610,
+        "formatted": "5:11.61"
+      },
+      "split": "(2:31.86)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    }
+  ]
+}
