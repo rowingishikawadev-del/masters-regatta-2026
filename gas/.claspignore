@@ -1,0 +1,17 @@
+# サブフォルダは別 GAS プロジェクト
+pdf_publisher/**
+judge_form_publisher/**
+
+# ドキュメント
+**/*.md
+**/*.bak
+**/*.bak.*
+**/*.bak2
+
+# OS
+**/.DS_Store
+**/.gitignore
+
+# clasp 自身
+.clasp.json
+.claspignore

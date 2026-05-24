@@ -1,0 +1,6 @@
+**/*.md
+**/*.bak
+**/*.bak.*
+**/.DS_Store
+.clasp.json
+.claspignore

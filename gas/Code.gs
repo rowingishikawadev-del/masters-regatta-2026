@@ -302,36 +302,43 @@ function processPendingCSVs(startTime) {
     const files = raceFiles[raceNo];
     const collectedPoints = Object.keys(files);
 
-    // 【レース距離別の判定】
-    //   1000m レース → ゴール = 1000m、中間 = 500m（任意）
-    //   500m レース  → ゴール = 500m のみ（中間ポイント無し）
-    //   distance 不明 → デフォルト 1000m として扱う（後方互換）
+    // 【レース距離別の判定 — 物理測定地点と論理ゴールの違いに注意】
+    //   - 物理測定地点: 全レース共通で「500m 地点」「1000m 地点」にセンサー
+    //   - CSV ラベル: 物理位置を表す ("500m" / "1000m")
+    //   - 1000m レース: スタート→500m(中間)→1000m(ゴール)
+    //                   500m CSV = 中間ラップ、1000m CSV = ゴール → 両方使う
+    //   - 500m  レース: スタートが 500m 地点・ゴールが 1000m 地点
+    //                   500m CSV = スタート時刻 (0:00.00 で無意味) → 破棄
+    //                   1000m CSV = ゴールタイム → これを採用
+    //                   race_XXX.json では times['500m'] にこのゴールを格納
+    //                   （PDF の 500m 列に表示するため・順位決定もこの値）
     const raceCourseLength = (courseLengthMap[raceNo] || 1000); // 500 or 1000
-    const goalPoint = raceCourseLength + 'm';                   // '500m' or '1000m'
-    const racePoints = (raceCourseLength === 500)
-      ? ['500m']
-      : measurementPoints.slice();                              // 1000m レースは設定通り（例: ['500m','1000m']）
-
+    const goalPoint = '1000m'; // 全レース共通: 物理 1000m 地点が必須
     const hasGoal = collectedPoints.includes(goalPoint);
 
-    // ゴールポイントが未着の場合はスキップ
     if (!hasGoal) {
-      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' distance=' + raceCourseLength + 'm ゴール(' + goalPoint + ')未着のためスキップ: 取得済み=[' + collectedPoints.join(',') + ']');
+      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' distance=' + raceCourseLength + 'm 物理ゴール(1000m CSV)未着のためスキップ: 取得済み=[' + collectedPoints.join(',') + ']');
       continue;
     }
 
+    // buildAndPushRaceJSON に渡す measurementPoints
+    //   500m レース → ['500m'] のみ（内部で 1000m CSV を 500m スロットに再ラベル）
+    //   1000m レース → ['500m','1000m']（設定通り、中間+ゴール）
+    const racePoints = (raceCourseLength === 500)
+      ? ['500m']
+      : measurementPoints.slice();
+
     // ログ出力（500m / 1000m レースで分岐）
     if (raceCourseLength === 500) {
-      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 500mレース: 500m到着のため処理開始');
-    } else if (collectedPoints.length < racePoints.length) {
-      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 1000mレース: 中間ポイント未着だがゴール到着のため処理開始: 取得済み=[' + collectedPoints.join(',') + ']');
+      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 500mレース: 物理1000m地点のCSV(=ゴール)到着のため処理開始（500mスロットに再ラベル）');
+    } else if (collectedPoints.length < measurementPoints.length) {
+      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 1000mレース: 中間500m未着だがゴール1000m到着のため処理開始: 取得済み=[' + collectedPoints.join(',') + ']');
     } else {
       Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 1000mレース: 全ポイント揃い。処理開始');
     }
 
     try {
-      // 500m レースは racePoints=['500m']、1000m レースは racePoints=['500m','1000m'] を渡す
-      buildAndPushRaceJSON(parseInt(raceNo, 10), files, racePoints);
+      buildAndPushRaceJSON(parseInt(raceNo, 10), files, racePoints, raceCourseLength);
     } catch (e) {
       Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 処理エラー: ' + e.message);
       recordError('processPendingCSVs_race' + raceNo, e);
@@ -393,20 +400,51 @@ function fetchCourseLengthMap_() {
  * レースJSONを組み立てて GitHub に Push し、CSVをprocessed/へ移動する
  * @param {number} raceNo
  * @param {{ [point: string]: GoogleAppsScript.Drive.File }} files
- * @param {string[]} measurementPoints
+ * @param {string[]} measurementPoints  buildRaceJSON に渡す論理 measurementPoints
+ *   - 1000m レース: ['500m','1000m']
+ *   - 500m  レース: ['500m']（実体は 1000m CSV データを 500m スロットに再ラベル）
+ * @param {number} [raceCourseLength]  500 または 1000（省略時 1000）
  */
-function buildAndPushRaceJSON(raceNo, files, measurementPoints) {
+function buildAndPushRaceJSON(raceNo, files, measurementPoints, raceCourseLength) {
+  raceCourseLength = raceCourseLength || 1000;
+  const is500mRace = (raceCourseLength === 500);
+
   // 各計測ポイントのCSVをパース
+  // 500m レースは files['1000m'] が物理ゴールデータ、files['500m'] はスタート時刻（無意味）
   const measurementData = {};
-  for (const point of measurementPoints) {
-    const file = files[point];
-    const csvContent = file.getBlob().getDataAsString('UTF-8');
-    measurementData[point] = parseResultCSV(csvContent);
-    Logger.log('[buildAndPushRaceJSON] race_no=' + raceNo + ' point=' + point + ' rows=' + measurementData[point].length);
+  const filesToMove = []; // processed/ へ移動する対象（実体のラベル）
+
+  if (is500mRace) {
+    // 500m レース: 1000m CSV データを 500m スロットに再ラベル
+    if (!files['1000m']) {
+      Logger.log('[buildAndPushRaceJSON] race_no=' + raceNo + ' ⚠ 500mレースなのに 1000m CSV が無い');
+      return;
+    }
+    const csvContent = files['1000m'].getBlob().getDataAsString('UTF-8');
+    measurementData['500m'] = parseResultCSV(csvContent);
+    Logger.log('[buildAndPushRaceJSON] race_no=' + raceNo + ' 500mレース: 物理1000m CSV → 500mスロットに再ラベル rows=' + measurementData['500m'].length);
+    filesToMove.push({ file: files['1000m'], point: '1000m' });
+
+    // 500m CSV（スタート時刻データ）も processed/ に逃がす（残しっぱなしを防ぐ）
+    if (files['500m']) {
+      filesToMove.push({ file: files['500m'], point: '500m' });
+      Logger.log('[buildAndPushRaceJSON] race_no=' + raceNo + ' 500mレース: 物理500m CSV（スタート時刻）は破棄して processed へ移動');
+    }
+  } else {
+    // 1000m レース: 既存ロジック
+    for (const point of measurementPoints) {
+      const file = files[point];
+      if (!file) continue;
+      const csvContent = file.getBlob().getDataAsString('UTF-8');
+      measurementData[point] = parseResultCSV(csvContent);
+      Logger.log('[buildAndPushRaceJSON] race_no=' + raceNo + ' point=' + point + ' rows=' + measurementData[point].length);
+      filesToMove.push({ file: file, point: point });
+    }
   }
 
   // JSON組み立て
   const raceJson = buildRaceJSON(raceNo, measurementData, measurementPoints);
+  raceJson.course_length = raceCourseLength; // 距離情報を JSON に明示
 
   // GitHub へ Push
   const paddedNo = String(raceNo).padStart(3, '0');
@@ -414,11 +452,11 @@ function buildAndPushRaceJSON(raceNo, files, measurementPoints) {
   pushToGitHub(path, JSON.stringify(raceJson, null, 2));
 
   // CSVを processed/ へ移動
-  for (const point of measurementPoints) {
-    moveToProcessed(files[point], point);
+  for (const item of filesToMove) {
+    moveToProcessed(item.file, item.point);
   }
 
-  Logger.log('[buildAndPushRaceJSON] race_no=' + raceNo + ' Push完了');
+  Logger.log('[buildAndPushRaceJSON] race_no=' + raceNo + ' (distance=' + raceCourseLength + 'm) Push完了');
 }
 
 // ============================================================

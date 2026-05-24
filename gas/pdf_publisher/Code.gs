@@ -713,9 +713,16 @@ function buildRaceInfo_(raceNo, masterData, resultData) {
   const roundName = decodeRound(schedule.round || '');
   const raceTime = composeRaceTime_(schedule.date, schedule.time);
 
-  // レース距離（500m or 1000m）。schedule.course_length 優先 → tournament.course_length → デフォルト 1000m
+  // レース距離（500m or 1000m）の決定優先順位:
+  //   1. resultData.course_length（新ロジックの race_XXX.json には GAS が埋め込む）
+  //   2. schedule.course_length（master.json から）
+  //   3. tournament.course_length（大会デフォルト）
+  //   4. 1000m（最終フォールバック）
   const tournamentLen = (masterData.tournament && masterData.tournament.course_length) || 1000;
-  const courseLength = parseInt(schedule.course_length || tournamentLen, 10);
+  const courseLength = parseInt(
+    (resultData && resultData.course_length) || schedule.course_length || tournamentLen,
+    10
+  );
   const is500mRace = (courseLength === 500);
 
   const masterEntries = schedule.entries || [];
@@ -729,13 +736,20 @@ function buildRaceInfo_(raceNo, masterData, resultData) {
       .slice()
       .sort(function(a, b) { return (a.rank || 99) - (b.rank || 99); })
       .map(function(r) {
-        // 500m レース: 500m 列に実値（旧データ互換: '1000m' スロットにゴールが入っているケースもフォールバック）、1000m 列はブランク
-        // 1000m レース: 既存通り（500m=中間、1000m=ゴール）
+        // 500m レース仕様:
+        //   - 物理測定地点: 500m地点 = スタート時刻（0:00.00 で無意味） / 1000m地点 = ゴール
+        //   - GAS の新ロジック: 1000m CSV データを race_XXX.json の times['500m'] に再ラベルして格納
+        //   - 旧データ救済: race_XXX.json の times['500m'] が 0:00.00 / 空 ならば times['1000m'] にゴールが入っている
+        //   - PDF 表示: 500m 列に実ゴールタイム、1000m 列はブランク
+        // 1000m レース: 既存通り（500m=中間ラップ、1000m=ゴール）
         let time500 = '';
         let time1000 = '';
         if (is500mRace) {
-          time500 = extractTime_(r, '500m', 'time_500')
-                 || extractTime_(r, '1000m', 'time_1000'); // 旧仕様で 1000m スロットに入った 500m ゴールを救済
+          const t500 = extractTime_(r, '500m', 'time_500');
+          const t1000 = extractTime_(r, '1000m', 'time_1000');
+          // 500m スロットがスタート時刻パターン（0:00.00 / 0:00 / 空）の場合は 1000m スロットからフォールバック
+          const isStartTimePattern = !t500 || /^0:0?0(?:\.0*)?$/.test(t500);
+          time500 = isStartTimePattern ? (t1000 || '') : t500;
           time1000 = ''; // 500m レースは 1000m 列を必ずブランク
         } else {
           time500 = extractTime_(r, '500m', 'time_500');
