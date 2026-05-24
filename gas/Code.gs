@@ -3,11 +3,14 @@
  * Google Drive のCSVを監視し、GitHub にレース結果JSONをPushする
  *
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- *  バージョン: v1.2.0 (2026/05/25)
- *  最終 push:  2026/05/25 02:09  (clasp by Claude Code)
+ *  バージョン: v1.3.0 (2026/05/25)
+ *  最終 push:  2026/05/25 02:15  (clasp by Claude Code)
  *  scriptId:   1PYr-9DlmBOECNR0G6jDYYuTRVnW_Bt8GVMt3YHARmdBZ1uwhY_whvRLm
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  *  ▼ 変更履歴
+ *  v1.3.0 (2026/05/25)
+ *    - reprocessAllRaces() 新設: processed/ の全 CSV を race_csv/ に戻して全件再処理
+ *      → 仕様変更後の総まとめで全レース race_XXX.json を新ロジックで再生成可能
  *  v1.2.0 (2026/05/25)
  *    - 500m レース対応: 物理1000m地点 CSV をゴールデータとして採用
  *      （物理500m地点 CSV はスタート時刻なので破棄）
@@ -22,7 +25,7 @@
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  *  バージョン定数（ログ出力・サポート時の参照用）
  */
-const GAS_MAIN_VERSION = '1.2.0 (2026/05/25)';
+const GAS_MAIN_VERSION = '1.3.0 (2026/05/25)';
 
 // ============================================================
 // ▼▼▼ はじめにここだけ入力してください ▼▼▼
@@ -891,6 +894,78 @@ function reprocess500mRaces() {
   processPendingCSVs(startTime);
 
   Logger.log('=== reprocess500mRaces 完了 ===');
+}
+
+/**
+ * 【全レース一括再処理】processed/ 配下の全 CSV を race_csv/ に戻して再処理する。
+ *
+ * 用途:
+ *   - 仕様変更後（500m レース対応など）に既存全レースを新ロジックで再生成
+ *   - 大会後の総まとめで race_XXX.json をすべて作り直したい時
+ *
+ * 動作:
+ *   1. processed/500m/ と processed/1000m/ の全 CSV を race_csv/{point}/ に move back
+ *      （フォルダ名と CSV ファイル名の _point が一致するもののみ）
+ *   2. processPendingCSVs() を内部呼び出し → race_XXX.json を生成 & GitHub Push
+ *      - 500m レースは物理1000m CSV をゴールデータとして採用（500m スロットに再ラベル）
+ *      - 1000m レースは既存通り
+ *
+ * GAS 6 分制限を超えた分は、次回の onTrigger 自動実行で順次続行される
+ * （race_csv/ に戻した CSV は次回トリガーでも検知されるため）
+ */
+function reprocessAllRaces() {
+  Logger.log('=== reprocessAllRaces 開始 ===');
+  const startTime = Date.now();
+
+  const props = PropertiesService.getScriptProperties();
+  const rootFolderId = props.getProperty(CONFIG.props.driveFolderId);
+  if (!rootFolderId) { throw new Error('DRIVE_ROOT_FOLDER_ID が未設定'); }
+
+  const measurementPoints = getMeasurementPoints();
+  const processedFolder = getOrCreateFolder(rootFolderId, CONFIG.folders.processed);
+  const raceCsvFolder = getOrCreateFolder(rootFolderId, CONFIG.folders.raceCsv);
+
+  // 1. processed/{point}/ → race_csv/{point}/ へ全件 move back
+  let totalMoved = 0;
+  for (const point of measurementPoints) {
+    const processedPoint = getOrCreateFolder(processedFolder.getId(), point);
+    const raceCsvPoint = getOrCreateFolder(raceCsvFolder.getId(), point);
+
+    let movedInPoint = 0;
+    const files = processedPoint.getFiles();
+    while (files.hasNext()) {
+      const file = files.next();
+      const fileName = file.getName();
+      const match = fileName.match(CONFIG.csvPattern);
+      if (!match) continue;
+      const filePoint = match[2];
+      // フォルダ名と CSV ファイル名の point が一致するもののみ戻す
+      if (filePoint.toLowerCase() !== point.toLowerCase()) {
+        Logger.log('  ⚠ ポイント不一致のためスキップ: ' + fileName + ' (期待: ' + point + ')');
+        continue;
+      }
+      try {
+        file.moveTo(raceCsvPoint);
+        movedInPoint++;
+        totalMoved++;
+      } catch (e) {
+        Logger.log('  ⚠ 移動失敗: ' + fileName + ': ' + e.message);
+      }
+    }
+    Logger.log('processed/' + point + '/ → race_csv/' + point + '/ に戻したファイル数: ' + movedInPoint);
+  }
+  Logger.log('合計 ' + totalMoved + ' ファイルを race_csv/ に戻しました');
+
+  if (totalMoved === 0) {
+    Logger.log('move back 対象なし。race_csv/ に既にある CSV を直接処理します');
+  }
+
+  // 2. processPendingCSVs() を実行 → race_XXX.json 生成 & GitHub Push
+  Logger.log('--- processPendingCSVs() 実行 ---');
+  processPendingCSVs(startTime);
+
+  Logger.log('=== reprocessAllRaces 完了 ===');
+  Logger.log('※ GAS 6 分制限で処理しきれなかった分は次回 onTrigger 自動実行で続行されます');
 }
 
 // ============================================================
