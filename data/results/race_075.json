@@ -1,1 +1,99 @@
-{"race_no":75,"cleared":true,"results":[]}
+{
+  "race_no": 75,
+  "updated_at": "2026-05-24T18:01:51.843Z",
+  "results": [
+    {
+      "lane": 5,
+      "rank": 1,
+      "times": {
+        "500m": {
+          "time_ms": 119990,
+          "formatted": "1:59.99"
+        },
+        "1000m": {
+          "time_ms": 242480,
+          "formatted": "4:02.48"
+        }
+      },
+      "finish": {
+        "time_ms": 242480,
+        "formatted": "4:02.48"
+      },
+      "split": "(2:02.49)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 2,
+      "rank": 2,
+      "times": {
+        "500m": {
+          "time_ms": 130830,
+          "formatted": "2:10.83"
+        },
+        "1000m": {
+          "time_ms": 258910,
+          "formatted": "4:18.91"
+        }
+      },
+      "finish": {
+        "time_ms": 258910,
+        "formatted": "4:18.91"
+      },
+      "split": "(2:08.08)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 3,
+      "rank": 3,
+      "times": {
+        "500m": {
+          "time_ms": 137000,
+          "formatted": "2:17.00"
+        },
+        "1000m": {
+          "time_ms": 274470,
+          "formatted": "4:34.47"
+        }
+      },
+      "finish": {
+        "time_ms": 274470,
+        "formatted": "4:34.47"
+      },
+      "split": "(2:17.47)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 4,
+      "rank": 4,
+      "times": {
+        "500m": {
+          "time_ms": 161960,
+          "formatted": "2:41.96"
+        },
+        "1000m": {
+          "time_ms": 310530,
+          "formatted": "5:10.53"
+        }
+      },
+      "finish": {
+        "time_ms": 310530,
+        "formatted": "5:10.53"
+      },
+      "split": "(2:28.57)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    }
+  ],
+  "course_length": 1000
+}
