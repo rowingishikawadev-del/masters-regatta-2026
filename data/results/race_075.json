@@ -1,6 +1,6 @@
 {
   "race_no": 75,
-  "updated_at": "2026-05-24T15:32:13.369Z",
+  "updated_at": "2026-05-24T18:01:51.843Z",
   "results": [
     {
       "lane": 5,
@@ -94,5 +94,6 @@
       "note": "",
       "status": "finish"
     }
-  ]
+  ],
+  "course_length": 1000
 }

@@ -1,1 +1,53 @@
-{"race_no":57,"cleared":true,"results":[]}
+{
+  "race_no": 57,
+  "updated_at": "2026-05-24T18:00:42.256Z",
+  "results": [
+    {
+      "lane": 4,
+      "rank": 1,
+      "times": {
+        "500m": {
+          "time_ms": 130490,
+          "formatted": "2:10.49"
+        },
+        "1000m": {
+          "time_ms": 273660,
+          "formatted": "4:33.66"
+        }
+      },
+      "finish": {
+        "time_ms": 273660,
+        "formatted": "4:33.66"
+      },
+      "split": "(2:23.17)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 3,
+      "rank": 2,
+      "times": {
+        "500m": {
+          "time_ms": 182170,
+          "formatted": "3:02.17"
+        },
+        "1000m": {
+          "time_ms": 353800,
+          "formatted": "5:53.80"
+        }
+      },
+      "finish": {
+        "time_ms": 353800,
+        "formatted": "5:53.80"
+      },
+      "split": "(2:51.63)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    }
+  ],
+  "course_length": 1000
+}
