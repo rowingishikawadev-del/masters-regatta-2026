@@ -1,7 +1,28 @@
 /**
- * ボート競技ライブリザルト - Google Apps Script
+ * ボート競技ライブリザルト - Google Apps Script (メイン)
  * Google Drive のCSVを監視し、GitHub にレース結果JSONをPushする
+ *
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ *  バージョン: v1.2.0 (2026/05/25)
+ *  最終 push:  2026/05/25 02:09  (clasp by Claude Code)
+ *  scriptId:   1PYr-9DlmBOECNR0G6jDYYuTRVnW_Bt8GVMt3YHARmdBZ1uwhY_whvRLm
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ *  ▼ 変更履歴
+ *  v1.2.0 (2026/05/25)
+ *    - 500m レース対応: 物理1000m地点 CSV をゴールデータとして採用
+ *      （物理500m地点 CSV はスタート時刻なので破棄）
+ *    - fetchCourseLengthMap_() で master.json から距離マップ取得
+ *    - reprocess500mRaces() で processed/ から戻して再処理する救済関数
+ *    - buildAndPushRaceJSON に raceCourseLength 引数を追加
+ *    - clearAllResults の resultsPath 未宣言バグ修正
+ *  v1.1.0 (2026/05/21)
+ *    - 速報テーブルに区分列(カテゴリー)を全レース常時表示
+ *  v1.0.0 (2026/05/18)
+ *    - JARA 公式 PDF でスケジュール・エントリー再構築 (123 レース)
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ *  バージョン定数（ログ出力・サポート時の参照用）
  */
+const GAS_MAIN_VERSION = '1.2.0 (2026/05/25)';
 
 // ============================================================
 // ▼▼▼ はじめにここだけ入力してください ▼▼▼

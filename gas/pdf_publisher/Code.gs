@@ -1,9 +1,20 @@
 /**
  * ============================================================
  *  マスターズレガッタ2026 試合結果PDF生成システム (Code.gs)
- *  Version: 0.15.3
- *  Last Updated: 2026/05/22
+ *  Version: 0.17.0
+ *  Last Updated: 2026/05/25
+ *  Last Pushed:  2026/05/25 02:09 (clasp by Claude Code)
+ *  scriptId:     1C8qpIqKRLNtQcTl0LerglEaMdt1X9rvZJeH89GT7c48kiQUAvFzlswAt
  *  Changes:
+ *   - v0.17.0 (2026/05/25): 500m レース PDF 対応強化
+ *      ・buildRaceInfo_ で resultData.course_length 優先 → schedule.course_length → tournament.course_length の判定
+ *      ・500m レース時の 0:00.00 スタート時刻パターン判定で 1000m スロットからフォールバック（旧データ救済）
+ *      ・物理1000m地点 CSV を採用した新 race_XXX.json にも対応（times['500m'] = 実ゴールタイム）
+ *   - v0.16.0 (2026/05/24): 500m レース PDF 一括再生成・距離セル書き込み
+ *      ・populateSheet / populateSheetForPreRace_ で Template_result の「距離」セルに値を書き込み
+ *      ・regenerateAllResultPdfs(startNo, endNo) 全レース PDF 強制再生成
+ *      ・regenerate500mResultPdfs() 500m レースのみ一括再生成
+ *      ・buildRaceInfo_ で is500mRace 判定（500m 列に値・1000m 列ブランク）
  *   - v0.15.3 (2026/05/22): 新雛形対応 — 「B」列削除、カテゴリと着順入れ替え、着順は手書きのためGAS書き込みスキップ（列が無ければ書かない）
  *   - v0.15.2 (2026/05/21): 日付正規化（ゼロ埋め）を強化。master.json の 2026/5/23 形式と 2026/05/23 形式を統一比較
  *   - v0.15.1 (2026/05/21): 準備資料を日付ごとに分割生成（実行時間制限対策）、ファイル名 レース前準備資料_YYYY-MM-DD.pdf
@@ -28,7 +39,7 @@
  * ============================================================
  * GitHubの race_NNN.json を監視し、変更があったレースだけPDFを再生成する。
  */
-const PDF_PUBLISHER_VERSION = '0.15.3 (2026/05/22)';
+const PDF_PUBLISHER_VERSION = '0.17.0 (2026/05/25)';
 
 const CONFIG_KEYS = {
   githubRepo: 'GITHUB_REPO',
