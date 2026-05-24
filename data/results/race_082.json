@@ -1,1 +1,121 @@
-{"race_no":82,"cleared":true,"results":[]}
+{
+  "race_no": 82,
+  "updated_at": "2026-05-24T15:32:53.477Z",
+  "results": [
+    {
+      "lane": 2,
+      "rank": 1,
+      "times": {
+        "500m": {
+          "time_ms": 126410,
+          "formatted": "2:06.41"
+        },
+        "1000m": {
+          "time_ms": 255340,
+          "formatted": "4:15.34"
+        }
+      },
+      "finish": {
+        "time_ms": 255340,
+        "formatted": "4:15.34"
+      },
+      "split": "(2:08.93)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 3,
+      "rank": 2,
+      "times": {
+        "500m": {
+          "time_ms": 137130,
+          "formatted": "2:17.13"
+        },
+        "1000m": {
+          "time_ms": 277790,
+          "formatted": "4:37.79"
+        }
+      },
+      "finish": {
+        "time_ms": 277790,
+        "formatted": "4:37.79"
+      },
+      "split": "(2:20.66)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 1,
+      "rank": 3,
+      "times": {
+        "500m": {
+          "time_ms": 144360,
+          "formatted": "2:24.36"
+        },
+        "1000m": {
+          "time_ms": 286560,
+          "formatted": "4:46.56"
+        }
+      },
+      "finish": {
+        "time_ms": 286560,
+        "formatted": "4:46.56"
+      },
+      "split": "(2:22.20)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 4,
+      "rank": 4,
+      "times": {
+        "500m": {
+          "time_ms": 149740,
+          "formatted": "2:29.74"
+        },
+        "1000m": {
+          "time_ms": 292930,
+          "formatted": "4:52.93"
+        }
+      },
+      "finish": {
+        "time_ms": 292930,
+        "formatted": "4:52.93"
+      },
+      "split": "(2:23.19)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 5,
+      "rank": 5,
+      "times": {
+        "500m": {
+          "time_ms": 158400,
+          "formatted": "2:38.40"
+        },
+        "1000m": {
+          "time_ms": 321040,
+          "formatted": "5:21.04"
+        }
+      },
+      "finish": {
+        "time_ms": 321040,
+        "formatted": "5:21.04"
+      },
+      "split": "(2:42.64)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    }
+  ]
+}
