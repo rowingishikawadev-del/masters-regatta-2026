@@ -1,25 +1,48 @@
 {
   "race_no": 7,
-  "updated_at": "2026-05-20T10:05:11.306Z",
+  "updated_at": "2026-05-22T23:10:12.079Z",
   "results": [
     {
-      "lane": 2,
+      "lane": 3,
       "rank": 1,
       "times": {
         "500m": {
-          "time_ms": 113800,
-          "formatted": "1:53.80"
+          "time_ms": 135880,
+          "formatted": "2:15.88"
         },
         "1000m": {
-          "time_ms": 230100,
-          "formatted": "3:50.10"
+          "time_ms": 277620,
+          "formatted": "4:37.62"
         }
       },
       "finish": {
-        "time_ms": 230100,
-        "formatted": "3:50.10"
+        "time_ms": 277620,
+        "formatted": "4:37.62"
       },
-      "split": "(1:56.30)",
+      "split": "(2:21.74)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 2,
+      "rank": 2,
+      "times": {
+        "500m": {
+          "time_ms": 136970,
+          "formatted": "2:16.97"
+        },
+        "1000m": {
+          "time_ms": 280240,
+          "formatted": "4:40.24"
+        }
+      },
+      "finish": {
+        "time_ms": 280240,
+        "formatted": "4:40.24"
+      },
+      "split": "(2:23.27)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -27,68 +50,22 @@
     },
     {
       "lane": 4,
-      "rank": 2,
-      "times": {
-        "500m": {
-          "time_ms": 115300,
-          "formatted": "1:55.30"
-        },
-        "1000m": {
-          "time_ms": 233200,
-          "formatted": "3:53.20"
-        }
-      },
-      "finish": {
-        "time_ms": 233200,
-        "formatted": "3:53.20"
-      },
-      "split": "(1:57.90)",
-      "tie_group": "",
-      "photo_flag": false,
-      "note": "",
-      "status": "finish"
-    },
-    {
-      "lane": 1,
       "rank": 3,
       "times": {
         "500m": {
-          "time_ms": 117100,
-          "formatted": "1:57.10"
+          "time_ms": 148390,
+          "formatted": "2:28.39"
         },
         "1000m": {
-          "time_ms": 236900,
-          "formatted": "3:56.90"
+          "time_ms": 292460,
+          "formatted": "4:52.46"
         }
       },
       "finish": {
-        "time_ms": 236900,
-        "formatted": "3:56.90"
+        "time_ms": 292460,
+        "formatted": "4:52.46"
       },
-      "split": "(1:59.80)",
-      "tie_group": "",
-      "photo_flag": false,
-      "note": "",
-      "status": "finish"
-    },
-    {
-      "lane": 3,
-      "rank": 4,
-      "times": {
-        "500m": {
-          "time_ms": 119400,
-          "formatted": "1:59.40"
-        },
-        "1000m": {
-          "time_ms": 241800,
-          "formatted": "4:01.80"
-        }
-      },
-      "finish": {
-        "time_ms": 241800,
-        "formatted": "4:01.80"
-      },
-      "split": "(2:02.40)",
+      "split": "(2:24.07)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
@@ -96,22 +73,45 @@
     },
     {
       "lane": 5,
-      "rank": 5,
+      "rank": 4,
       "times": {
         "500m": {
-          "time_ms": 121200,
-          "formatted": "2:01.20"
+          "time_ms": 155450,
+          "formatted": "2:35.45"
         },
         "1000m": {
-          "time_ms": 245600,
-          "formatted": "4:05.60"
+          "time_ms": 320190,
+          "formatted": "5:20.19"
         }
       },
       "finish": {
-        "time_ms": 245600,
-        "formatted": "4:05.60"
+        "time_ms": 320190,
+        "formatted": "5:20.19"
       },
-      "split": "(2:04.40)",
+      "split": "(2:44.74)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 1,
+      "rank": 5,
+      "times": {
+        "500m": {
+          "time_ms": 192270,
+          "formatted": "3:12.27"
+        },
+        "1000m": {
+          "time_ms": 385840,
+          "formatted": "6:25.84"
+        }
+      },
+      "finish": {
+        "time_ms": 385840,
+        "formatted": "6:25.84"
+      },
+      "split": "(3:13.57)",
       "tie_group": "",
       "photo_flag": false,
       "note": "",
