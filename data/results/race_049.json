@@ -1,1 +1,98 @@
-{"race_no":49,"cleared":true,"results":[]}
+{
+  "race_no": 49,
+  "updated_at": "2026-05-24T15:28:01.588Z",
+  "results": [
+    {
+      "lane": 5,
+      "rank": 1,
+      "times": {
+        "500m": {
+          "time_ms": 145120,
+          "formatted": "2:25.12"
+        },
+        "1000m": {
+          "time_ms": 283040,
+          "formatted": "4:43.04"
+        }
+      },
+      "finish": {
+        "time_ms": 283040,
+        "formatted": "4:43.04"
+      },
+      "split": "(2:17.92)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 3,
+      "rank": 2,
+      "times": {
+        "500m": {
+          "time_ms": 144310,
+          "formatted": "2:24.31"
+        },
+        "1000m": {
+          "time_ms": 294130,
+          "formatted": "4:54.13"
+        }
+      },
+      "finish": {
+        "time_ms": 294130,
+        "formatted": "4:54.13"
+      },
+      "split": "(2:29.82)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 4,
+      "rank": 3,
+      "times": {
+        "500m": {
+          "time_ms": 148190,
+          "formatted": "2:28.19"
+        },
+        "1000m": {
+          "time_ms": 303720,
+          "formatted": "5:03.72"
+        }
+      },
+      "finish": {
+        "time_ms": 303720,
+        "formatted": "5:03.72"
+      },
+      "split": "(2:35.53)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 2,
+      "rank": 4,
+      "times": {
+        "500m": {
+          "time_ms": 150800,
+          "formatted": "2:30.80"
+        },
+        "1000m": {
+          "time_ms": 310860,
+          "formatted": "5:10.86"
+        }
+      },
+      "finish": {
+        "time_ms": 310860,
+        "formatted": "5:10.86"
+      },
+      "split": "(2:40.06)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    }
+  ]
+}
