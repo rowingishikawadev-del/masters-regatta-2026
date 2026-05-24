@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-05-24T15:02:43.850Z",
-  "updated_at": "2026-05-24T15:02:43.850Z",
+  "generated_at": "2026-05-24T15:11:45.659Z",
+  "updated_at": "2026-05-24T15:11:45.659Z",
   "measurement_points": [
     "500m",
     "1000m"
@@ -5351,6 +5351,5 @@
       ],
       "course_length": 500
     }
-  ],
-  "last_trigger_at": "2026-05-24T15:10:10.734Z"
+  ]
 }
