@@ -1,11 +1,16 @@
 /**
  * ============================================================
  *  マスターズレガッタ2026 試合結果PDF生成システム (Code.gs)
- *  Version: 0.17.0
+ *  Version: 0.18.0
  *  Last Updated: 2026/05/25
- *  Last Pushed:  2026/05/25 02:09 (clasp by Claude Code)
+ *  Last Pushed:  2026/05/25 03:10 (clasp by Claude Code)
  *  scriptId:     1C8qpIqKRLNtQcTl0LerglEaMdt1X9rvZJeH89GT7c48kiQUAvFzlswAt
  *  Changes:
+ *   - v0.18.0 (2026/05/25): 全レース結果まとめ PDF（結果ブックレット）追加
+ *      ・generateAllResultsBooklet() — 全日程を日付ごとに分割して 1 PDF/日 生成
+ *      ・generateResultsBookletForDate(dateStr) — 指定日のみ生成
+ *      ・populateSheetForResultBooklet_() — 結果テンプレ1シート/レースで書込
+ *      ・出力先は PRE_RACE_BOOKLET_FOLDER_ID、ファイル名「レース結果_YYYY-MM-DD.pdf」
  *   - v0.17.0 (2026/05/25): 500m レース PDF 対応強化
  *      ・buildRaceInfo_ で resultData.course_length 優先 → schedule.course_length → tournament.course_length の判定
  *      ・500m レース時の 0:00.00 スタート時刻パターン判定で 1000m スロットからフォールバック（旧データ救済）
@@ -39,7 +44,7 @@
  * ============================================================
  * GitHubの race_NNN.json を監視し、変更があったレースだけPDFを再生成する。
  */
-const PDF_PUBLISHER_VERSION = '0.17.0 (2026/05/25)';
+const PDF_PUBLISHER_VERSION = '0.18.0 (2026/05/25)';
 
 const CONFIG_KEYS = {
   githubRepo: 'GITHUB_REPO',
@@ -231,6 +236,153 @@ function populateSheet(spreadsheet, raceNo, masterData, resultData) {
   writeBelowLabel_(sheet, values, 'レース時間', raceInfo.raceTime);
   writeBelowLabel_(sheet, values, '種目名', raceInfo.eventName);
   // 距離（500m / 1000m）: schedule.course_length → 文字列化して書き込む
+  writeBelowLabel_(sheet, values, '距離', raceInfo.courseLength + 'm');
+  writeBelowLabel_(sheet, values, 'カテゴリ', raceInfo.ageGroup);
+  writeRoundValue_(sheet, values, raceInfo.roundName);
+  writeRankingRows_(sheet, values, raceInfo.entries);
+}
+
+// ============================================================
+//  全レース結果まとめ PDF（結果ブックレット）
+//  v0.18.0 (2026/05/25) で新設
+//
+//  generateAllResultsBooklet() — 全レース結果を 1 つの PDF にまとめる
+//  generateResultsBookletForDate(dateStr) — 指定日のレース結果のみ
+//
+//  既存の populateSheet と同じロジックで「結果テンプレートシート（先頭シート）」を
+//  各レース分 copyTo してから populateSheetForResultBooklet_ で値を書き込む。
+//  PDF 出力先は PRE_RACE_BOOKLET_FOLDER_ID（準備資料と同じフォルダ）。
+//  ファイル名は「全レース結果_YYYY-MM-DD_HHmm.pdf」or「レース結果_YYYY-MM-DD.pdf」
+//
+//  GAS 6 分制限を超える可能性があるため、日付指定版を推奨
+// ============================================================
+
+/**
+ * 全レースの結果を 1 つの PDF にまとめる（日付ごとに分割実行）
+ * 5/23 と 5/24 別ファイルに自動分割される
+ */
+function generateAllResultsBooklet() {
+  Logger.log('=== generateAllResultsBooklet 開始 v' + PDF_PUBLISHER_VERSION + ' ===');
+  const config = getConfig_();
+  const masterData = fetchMasterData_(config);
+  const dates = ((masterData.tournament || {}).dates || []).slice();
+  if (dates.length === 0) throw new Error('tournament.dates が空です。');
+
+  dates.forEach(function(d) {
+    try {
+      generateResultsBookletForDate(String(d).replace(/-/g, '/'), masterData);
+    } catch (e) {
+      Logger.log('日付 ' + d + ' でエラー: ' + e.message);
+    }
+  });
+  Logger.log('=== 全日程の結果まとめ PDF 生成完了 dates=' + dates.length + ' ===');
+}
+
+/**
+ * 指定日のレース結果を 1 PDF にまとめる
+ * ファイル名: レース結果_YYYY-MM-DD.pdf
+ * @param {string} dateStr 例: '2026/5/23' または '2026-05-23'
+ * @param {object} [masterData] 省略時は fetch する
+ */
+function generateResultsBookletForDate(dateStr, masterData) {
+  Logger.log('=== generateResultsBookletForDate v' + PDF_PUBLISHER_VERSION + ' date=' + dateStr + ' ===');
+  const config = getConfig_();
+  const loadedMasterData = masterData || fetchMasterData_(config);
+  const normalizedDate = normalizeDateKey_(dateStr);
+
+  const schedule = (loadedMasterData.schedule || [])
+    .filter(function(r) { return normalizeDateKey_(r.date) === normalizedDate; })
+    .sort(function(a, b) { return (a.race_no || 0) - (b.race_no || 0); });
+  if (schedule.length === 0) {
+    Logger.log('対象日のレースなし: ' + dateStr);
+    return;
+  }
+
+  const tmpTitle = '_tmp_results_booklet_' + normalizedDate.replace(/\//g, '-') + '_' + Date.now();
+  const templateFile = DriveApp.getFileById(config.templateSheetId);
+  const tmpFile = templateFile.makeCopy(tmpTitle);
+  const tmpSpreadsheet = SpreadsheetApp.openById(tmpFile.getId());
+  Logger.log('一時 Spreadsheet 作成: ' + tmpFile.getId());
+
+  const startedAt = Date.now();
+  let processed = 0;
+
+  try {
+    // 結果テンプレートシート = getSheets()[0]（既存 populateSheet と同じ）
+    const allSheets = tmpSpreadsheet.getSheets();
+    const templateSheet = allSheets[0];
+    // 他シートは削除
+    allSheets.forEach(function(s) {
+      if (s.getSheetId() !== templateSheet.getSheetId()) {
+        try { tmpSpreadsheet.deleteSheet(s); } catch (e) { Logger.log('シート削除警告: ' + e); }
+      }
+    });
+
+    schedule.forEach(function(race, idx) {
+      // 実行時間チェック
+      if (Date.now() - startedAt > MAX_RUNTIME_MS - STOP_BEFORE_MS) {
+        Logger.log('⏱ 実行時間上限が近いため中断 (idx=' + idx + ', 処理済み=' + processed + ')');
+        return;
+      }
+
+      try {
+        // 結果データ取得（失敗時はスキップせず空で生成）
+        let resultData = null;
+        try {
+          resultData = fetchRaceResult_(config, normalizeRaceNo_(race.race_no));
+        } catch (e) {
+          Logger.log('結果データ取得失敗 race_' + race.race_no + ': ' + e.message + ' → 空エントリで生成');
+        }
+
+        // シート用意
+        let sheet;
+        if (idx === 0) {
+          sheet = templateSheet;
+          sheet.setName('R' + String(race.race_no).padStart(3, '0'));
+        } else {
+          sheet = templateSheet.copyTo(tmpSpreadsheet);
+          sheet.setName('R' + String(race.race_no).padStart(3, '0'));
+        }
+
+        populateSheetForResultBooklet_(sheet, race.race_no, loadedMasterData, resultData);
+        processed++;
+        Logger.log('シート生成完了: R' + race.race_no + ' (' + processed + '/' + schedule.length + ')');
+      } catch (e) {
+        Logger.log('レース処理エラー race_' + race.race_no + ': ' + e);
+      }
+    });
+
+    SpreadsheetApp.flush();
+    Utilities.sleep(1500);
+
+    const fileName = 'レース結果_' + normalizedDate.replace(/\//g, '-') + '.pdf';
+    const pdfBlob = exportBookletPdf_(tmpSpreadsheet.getId(), fileName);
+    Logger.log('PDF export 完了: bytes=' + pdfBlob.getBytes().length);
+
+    const targetFolder = DriveApp.getFolderById(PRE_RACE_BOOKLET_FOLDER_ID);
+    const existing = targetFolder.getFilesByName(fileName);
+    while (existing.hasNext()) existing.next().setTrashed(true);
+    targetFolder.createFile(pdfBlob);
+    Logger.log('PDF 格納完了: ' + PRE_RACE_BOOKLET_FOLDER_ID + '/' + fileName);
+
+    return { fileName: fileName, raceCount: processed };
+  } finally {
+    tmpFile.setTrashed(true);
+  }
+}
+
+/**
+ * 結果ブックレット用シート書き込み（populateSheet と同等）
+ */
+function populateSheetForResultBooklet_(sheet, raceNo, masterData, resultData) {
+  const values = sheet.getDataRange().getDisplayValues();
+  const raceInfo = buildRaceInfo_(raceNo, masterData, resultData);
+
+  writeTournamentName_(sheet, values, masterData);
+  writePrintTime_(sheet, values);
+  writeBelowLabel_(sheet, values, 'Race No.', String(raceNo));
+  writeBelowLabel_(sheet, values, 'レース時間', raceInfo.raceTime);
+  writeBelowLabel_(sheet, values, '種目名', raceInfo.eventName);
   writeBelowLabel_(sheet, values, '距離', raceInfo.courseLength + 'm');
   writeBelowLabel_(sheet, values, 'カテゴリ', raceInfo.ageGroup);
   writeRoundValue_(sheet, values, raceInfo.roundName);
