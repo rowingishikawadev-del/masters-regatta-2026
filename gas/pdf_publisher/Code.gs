@@ -1,11 +1,14 @@
 /**
  * ============================================================
  *  マスターズレガッタ2026 試合結果PDF生成システム (Code.gs)
- *  Version: 0.18.0
+ *  Version: 0.18.1
  *  Last Updated: 2026/05/25
- *  Last Pushed:  2026/05/25 03:10 (clasp by Claude Code)
+ *  Last Pushed:  2026/05/25 03:56 (clasp by Claude Code)
  *  scriptId:     1C8qpIqKRLNtQcTl0LerglEaMdt1X9rvZJeH89GT7c48kiQUAvFzlswAt
  *  Changes:
+ *   - v0.18.1 (2026/05/25): clearAllCaches() 新設
+ *      ・CacheService の master.json / resultList キャッシュ（240秒 TTL）を即時クリア
+ *      ・importMasterData 直後の PDF 再生成で古いキャッシュが残る問題を解消
  *   - v0.18.0 (2026/05/25): 全レース結果まとめ PDF（結果ブックレット）追加
  *      ・generateAllResultsBooklet() — 全日程を日付ごとに分割して 1 PDF/日 生成
  *      ・generateResultsBookletForDate(dateStr) — 指定日のみ生成
@@ -44,7 +47,7 @@
  * ============================================================
  * GitHubの race_NNN.json を監視し、変更があったレースだけPDFを再生成する。
  */
-const PDF_PUBLISHER_VERSION = '0.18.0 (2026/05/25)';
+const PDF_PUBLISHER_VERSION = '0.18.1 (2026/05/25)';
 
 const CONFIG_KEYS = {
   githubRepo: 'GITHUB_REPO',
@@ -609,6 +612,25 @@ function testGenerateRace1Status() {
     ]
   };
   return generatePdf('1', masterData, dummyWithStatus);
+}
+
+/**
+ * master.json / 結果リスト の CacheService キャッシュをクリアする
+ * importMasterData / clearAllResults 等の直後に呼べば次回 fetch が最新を取りに行く
+ */
+function clearAllCaches() {
+  const cache = CacheService.getScriptCache();
+  // 既知のキー（CACHE_KEYS で定義された値）を全て削除
+  try {
+    Object.values(CACHE_KEYS).forEach(function(k) {
+      try { cache.remove(k); } catch (e) {}
+    });
+    // resultList は githubRepo/branch を含む組み合わせキーなので念のため全削除を試行
+    cache.removeAll(Object.values(CACHE_KEYS));
+    Logger.log('[clearAllCaches] PDF Publisher の CacheService キャッシュをクリアしました');
+  } catch (e) {
+    Logger.log('[clearAllCaches] キャッシュクリア時エラー: ' + e.message);
+  }
 }
 
 function testClearAllHashes() {
