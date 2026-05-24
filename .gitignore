@@ -14,3 +14,4 @@ venv/
 # エディタ
 .vscode/
 .idea/
+master/schedule.csv.bak-*
