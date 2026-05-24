@@ -1,1 +1,102 @@
-{"race_no":114,"cleared":true,"results":[]}
+{
+  "race_no": 114,
+  "updated_at": "2026-05-24T17:23:26.823Z",
+  "results": [
+    {
+      "lane": 3,
+      "rank": 1,
+      "times": {
+        "500m": {
+          "time_ms": 148750,
+          "formatted": "2:28.75"
+        }
+      },
+      "finish": {
+        "time_ms": 148750,
+        "formatted": "2:28.75"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 4,
+      "rank": 2,
+      "times": {
+        "500m": {
+          "time_ms": 152090,
+          "formatted": "2:32.09"
+        }
+      },
+      "finish": {
+        "time_ms": 152090,
+        "formatted": "2:32.09"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 1,
+      "rank": 3,
+      "times": {
+        "500m": {
+          "time_ms": 155420,
+          "formatted": "2:35.42"
+        }
+      },
+      "finish": {
+        "time_ms": 155420,
+        "formatted": "2:35.42"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 2,
+      "rank": 4,
+      "times": {
+        "500m": {
+          "time_ms": 162460,
+          "formatted": "2:42.46"
+        }
+      },
+      "finish": {
+        "time_ms": 162460,
+        "formatted": "2:42.46"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 5,
+      "rank": 5,
+      "times": {
+        "500m": {
+          "time_ms": 164870,
+          "formatted": "2:44.87"
+        }
+      },
+      "finish": {
+        "time_ms": 164870,
+        "formatted": "2:44.87"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    }
+  ],
+  "course_length": 500
+}
