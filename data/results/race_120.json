@@ -1,1 +1,64 @@
-{"race_no":120,"cleared":true,"results":[]}
+{
+  "race_no": 120,
+  "updated_at": "2026-05-24T17:24:00.511Z",
+  "results": [
+    {
+      "lane": 2,
+      "rank": 1,
+      "times": {
+        "500m": {
+          "time_ms": 170180,
+          "formatted": "2:50.18"
+        }
+      },
+      "finish": {
+        "time_ms": 170180,
+        "formatted": "2:50.18"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 4,
+      "rank": 2,
+      "times": {
+        "500m": {
+          "time_ms": 192410,
+          "formatted": "3:12.41"
+        }
+      },
+      "finish": {
+        "time_ms": 192410,
+        "formatted": "3:12.41"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 5,
+      "rank": 3,
+      "times": {
+        "500m": {
+          "time_ms": 217000,
+          "formatted": "3:37.00"
+        }
+      },
+      "finish": {
+        "time_ms": 217000,
+        "formatted": "3:37.00"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    }
+  ],
+  "course_length": 500
+}
