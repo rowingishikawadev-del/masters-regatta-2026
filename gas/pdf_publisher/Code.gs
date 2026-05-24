@@ -219,6 +219,8 @@ function populateSheet(spreadsheet, raceNo, masterData, resultData) {
   writeBelowLabel_(sheet, values, 'Race No.', raceNo);
   writeBelowLabel_(sheet, values, 'レース時間', raceInfo.raceTime);
   writeBelowLabel_(sheet, values, '種目名', raceInfo.eventName);
+  // 距離（500m / 1000m）: schedule.course_length → 文字列化して書き込む
+  writeBelowLabel_(sheet, values, '距離', raceInfo.courseLength + 'm');
   writeBelowLabel_(sheet, values, 'カテゴリ', raceInfo.ageGroup);
   writeRoundValue_(sheet, values, raceInfo.roundName);
   writeRankingRows_(sheet, values, raceInfo.entries);
@@ -322,11 +324,16 @@ function populateSheetForPreRace_(sheet, race, masterData) {
   const ageGroup = race.age_group || '';
   const roundName = decodeRound(race.round || '');
 
+  // 距離（500m / 1000m）。schedule.course_length 優先 → tournament.course_length → デフォルト 1000
+  const tournamentLen = (masterData && masterData.tournament && masterData.tournament.course_length) || 1000;
+  const courseLength = parseInt(race.course_length || tournamentLen, 10);
+
   writeTournamentName_(sheet, values, masterData);
   writePrintTime_(sheet, values);
   writeBelowLabel_(sheet, values, 'Race No.', String(race.race_no));
   writeBelowLabel_(sheet, values, 'レース時間', raceTime);
   writeBelowLabel_(sheet, values, '種目名', race.event_name || '');
+  writeBelowLabel_(sheet, values, '距離', courseLength + 'm');
   writeBelowLabel_(sheet, values, 'カテゴリ', ageGroup);
   writeRoundValue_(sheet, values, roundName);
 
