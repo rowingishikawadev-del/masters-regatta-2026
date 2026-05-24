@@ -3,11 +3,14 @@
  * Google Drive のCSVを監視し、GitHub にレース結果JSONをPushする
  *
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- *  バージョン: v1.3.0 (2026/05/25)
- *  最終 push:  2026/05/25 02:15  (clasp by Claude Code)
+ *  バージョン: v1.3.1 (2026/05/25)
+ *  最終 push:  2026/05/25 02:50  (clasp by Claude Code)
  *  scriptId:   1PYr-9DlmBOECNR0G6jDYYuTRVnW_Bt8GVMt3YHARmdBZ1uwhY_whvRLm
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  *  ▼ 変更履歴
+ *  v1.3.1 (2026/05/25)
+ *    - reprocessAllRaces() を拡張: 「削除済」フォルダからも CSV を race_csv/ に救済
+ *      （clearAllResults 実行後の救済用）
  *  v1.3.0 (2026/05/25)
  *    - reprocessAllRaces() 新設: processed/ の全 CSV を race_csv/ に戻して全件再処理
  *      → 仕様変更後の総まとめで全レース race_XXX.json を新ロジックで再生成可能
@@ -25,7 +28,7 @@
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  *  バージョン定数（ログ出力・サポート時の参照用）
  */
-const GAS_MAIN_VERSION = '1.3.0 (2026/05/25)';
+const GAS_MAIN_VERSION = '1.3.1 (2026/05/25)';
 
 // ============================================================
 // ▼▼▼ はじめにここだけ入力してください ▼▼▼
@@ -954,13 +957,46 @@ function reprocessAllRaces() {
     }
     Logger.log('processed/' + point + '/ → race_csv/' + point + '/ に戻したファイル数: ' + movedInPoint);
   }
-  Logger.log('合計 ' + totalMoved + ' ファイルを race_csv/ に戻しました');
+  Logger.log('processed/ からの合計 ' + totalMoved + ' ファイル');
+
+  // 2. 「削除済」フォルダからも戻す（clearAllResults で移動された分の救済）
+  //    DELETED_FOLDER_ID スクリプトプロパティ or デフォルト ID を参照
+  const deletedFolderId = props.getProperty('DELETED_FOLDER_ID') || '1DaFuSAZQxdYqqI0-_SvidMEfK8G1zUa4';
+  let deletedRestored = 0;
+  try {
+    const deletedFolder = DriveApp.getFolderById(deletedFolderId);
+    Logger.log('--- 削除済フォルダ（' + deletedFolderId + '）からも CSV を救済 ---');
+    // 削除済フォルダ直下に CSV が並んでいる構造（point サブフォルダなし）
+    const dFiles = deletedFolder.getFiles();
+    while (dFiles.hasNext()) {
+      const file = dFiles.next();
+      const fileName = file.getName();
+      const match = fileName.match(CONFIG.csvPattern);
+      if (!match) continue;
+      const filePoint = match[2]; // CSV ファイル名から '500m' or '1000m' 抽出
+      // 対応する race_csv/{point}/ サブフォルダを取得
+      const raceCsvPoint = getOrCreateFolder(raceCsvFolder.getId(), filePoint);
+      try {
+        file.moveTo(raceCsvPoint);
+        deletedRestored++;
+        totalMoved++;
+        Logger.log('  削除済 → race_csv/' + filePoint + '/: ' + fileName);
+      } catch (e) {
+        Logger.log('  ⚠ 削除済からの移動失敗: ' + fileName + ': ' + e.message);
+      }
+    }
+    Logger.log('削除済 → race_csv/ に戻したファイル数: ' + deletedRestored);
+  } catch (e) {
+    Logger.log('削除済フォルダ取得失敗（スキップ）: ' + e.message);
+  }
+
+  Logger.log('合計 ' + totalMoved + ' ファイルを race_csv/ に戻しました（processed + 削除済）');
 
   if (totalMoved === 0) {
     Logger.log('move back 対象なし。race_csv/ に既にある CSV を直接処理します');
   }
 
-  // 2. processPendingCSVs() を実行 → race_XXX.json 生成 & GitHub Push
+  // 3. processPendingCSVs() を実行 → race_XXX.json 生成 & GitHub Push
   Logger.log('--- processPendingCSVs() 実行 ---');
   processPendingCSVs(startTime);
 
