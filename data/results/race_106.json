@@ -1,6 +1,6 @@
 {
   "race_no": 106,
-  "updated_at": "2026-05-24T18:03:10.116Z",
+  "updated_at": "2026-05-24T18:05:18.205Z",
   "results": [
     {
       "lane": 4,
@@ -22,8 +22,27 @@
       "status": "finish"
     },
     {
-      "lane": 3,
+      "lane": 2,
       "rank": 2,
+      "times": {
+        "500m": {
+          "time_ms": 144860,
+          "formatted": "2:24.86"
+        }
+      },
+      "finish": {
+        "time_ms": 144860,
+        "formatted": "2:24.86"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 3,
+      "rank": 3,
       "times": {
         "500m": {
           "time_ms": 152410,
@@ -42,7 +61,7 @@
     },
     {
       "lane": 1,
-      "rank": 3,
+      "rank": 4,
       "times": {
         "500m": {
           "time_ms": 153320,
@@ -52,25 +71,6 @@
       "finish": {
         "time_ms": 153320,
         "formatted": "2:33.32"
-      },
-      "split": "",
-      "tie_group": "",
-      "photo_flag": false,
-      "note": "",
-      "status": "finish"
-    },
-    {
-      "lane": 2,
-      "rank": 4,
-      "times": {
-        "500m": {
-          "time_ms": 154860,
-          "formatted": "2:34.86"
-        }
-      },
-      "finish": {
-        "time_ms": 154860,
-        "formatted": "2:34.86"
       },
       "split": "",
       "tie_group": "",
