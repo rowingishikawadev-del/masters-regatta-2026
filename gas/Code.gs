@@ -758,6 +758,83 @@ function moveToProcessed(file, point) {
 }
 
 // ============================================================
+// 6.5 processed/ から race_csv/ へ戻して再処理（500m レース対応・新ロジック適用用）
+// ============================================================
+
+/**
+ * 500m レース全件を processed/ から race_csv/ に戻し、再処理を発火する。
+ *
+ * 用途:
+ *   - 旧ロジック（500m + 1000m 両方必須）で結果反映されなかった 500m レースを救済
+ *   - 新ロジック（fetchCourseLengthMap_ + processPendingCSVs）で正しく race_XXX.json を再生成
+ *
+ * 動作:
+ *   1. master.json から course_length=500 の race_no を抽出
+ *   2. processed/500m/ 配下から該当 race_no の CSV を race_csv/500m/ に move back
+ *   3. processPendingCSVs() を内部呼び出しで実行 → race_XXX.json を生成 & GitHub Push
+ *
+ * GAS 6 分制限を超える場合は、内部で時間切れになった分は次回トリガー実行で順次処理される
+ */
+function reprocess500mRaces() {
+  Logger.log('=== reprocess500mRaces 開始 ===');
+  const startTime = Date.now();
+
+  // 1. master.json から 500m レースの race_no を取得
+  const courseMap = fetchCourseLengthMap_();
+  const race500 = Object.keys(courseMap)
+    .filter(function(no) { return courseMap[no] === 500; })
+    .map(function(no) { return parseInt(no, 10); })
+    .sort(function(a, b) { return a - b; });
+
+  if (race500.length === 0) {
+    Logger.log('500m レースが master.json に見つかりません。先に importMasterData() を実行してください');
+    return;
+  }
+  Logger.log('500m レース: ' + race500.length + ' 件 (race_no ' + race500[0] + '〜' + race500[race500.length - 1] + ')');
+
+  // 2. processed/500m/ → race_csv/500m/ へ move back
+  const props = PropertiesService.getScriptProperties();
+  const rootFolderId = props.getProperty(CONFIG.props.driveFolderId);
+  if (!rootFolderId) { throw new Error('DRIVE_ROOT_FOLDER_ID が未設定'); }
+
+  const processedFolder = getOrCreateFolder(rootFolderId, CONFIG.folders.processed);
+  const processedPoint500 = getOrCreateFolder(processedFolder.getId(), '500m');
+  const raceCsvFolder = getOrCreateFolder(rootFolderId, CONFIG.folders.raceCsv);
+  const raceCsvPoint500 = getOrCreateFolder(raceCsvFolder.getId(), '500m');
+
+  const race500Set = {}; race500.forEach(function(n) { race500Set[n] = true; });
+
+  let movedBack = 0;
+  const files = processedPoint500.getFiles();
+  while (files.hasNext()) {
+    const file = files.next();
+    const fileName = file.getName();
+    const match = fileName.match(CONFIG.csvPattern);
+    if (!match) continue;
+    const raceNo = parseInt(match[1], 10);
+    if (!race500Set[raceNo]) continue;
+    try {
+      file.moveTo(raceCsvPoint500);
+      movedBack++;
+      Logger.log('  move back: ' + fileName + ' (race_no=' + raceNo + ')');
+    } catch (e) {
+      Logger.log('  ⚠ 移動失敗: ' + fileName + ': ' + e.message);
+    }
+  }
+  Logger.log('processed/500m/ → race_csv/500m/ に戻したファイル数: ' + movedBack);
+
+  if (movedBack === 0) {
+    Logger.log('move back 対象なし。race_csv/500m/ に既にある CSV を直接処理します');
+  }
+
+  // 3. processPendingCSVs() を実行 → race_XXX.json 生成 & GitHub Push
+  Logger.log('--- processPendingCSVs() 実行 ---');
+  processPendingCSVs(startTime);
+
+  Logger.log('=== reprocess500mRaces 完了 ===');
+}
+
+// ============================================================
 // 7. マスターデータのインポート（手動実行用）
 // ============================================================
 

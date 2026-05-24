@@ -462,6 +462,122 @@ function testClearAllHashes() {
   Logger.log('削除したハッシュ数: ' + deletedCount);
 }
 
+/**
+ * 全レース結果 PDF を強制再生成する（500m レース対応・新ロジック反映用）。
+ *
+ * 使い方:
+ *   regenerateAllResultPdfs();              // 全レース再生成
+ *   regenerateAllResultPdfs(90, 123);       // 500m レース (race_no 90-123) のみ
+ *   regenerateAllResultPdfs(1, 50);         // 1〜50 だけ
+ *
+ * GAS 6 分制限対策:
+ *   - 1 回の実行で処理しきれない場合、次回呼び出し時に startRaceNo を進めて続行
+ *   - 既存ハッシュは無視して強制再生成（ハッシュは再生成後に更新される）
+ *
+ * @param {number} [startRaceNo]  開始 race_no（省略時=1）
+ * @param {number} [endRaceNo]    終了 race_no（省略時=全件）
+ */
+function regenerateAllResultPdfs(startRaceNo, endRaceNo) {
+  Logger.log('=== regenerateAllResultPdfs 開始 (start=' + (startRaceNo || 'auto') + ', end=' + (endRaceNo || 'auto') + ') ===');
+  const startedAt = Date.now();
+  const lock = LockService.getScriptLock();
+  try { lock.waitLock(LOCK_WAIT_MS); } catch (e) { Logger.log('ロック取得失敗: ' + e); return; }
+
+  let processed = 0, skipped = 0, errors = 0, lastProcessedNo = null;
+
+  try {
+    const config = getConfig_();
+    const properties = PropertiesService.getScriptProperties();
+    const masterData = fetchMasterData_(config);
+    const raceFiles = listRaceFiles_(config);
+    Logger.log('対象 race_XXX.json: ' + raceFiles.length + ' 件');
+
+    // race_no で昇順ソート（並び順を安定化）
+    raceFiles.sort(function(a, b) { return Number(a.raceNo) - Number(b.raceNo); });
+
+    const lo = Number(startRaceNo || 1);
+    const hi = Number(endRaceNo || 99999);
+
+    for (let i = 0; i < raceFiles.length; i++) {
+      // GAS 6 分制限への配慮: 残り時間が少なくなったら中断
+      if (Date.now() - startedAt > MAX_RUNTIME_MS - STOP_BEFORE_MS) {
+        Logger.log('⏱ 実行時間上限が近いため中断。次回は regenerateAllResultPdfs(' + (lastProcessedNo + 1) + ', ' + (endRaceNo || '') + ') で再開してください');
+        break;
+      }
+
+      const raceFile = raceFiles[i];
+      const raceNo = Number(raceFile.raceNo);
+      if (raceNo < lo || raceNo > hi) { skipped++; continue; }
+
+      try {
+        // 結果データ取得 → 結果なしならスキップ＆既存 PDF をアーカイブ移動
+        const resultText = fetchText_(raceFile.downloadUrl, config);
+        const resultJson = JSON.parse(resultText);
+        const lastClearedAt = masterData && masterData.tournament && masterData.tournament.last_cleared_at;
+        const isStale = lastClearedAt && resultJson.updated_at && resultJson.updated_at < lastClearedAt;
+        const hasResults = resultJson
+          && Array.isArray(resultJson.results)
+          && resultJson.results.length > 0
+          && !resultJson.cleared
+          && !isStale;
+
+        if (!hasResults) {
+          try {
+            const outputFolder = DriveApp.getFolderById(config.outputFolderId);
+            moveToArchive_(outputFolder, raceFile.raceNo + '.pdf', config.archiveFolderId);
+          } catch (cleanupError) {
+            Logger.log('既存PDFアーカイブ移動エラー race_' + raceFile.raceNo + ': ' + cleanupError);
+          }
+          Logger.log('スキップ (結果なし/cleared): race_' + raceFile.raceNo);
+          skipped++;
+          continue;
+        }
+
+        // ハッシュ無視で強制再生成
+        generatePdf(raceFile.raceNo, masterData, resultJson);
+        properties.setProperty(getHashKey_(raceFile.raceNo), raceFile.sha);
+        processed++;
+        lastProcessedNo = raceNo;
+        Logger.log('✅ 再生成完了: race_' + raceFile.raceNo + '.pdf (' + processed + '/' + raceFiles.length + ')');
+      } catch (raceError) {
+        errors++;
+        Logger.log('⚠ レース処理エラー race_' + raceFile.raceNo + ': ' + raceError);
+      }
+    }
+  } catch (error) {
+    Logger.log('regenerateAllResultPdfs エラー: ' + error);
+    throw error;
+  } finally {
+    lock.releaseLock();
+  }
+
+  Logger.log('=== 完了: 再生成=' + processed + ' スキップ=' + skipped + ' エラー=' + errors + ' 最終race_no=' + lastProcessedNo + ' ===');
+}
+
+/**
+ * 500m レースの PDF のみを再生成する（典型ケース用ショートカット）。
+ * master.json から course_length=500 の race_no を抽出して順次再生成。
+ */
+function regenerate500mResultPdfs() {
+  Logger.log('=== regenerate500mResultPdfs 開始 ===');
+  const config = getConfig_();
+  const masterData = fetchMasterData_(config);
+  const race500 = (masterData.schedule || [])
+    .filter(function(r) { return Number(r.course_length) === 500; })
+    .map(function(r) { return Number(r.race_no); })
+    .sort(function(a, b) { return a - b; });
+
+  if (race500.length === 0) {
+    Logger.log('500m レースが見つかりません。master.json の schedule[].course_length を確認してください');
+    return;
+  }
+  Logger.log('500m レース: ' + race500.length + ' 件 (race_no ' + race500[0] + '〜' + race500[race500.length - 1] + ')');
+
+  // race_no の連続範囲を全カバー（最小〜最大）。範囲内の 1000m レースは自動でスキップされない仕様なので注意
+  // → regenerateAllResultPdfs 側で範囲フィルタを使いつつ、内部で 500m のみ処理する形に
+  regenerateAllResultPdfs(race500[0], race500[race500.length - 1]);
+}
+
 function getConfig_() {
   const properties = PropertiesService.getScriptProperties().getProperties();
   return {
