@@ -1583,6 +1583,7 @@ function clearAllResults() {
   const owner = CONFIG.github.owner;
   const repo = CONFIG.github.repo;
   const branch = CONFIG.github.branch;
+  const resultsPath = CONFIG.github.resultsPath; // 'data/results'
 
   // results/ フォルダの既存ファイルを収集（フォルダが存在しなくても続行）
   const existingRaceNos = [];
