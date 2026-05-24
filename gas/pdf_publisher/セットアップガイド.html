@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>マスターズPDF生成 セットアップガイド</title>
+  <style>
+    :root {
+      --navy-900: #0A1628;
+      --navy: #152E58;
+      --orange: #EA580C;
+      --bg: #FFFFFF;
+      --text: #1F2937;
+      --muted: #6B7280;
+      --panel: #F8FAFC;
+      --danger: #DC2626;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.8;
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    h1 {
+      margin: 0 0 16px;
+      color: var(--navy-900);
+      font-size: 40px;
+      line-height: 1.25;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 48px 0 18px;
+      color: var(--navy);
+      font-size: 28px;
+      line-height: 1.35;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+    p {
+      margin: 0 0 20px;
+    }
+    .lead {
+      color: var(--muted);
+      font-size: 22px;
+    }
+    .step {
+      margin: 22px 0;
+      padding: 24px;
+      background: var(--panel);
+      box-shadow: 0 8px 28px rgba(10, 22, 40, 0.10);
+      border-radius: 8px;
+    }
+    .step-number {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--orange);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    code {
+      display: inline-block;
+      max-width: 100%;
+      padding: 2px 8px;
+      overflow-wrap: anywhere;
+      color: var(--navy-900);
+      background: #EEF2F7;
+      box-shadow: inset 0 0 0 1px rgba(21, 46, 88, 0.08);
+      border-radius: 6px;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.9em;
+      font-weight: 700;
+    }
+    ul {
+      margin: 12px 0 0;
+      padding-left: 1.2em;
+    }
+    li {
+      margin: 10px 0;
+    }
+    .note {
+      margin-top: 36px;
+      padding: 24px;
+      color: var(--navy-900);
+      background: #FFF7ED;
+      box-shadow: 0 8px 28px rgba(234, 88, 12, 0.16);
+      border-radius: 8px;
+    }
+    .warning {
+      margin-top: 18px;
+      padding: 18px;
+      color: var(--danger);
+      background: #FEF2F2;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.35), 0 8px 28px rgba(220, 38, 38, 0.14);
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>マスターズPDF生成 セットアップガイド</h1>
+    <p class="lead">試合結果PDFを2分ごとに自動生成するための初期設定です。上から順番に1つずつ進めてください。</p>
+
+    <h2>初期セットアップ</h2>
+
+    <section class="step">
+      <span class="step-number">手順 1</span>
+      <p><code>https://script.google.com</code> を開きます。</p>
+    </section>
+
+    <section class="step">
+      <span class="step-number">手順 2</span>
+      <p>新しい Apps Script プロジェクトを作成します。</p>
+    </section>
+
+    <section class="step">
+      <span class="step-number">手順 3</span>
+      <p>プロジェクト名を <code>マスターズPDF生成</code> に変更します。</p>
+    </section>
+
+    <section class="step">
+      <span class="step-number">手順 4</span>
+      <p><code>appsscript.json</code> の内容を、このフォルダの <code>appsscript.json</code> と同じ内容に置き換えます。</p>
+    </section>
+
+    <section class="step">
+      <span class="step-number">手順 5</span>
+      <p><code>Code.gs</code> の内容を、このフォルダの <code>Code.gs</code> と同じ内容に置き換えます。</p>
+    </section>
+
+    <section class="step">
+      <span class="step-number">手順 6</span>
+      <p>新しいファイル <code>Setup.gs</code> を作成し、このフォルダの <code>Setup.gs</code> の内容を貼り付けます。</p>
+    </section>
+
+    <section class="step">
+      <span class="step-number">手順 7</span>
+      <p>プロジェクト設定を開き、スクリプトプロパティに次の5つを設定します。</p>
+      <ul>
+        <li><code>GITHUB_REPO</code> = <code>rowingishikawadev-del/masters-regatta-2026</code></li>
+        <li><code>GITHUB_BRANCH</code> = <code>main</code></li>
+        <li><code>GITHUB_TOKEN</code> = 既存GAS（CSV→JSON Push）で使用中のものと同じ値</li>
+        <li><code>TEMPLATE_SHEET_ID</code> = <code>1A_CIgcyJ-1jp6qwIhxItDKpVtbMIRc8C5IGJajr0D7g</code></li>
+        <li><code>PDF_OUTPUT_FOLDER_ID</code> = <code>1n74sgVFD40JIjDf06pltjKp77yBhs4mY</code></li>
+      </ul>
+      <p class="warning"><code>GITHUB_TOKEN</code> が未設定だと GitHub API のレート制限でPDF生成が停止します。必ず既存GASと同じ Personal Access Token を設定してください。</p>
+    </section>
+
+    <section class="step">
+      <span class="step-number">手順 8</span>
+      <p>関数の一覧から <code>saveSetup</code> を選び、実行します。</p>
+    </section>
+
+    <section class="step">
+      <span class="step-number">手順 9</span>
+      <p>関数の一覧から <code>initializeTemplate</code> を選び、1回実行して雛形を初期化します。</p>
+      <p>これで雛形の順位列に 1〜6 がベタ書きされ、以降のレース処理が安定します。</p>
+    </section>
+
+    <section class="step">
+      <span class="step-number">手順 10</span>
+      <p>権限確認が出たら、使用するGoogleアカウントで承認します。</p>
+    </section>
+
+    <section class="step">
+      <span class="step-number">手順 11</span>
+      <p>関数の一覧から <code>setupTrigger</code> を選び、実行します。</p>
+    </section>
+
+    <section class="step">
+      <span class="step-number">手順 12</span>
+      <p>関数の一覧から <code>testGenerateRace1</code> を選び、実行します。</p>
+      <ul>
+        <li><code>testGenerateRace1RealFormat</code>: 実 <code>race_NNN.json</code> 形式のダミーで動作確認</li>
+        <li><code>testGenerateRace1Status</code>: DNS/DNF を含むダミーで備考欄表示確認</li>
+      </ul>
+    </section>
+
+    <section class="step">
+      <span class="step-number">手順 13</span>
+      <p>Drive の結果フォルダに <code>1.pdf</code> が作成されていることを確認します。</p>
+    </section>
+
+    <h2>大会運用</h2>
+
+    <section class="step">
+      <span class="step-number">大会前日</span>
+      <p><code>setupTrigger</code> を実行します。2分ごとの自動生成が有効になります。</p>
+    </section>
+
+    <section class="step">
+      <span class="step-number">大会終了後</span>
+      <p><code>removeTrigger</code> を実行します。自動生成が停止します。</p>
+    </section>
+
+    <section class="note">
+      <p>開発テスト用リポジトリに切り替える場合は、スクリプトプロパティの <code>GITHUB_REPO</code> を <code>RYUIYAMADA/masters-regatta-test</code> に変更してください。本番に戻すときは <code>rowingishikawadev-del/masters-regatta-2026</code> に戻してください。</p>
+    </section>
+
+    <section class="note">
+      <p><code>GITHUB_TOKEN</code> を変更しても、すでに記録されたハッシュはそのまま有効です。念のため再生成対象をリセットしたい場合は、関数の一覧から <code>testClearAllHashes</code> を実行してください。</p>
+    </section>
+  </main>
+</body>
+</html>

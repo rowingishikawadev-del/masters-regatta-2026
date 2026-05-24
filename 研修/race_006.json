@@ -1,0 +1,98 @@
+{
+  "race_no": 6,
+  "updated_at": "2026-05-23T08:00:00.000Z",
+  "results": [
+    {
+      "lane": 4,
+      "rank": 1,
+      "times": {
+        "500m": {
+          "time_ms": 107500,
+          "formatted": "1:47.50"
+        },
+        "1000m": {
+          "time_ms": 216800,
+          "formatted": "3:36.80"
+        }
+      },
+      "finish": {
+        "time_ms": 216800,
+        "formatted": "3:36.80"
+      },
+      "split": "(1:49.30)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 3,
+      "rank": 2,
+      "times": {
+        "500m": {
+          "time_ms": 108900,
+          "formatted": "1:48.90"
+        },
+        "1000m": {
+          "time_ms": 219200,
+          "formatted": "3:39.20"
+        }
+      },
+      "finish": {
+        "time_ms": 219200,
+        "formatted": "3:39.20"
+      },
+      "split": "(1:50.30)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 2,
+      "rank": 3,
+      "times": {
+        "500m": {
+          "time_ms": 110700,
+          "formatted": "1:50.70"
+        },
+        "1000m": {
+          "time_ms": 223500,
+          "formatted": "3:43.50"
+        }
+      },
+      "finish": {
+        "time_ms": 223500,
+        "formatted": "3:43.50"
+      },
+      "split": "(1:52.80)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 5,
+      "rank": 4,
+      "times": {
+        "500m": {
+          "time_ms": 113200,
+          "formatted": "1:53.20"
+        },
+        "1000m": {
+          "time_ms": 228600,
+          "formatted": "3:48.60"
+        }
+      },
+      "finish": {
+        "time_ms": 228600,
+        "formatted": "3:48.60"
+      },
+      "split": "(1:55.40)",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    }
+  ]
+}

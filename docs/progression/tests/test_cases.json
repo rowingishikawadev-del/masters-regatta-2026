@@ -1,0 +1,546 @@
+{
+  "schema_version": "2026-05-23",
+  "source_documents": [
+    {
+      "template": "alljapan-2026-A",
+      "pdf": "~/Downloads/2026alljapan_progression0420a.pdf",
+      "date": "2026/04/17",
+      "note": "順位上がり変更版"
+    },
+    {
+      "template": "alljapan-2026-B",
+      "pdf": "~/Downloads/2026alljapan_progression0420b.pdf",
+      "date": "2026/04/19"
+    }
+  ],
+  "conventions": {
+    "bn": "boat number / lane position in the target race",
+    "source": "PDF source expression such as 1.HT, 1.1.H, 2.3.S",
+    "status_order": [
+      "finish",
+      "dns",
+      "dnf",
+      "dq"
+    ],
+    "tie_policy": "keep tied crews in the same tie_group and preserve deterministic input_order inside that group until an official tie-break is supplied",
+    "skip_if": "the target race is not created when it has only one assigned crew"
+  },
+  "test_cases": [
+    {
+      "id": "alljapan-A-pattern1-basic",
+      "description": "A版 1-6クルー: 5艇エントリーのプレリミナリーからファイナルへのBN割当",
+      "template": "alljapan-2026-A",
+      "pattern": 1,
+      "input": {
+        "entries_count": 5,
+        "preliminary_results": [
+          { "crew_id": "crew_A", "time_ms": 200000, "status": "finish" },
+          { "crew_id": "crew_B", "time_ms": 205000, "status": "finish" },
+          { "crew_id": "crew_C", "time_ms": 210000, "status": "finish" },
+          { "crew_id": "crew_D", "time_ms": 215000, "status": "finish" },
+          { "crew_id": "crew_E", "time_ms": 220000, "status": "finish" }
+        ]
+      },
+      "expected": {
+        "races": {
+          "F": [
+            { "bn": 1, "crew_id": "crew_E", "source": "5.P" },
+            { "bn": 2, "crew_id": "crew_C", "source": "3.P" },
+            { "bn": 3, "crew_id": "crew_A", "source": "1.P" },
+            { "bn": 4, "crew_id": "crew_B", "source": "2.P" },
+            { "bn": 5, "crew_id": "crew_D", "source": "4.P" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "alljapan-B-pattern1-basic",
+      "description": "B版 1-6クルー: 6艇エントリーのプレリミナリーからファイナルへのBN割当",
+      "template": "alljapan-2026-B",
+      "pattern": 1,
+      "input": {
+        "entries_count": 6,
+        "source_results": {
+          "P": ["crew_A", "crew_B", "crew_C", "crew_D", "crew_E", "crew_F"]
+        }
+      },
+      "expected": {
+        "races": {
+          "F": [
+            { "bn": 1, "crew_id": "crew_E", "source": "5.P" },
+            { "bn": 2, "crew_id": "crew_C", "source": "3.P" },
+            { "bn": 3, "crew_id": "crew_A", "source": "1.P" },
+            { "bn": 4, "crew_id": "crew_B", "source": "2.P" },
+            { "bn": 5, "crew_id": "crew_D", "source": "4.P" },
+            { "bn": 6, "crew_id": "crew_F", "source": "6.P" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "alljapan-A-pattern2-basic",
+      "description": "A版 7-12クルー: 予選1位がFA、予選2位以下HTがFA/FBへ進む",
+      "template": "alljapan-2026-A",
+      "pattern": 2,
+      "input": {
+        "entries_count": 12,
+        "source_results": {
+          "1.1.H": "crew_A", "2.1.H": "crew_B",
+          "HT": ["crew_C", "crew_D", "crew_E", "crew_F", "crew_G", "crew_H", "crew_I", "crew_J", "crew_K", "crew_L"]
+        }
+      },
+      "expected": {
+        "races": {
+          "FA": [
+            { "bn": 1, "crew_id": "crew_E", "source": "3.HT" },
+            { "bn": 2, "crew_id": "crew_C", "source": "1.HT" },
+            { "bn": 3, "crew_id": "crew_A", "source": "1.1.H" },
+            { "bn": 4, "crew_id": "crew_B", "source": "2.1.H" },
+            { "bn": 5, "crew_id": "crew_D", "source": "2.HT" },
+            { "bn": 6, "crew_id": "crew_F", "source": "4.HT" }
+          ],
+          "FB": [
+            { "bn": 1, "crew_id": "crew_K", "source": "9.HT" },
+            { "bn": 2, "crew_id": "crew_I", "source": "7.HT" },
+            { "bn": 3, "crew_id": "crew_G", "source": "5.HT" },
+            { "bn": 4, "crew_id": "crew_H", "source": "6.HT" },
+            { "bn": 5, "crew_id": "crew_J", "source": "8.HT" },
+            { "bn": 6, "crew_id": "crew_L", "source": "10.HT" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "alljapan-B-pattern2-basic",
+      "description": "B版 7-12クルー: 予選1-2位がFA、予選3位以下HTがFA/FBへ進む",
+      "template": "alljapan-2026-B",
+      "pattern": 2,
+      "input": {
+        "entries_count": 12,
+        "source_results": {
+          "1.1.H": "crew_A", "2.1.H": "crew_B", "1.2.H": "crew_C", "2.2.H": "crew_D",
+          "HT": ["crew_E", "crew_F", "crew_G", "crew_H", "crew_I", "crew_J", "crew_K", "crew_L"]
+        }
+      },
+      "expected": {
+        "races": {
+          "FA": [
+            { "bn": 1, "crew_id": "crew_E", "source": "1.HT" },
+            { "bn": 2, "crew_id": "crew_C", "source": "1.2.H" },
+            { "bn": 3, "crew_id": "crew_A", "source": "1.1.H" },
+            { "bn": 4, "crew_id": "crew_B", "source": "2.1.H" },
+            { "bn": 5, "crew_id": "crew_D", "source": "2.2.H" },
+            { "bn": 6, "crew_id": "crew_F", "source": "2.HT" }
+          ],
+          "FB": [
+            { "bn": 1, "crew_id": "crew_K", "source": "7.HT" },
+            { "bn": 2, "crew_id": "crew_I", "source": "5.HT" },
+            { "bn": 3, "crew_id": "crew_G", "source": "3.HT" },
+            { "bn": 4, "crew_id": "crew_H", "source": "4.HT" },
+            { "bn": 5, "crew_id": "crew_J", "source": "6.HT" },
+            { "bn": 6, "crew_id": "crew_L", "source": "8.HT" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "alljapan-A-pattern3-basic",
+      "description": "A版 13-18クルー: HからS/FC、SからFA/FBへの割当",
+      "template": "alljapan-2026-A",
+      "pattern": 3,
+      "input": { "entries_count": 18, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "S1": ["7.HT", "2.HT", "1.1.H", "3.1.H", "5.HT", "9.HT"],
+          "S2": ["6.HT", "3.HT", "2.1.H", "1.HT", "4.HT", "8.HT"],
+          "FA": ["1.3.S", "1.2.S", "1.1.S", "2.1.S", "2.2.S", "2.3.S"],
+          "FB": ["1.6.S", "1.5.S", "1.4.S", "2.4.S", "2.5.S", "2.6.S"],
+          "FC": ["14.HT", "12.HT", "10.HT", "11.HT", "13.HT", "15.HT"]
+        }
+      }
+    },
+    {
+      "id": "alljapan-B-pattern3-basic",
+      "description": "B版 13-18クルー: H上位2艇を含むS割当とFC割当",
+      "template": "alljapan-2026-B",
+      "pattern": 3,
+      "input": { "entries_count": 18, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "S1": ["4.HT", "2.2.H", "1.1.H", "3.1.H", "2.HT", "6.HT"],
+          "S2": ["3.HT", "3.2.H", "2.1.H", "1.2.H", "1.HT", "5.HT"],
+          "FA": ["1.3.S", "1.2.S", "1.1.S", "2.1.S", "2.2.S", "2.3.S"],
+          "FB": ["1.6.S", "1.5.S", "1.4.S", "2.4.S", "2.5.S", "2.6.S"],
+          "FC": ["11.HT", "9.HT", "7.HT", "8.HT", "10.HT", "12.HT"]
+        }
+      }
+    },
+    {
+      "id": "alljapan-A-pattern4-basic",
+      "description": "A版 19-24クルー: HからS/FC/FDへの割当",
+      "template": "alljapan-2026-A",
+      "pattern": 4,
+      "input": { "entries_count": 24, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "S1": ["6.HT", "2.HT", "1.1.H", "3.1.H", "4.HT", "7.HT"],
+          "S2": ["5.HT", "1.HT", "2.1.H", "4.1.H", "3.HT", "8.HT"],
+          "FA": ["1.3.S", "1.2.S", "1.1.S", "2.1.S", "2.2.S", "2.3.S"],
+          "FB": ["1.6.S", "1.5.S", "1.4.S", "2.4.S", "2.5.S", "2.6.S"],
+          "FC": ["13.HT", "11.HT", "9.HT", "10.HT", "12.HT", "14.HT"],
+          "FD": ["19.HT", "17.HT", "15.HT", "16.HT", "18.HT", "20.HT"]
+        }
+      }
+    },
+    {
+      "id": "alljapan-B-pattern4-basic",
+      "description": "B版 19-24クルー: H上位2艇を含むS割当とFC/FD割当",
+      "template": "alljapan-2026-B",
+      "pattern": 4,
+      "input": { "entries_count": 24, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "S1": ["2.HT", "2.2.H", "1.1.H", "3.1.H", "4.2.H", "3.HT"],
+          "S2": ["1.HT", "1.2.H", "2.1.H", "4.1.H", "3.2.H", "4.HT"],
+          "FA": ["1.3.S", "1.2.S", "1.1.S", "2.1.S", "2.2.S", "2.3.S"],
+          "FB": ["1.6.S", "1.5.S", "1.4.S", "2.4.S", "2.5.S", "2.6.S"],
+          "FC": ["9.HT", "7.HT", "5.HT", "6.HT", "8.HT", "10.HT"],
+          "FD": ["15.HT", "13.HT", "11.HT", "12.HT", "14.HT", "16.HT"]
+        }
+      }
+    },
+    {
+      "id": "alljapan-A-pattern5-basic",
+      "description": "A版 25-30クルー: HからQ/FE、QからS/FC/FD、SからFA/FB",
+      "template": "alljapan-2026-A",
+      "pattern": 5,
+      "input": { "entries_count": 30, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "Q1": ["15.HT", "4.HT", "1.1.H", "5.1.H", "11.HT", "19.HT"],
+          "Q2": ["14.HT", "5.HT", "2.1.H", "1.HT", "10.HT", "18.HT"],
+          "Q3": ["13.HT", "6.HT", "3.1.H", "2.HT", "9.HT", "17.HT"],
+          "Q4": ["12.HT", "7.HT", "4.1.H", "3.HT", "8.HT", "16.HT"],
+          "S1": ["2.3.Q", "2.2.Q", "1.1.Q", "3.1.Q", "4.2.Q", "3.3.Q"],
+          "S2": ["1.3.Q", "1.2.Q", "2.1.Q", "4.1.Q", "3.2.Q", "4.3.Q"],
+          "FA": ["1.3.S", "1.2.S", "1.1.S", "2.1.S", "2.2.S", "2.3.S"],
+          "FB": ["1.6.S", "1.5.S", "1.4.S", "2.4.S", "2.5.S", "2.6.S"],
+          "FC": ["5.QT", "3.QT", "1.QT", "2.QT", "4.QT", "6.QT"],
+          "FD": ["11.QT", "9.QT", "7.QT", "8.QT", "10.QT", "12.QT"],
+          "FE": ["24.HT", "22.HT", "20.HT", "21.HT", "23.HT", "25.HT"]
+        }
+      }
+    },
+    {
+      "id": "alljapan-B-pattern5-basic",
+      "description": "B版 25-30クルー: H上位2艇を含むQ割当とFE割当",
+      "template": "alljapan-2026-B",
+      "pattern": 5,
+      "input": { "entries_count": 30, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "Q1": ["10.HT", "4.2.H", "1.1.H", "5.1.H", "6.HT", "14.HT"],
+          "Q2": ["9.HT", "5.2.H", "2.1.H", "1.2.H", "5.HT", "13.HT"],
+          "Q3": ["8.HT", "1.HT", "3.1.H", "2.2.H", "4.HT", "12.HT"],
+          "Q4": ["7.HT", "2.HT", "4.1.H", "3.2.H", "3.HT", "11.HT"],
+          "S1": ["2.3.Q", "2.2.Q", "1.1.Q", "3.1.Q", "4.2.Q", "3.3.Q"],
+          "S2": ["1.3.Q", "1.2.Q", "2.1.Q", "4.1.Q", "3.2.Q", "4.3.Q"],
+          "FA": ["1.3.S", "1.2.S", "1.1.S", "2.1.S", "2.2.S", "2.3.S"],
+          "FB": ["1.6.S", "1.5.S", "1.4.S", "2.4.S", "2.5.S", "2.6.S"],
+          "FC": ["5.QT", "3.QT", "1.QT", "2.QT", "4.QT", "6.QT"],
+          "FD": ["11.QT", "9.QT", "7.QT", "8.QT", "10.QT", "12.QT"],
+          "FE": ["19.HT", "17.HT", "15.HT", "16.HT", "18.HT", "20.HT"]
+        }
+      }
+    },
+    {
+      "id": "alljapan-A-pattern6-basic",
+      "description": "A版 31-36クルー: HからQ/FE/FF、QからS/FC/FD、SからFA/FB",
+      "template": "alljapan-2026-A",
+      "pattern": 6,
+      "input": { "entries_count": 36, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "Q1": ["14.HT", "3.HT", "1.1.H", "2.HT", "10.HT", "15.HT"],
+          "Q2": ["13.HT", "4.HT", "2.1.H", "1.HT", "9.HT", "16.HT"],
+          "Q3": ["12.HT", "5.HT", "3.1.H", "6.1.H", "8.HT", "17.HT"],
+          "Q4": ["11.HT", "6.HT", "4.1.H", "5.1.H", "7.HT", "18.HT"],
+          "FE": ["23.HT", "21.HT", "19.HT", "20.HT", "22.HT", "24.HT"],
+          "FF": ["29.HT", "27.HT", "25.HT", "26.HT", "28.HT", "30.HT"]
+        }
+      }
+    },
+    {
+      "id": "alljapan-B-pattern6-basic",
+      "description": "B版 31-36クルー: H上位2艇を含むQ割当とFE/FF割当",
+      "template": "alljapan-2026-B",
+      "pattern": 6,
+      "input": { "entries_count": 36, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "Q1": ["8.HT", "3.2.H", "1.1.H", "2.2.H", "4.HT", "9.HT"],
+          "Q2": ["7.HT", "4.2.H", "2.1.H", "1.2.H", "3.HT", "10.HT"],
+          "Q3": ["6.HT", "5.2.H", "3.1.H", "6.1.H", "2.HT", "11.HT"],
+          "Q4": ["5.HT", "6.2.H", "4.1.H", "5.1.H", "1.HT", "12.HT"],
+          "FE": ["17.HT", "15.HT", "13.HT", "14.HT", "16.HT", "18.HT"],
+          "FF": ["23.HT", "21.HT", "19.HT", "20.HT", "22.HT", "24.HT"]
+        }
+      }
+    },
+    {
+      "id": "alljapan-A-pattern7-basic",
+      "description": "A版 37-42クルー: HからQ/FE/FF/FGへの割当",
+      "template": "alljapan-2026-A",
+      "pattern": 7,
+      "input": { "entries_count": 42, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "Q1": ["13.HT", "2.HT", "1.1.H", "5.1.H", "9.HT", "17.HT"],
+          "Q2": ["12.HT", "3.HT", "2.1.H", "6.1.H", "8.HT", "16.HT"],
+          "Q3": ["11.HT", "4.HT", "3.1.H", "7.1.H", "7.HT", "15.HT"],
+          "Q4": ["10.HT", "5.HT", "4.1.H", "1.HT", "6.HT", "14.HT"],
+          "FE": ["22.HT", "20.HT", "18.HT", "19.HT", "21.HT", "23.HT"],
+          "FF": ["28.HT", "26.HT", "24.HT", "25.HT", "27.HT", "29.HT"],
+          "FG": ["34.HT", "32.HT", "30.HT", "31.HT", "33.HT", "35.HT"]
+        }
+      }
+    },
+    {
+      "id": "alljapan-B-pattern7-basic",
+      "description": "B版 37-42クルー: H上位2艇を含むQ割当とFE/FF/FG割当",
+      "template": "alljapan-2026-B",
+      "pattern": 7,
+      "input": { "entries_count": 42, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "Q1": ["6.HT", "2.2.H", "1.1.H", "5.1.H", "2.HT", "10.HT"],
+          "Q2": ["5.HT", "3.2.H", "2.1.H", "6.1.H", "1.HT", "9.HT"],
+          "Q3": ["4.HT", "4.2.H", "3.1.H", "7.1.H", "7.2.H", "8.HT"],
+          "Q4": ["3.HT", "5.2.H", "4.1.H", "1.2.H", "6.2.H", "7.HT"],
+          "FE": ["15.HT", "13.HT", "11.HT", "12.HT", "14.HT", "16.HT"],
+          "FF": ["21.HT", "19.HT", "17.HT", "18.HT", "20.HT", "22.HT"],
+          "FG": ["27.HT", "25.HT", "23.HT", "24.HT", "26.HT", "28.HT"]
+        }
+      }
+    },
+    {
+      "id": "edge-A-pattern2-dns-dnf-dq",
+      "description": "A版 パターン2: DNS/DNF/DQを含む予選で正常完漕艇を先に順位付けし、DNS艇をFB末尾に置く",
+      "template": "alljapan-2026-A",
+      "pattern": 2,
+      "input": {
+        "entries_count": 12,
+        "heat_results": {
+          "H1": [
+            { "crew_id": "crew_A", "time_ms": 200000, "status": "finish" },
+            { "crew_id": "crew_C", "time_ms": 210000, "status": "finish" },
+            { "crew_id": "crew_E", "time_ms": 220000, "status": "finish" },
+            { "crew_id": "crew_G", "time_ms": 230000, "status": "finish" },
+            { "crew_id": "crew_I", "time_ms": 240000, "status": "dnf" },
+            { "crew_id": "crew_K", "time_ms": null, "status": "dns" }
+          ],
+          "H2": [
+            { "crew_id": "crew_B", "time_ms": 205000, "status": "finish" },
+            { "crew_id": "crew_D", "time_ms": 215000, "status": "finish" },
+            { "crew_id": "crew_F", "time_ms": 225000, "status": "finish" },
+            { "crew_id": "crew_H", "time_ms": 235000, "status": "finish" },
+            { "crew_id": "crew_J", "time_ms": 245000, "status": "dq" },
+            { "crew_id": "crew_L", "time_ms": 250000, "status": "finish" }
+          ]
+        }
+      },
+      "expected": {
+        "classification_notes": [
+          "H1/H2 winners crew_A and crew_B are protected as 1.1.H and 2.1.H",
+          "DNF, DQ, DNS are ordered after finishers by status_order"
+        ],
+        "races": {
+          "FA": [
+            { "bn": 1, "crew_id": "crew_F", "source": "3.HT" },
+            { "bn": 2, "crew_id": "crew_C", "source": "1.HT" },
+            { "bn": 3, "crew_id": "crew_A", "source": "1.1.H" },
+            { "bn": 4, "crew_id": "crew_B", "source": "2.1.H" },
+            { "bn": 5, "crew_id": "crew_D", "source": "2.HT" },
+            { "bn": 6, "crew_id": "crew_G", "source": "4.HT" }
+          ],
+          "FB": [
+            { "bn": 1, "crew_id": "crew_J", "source": "9.HT" },
+            { "bn": 2, "crew_id": "crew_I", "source": "7.HT" },
+            { "bn": 3, "crew_id": "crew_L", "source": "5.HT" },
+            { "bn": 4, "crew_id": "crew_H", "source": "6.HT" },
+            { "bn": 5, "crew_id": "crew_K", "source": "10.HT" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "edge-B-pattern3-tie-group",
+      "description": "B版 パターン3: 予選3位以下の同タイムをtie_groupで保持する",
+      "template": "alljapan-2026-B",
+      "pattern": 3,
+      "input": {
+        "entries_count": 18,
+        "heat_results": {
+          "H1": [
+            { "crew_id": "crew_A", "time_ms": 200000, "status": "finish" },
+            { "crew_id": "crew_D", "time_ms": 210000, "status": "finish" },
+            { "crew_id": "crew_G", "time_ms": 220000, "status": "finish", "tie_group": "T1", "input_order": 1 }
+          ],
+          "H2": [
+            { "crew_id": "crew_B", "time_ms": 201000, "status": "finish" },
+            { "crew_id": "crew_E", "time_ms": 211000, "status": "finish" },
+            { "crew_id": "crew_H", "time_ms": 220000, "status": "finish", "tie_group": "T1", "input_order": 2 }
+          ],
+          "H3": [
+            { "crew_id": "crew_C", "time_ms": 202000, "status": "finish" },
+            { "crew_id": "crew_F", "time_ms": 212000, "status": "finish" }
+          ]
+        }
+      },
+      "expected": {
+        "tie_groups": [
+          { "tie_group": "T1", "sources": ["1.HT", "2.HT"], "crew_ids": ["crew_G", "crew_H"] }
+        ],
+        "races": {
+          "S1": ["4.HT", "2.2.H", "1.1.H", "3.1.H", "2.HT", "6.HT"],
+          "S2": ["3.HT", "3.2.H", "2.1.H", "1.2.H", "1.HT", "5.HT"]
+        }
+      }
+    },
+    {
+      "id": "edge-B-pattern2-skip-fb-one-crew",
+      "description": "B版 パターン2: 7艇エントリーでFBが1艇となりskip_ifが発動する",
+      "template": "alljapan-2026-B",
+      "pattern": 2,
+      "input": {
+        "entries_count": 7,
+        "source_results": {
+          "1.1.H": "crew_A", "2.1.H": "crew_B", "1.2.H": "crew_C", "2.2.H": "crew_D",
+          "HT": ["crew_E", "crew_F", "crew_G"]
+        }
+      },
+      "expected": {
+        "races": {
+          "FA": [
+            { "bn": 1, "crew_id": "crew_E", "source": "1.HT" },
+            { "bn": 2, "crew_id": "crew_C", "source": "1.2.H" },
+            { "bn": 3, "crew_id": "crew_A", "source": "1.1.H" },
+            { "bn": 4, "crew_id": "crew_B", "source": "2.1.H" },
+            { "bn": 5, "crew_id": "crew_D", "source": "2.2.H" },
+            { "bn": 6, "crew_id": "crew_F", "source": "2.HT" }
+          ],
+          "FB": {
+            "skipped": true,
+            "reason": "only_one_crew",
+            "assignments": [
+              { "bn": 3, "crew_id": "crew_G", "source": "3.HT" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "edge-A-pattern2-intermediate-9-crews",
+      "description": "A版 パターン2: 9艇の中間人数でFBが3艇になる",
+      "template": "alljapan-2026-A",
+      "pattern": 2,
+      "input": {
+        "entries_count": 9,
+        "source_results": {
+          "1.1.H": "crew_A", "2.1.H": "crew_B",
+          "HT": ["crew_C", "crew_D", "crew_E", "crew_F", "crew_G", "crew_H", "crew_I"]
+        }
+      },
+      "expected": {
+        "races": {
+          "FA": ["3.HT", "1.HT", "1.1.H", "2.1.H", "2.HT", "4.HT"],
+          "FB": [
+            { "bn": 3, "crew_id": "crew_G", "source": "5.HT" },
+            { "bn": 4, "crew_id": "crew_H", "source": "6.HT" },
+            { "bn": 5, "crew_id": "crew_I", "source": "7.HT" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "edge-B-pattern3-intermediate-15-crews",
+      "description": "B版 パターン3: 15艇の中間人数でFCが3艇になる",
+      "template": "alljapan-2026-B",
+      "pattern": 3,
+      "input": { "entries_count": 15, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "S1": ["4.HT", "2.2.H", "1.1.H", "3.1.H", "2.HT", "6.HT"],
+          "S2": ["3.HT", "3.2.H", "2.1.H", "1.2.H", "1.HT", "5.HT"],
+          "FC": [
+            { "bn": 3, "source": "7.HT" },
+            { "bn": 4, "source": "8.HT" },
+            { "bn": 5, "source": "9.HT" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "edge-A-pattern4-intermediate-22-crews",
+      "description": "A版 パターン4: 22艇の中間人数でFDが4艇になる",
+      "template": "alljapan-2026-A",
+      "pattern": 4,
+      "input": { "entries_count": 22, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "S1": ["6.HT", "2.HT", "1.1.H", "3.1.H", "4.HT", "7.HT"],
+          "S2": ["5.HT", "1.HT", "2.1.H", "4.1.H", "3.HT", "8.HT"],
+          "FC": ["13.HT", "11.HT", "9.HT", "10.HT", "12.HT", "14.HT"],
+          "FD": [
+            { "bn": 1, "source": "19.HT" },
+            { "bn": 2, "source": "17.HT" },
+            { "bn": 3, "source": "15.HT" },
+            { "bn": 4, "source": "16.HT" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "edge-B-pattern5-intermediate-27-crews",
+      "description": "B版 パターン5: 27艇の中間人数でFEが3艇になる",
+      "template": "alljapan-2026-B",
+      "pattern": 5,
+      "input": { "entries_count": 27, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "Q1": ["10.HT", "4.2.H", "1.1.H", "5.1.H", "6.HT", "14.HT"],
+          "Q2": ["9.HT", "5.2.H", "2.1.H", "1.2.H", "5.HT", "13.HT"],
+          "Q3": ["8.HT", "1.HT", "3.1.H", "2.2.H", "4.HT", "12.HT"],
+          "Q4": ["7.HT", "2.HT", "4.1.H", "3.2.H", "3.HT", "11.HT"],
+          "FE": [
+            { "bn": 3, "source": "15.HT" },
+            { "bn": 4, "source": "16.HT" },
+            { "bn": 5, "source": "17.HT" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "edge-A-pattern7-intermediate-39-crews",
+      "description": "A版 パターン7: 39艇の中間人数でFGが3艇になる",
+      "template": "alljapan-2026-A",
+      "pattern": 7,
+      "input": { "entries_count": 39, "fixture": "synthetic_ranked_sources" },
+      "expected": {
+        "races": {
+          "Q1": ["13.HT", "2.HT", "1.1.H", "5.1.H", "9.HT", "17.HT"],
+          "Q2": ["12.HT", "3.HT", "2.1.H", "6.1.H", "8.HT", "16.HT"],
+          "Q3": ["11.HT", "4.HT", "3.1.H", "7.1.H", "7.HT", "15.HT"],
+          "Q4": ["10.HT", "5.HT", "4.1.H", "1.HT", "6.HT", "14.HT"],
+          "FE": ["22.HT", "20.HT", "18.HT", "19.HT", "21.HT", "23.HT"],
+          "FF": ["28.HT", "26.HT", "24.HT", "25.HT", "27.HT", "29.HT"],
+          "FG": [
+            { "bn": 3, "source": "30.HT" },
+            { "bn": 4, "source": "31.HT" },
+            { "bn": 5, "source": "32.HT" }
+          ]
+        }
+      }
+    }
+  ]
+}

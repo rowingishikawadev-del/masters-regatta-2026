@@ -1,0 +1,16 @@
+{
+  "name": "progression-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "gas:bundle": "tsc && cat dist/*.js > dist/bundle.gs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vitest": "4.1.1"
+  }
+}

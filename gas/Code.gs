@@ -879,13 +879,17 @@ function normalizeFullWidth_(str) {
 }
 
 /**
- * age_group 文字列（例: "DEF", "JKLMN"）から カテゴリーコードの配列を生成する
- * @param {string} ageGroup - 例: "DEF"
+ * age_group 文字列（例: "D・E・F", "DEF", "A・Aパラ"）から カテゴリーコードの配列を生成する
+ * @param {string} ageGroup - 例: "D・E・F"
  * @returns {string[]} - 例: ["D","E","F"]
  */
 function parseCategories_(ageGroup) {
   if (!ageGroup) return [];
-  return ageGroup.split('').filter(c => /[A-N]/i.test(c)).map(c => c.toUpperCase());
+  const text = String(ageGroup);
+  if (text.indexOf('・') !== -1) {
+    return text.split('・').map(function(s) { return s.trim(); }).filter(Boolean);
+  }
+  return text.split('').filter(function(c) { return /[A-Z]/.test(c); });
 }
 
 /**

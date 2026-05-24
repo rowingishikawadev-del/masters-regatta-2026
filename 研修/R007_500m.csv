@@ -1,0 +1,6 @@
+measurement_point,lane,lap_index,time_ms,formatted,race_no,tie_group,photo_flag,note
+500m,1,1,117100,1:57.100,7,,,
+500m,2,1,113800,1:53.800,7,,,
+500m,3,1,119400,1:59.400,7,,,
+500m,4,1,115300,1:55.300,7,,,
+500m,5,1,121200,2:01.200,7,,,

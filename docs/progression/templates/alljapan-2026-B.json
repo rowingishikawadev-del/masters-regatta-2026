@@ -1,0 +1,1613 @@
+{
+  "id": "alljapan-2026-B",
+  "name": "全日本選手権2026 標準版",
+  "version": "2026/4/19",
+  "lanes": 6,
+  "patterns": [
+    {
+      "entries_min": 1,
+      "entries_max": 6,
+      "description": "1〜6クルー（タイム決勝相当）",
+      "rounds": [
+        {
+          "code": "P",
+          "name": "プレリミナリー",
+          "race_count": 1
+        },
+        {
+          "code": "F",
+          "name": "ファイナル",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "5.P"
+            },
+            {
+              "bn": 2,
+              "source": "3.P"
+            },
+            {
+              "bn": 3,
+              "source": "1.P"
+            },
+            {
+              "bn": 4,
+              "source": "2.P"
+            },
+            {
+              "bn": 5,
+              "source": "4.P"
+            },
+            {
+              "bn": 6,
+              "source": "6.P"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "entries_min": 7,
+      "entries_max": 12,
+      "description": "7〜12クルー",
+      "rounds": [
+        {
+          "code": "H",
+          "name": "予選",
+          "race_count": 2
+        },
+        {
+          "code": "FA",
+          "name": "ファイナルA",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "1.HT"
+            },
+            {
+              "bn": 2,
+              "source": "1.2.H"
+            },
+            {
+              "bn": 3,
+              "source": "1.1.H"
+            },
+            {
+              "bn": 4,
+              "source": "2.1.H"
+            },
+            {
+              "bn": 5,
+              "source": "2.2.H"
+            },
+            {
+              "bn": 6,
+              "source": "2.HT"
+            }
+          ]
+        },
+        {
+          "code": "FB",
+          "name": "ファイナルB",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "7.HT"
+            },
+            {
+              "bn": 2,
+              "source": "5.HT"
+            },
+            {
+              "bn": 3,
+              "source": "3.HT"
+            },
+            {
+              "bn": 4,
+              "source": "4.HT"
+            },
+            {
+              "bn": 5,
+              "source": "6.HT"
+            },
+            {
+              "bn": 6,
+              "source": "8.HT"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "entries_min": 13,
+      "entries_max": 18,
+      "description": "13〜18クルー",
+      "rounds": [
+        {
+          "code": "H",
+          "name": "予選",
+          "race_count": 3
+        },
+        {
+          "code": "S",
+          "name": "準決勝",
+          "race_count": 2,
+          "lane_assignments": {
+            "S1": [
+              {
+                "bn": 1,
+                "source": "4.HT"
+              },
+              {
+                "bn": 2,
+                "source": "2.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "1.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "3.1.H"
+              },
+              {
+                "bn": 5,
+                "source": "2.HT"
+              },
+              {
+                "bn": 6,
+                "source": "6.HT"
+              }
+            ],
+            "S2": [
+              {
+                "bn": 1,
+                "source": "3.HT"
+              },
+              {
+                "bn": 2,
+                "source": "3.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "2.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "1.2.H"
+              },
+              {
+                "bn": 5,
+                "source": "1.HT"
+              },
+              {
+                "bn": 6,
+                "source": "5.HT"
+              }
+            ]
+          }
+        },
+        {
+          "code": "FA",
+          "name": "ファイナルA",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "1.3.S"
+            },
+            {
+              "bn": 2,
+              "source": "1.2.S"
+            },
+            {
+              "bn": 3,
+              "source": "1.1.S"
+            },
+            {
+              "bn": 4,
+              "source": "2.1.S"
+            },
+            {
+              "bn": 5,
+              "source": "2.2.S"
+            },
+            {
+              "bn": 6,
+              "source": "2.3.S"
+            }
+          ]
+        },
+        {
+          "code": "FB",
+          "name": "ファイナルB",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "1.6.S"
+            },
+            {
+              "bn": 2,
+              "source": "1.5.S"
+            },
+            {
+              "bn": 3,
+              "source": "1.4.S"
+            },
+            {
+              "bn": 4,
+              "source": "2.4.S"
+            },
+            {
+              "bn": 5,
+              "source": "2.5.S"
+            },
+            {
+              "bn": 6,
+              "source": "2.6.S"
+            }
+          ]
+        },
+        {
+          "code": "FC",
+          "name": "ファイナルC",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "11.HT"
+            },
+            {
+              "bn": 2,
+              "source": "9.HT"
+            },
+            {
+              "bn": 3,
+              "source": "7.HT"
+            },
+            {
+              "bn": 4,
+              "source": "8.HT"
+            },
+            {
+              "bn": 5,
+              "source": "10.HT"
+            },
+            {
+              "bn": 6,
+              "source": "12.HT"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "entries_min": 19,
+      "entries_max": 24,
+      "description": "19〜24クルー",
+      "rounds": [
+        {
+          "code": "H",
+          "name": "予選",
+          "race_count": 4
+        },
+        {
+          "code": "S",
+          "name": "準決勝",
+          "race_count": 2,
+          "lane_assignments": {
+            "S1": [
+              {
+                "bn": 1,
+                "source": "2.HT"
+              },
+              {
+                "bn": 2,
+                "source": "2.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "1.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "3.1.H"
+              },
+              {
+                "bn": 5,
+                "source": "4.2.H"
+              },
+              {
+                "bn": 6,
+                "source": "3.HT"
+              }
+            ],
+            "S2": [
+              {
+                "bn": 1,
+                "source": "1.HT"
+              },
+              {
+                "bn": 2,
+                "source": "1.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "2.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "4.1.H"
+              },
+              {
+                "bn": 5,
+                "source": "3.2.H"
+              },
+              {
+                "bn": 6,
+                "source": "4.HT"
+              }
+            ]
+          }
+        },
+        {
+          "code": "FA",
+          "name": "ファイナルA",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "1.3.S"
+            },
+            {
+              "bn": 2,
+              "source": "1.2.S"
+            },
+            {
+              "bn": 3,
+              "source": "1.1.S"
+            },
+            {
+              "bn": 4,
+              "source": "2.1.S"
+            },
+            {
+              "bn": 5,
+              "source": "2.2.S"
+            },
+            {
+              "bn": 6,
+              "source": "2.3.S"
+            }
+          ]
+        },
+        {
+          "code": "FB",
+          "name": "ファイナルB",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "1.6.S"
+            },
+            {
+              "bn": 2,
+              "source": "1.5.S"
+            },
+            {
+              "bn": 3,
+              "source": "1.4.S"
+            },
+            {
+              "bn": 4,
+              "source": "2.4.S"
+            },
+            {
+              "bn": 5,
+              "source": "2.5.S"
+            },
+            {
+              "bn": 6,
+              "source": "2.6.S"
+            }
+          ]
+        },
+        {
+          "code": "FC",
+          "name": "ファイナルC",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "9.HT"
+            },
+            {
+              "bn": 2,
+              "source": "7.HT"
+            },
+            {
+              "bn": 3,
+              "source": "5.HT"
+            },
+            {
+              "bn": 4,
+              "source": "6.HT"
+            },
+            {
+              "bn": 5,
+              "source": "8.HT"
+            },
+            {
+              "bn": 6,
+              "source": "10.HT"
+            }
+          ]
+        },
+        {
+          "code": "FD",
+          "name": "ファイナルD",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "15.HT"
+            },
+            {
+              "bn": 2,
+              "source": "13.HT"
+            },
+            {
+              "bn": 3,
+              "source": "11.HT"
+            },
+            {
+              "bn": 4,
+              "source": "12.HT"
+            },
+            {
+              "bn": 5,
+              "source": "14.HT"
+            },
+            {
+              "bn": 6,
+              "source": "16.HT"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "entries_min": 25,
+      "entries_max": 30,
+      "description": "25〜30クルー",
+      "rounds": [
+        {
+          "code": "H",
+          "name": "予選",
+          "race_count": 5
+        },
+        {
+          "code": "Q",
+          "name": "準々決勝",
+          "race_count": 4,
+          "lane_assignments": {
+            "Q1": [
+              {
+                "bn": 1,
+                "source": "10.HT"
+              },
+              {
+                "bn": 2,
+                "source": "4.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "1.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "5.1.H"
+              },
+              {
+                "bn": 5,
+                "source": "6.HT"
+              },
+              {
+                "bn": 6,
+                "source": "14.HT"
+              }
+            ],
+            "Q2": [
+              {
+                "bn": 1,
+                "source": "9.HT"
+              },
+              {
+                "bn": 2,
+                "source": "5.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "2.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "1.2.H"
+              },
+              {
+                "bn": 5,
+                "source": "5.HT"
+              },
+              {
+                "bn": 6,
+                "source": "13.HT"
+              }
+            ],
+            "Q3": [
+              {
+                "bn": 1,
+                "source": "8.HT"
+              },
+              {
+                "bn": 2,
+                "source": "1.HT"
+              },
+              {
+                "bn": 3,
+                "source": "3.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "2.2.H"
+              },
+              {
+                "bn": 5,
+                "source": "4.HT"
+              },
+              {
+                "bn": 6,
+                "source": "12.HT"
+              }
+            ],
+            "Q4": [
+              {
+                "bn": 1,
+                "source": "7.HT"
+              },
+              {
+                "bn": 2,
+                "source": "2.HT"
+              },
+              {
+                "bn": 3,
+                "source": "4.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "3.2.H"
+              },
+              {
+                "bn": 5,
+                "source": "3.HT"
+              },
+              {
+                "bn": 6,
+                "source": "11.HT"
+              }
+            ]
+          }
+        },
+        {
+          "code": "S",
+          "name": "準決勝",
+          "race_count": 2,
+          "lane_assignments": {
+            "S1": [
+              {
+                "bn": 1,
+                "source": "2.3.Q"
+              },
+              {
+                "bn": 2,
+                "source": "2.2.Q"
+              },
+              {
+                "bn": 3,
+                "source": "1.1.Q"
+              },
+              {
+                "bn": 4,
+                "source": "3.1.Q"
+              },
+              {
+                "bn": 5,
+                "source": "4.2.Q"
+              },
+              {
+                "bn": 6,
+                "source": "3.3.Q"
+              }
+            ],
+            "S2": [
+              {
+                "bn": 1,
+                "source": "1.3.Q"
+              },
+              {
+                "bn": 2,
+                "source": "1.2.Q"
+              },
+              {
+                "bn": 3,
+                "source": "2.1.Q"
+              },
+              {
+                "bn": 4,
+                "source": "4.1.Q"
+              },
+              {
+                "bn": 5,
+                "source": "3.2.Q"
+              },
+              {
+                "bn": 6,
+                "source": "4.3.Q"
+              }
+            ]
+          }
+        },
+        {
+          "code": "FA",
+          "name": "ファイナルA",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "1.3.S"
+            },
+            {
+              "bn": 2,
+              "source": "1.2.S"
+            },
+            {
+              "bn": 3,
+              "source": "1.1.S"
+            },
+            {
+              "bn": 4,
+              "source": "2.1.S"
+            },
+            {
+              "bn": 5,
+              "source": "2.2.S"
+            },
+            {
+              "bn": 6,
+              "source": "2.3.S"
+            }
+          ]
+        },
+        {
+          "code": "FB",
+          "name": "ファイナルB",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "1.6.S"
+            },
+            {
+              "bn": 2,
+              "source": "1.5.S"
+            },
+            {
+              "bn": 3,
+              "source": "1.4.S"
+            },
+            {
+              "bn": 4,
+              "source": "2.4.S"
+            },
+            {
+              "bn": 5,
+              "source": "2.5.S"
+            },
+            {
+              "bn": 6,
+              "source": "2.6.S"
+            }
+          ]
+        },
+        {
+          "code": "FC",
+          "name": "ファイナルC",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "5.QT"
+            },
+            {
+              "bn": 2,
+              "source": "3.QT"
+            },
+            {
+              "bn": 3,
+              "source": "1.QT"
+            },
+            {
+              "bn": 4,
+              "source": "2.QT"
+            },
+            {
+              "bn": 5,
+              "source": "4.QT"
+            },
+            {
+              "bn": 6,
+              "source": "6.QT"
+            }
+          ]
+        },
+        {
+          "code": "FD",
+          "name": "ファイナルD",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "11.QT"
+            },
+            {
+              "bn": 2,
+              "source": "9.QT"
+            },
+            {
+              "bn": 3,
+              "source": "7.QT"
+            },
+            {
+              "bn": 4,
+              "source": "8.QT"
+            },
+            {
+              "bn": 5,
+              "source": "10.QT"
+            },
+            {
+              "bn": 6,
+              "source": "12.QT"
+            }
+          ]
+        },
+        {
+          "code": "FE",
+          "name": "ファイナルE",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "19.HT"
+            },
+            {
+              "bn": 2,
+              "source": "17.HT"
+            },
+            {
+              "bn": 3,
+              "source": "15.HT"
+            },
+            {
+              "bn": 4,
+              "source": "16.HT"
+            },
+            {
+              "bn": 5,
+              "source": "18.HT"
+            },
+            {
+              "bn": 6,
+              "source": "20.HT"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "entries_min": 31,
+      "entries_max": 36,
+      "description": "31〜36クルー",
+      "rounds": [
+        {
+          "code": "H",
+          "name": "予選",
+          "race_count": 6
+        },
+        {
+          "code": "Q",
+          "name": "準々決勝",
+          "race_count": 4,
+          "lane_assignments": {
+            "Q1": [
+              {
+                "bn": 1,
+                "source": "8.HT"
+              },
+              {
+                "bn": 2,
+                "source": "3.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "1.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "2.2.H"
+              },
+              {
+                "bn": 5,
+                "source": "4.HT"
+              },
+              {
+                "bn": 6,
+                "source": "9.HT"
+              }
+            ],
+            "Q2": [
+              {
+                "bn": 1,
+                "source": "7.HT"
+              },
+              {
+                "bn": 2,
+                "source": "4.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "2.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "1.2.H"
+              },
+              {
+                "bn": 5,
+                "source": "3.HT"
+              },
+              {
+                "bn": 6,
+                "source": "10.HT"
+              }
+            ],
+            "Q3": [
+              {
+                "bn": 1,
+                "source": "6.HT"
+              },
+              {
+                "bn": 2,
+                "source": "5.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "3.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "6.1.H"
+              },
+              {
+                "bn": 5,
+                "source": "2.HT"
+              },
+              {
+                "bn": 6,
+                "source": "11.HT"
+              }
+            ],
+            "Q4": [
+              {
+                "bn": 1,
+                "source": "5.HT"
+              },
+              {
+                "bn": 2,
+                "source": "6.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "4.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "5.1.H"
+              },
+              {
+                "bn": 5,
+                "source": "1.HT"
+              },
+              {
+                "bn": 6,
+                "source": "12.HT"
+              }
+            ]
+          }
+        },
+        {
+          "code": "S",
+          "name": "準決勝",
+          "race_count": 2,
+          "lane_assignments": {
+            "S1": [
+              {
+                "bn": 1,
+                "source": "2.3.Q"
+              },
+              {
+                "bn": 2,
+                "source": "2.2.Q"
+              },
+              {
+                "bn": 3,
+                "source": "1.1.Q"
+              },
+              {
+                "bn": 4,
+                "source": "3.1.Q"
+              },
+              {
+                "bn": 5,
+                "source": "4.2.Q"
+              },
+              {
+                "bn": 6,
+                "source": "3.3.Q"
+              }
+            ],
+            "S2": [
+              {
+                "bn": 1,
+                "source": "1.3.Q"
+              },
+              {
+                "bn": 2,
+                "source": "1.2.Q"
+              },
+              {
+                "bn": 3,
+                "source": "2.1.Q"
+              },
+              {
+                "bn": 4,
+                "source": "4.1.Q"
+              },
+              {
+                "bn": 5,
+                "source": "3.2.Q"
+              },
+              {
+                "bn": 6,
+                "source": "4.3.Q"
+              }
+            ]
+          }
+        },
+        {
+          "code": "FA",
+          "name": "ファイナルA",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "1.3.S"
+            },
+            {
+              "bn": 2,
+              "source": "1.2.S"
+            },
+            {
+              "bn": 3,
+              "source": "1.1.S"
+            },
+            {
+              "bn": 4,
+              "source": "2.1.S"
+            },
+            {
+              "bn": 5,
+              "source": "2.2.S"
+            },
+            {
+              "bn": 6,
+              "source": "2.3.S"
+            }
+          ]
+        },
+        {
+          "code": "FB",
+          "name": "ファイナルB",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "1.6.S"
+            },
+            {
+              "bn": 2,
+              "source": "1.5.S"
+            },
+            {
+              "bn": 3,
+              "source": "1.4.S"
+            },
+            {
+              "bn": 4,
+              "source": "2.4.S"
+            },
+            {
+              "bn": 5,
+              "source": "2.5.S"
+            },
+            {
+              "bn": 6,
+              "source": "2.6.S"
+            }
+          ]
+        },
+        {
+          "code": "FC",
+          "name": "ファイナルC",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "5.QT"
+            },
+            {
+              "bn": 2,
+              "source": "3.QT"
+            },
+            {
+              "bn": 3,
+              "source": "1.QT"
+            },
+            {
+              "bn": 4,
+              "source": "2.QT"
+            },
+            {
+              "bn": 5,
+              "source": "4.QT"
+            },
+            {
+              "bn": 6,
+              "source": "6.QT"
+            }
+          ]
+        },
+        {
+          "code": "FD",
+          "name": "ファイナルD",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "11.QT"
+            },
+            {
+              "bn": 2,
+              "source": "9.QT"
+            },
+            {
+              "bn": 3,
+              "source": "7.QT"
+            },
+            {
+              "bn": 4,
+              "source": "8.QT"
+            },
+            {
+              "bn": 5,
+              "source": "10.QT"
+            },
+            {
+              "bn": 6,
+              "source": "12.QT"
+            }
+          ]
+        },
+        {
+          "code": "FE",
+          "name": "ファイナルE",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "17.HT"
+            },
+            {
+              "bn": 2,
+              "source": "15.HT"
+            },
+            {
+              "bn": 3,
+              "source": "13.HT"
+            },
+            {
+              "bn": 4,
+              "source": "14.HT"
+            },
+            {
+              "bn": 5,
+              "source": "16.HT"
+            },
+            {
+              "bn": 6,
+              "source": "18.HT"
+            }
+          ]
+        },
+        {
+          "code": "FF",
+          "name": "ファイナルF",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "23.HT"
+            },
+            {
+              "bn": 2,
+              "source": "21.HT"
+            },
+            {
+              "bn": 3,
+              "source": "19.HT"
+            },
+            {
+              "bn": 4,
+              "source": "20.HT"
+            },
+            {
+              "bn": 5,
+              "source": "22.HT"
+            },
+            {
+              "bn": 6,
+              "source": "24.HT"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "entries_min": 37,
+      "entries_max": 42,
+      "description": "37〜42クルー",
+      "rounds": [
+        {
+          "code": "H",
+          "name": "予選",
+          "race_count": 7
+        },
+        {
+          "code": "Q",
+          "name": "準々決勝",
+          "race_count": 4,
+          "lane_assignments": {
+            "Q1": [
+              {
+                "bn": 1,
+                "source": "6.HT"
+              },
+              {
+                "bn": 2,
+                "source": "2.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "1.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "5.1.H"
+              },
+              {
+                "bn": 5,
+                "source": "2.HT"
+              },
+              {
+                "bn": 6,
+                "source": "10.HT"
+              }
+            ],
+            "Q2": [
+              {
+                "bn": 1,
+                "source": "5.HT"
+              },
+              {
+                "bn": 2,
+                "source": "3.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "2.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "6.1.H"
+              },
+              {
+                "bn": 5,
+                "source": "1.HT"
+              },
+              {
+                "bn": 6,
+                "source": "9.HT"
+              }
+            ],
+            "Q3": [
+              {
+                "bn": 1,
+                "source": "4.HT"
+              },
+              {
+                "bn": 2,
+                "source": "4.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "3.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "7.1.H"
+              },
+              {
+                "bn": 5,
+                "source": "7.2.H"
+              },
+              {
+                "bn": 6,
+                "source": "8.HT"
+              }
+            ],
+            "Q4": [
+              {
+                "bn": 1,
+                "source": "3.HT"
+              },
+              {
+                "bn": 2,
+                "source": "5.2.H"
+              },
+              {
+                "bn": 3,
+                "source": "4.1.H"
+              },
+              {
+                "bn": 4,
+                "source": "1.2.H"
+              },
+              {
+                "bn": 5,
+                "source": "6.2.H"
+              },
+              {
+                "bn": 6,
+                "source": "7.HT"
+              }
+            ]
+          }
+        },
+        {
+          "code": "S",
+          "name": "準決勝",
+          "race_count": 2,
+          "lane_assignments": {
+            "S1": [
+              {
+                "bn": 1,
+                "source": "2.3.Q"
+              },
+              {
+                "bn": 2,
+                "source": "2.2.Q"
+              },
+              {
+                "bn": 3,
+                "source": "1.1.Q"
+              },
+              {
+                "bn": 4,
+                "source": "3.1.Q"
+              },
+              {
+                "bn": 5,
+                "source": "4.2.Q"
+              },
+              {
+                "bn": 6,
+                "source": "3.3.Q"
+              }
+            ],
+            "S2": [
+              {
+                "bn": 1,
+                "source": "1.3.Q"
+              },
+              {
+                "bn": 2,
+                "source": "1.2.Q"
+              },
+              {
+                "bn": 3,
+                "source": "2.1.Q"
+              },
+              {
+                "bn": 4,
+                "source": "4.1.Q"
+              },
+              {
+                "bn": 5,
+                "source": "3.2.Q"
+              },
+              {
+                "bn": 6,
+                "source": "4.3.Q"
+              }
+            ]
+          }
+        },
+        {
+          "code": "FA",
+          "name": "ファイナルA",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "1.3.S"
+            },
+            {
+              "bn": 2,
+              "source": "1.2.S"
+            },
+            {
+              "bn": 3,
+              "source": "1.1.S"
+            },
+            {
+              "bn": 4,
+              "source": "2.1.S"
+            },
+            {
+              "bn": 5,
+              "source": "2.2.S"
+            },
+            {
+              "bn": 6,
+              "source": "2.3.S"
+            }
+          ]
+        },
+        {
+          "code": "FB",
+          "name": "ファイナルB",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "1.6.S"
+            },
+            {
+              "bn": 2,
+              "source": "1.5.S"
+            },
+            {
+              "bn": 3,
+              "source": "1.4.S"
+            },
+            {
+              "bn": 4,
+              "source": "2.4.S"
+            },
+            {
+              "bn": 5,
+              "source": "2.5.S"
+            },
+            {
+              "bn": 6,
+              "source": "2.6.S"
+            }
+          ]
+        },
+        {
+          "code": "FC",
+          "name": "ファイナルC",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "5.QT"
+            },
+            {
+              "bn": 2,
+              "source": "3.QT"
+            },
+            {
+              "bn": 3,
+              "source": "1.QT"
+            },
+            {
+              "bn": 4,
+              "source": "2.QT"
+            },
+            {
+              "bn": 5,
+              "source": "4.QT"
+            },
+            {
+              "bn": 6,
+              "source": "6.QT"
+            }
+          ]
+        },
+        {
+          "code": "FD",
+          "name": "ファイナルD",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "11.QT"
+            },
+            {
+              "bn": 2,
+              "source": "9.QT"
+            },
+            {
+              "bn": 3,
+              "source": "7.QT"
+            },
+            {
+              "bn": 4,
+              "source": "8.QT"
+            },
+            {
+              "bn": 5,
+              "source": "10.QT"
+            },
+            {
+              "bn": 6,
+              "source": "12.QT"
+            }
+          ]
+        },
+        {
+          "code": "FE",
+          "name": "ファイナルE",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "15.HT"
+            },
+            {
+              "bn": 2,
+              "source": "13.HT"
+            },
+            {
+              "bn": 3,
+              "source": "11.HT"
+            },
+            {
+              "bn": 4,
+              "source": "12.HT"
+            },
+            {
+              "bn": 5,
+              "source": "14.HT"
+            },
+            {
+              "bn": 6,
+              "source": "16.HT"
+            }
+          ]
+        },
+        {
+          "code": "FF",
+          "name": "ファイナルF",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "21.HT"
+            },
+            {
+              "bn": 2,
+              "source": "19.HT"
+            },
+            {
+              "bn": 3,
+              "source": "17.HT"
+            },
+            {
+              "bn": 4,
+              "source": "18.HT"
+            },
+            {
+              "bn": 5,
+              "source": "20.HT"
+            },
+            {
+              "bn": 6,
+              "source": "22.HT"
+            }
+          ]
+        },
+        {
+          "code": "FG",
+          "name": "ファイナルG",
+          "race_count": 1,
+          "lane_assignment": [
+            {
+              "bn": 1,
+              "source": "27.HT"
+            },
+            {
+              "bn": 2,
+              "source": "25.HT"
+            },
+            {
+              "bn": 3,
+              "source": "23.HT"
+            },
+            {
+              "bn": 4,
+              "source": "24.HT"
+            },
+            {
+              "bn": 5,
+              "source": "26.HT"
+            },
+            {
+              "bn": 6,
+              "source": "28.HT"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "advance_rules_text": {
+    "1-6": "全てのクルーはプレリミナリーに出場し、ファイナルに進む",
+    "7-12": "予選１、２位はファイナルAに進む。残るクルーのタイム１、２位はファイナルAに進む。残るクルーのタイム３～８位はファイナルBに進む。",
+    "13-18": "予選１、２位は準決勝に進む。残るクルーのタイム１～６位は準決勝に進む。残るクルーのタイム７～１２位はファイナルCに進む。 準決勝１～３位はファイナルAに進む。 残るクルーはファイナルBに進む。",
+    "19-24": "予選１、２位は準決勝に進む。残るクルーのタイム１～４位は準決勝に進む。残るクルーのタイム５～１０位はファイナルCに進む。残るクルーのタイム１１～１６位はファイナルDに進む。 準決勝１～３位はファイナルAに進む。残るクルーはファイナルBに進む",
+    "25-30": "予選１、２位は準々決勝に進む。残るクルーのタイム１～１４位は準々決勝に進む。残るクルーのタイム１５～２０位はファイナルEに進む。 準決勝１～３位は準決勝に進む。残るクルーのタイム１～６位はファイナルCに進む。残るクルーのタイム７～１２位はファイナルDに進む。 準決勝１～３位はファイナルAに進む 残るクルーはファイナルBに進む",
+    "31-36": "予選１、２位は準々決勝に進む。残るクルーのタイム１～１２位は準々決勝に進む。残るクルーのタイム１３～１８位はファイナルEに進む。残るクルーのタイム１９～２４位はファイナルFに進む。 準決勝１～３位は準決勝に進む。残るクルーのタイム１～６位はファイナルCに進む。残るクルーのタイム７～１２位はファイナルDに進む。 準決勝１～３位はファイナルAに進む 残るクルーはファイナルBに進む",
+    "37-42": "予選１、２位は準々決勝に進む。残るクルーのタイム１～１０位は準々決勝に進む。残るクルーのタイム１１～１６位はファイナルEに進む。残るクルーのタイム１７～２２位はファイナルFに進む。残るクルーのタイム２３～２８位はファイナルGに進む。 準決勝１～３位は準決勝に進む。残るクルーのタイム１～６位はファイナルCに進む。残るクルーのタイム７～１２位はファイナルDに進む。 準決勝１～３位はファイナルAに進む 残るクルーはファイナルBに進む"
+  },
+  "notes": [
+    "FBが1艇である場合はレースは実施しない",
+    "FCが1艇である場合はレースは実施しない",
+    "FDが1艇である場合はレースは実施しない",
+    "FEが1艇である場合はレースは実施しない",
+    "FFが1艇である場合はレースは実施しない",
+    "FGが1艇である場合はレースは実施しない"
+  ],
+  "glossary": {
+    "N.P": "プレリミナリーで N位",
+    "N.HT": "予選3位以下のタイム N位",
+    "N.M.H": "タイム N位、順位 M位、予選",
+    "N.M.Q": "タイム N位、順位 M位、準々決勝",
+    "N.QT": "準々決勝4位以下のタイム N位",
+    "N.M.S": "タイム N位、順位 M位、準決勝"
+  }
+}

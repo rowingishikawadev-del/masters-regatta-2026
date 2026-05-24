@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>マスターズ判定員帳票生成 セットアップガイド</title>
+  <style>
+    :root {
+      --navy-900: #0A1628;
+      --navy: #152E58;
+      --orange: #EA580C;
+      --bg: #FFFFFF;
+      --text: #111827;
+      --muted: #4B5563;
+      --panel: #F8FAFC;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-weight: 700;
+      line-height: 1.75;
+    }
+
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      color: var(--navy-900);
+      font-size: 32px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 40px 0 16px;
+      color: var(--navy);
+      font-size: 22px;
+      line-height: 1.4;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    ol,
+    ul {
+      margin: 0;
+      padding-left: 1.6em;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    code {
+      display: inline-block;
+      padding: 2px 6px;
+      background: var(--panel);
+      color: var(--navy-900);
+      box-shadow: inset 0 0 0 1px rgba(10, 22, 40, 0.08);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+      font-weight: 700;
+    }
+
+    .notice {
+      margin: 24px 0;
+      padding: 18px 20px;
+      background: var(--panel);
+      box-shadow: 0 8px 24px rgba(10, 22, 40, 0.10);
+    }
+
+    .accent {
+      color: var(--orange);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>マスターズ判定員帳票生成 セットアップガイド</h1>
+    <p>龍偉用の初期セットアップ手順です。このGASは既存のマスターズPDF生成とは独立しており、トリガー無しの手動実行のみです。</p>
+
+    <section>
+      <h2>初期セットアップ</h2>
+      <ol>
+        <li>Apps Script Editor で新規プロジェクトを作成し、名前を <code>マスターズ判定員帳票</code> にします。</li>
+        <li><code>Code.gs</code>、<code>Setup.gs</code>、<code>appsscript.json</code> を貼り付けます。</li>
+        <li>スクリプトプロパティを設定します。<code>GITHUB_TOKEN</code> は既存GASと同じ値を使います。</li>
+        <li><code>saveSetup()</code> を実行します。</li>
+        <li><code>testGenerateDay1()</code> で 2026/05/23 のPDFを生成し、Drive を確認します。</li>
+        <li><code>testGenerateDay2()</code> で 2026/05/24 のPDFを生成し、Drive を確認します。</li>
+        <li>修正があれば <code>generateAllJudgeForms()</code> で両日分を一括再生成します。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>スクリプトプロパティ</h2>
+      <ul>
+        <li><code>GITHUB_REPO</code> = <code>rowingishikawadev-del/masters-regatta-2026</code></li>
+        <li><code>GITHUB_BRANCH</code> = <code>main</code></li>
+        <li><code>GITHUB_TOKEN</code> = 既存GASと同じ値</li>
+        <li><code>TEMPLATE_SHEET_ID</code> = <code>1Q37f2gAgfLwIr2snBjLUiZKcUEr99wr97NjbhDNFRHc</code></li>
+        <li><code>OUTPUT_FOLDER_ID</code> = <code>1LHAVHRnwVgMaQL4ipaDGa6HINz-9oXkn</code></li>
+      </ul>
+    </section>
+
+    <section class="notice">
+      <h2>運用メモ</h2>
+      <p><span class="accent">トリガーは作成しません。</span> 判定員帳票が必要なタイミングで <code>testGenerateDay1()</code>、<code>testGenerateDay2()</code>、または <code>generateAllJudgeForms()</code> を手動実行してください。</p>
+      <p>出力ファイル名は <code>判定員帳票_YYYY-MM-DD.pdf</code> です。同名ファイルが出力先フォルダにある場合はゴミ箱へ移動してから新規作成します。</p>
+    </section>
+  </main>
+</body>
+</html>

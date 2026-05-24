@@ -1,4 +1,13 @@
-# 第17回全日本マスターズレガッタ 速報サイト（本番）
+# 第17回全日本マスターズレガッタ 速報サイト（本番・統合正本）
+
+> **2026/05/24 統合**: 旧 `rowing-live-results`（初代テストサイト）と
+> 旧 `ishikawa-rowing-2026`（中間版）を統合した正本プロジェクト。
+> 詳細: [`MERGER_LOG.md`](./MERGER_LOG.md) 参照。
+
+## 起動コマンド
+```bash
+cd ~/Desktop/ryui-workspace/projects/rowing/masters-regatta-2026 && claude
+```
 
 ## 大会情報
 - **大会名**: 第17回全日本マスターズレガッタ
