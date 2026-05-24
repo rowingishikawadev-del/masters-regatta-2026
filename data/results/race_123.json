@@ -1,1 +1,120 @@
-{"race_no":123,"cleared":true,"results":[]}
+{
+  "race_no": 123,
+  "updated_at": "2026-05-24T15:04:43.499Z",
+  "results": [
+    {
+      "lane": 1,
+      "rank": 1,
+      "times": {
+        "500m": {
+          "time_ms": 0,
+          "formatted": "0:00.00"
+        }
+      },
+      "finish": {
+        "time_ms": 0,
+        "formatted": "0:00.00"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 2,
+      "rank": 2,
+      "times": {
+        "500m": {
+          "time_ms": 0,
+          "formatted": "0:00.00"
+        }
+      },
+      "finish": {
+        "time_ms": 0,
+        "formatted": "0:00.00"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 3,
+      "rank": 3,
+      "times": {
+        "500m": {
+          "time_ms": 0,
+          "formatted": "0:00.00"
+        }
+      },
+      "finish": {
+        "time_ms": 0,
+        "formatted": "0:00.00"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 4,
+      "rank": 4,
+      "times": {
+        "500m": {
+          "time_ms": 0,
+          "formatted": "0:00.00"
+        }
+      },
+      "finish": {
+        "time_ms": 0,
+        "formatted": "0:00.00"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 5,
+      "rank": 5,
+      "times": {
+        "500m": {
+          "time_ms": 0,
+          "formatted": "0:00.00"
+        }
+      },
+      "finish": {
+        "time_ms": 0,
+        "formatted": "0:00.00"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    },
+    {
+      "lane": 6,
+      "rank": 6,
+      "times": {
+        "500m": {
+          "time_ms": 0,
+          "formatted": "0:00.00"
+        }
+      },
+      "finish": {
+        "time_ms": 0,
+        "formatted": "0:00.00"
+      },
+      "split": "",
+      "tie_group": "",
+      "photo_flag": false,
+      "note": "",
+      "status": "finish"
+    }
+  ]
+}
