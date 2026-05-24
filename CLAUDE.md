@@ -148,6 +148,11 @@ git push staging main     # 本番環境へデプロイ（masters-regatta-2026-3
 #### 大会後
 - 2026-05-24: **3 プロジェクト統合**（rowing-live-results / ishikawa-rowing-2026 を本プロジェクトに統一）
 - 2026-05-24: workspace 再構築（projects/rowing/ 配下に配置・カテゴリ階層化）
+- 2026-05-24: **500m レース対応（残務）**: スプレッドシート schedule の `course_length` 列を distance マスターに採用
+  - `gas/Code.gs`: `fetchCourseLengthMap_()` 新設・`processPendingCSVs` で **レース別ゴールポイント判定**（500m レースは 500m 到着で確定、1000m レースは現行通り）
+  - `gas/pdf_publisher/Code.gs`: `buildRaceInfo_` で `course_length` を参照し、**500m レースは 500m 列に実値・1000m 列はブランク**で出力。順位は 500m タイムで決定
+  - 旧データ救済: 旧ロジックで 1000m スロットに入った 500m ゴールタイムを PDF 側でフォールバック取得
+  - 参照: `references/spec-source-dest-schedule-20260511.pdf` (5/24 11:07 以降 MKF/MixKF = 500m)
 
 ## 状態（大会完了後）
 

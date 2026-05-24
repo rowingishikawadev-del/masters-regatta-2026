@@ -590,6 +590,11 @@ function buildRaceInfo_(raceNo, masterData, resultData) {
   const roundName = decodeRound(schedule.round || '');
   const raceTime = composeRaceTime_(schedule.date, schedule.time);
 
+  // レース距離（500m or 1000m）。schedule.course_length 優先 → tournament.course_length → デフォルト 1000m
+  const tournamentLen = (masterData.tournament && masterData.tournament.course_length) || 1000;
+  const courseLength = parseInt(schedule.course_length || tournamentLen, 10);
+  const is500mRace = (courseLength === 500);
+
   const masterEntries = schedule.entries || [];
   const results = (resultData && resultData.results) || [];
   const categoryRanks = buildCategoryRanks_(results, masterEntries);
@@ -601,13 +606,25 @@ function buildRaceInfo_(raceNo, masterData, resultData) {
       .slice()
       .sort(function(a, b) { return (a.rank || 99) - (b.rank || 99); })
       .map(function(r) {
+        // 500m レース: 500m 列に実値（旧データ互換: '1000m' スロットにゴールが入っているケースもフォールバック）、1000m 列はブランク
+        // 1000m レース: 既存通り（500m=中間、1000m=ゴール）
+        let time500 = '';
+        let time1000 = '';
+        if (is500mRace) {
+          time500 = extractTime_(r, '500m', 'time_500')
+                 || extractTime_(r, '1000m', 'time_1000'); // 旧仕様で 1000m スロットに入った 500m ゴールを救済
+          time1000 = ''; // 500m レースは 1000m 列を必ずブランク
+        } else {
+          time500 = extractTime_(r, '500m', 'time_500');
+          time1000 = extractTime_(r, '1000m', 'time_1000');
+        }
         return [
           extractRank_(r),
           extractAffiliation_(r, masterEntries),
           String(r.lane || ''),
           extractCategory_(r, masterEntries),
-          extractTime_(r, '500m', 'time_500'),
-          extractTime_(r, '1000m', 'time_1000'),
+          time500,
+          time1000,
           extractCategoryNote_(r, masterEntries, categoryRanks, isCombinedCategory),
           extractCrewName_(r, masterEntries)
         ];
@@ -619,6 +636,8 @@ function buildRaceInfo_(raceNo, masterData, resultData) {
     ageGroup: ageGroup,
     roundName: roundName,
     raceTime: raceTime,
+    courseLength: courseLength, // PDF 側で参照可能に（必要なら見出し表示などに利用）
+    is500mRace: is500mRace,
     entries: entries
   };
 }

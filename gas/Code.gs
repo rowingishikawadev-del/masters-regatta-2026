@@ -288,7 +288,10 @@ function processPendingCSVs(startTime) {
     }
   }
 
-  // 全計測ポイントが揃ったレースを処理
+  // master.json をプリフェッチ（レースごとの course_length 判定用キャッシュ）
+  const courseLengthMap = fetchCourseLengthMap_();
+
+  // 各レースを処理（レース距離に応じてゴールポイントを動的決定）
   for (const raceNo in raceFiles) {
     // 実行時間チェック
     if (startTime && Date.now() - startTime > CONFIG.maxExecutionMs) {
@@ -298,25 +301,37 @@ function processPendingCSVs(startTime) {
 
     const files = raceFiles[raceNo];
     const collectedPoints = Object.keys(files);
-    const lastPoint = measurementPoints[measurementPoints.length - 1];
-    const hasLastPoint = collectedPoints.includes(lastPoint);
 
-    // ゴールポイント（1000m）が未着の場合はスキップ
-    // 例: 500mのみ到着 → 処理しない
-    if (!hasLastPoint) {
-      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' ゴールポイント(' + lastPoint + ')未着のためスキップ: 取得済み=[' + collectedPoints.join(',') + ']');
+    // 【レース距離別の判定】
+    //   1000m レース → ゴール = 1000m、中間 = 500m（任意）
+    //   500m レース  → ゴール = 500m のみ（中間ポイント無し）
+    //   distance 不明 → デフォルト 1000m として扱う（後方互換）
+    const raceCourseLength = (courseLengthMap[raceNo] || 1000); // 500 or 1000
+    const goalPoint = raceCourseLength + 'm';                   // '500m' or '1000m'
+    const racePoints = (raceCourseLength === 500)
+      ? ['500m']
+      : measurementPoints.slice();                              // 1000m レースは設定通り（例: ['500m','1000m']）
+
+    const hasGoal = collectedPoints.includes(goalPoint);
+
+    // ゴールポイントが未着の場合はスキップ
+    if (!hasGoal) {
+      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' distance=' + raceCourseLength + 'm ゴール(' + goalPoint + ')未着のためスキップ: 取得済み=[' + collectedPoints.join(',') + ']');
       continue;
     }
 
-    // 中間ポイント（500m）未着でもゴールが揃えば処理する
-    if (collectedPoints.length < measurementPoints.length) {
-      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 中間ポイント未着だがゴール到着のため処理: 取得済み=[' + collectedPoints.join(',') + ']');
+    // ログ出力（500m / 1000m レースで分岐）
+    if (raceCourseLength === 500) {
+      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 500mレース: 500m到着のため処理開始');
+    } else if (collectedPoints.length < racePoints.length) {
+      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 1000mレース: 中間ポイント未着だがゴール到着のため処理開始: 取得済み=[' + collectedPoints.join(',') + ']');
     } else {
-      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 全ポイント揃い。処理開始');
+      Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 1000mレース: 全ポイント揃い。処理開始');
     }
 
     try {
-      buildAndPushRaceJSON(parseInt(raceNo, 10), files, measurementPoints);
+      // 500m レースは racePoints=['500m']、1000m レースは racePoints=['500m','1000m'] を渡す
+      buildAndPushRaceJSON(parseInt(raceNo, 10), files, racePoints);
     } catch (e) {
       Logger.log('[processPendingCSVs] race_no=' + raceNo + ' 処理エラー: ' + e.message);
       recordError('processPendingCSVs_race' + raceNo, e);
@@ -324,6 +339,54 @@ function processPendingCSVs(startTime) {
   }
 
   Logger.log('[processPendingCSVs] 完了');
+}
+
+/**
+ * master.json から { raceNo: course_length } のマップを取得する
+ * - GitHub から data/master.json を fetch
+ * - schedule[].course_length を抽出
+ * - 失敗時は空マップ（呼び出し側でデフォルト 1000m にフォールバック）
+ * @returns {{ [raceNo: number]: number }}  例: { 90: 500, 91: 500, 1: 1000, ... }
+ */
+function fetchCourseLengthMap_() {
+  try {
+    const props = PropertiesService.getScriptProperties();
+    const token = props.getProperty(CONFIG.props.githubToken);
+
+    if (!token) {
+      Logger.log('[fetchCourseLengthMap_] GITHUB_TOKEN 未設定 → 空マップを返却（デフォルト 1000m）');
+      return {};
+    }
+
+    const url = CONFIG.github.apiBase + '/repos/' + CONFIG.github.owner + '/' +
+      CONFIG.github.repo + '/contents/' + CONFIG.github.masterPath + '?ref=' + CONFIG.github.branch;
+    const res = UrlFetchApp.fetch(url, {
+      method: 'get',
+      headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' },
+      muteHttpExceptions: true,
+    });
+
+    if (res.getResponseCode() !== 200) {
+      Logger.log('[fetchCourseLengthMap_] master.json 取得失敗: HTTP ' + res.getResponseCode());
+      return {};
+    }
+
+    const body = JSON.parse(res.getContentText());
+    const content = Utilities.newBlob(Utilities.base64Decode(body.content), 'application/octet-stream').getDataAsString('UTF-8');
+    const master = JSON.parse(content);
+
+    const map = {};
+    (master.schedule || []).forEach(r => {
+      if (r && r.race_no != null && r.course_length) {
+        map[parseInt(r.race_no, 10)] = parseInt(r.course_length, 10);
+      }
+    });
+    Logger.log('[fetchCourseLengthMap_] 取得: ' + Object.keys(map).length + ' レース分の course_length');
+    return map;
+  } catch (e) {
+    Logger.log('[fetchCourseLengthMap_] エラー（デフォルト 1000m にフォールバック）: ' + e.message);
+    return {};
+  }
 }
 
 /**
