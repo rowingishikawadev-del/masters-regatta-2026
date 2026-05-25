@@ -1,11 +1,16 @@
 /**
  * ============================================================
  *  マスターズレガッタ2026 試合結果PDF生成システム (Code.gs)
- *  Version: 0.18.1
+ *  Version: 0.19.0
  *  Last Updated: 2026/05/25
- *  Last Pushed:  2026/05/25 03:56 (clasp by Claude Code)
+ *  Last Pushed:  2026/05/25 04:20 (clasp by Claude Code)
  *  scriptId:     1C8qpIqKRLNtQcTl0LerglEaMdt1X9rvZJeH89GT7c48kiQUAvFzlswAt
  *  Changes:
+ *   - v0.19.0 (2026/05/25): 全レース結果 一覧表 PDF（昨年フォーマット）追加
+ *      ・generateResultsListPdf() — 全日程を日付ごとに 1 PDF/日 生成
+ *      ・generateResultsListPdfForDate(dateStr) — 指定日のみ
+ *      ・1 行=1 クルー、レースNo・種目をセル結合。都道府県/決勝表記は除外
+ *      ・ファイル名「結果一覧_YYYY-MM-DD.pdf」
  *   - v0.18.1 (2026/05/25): clearAllCaches() 新設
  *      ・CacheService の master.json / resultList キャッシュ（240秒 TTL）を即時クリア
  *      ・importMasterData 直後の PDF 再生成で古いキャッシュが残る問題を解消
@@ -47,7 +52,7 @@
  * ============================================================
  * GitHubの race_NNN.json を監視し、変更があったレースだけPDFを再生成する。
  */
-const PDF_PUBLISHER_VERSION = '0.18.1 (2026/05/25)';
+const PDF_PUBLISHER_VERSION = '0.19.0 (2026/05/25)';
 
 const CONFIG_KEYS = {
   githubRepo: 'GITHUB_REPO',
@@ -1293,6 +1298,193 @@ function findCell_(values, predicate) {
     }
   }
   return null;
+}
+
+// ============================================================
+//  全レース結果 一覧表 PDF（昨年フォーマット）
+//  v0.19.0 (2026/05/25) で新設
+//
+//  generateResultsListPdf() — 全日程を日付ごとに分割して 1 PDF/日
+//  generateResultsListPdfForDate(dateStr) — 指定日のみ
+//
+//  昨年の「競漕記録 全レース結果」形式（1 行 = 1 クルー、レースごとに
+//  レースNo・種目をセル結合）を GAS で動的にスプレッドシート生成して PDF 化。
+//  列: レースNo / 種目 / B / クルー名 / 着順 / 1000m / 500m / 備考 / カテゴリ / 風向風速
+//  （都道府県・「決勝」表記は龍偉指示で除外）
+//  出力先: PRE_RACE_BOOKLET_FOLDER_ID、ファイル名「結果一覧_YYYY-MM-DD.pdf」
+// ============================================================
+
+/**
+ * 全レース結果の一覧表 PDF を日付ごとに生成
+ */
+function generateResultsListPdf() {
+  Logger.log('=== generateResultsListPdf 開始 v' + PDF_PUBLISHER_VERSION + ' ===');
+  const config = getConfig_();
+  const masterData = fetchMasterData_(config);
+  const dates = ((masterData.tournament || {}).dates || []).slice();
+  if (dates.length === 0) throw new Error('tournament.dates が空です。');
+  dates.forEach(function(d) {
+    try {
+      generateResultsListPdfForDate(String(d).replace(/-/g, '/'), masterData);
+    } catch (e) {
+      Logger.log('日付 ' + d + ' でエラー: ' + e.message);
+    }
+  });
+  Logger.log('=== 全日程の結果一覧 PDF 生成完了 dates=' + dates.length + ' ===');
+}
+
+/**
+ * 指定日の全レース結果を 1 つの一覧表 PDF にする
+ * @param {string} dateStr 例: '2026/5/23'
+ * @param {object} [masterData]
+ */
+function generateResultsListPdfForDate(dateStr, masterData) {
+  Logger.log('=== generateResultsListPdfForDate date=' + dateStr + ' ===');
+  const config = getConfig_();
+  const loadedMaster = masterData || fetchMasterData_(config);
+  const normalizedDate = normalizeDateKey_(dateStr);
+
+  const schedule = (loadedMaster.schedule || [])
+    .filter(function(r) { return normalizeDateKey_(r.date) === normalizedDate; })
+    .sort(function(a, b) { return (a.race_no || 0) - (b.race_no || 0); });
+  if (schedule.length === 0) { Logger.log('対象日のレースなし: ' + dateStr); return; }
+
+  // 新規スプレッドシート作成
+  const ssName = '_tmp_results_list_' + normalizedDate.replace(/\//g, '-') + '_' + Date.now();
+  const ss = SpreadsheetApp.create(ssName);
+  const sheet = ss.getActiveSheet();
+  sheet.setName('結果一覧');
+
+  try {
+    const headers = ['レースNo', '種目', 'B', 'クルー名', '着順', '1000m', '500m', '備考', 'カテゴリ', '風向/風速'];
+    const allRows = [headers];
+    const mergeRanges = []; // {startRow, span}
+
+    schedule.forEach(function(race) {
+      let result = null;
+      try { result = fetchRaceResult_(config, normalizeRaceNo_(race.race_no)); } catch (e) {}
+      const raceInfo = buildRaceInfo_(race.race_no, loadedMaster, result);
+      // raceInfo.entries: [rank, affiliation, lane, category, time500, time1000, note, crewName]
+      const entries = raceInfo.entries || [];
+      const courseLength = raceInfo.courseLength;
+      const startRow = allRows.length + 1; // header=1
+      const eventLabel = composeEventLabelForList_(race, raceInfo);
+
+      if (entries.length === 0) {
+        // エントリー情報から最低限の行を作る（結果なし）
+        const masterEntries = race.entries || [];
+        if (masterEntries.length === 0) {
+          allRows.push([race.race_no, eventLabel, '', '', '', '', '', '結果なし', '', '']);
+        } else {
+          masterEntries.forEach(function(e, i) {
+            allRows.push([
+              i === 0 ? race.race_no : '',
+              i === 0 ? eventLabel : '',
+              e.lane, composeCrew_(e), '', '', '', '', e.category || '', ''
+            ]);
+          });
+          mergeRanges.push({ startRow: startRow, span: masterEntries.length });
+        }
+      } else {
+        entries.forEach(function(row, i) {
+          // row = [rank, affiliation, lane, category, time500, time1000, note, crewName]
+          const rank = row[0], affil = row[1], lane = row[2], cat = row[3];
+          const t500 = row[4], t1000 = row[5], note = row[6], crewName = row[7];
+          // 500m レース: t500 に実値・t1000 ブランク（buildRaceInfo_ が処理済み）
+          const crewCell = (affil ? affil + '\n' : '') + crewName;
+          allRows.push([
+            i === 0 ? race.race_no : '',
+            i === 0 ? eventLabel : '',
+            lane, crewCell, rank, t1000, t500, note, cat, ''
+          ]);
+        });
+        mergeRanges.push({ startRow: startRow, span: entries.length });
+      }
+    });
+
+    // 一括書き込み
+    sheet.getRange(1, 1, allRows.length, headers.length).setValues(allRows);
+
+    // レースNo・種目をセル結合（span > 1）
+    mergeRanges.forEach(function(m) {
+      if (m.span > 1) {
+        sheet.getRange(m.startRow, 1, m.span, 1).merge();
+        sheet.getRange(m.startRow, 2, m.span, 1).merge();
+      }
+      sheet.getRange(m.startRow, 1, m.span, 2).setVerticalAlignment('middle');
+    });
+
+    // 書式設定
+    const lastRow = allRows.length;
+    const fullRange = sheet.getRange(1, 1, lastRow, headers.length);
+    fullRange.setBorder(true, true, true, true, true, true);
+    fullRange.setFontFamily('Hiragino Kaku Gothic ProN');
+    fullRange.setFontSize(9);
+    fullRange.setVerticalAlignment('middle');
+    fullRange.setWrap(true);
+    // ヘッダー
+    sheet.getRange(1, 1, 1, headers.length)
+      .setFontWeight('bold').setBackground('#f0f0f0').setHorizontalAlignment('center');
+    // 中央寄せ列（レースNo, B, 着順, 1000m, 500m, カテゴリ）
+    [1, 3, 5, 6, 7, 9].forEach(function(c) {
+      sheet.getRange(2, c, lastRow - 1, 1).setHorizontalAlignment('center');
+    });
+    // 列幅
+    const widths = [50, 150, 28, 220, 40, 70, 70, 110, 56, 56];
+    widths.forEach(function(w, i) { sheet.setColumnWidth(i + 1, w); });
+
+    SpreadsheetApp.flush();
+    Utilities.sleep(1500);
+
+    // PDF エクスポート（A4 横）
+    const fileName = '結果一覧_' + normalizedDate.replace(/\//g, '-') + '.pdf';
+    const pdfBlob = exportListPdf_(ss.getId(), sheet.getSheetId(), fileName);
+
+    const targetFolder = DriveApp.getFolderById(PRE_RACE_BOOKLET_FOLDER_ID);
+    const existing = targetFolder.getFilesByName(fileName);
+    while (existing.hasNext()) existing.next().setTrashed(true);
+    targetFolder.createFile(pdfBlob);
+    Logger.log('PDF 格納完了: ' + PRE_RACE_BOOKLET_FOLDER_ID + '/' + fileName);
+
+    return { fileName: fileName, raceCount: schedule.length };
+  } finally {
+    DriveApp.getFileById(ss.getId()).setTrashed(true);
+  }
+}
+
+/** 一覧表の種目ラベル（時刻 + 種目名 + カテゴリー、「決勝」表記なし） */
+function composeEventLabelForList_(race, raceInfo) {
+  const time = raceInfo.raceTime || composeRaceTime_(race.date, race.time);
+  const name = race.event_name || raceInfo.eventName || '';
+  const cat = race.age_group ? '（' + race.age_group + '）' : '';
+  return time + '\n' + name + cat;
+}
+
+/** master エントリーからクルー表示（団体名 + クルー名） */
+function composeCrew_(e) {
+  const affil = e.affiliation || '';
+  const crew = e.crew_name || '';
+  return (affil && affil !== crew) ? (affil + '\n' + crew) : crew;
+}
+
+/** 一覧表用 A4 横 PDF エクスポート（範囲自動・fitw） */
+function exportListPdf_(spreadsheetId, gid, fileName) {
+  const url = 'https://docs.google.com/spreadsheets/d/' + spreadsheetId + '/export?' +
+    'format=pdf&size=A4&portrait=false&fitw=true' +
+    '&top_margin=0.3&bottom_margin=0.3&left_margin=0.3&right_margin=0.3' +
+    '&gridlines=false&printtitle=false&sheetnames=false&pagenum=true' +
+    '&horizontal_alignment=CENTER&vertical_alignment=TOP' +
+    '&fzr=true' +  // 先頭行（ヘッダー）を各ページに繰り返し
+    '&gid=' + gid;
+  const response = UrlFetchApp.fetch(url, {
+    muteHttpExceptions: true,
+    headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() }
+  });
+  const status = response.getResponseCode();
+  if (status < 200 || status >= 300) {
+    throw new Error('結果一覧 PDF export 失敗: status=' + status + ' body=' + response.getContentText().substring(0, 300));
+  }
+  return response.getBlob().setName(fileName).setContentType('application/pdf');
 }
 
 function exportSpreadsheetPdf_(spreadsheetId, fileName, gid) {
