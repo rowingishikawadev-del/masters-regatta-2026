@@ -1,5 +1,22 @@
 # 第17回全日本マスターズレガッタ 速報サイト（本番・統合正本）
 
+> ⚠️ **MUST: Obsidian Brain 連携（外部脳）**
+> 本プロジェクトの全作業を Obsidian Vault に必ず記録する。サボり禁止。
+>
+> - **Vault**: `~/Desktop/ryui-workspace/obsidian-brain/`
+> - **本 PJ の Sessions ノート**: `Sessions/Masters Regatta.md`
+> - **本 PJ の Projects ノート**: `Projects/masters-regatta-2026.md` / `Projects/masters-pdf-publisher.md`
+> - **詳細ルール**: `~/.claude/CLAUDE.md` の「IMPORTANT: Obsidian Brain 運用ルール（外部脳）」セクション必読
+>
+> ### 必須アクション
+> 1. **セッション開始時**: `Sessions/Masters Regatta.md` 読込 → 「## セッション履歴」へ `### YYYY-MM-DD HH:MM - <見出し>` 追記開始
+> 2. **重要マイルストーン達成時**: 即時追記（後回し禁止）
+> 3. **意思決定**: `Decisions/YYYY-MM-DD-masters-<topic>.md`
+> 4. **バグ・ハマり解決**: `Knowledge/regatta-<topic>.md` または `Knowledge/gas-<topic>.md`
+> 5. **バージョン更新時**: `Projects/masters-regatta-2026.md` 最新化
+> 6. **時刻記録**: `created` / `last_updated` フロントマター + 「## 📜 更新履歴」必須・即時更新
+> 7. **透明性**: Vault 読書込のたびに「Obsidian: xxx を読みました/書きました」と明示報告
+
 > **2026/05/24 統合**: 旧 `rowing-live-results`（初代テストサイト）と
 > 旧 `ishikawa-rowing-2026`（中間版）を統合した正本プロジェクト。
 > 詳細: [`MERGER_LOG.md`](./MERGER_LOG.md) 参照。
@@ -148,11 +165,39 @@ git push staging main     # 本番環境へデプロイ（masters-regatta-2026-3
 #### 大会後
 - 2026-05-24: **3 プロジェクト統合**（rowing-live-results / ishikawa-rowing-2026 を本プロジェクトに統一）
 - 2026-05-24: workspace 再構築（projects/rowing/ 配下に配置・カテゴリ階層化）
-- 2026-05-24: **500m レース対応（残務）**: スプレッドシート schedule の `course_length` 列を distance マスターに採用
-  - `gas/Code.gs`: `fetchCourseLengthMap_()` 新設・`processPendingCSVs` で **レース別ゴールポイント判定**（500m レースは 500m 到着で確定、1000m レースは現行通り）
-  - `gas/pdf_publisher/Code.gs`: `buildRaceInfo_` で `course_length` を参照し、**500m レースは 500m 列に実値・1000m 列はブランク**で出力。順位は 500m タイムで決定
-  - 旧データ救済: 旧ロジックで 1000m スロットに入った 500m ゴールタイムを PDF 側でフォールバック取得
+- 2026-05-24: **500m レース対応（残務 初版）**: スプレッドシート schedule の `course_length` 列を distance マスターに採用
+  - `gas/Code.gs`: `fetchCourseLengthMap_()` 新設・`processPendingCSVs` で **レース別ゴールポイント判定**
+  - `gas/pdf_publisher/Code.gs`: `buildRaceInfo_` で `course_length` を参照
   - 参照: `references/spec-source-dest-schedule-20260511.pdf` (5/24 11:07 以降 MKF/MixKF = 500m)
+
+#### 2026-05-25（未明・500m 仕様確定 + 結果 PDF 整備）★今回セッション
+- **500m レース仕様 訂正・確定**（最重要）:
+  - 正しい仕様: 500m レースは「物理 500m 地点 = スタート(0:00.00)」「物理 1000m 地点 = ゴール」
+  - `buildAndPushRaceJSON(raceNo, files, measurementPoints, raceCourseLength)` 第4引数追加
+  - 500m レース時、**物理 1000m CSV をゴールデータとして採用**し `times['500m']` に再ラベル、物理 500m CSV（スタート時刻）は破棄
+  - `race_XXX.json` に `course_length` フィールドを明示書き込み
+  - PDF Publisher `buildRaceInfo_`: 0:00.00 スタート時刻パターン判定で旧データもフォールバック救済
+- **救済関数**:
+  - `reprocess500mRaces()` — 500m レースのみ processed/ から戻して再処理
+  - `reprocessAllRaces()` — **全 CSV を processed/ + 「削除済」フォルダ両方から race_csv/ に戻して全件再処理**（v1.3.1）
+  - 「削除済」フォルダ ID: `1DaFuSAZQxdYqqI0-_SvidMEfK8G1zUa4`（clearAllResults が processed/ を退避する先）
+- **バグ修正**: `clearAllResults` の `resultsPath` 未宣言 ReferenceError 修正
+- **結果 PDF 2 種を新規実装**（PDF Publisher）:
+  - `generateAllResultsBooklet()` / `generateResultsBookletForDate()` — 1 レース 1 シートの結果ブックレット（v0.18.0）
+  - `generateResultsListPdf()` / `generateResultsListPdfForDate()` — **昨年フォーマットの全レース結果一覧表**（1 行=1 クルー・レースNo/種目セル結合・都道府県/決勝なし）（v0.19.0）
+  - 参照: `references/spec-ref-2025-result-format-20260525.pdf`（昨年の競漕記録一覧）
+- **キャッシュ対策**: `clearAllCaches()` 新設（master.json の 240秒 CacheService キャッシュを即時クリア）（v0.18.1）
+- **age_group 修正**: race_033 / race_091 を「パラ」→「**A・Aパラ**」に修正
+  - ローカル + Drive 両方の `master/schedule.csv` を更新
+  - Drive 上 schedule.csv を新版に差し替え（旧版ゴミ箱）→ importMasterData で master.json 反映
+  - 「カテゴリー」ヘッダーが反映されなかった原因: ①CSV が古い ②龍偉が編集してたのは別シート ③GAS は CSV 優先 ④PDF Publisher の 4分キャッシュ
+- **clasp scriptId 重大修正**: メイン GAS の `.clasp.json` が誤プロジェクトを指していた
+  - 誤: `1XoIp2BO7K-...jNYrj` → 正: `1PYr-9DlmBO...whvRLm`
+  - 数時間分の修正が誤プロジェクトに反映されていた問題を解消
+- **GAS バージョン明記**: 両 GAS の冒頭にバージョン・変更履歴・scriptId を記載（龍偉が反映状況を即確認できるように）
+  - メイン GAS: `GAS_MAIN_VERSION = '1.3.1'`
+  - PDF Publisher: `PDF_PUBLISHER_VERSION = '0.19.0'`
+- **500m レース反映 実証**: race_090-094 が新ロジックで正しくサイト・PDF 反映確認（course_length:500, finish に実ゴールタイム）
 
 ## 状態（大会完了後）
 
