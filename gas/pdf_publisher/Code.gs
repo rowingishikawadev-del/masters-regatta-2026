@@ -1,11 +1,17 @@
 /**
  * ============================================================
  *  マスターズレガッタ2026 試合結果PDF生成システム (Code.gs)
- *  Version: 0.19.0
+ *  Version: 0.21.0
  *  Last Updated: 2026/05/25
- *  Last Pushed:  2026/05/25 04:20 (clasp by Claude Code)
+ *  Last Pushed:  2026/05/25 (clasp by Claude Code)
  *  scriptId:     1C8qpIqKRLNtQcTl0LerglEaMdt1X9rvZJeH89GT7c48kiQUAvFzlswAt
  *  Changes:
+ *   - v0.21.0 (2026/05/25): 結果一覧 PDF を全レース「6レーン固定」で表示
+ *      （各レーンに該当クルーの結果を配置・空レーンは空欄）。行高さを明示
+ *      設定して改ページ計算を決定的にし、レースの紙またぎ分割を確実に防止
+ *   - v0.20.0 (2026/05/25): 結果一覧 PDF を A4 縦構成に変更 + レースが
+ *      ページ間で分割されないよう余白行を自動挿入（fitw 等倍縮小を利用した
+ *      ページ高さ計算でレース単位の改ページ調整）
  *   - v0.19.0 (2026/05/25): 全レース結果 一覧表 PDF（昨年フォーマット）追加
  *      ・generateResultsListPdf() — 全日程を日付ごとに 1 PDF/日 生成
  *      ・generateResultsListPdfForDate(dateStr) — 指定日のみ
@@ -52,7 +58,7 @@
  * ============================================================
  * GitHubの race_NNN.json を監視し、変更があったレースだけPDFを再生成する。
  */
-const PDF_PUBLISHER_VERSION = '0.19.0 (2026/05/25)';
+const PDF_PUBLISHER_VERSION = '0.21.0 (2026/05/25)';
 
 const CONFIG_KEYS = {
   githubRepo: 'GITHUB_REPO',
@@ -1357,55 +1363,88 @@ function generateResultsListPdfForDate(dateStr, masterData) {
 
   try {
     const headers = ['レースNo', '種目', 'B', 'クルー名', '着順', '1000m', '500m', '備考', 'カテゴリ', '風向/風速'];
+    const widths = [44, 116, 22, 176, 34, 58, 58, 78, 46, 50];
+    const CREW_COL_W = widths[3];
+    const LINE_PX = 16, ROW_PAD = 8, BASE_ROW_H = 2 * LINE_PX + ROW_PAD, HEADER_H = 38;
+
     const allRows = [headers];
+    const rowHeights = [HEADER_H]; // 1始まりで rowHeights[r-1]
     const mergeRanges = []; // {startRow, span}
+    const blocks = [];      // {start, count}
+
+    // クルーセルの折返し行数から行高さを見積もる（明示設定して改ページ計算を決定的にする）
+    function estLines_(text) {
+      if (!text) return 1;
+      const charsPerLine = Math.max(4, Math.floor(CREW_COL_W / 13)); // 全角≒13px/字
+      return String(text).split('\n').reduce(function(sum, seg) {
+        let w = 0;
+        for (let i = 0; i < seg.length; i++) {
+          const code = seg.charCodeAt(i);
+          w += (code <= 0x7f || (code >= 0xff61 && code <= 0xff9f)) ? 0.6 : 1; // 半角/全角
+        }
+        return sum + Math.max(1, Math.ceil(w / charsPerLine));
+      }, 0);
+    }
+    function rowHeightFor_(crewCell) {
+      return Math.max(2, estLines_(crewCell)) * LINE_PX + ROW_PAD;
+    }
 
     schedule.forEach(function(race) {
       let result = null;
       try { result = fetchRaceResult_(config, normalizeRaceNo_(race.race_no)); } catch (e) {}
       const raceInfo = buildRaceInfo_(race.race_no, loadedMaster, result);
-      // raceInfo.entries: [rank, affiliation, lane, category, time500, time1000, note, crewName]
-      const entries = raceInfo.entries || [];
-      const courseLength = raceInfo.courseLength;
+      const resultEntries = raceInfo.entries || []; // [rank,affil,lane,cat,t500,t1000,note,crew]
+      const masterEntries = race.entries || [];
       const startRow = allRows.length + 1; // header=1
       const eventLabel = composeEventLabelForList_(race, raceInfo);
 
-      if (entries.length === 0) {
-        // エントリー情報から最低限の行を作る（結果なし）
-        const masterEntries = race.entries || [];
-        if (masterEntries.length === 0) {
-          allRows.push([race.race_no, eventLabel, '', '', '', '', '', '結果なし', '', '']);
-        } else {
-          masterEntries.forEach(function(e, i) {
-            allRows.push([
-              i === 0 ? race.race_no : '',
-              i === 0 ? eventLabel : '',
-              e.lane, composeCrew_(e), '', '', '', '', e.category || '', ''
-            ]);
-          });
-          mergeRanges.push({ startRow: startRow, span: masterEntries.length });
-        }
-      } else {
-        entries.forEach(function(row, i) {
-          // row = [rank, affiliation, lane, category, time500, time1000, note, crewName]
-          const rank = row[0], affil = row[1], lane = row[2], cat = row[3];
-          const t500 = row[4], t1000 = row[5], note = row[6], crewName = row[7];
-          // 500m レース: t500 に実値・t1000 ブランク（buildRaceInfo_ が処理済み）
-          const crewCell = (affil ? affil + '\n' : '') + crewName;
-          allRows.push([
-            i === 0 ? race.race_no : '',
-            i === 0 ? eventLabel : '',
-            lane, crewCell, rank, t1000, t500, note, cat, ''
-          ]);
-        });
-        mergeRanges.push({ startRow: startRow, span: entries.length });
+      // レーン → 表示データ。master でレーン/クルーを確定 → result で着順・タイムを上書き
+      const byLane = {};
+      masterEntries.forEach(function(e) {
+        const ln = String(e.lane || '');
+        if (!ln) return;
+        byLane[ln] = { crew: composeCrew_(e), rank: '', t1000: '', t500: '', note: '', cat: e.category || '' };
+      });
+      resultEntries.forEach(function(row) {
+        const ln = String(row[2] || '');
+        if (!ln) return;
+        const affil = row[1], crewName = row[7];
+        const crewCell = (affil && affil !== crewName ? affil + '\n' : '') + crewName;
+        byLane[ln] = {
+          crew: crewCell || ((byLane[ln] && byLane[ln].crew) || ''),
+          rank: row[0], t1000: row[5], t500: row[4], note: row[6], cat: row[3]
+        };
+      });
+
+      // 全レース最低6レーン表示。6超のレーンがあれば拡張
+      let maxLane = 6;
+      Object.keys(byLane).forEach(function(l) { const n = parseInt(l, 10); if (n > maxLane) maxLane = n; });
+
+      for (let ln = 1; ln <= maxLane; ln++) {
+        const d = byLane[String(ln)] || { crew: '', rank: '', t1000: '', t500: '', note: '', cat: '' };
+        allRows.push([
+          ln === 1 ? race.race_no : '',
+          ln === 1 ? eventLabel : '',
+          ln, d.crew, d.rank, d.t1000, d.t500, d.note, d.cat, ''
+        ]);
+        rowHeights.push(rowHeightFor_(d.crew));
       }
+      mergeRanges.push({ startRow: startRow, span: maxLane });
+      blocks.push({ start: startRow, count: maxLane });
     });
 
     // 一括書き込み
-    sheet.getRange(1, 1, allRows.length, headers.length).setValues(allRows);
+    const lastDataRow = allRows.length;
+    sheet.getRange(1, 1, lastDataRow, headers.length).setValues(allRows);
 
-    // レースNo・種目をセル結合（span > 1）
+    // 行高さを明示設定（getRowHeight 非依存で決定的に改ページ計算するため）
+    sheet.setRowHeights(1, lastDataRow, BASE_ROW_H);
+    sheet.setRowHeight(1, HEADER_H);
+    for (let r = 2; r <= lastDataRow; r++) {
+      if (rowHeights[r - 1] !== BASE_ROW_H) sheet.setRowHeight(r, rowHeights[r - 1]);
+    }
+
+    // レースNo・種目をセル結合
     mergeRanges.forEach(function(m) {
       if (m.span > 1) {
         sheet.getRange(m.startRow, 1, m.span, 1).merge();
@@ -1414,29 +1453,66 @@ function generateResultsListPdfForDate(dateStr, masterData) {
       sheet.getRange(m.startRow, 1, m.span, 2).setVerticalAlignment('middle');
     });
 
-    // 書式設定
-    const lastRow = allRows.length;
-    const fullRange = sheet.getRange(1, 1, lastRow, headers.length);
-    fullRange.setBorder(true, true, true, true, true, true);
+    // 書式設定（縦構成 A4 portrait）
+    const fullRange = sheet.getRange(1, 1, lastDataRow, headers.length);
     fullRange.setFontFamily('Hiragino Kaku Gothic ProN');
     fullRange.setFontSize(9);
     fullRange.setVerticalAlignment('middle');
     fullRange.setWrap(true);
-    // ヘッダー
     sheet.getRange(1, 1, 1, headers.length)
       .setFontWeight('bold').setBackground('#f0f0f0').setHorizontalAlignment('center');
-    // 中央寄せ列（レースNo, B, 着順, 1000m, 500m, カテゴリ）
     [1, 3, 5, 6, 7, 9].forEach(function(c) {
-      sheet.getRange(2, c, lastRow - 1, 1).setHorizontalAlignment('center');
+      sheet.getRange(2, c, lastDataRow - 1, 1).setHorizontalAlignment('center');
     });
-    // 列幅
-    const widths = [50, 150, 28, 220, 40, 70, 70, 110, 56, 56];
     widths.forEach(function(w, i) { sheet.setColumnWidth(i + 1, w); });
+    const tableWidthPx = widths.reduce(function(a, b) { return a + b; }, 0);
+
+    // === 改ページ調整: レースが紙をまたいで分割されないよう余白行を挿入 ===
+    // A4縦・余白0.3inch → 印刷可能 約 7.67 x 11.09 inch。fitw は縦横等倍縮小なので
+    //   1ページ分の高さ(px) = tableWidthPx * (11.09 / 7.67)
+    const PAGE_RATIO = 11.09 / 7.67;
+    const SAFETY = 0.93; // ページ番号フッター等の余裕
+    const pxPerPage = tableWidthPx * PAGE_RATIO * SAFETY;
+    const pageUsable = pxPerPage - HEADER_H; // fzr でヘッダーが各ページ先頭に繰り返す分
+
+    // レース単位でページに詰め、あふれる直前に余白行を計画
+    const spacers = []; // {beforeRow, height}
+    let used = 0;
+    blocks.forEach(function(b) {
+      let bh = 0;
+      for (let r = b.start; r < b.start + b.count; r++) bh += rowHeights[r - 1];
+      if (used > 0 && used + bh > pageUsable) {
+        spacers.push({ beforeRow: b.start, height: Math.max(8, Math.round(pageUsable - used)) });
+        used = 0;
+      }
+      used += bh;
+      if (bh > pageUsable) used = 0; // 単独で1ページ超なら次レースは新ページから
+    });
+
+    // 余白行を下から挿入（行番号ずれ防止）
+    for (let i = spacers.length - 1; i >= 0; i--) {
+      const sp = spacers[i];
+      sheet.insertRowsBefore(sp.beforeRow, 1);
+      const spRange = sheet.getRange(sp.beforeRow, 1, 1, headers.length);
+      spRange.setBorder(false, false, false, false, false, false);
+      spRange.setBackground('#ffffff');
+      sheet.setRowHeight(sp.beforeRow, sp.height);
+    }
+
+    // 罫線: ヘッダー + 各レースブロックを個別に枠線（余白行は枠なし）
+    sheet.getRange(1, 1, 1, headers.length).setBorder(true, true, true, true, true, true);
+    const sortedSpacers = spacers.slice().sort(function(a, b) { return a.beforeRow - b.beforeRow; });
+    let shift = 0, si = 0;
+    blocks.forEach(function(b) {
+      while (si < sortedSpacers.length && sortedSpacers[si].beforeRow <= b.start) { shift++; si++; }
+      sheet.getRange(b.start + shift, 1, b.count, headers.length)
+        .setBorder(true, true, true, true, true, true);
+    });
 
     SpreadsheetApp.flush();
-    Utilities.sleep(1500);
+    Utilities.sleep(1000);
 
-    // PDF エクスポート（A4 横）
+    // PDF エクスポート（A4 縦）
     const fileName = '結果一覧_' + normalizedDate.replace(/\//g, '-') + '.pdf';
     const pdfBlob = exportListPdf_(ss.getId(), sheet.getSheetId(), fileName);
 
@@ -1467,10 +1543,10 @@ function composeCrew_(e) {
   return (affil && affil !== crew) ? (affil + '\n' + crew) : crew;
 }
 
-/** 一覧表用 A4 横 PDF エクスポート（範囲自動・fitw） */
+/** 一覧表用 A4 縦 PDF エクスポート（範囲自動・fitw・改ページはシート側余白行で制御） */
 function exportListPdf_(spreadsheetId, gid, fileName) {
   const url = 'https://docs.google.com/spreadsheets/d/' + spreadsheetId + '/export?' +
-    'format=pdf&size=A4&portrait=false&fitw=true' +
+    'format=pdf&size=A4&portrait=true&fitw=true' +
     '&top_margin=0.3&bottom_margin=0.3&left_margin=0.3&right_margin=0.3' +
     '&gridlines=false&printtitle=false&sheetnames=false&pagenum=true' +
     '&horizontal_alignment=CENTER&vertical_alignment=TOP' +
