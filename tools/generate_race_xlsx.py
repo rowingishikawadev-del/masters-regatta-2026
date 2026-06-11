@@ -16,6 +16,20 @@ SHRINK_CENTER = Alignment(horizontal="center", vertical="center", wrap_text=Fals
 SHRINK_LEFT_CENTER = Alignment(horizontal="left", vertical="center", wrap_text=False, shrink_to_fit=True)
 ROUND_LABELS = {
     "FA": "決勝A",
+    "FB": "決勝B",
+    "FC": "決勝C",
+    "F": "決勝",
+    "SA": "準決A",
+    "SB": "準決B",
+    "SC": "準決C",
+    "S": "準決",
+    "R": "敗復",
+    "RA": "敗復A",
+    "RB": "敗復B",
+    "H": "予選",
+    "HA": "予選A",
+    "HB": "予選B",
+    "HC": "予選C",
 }
 
 
@@ -39,9 +53,22 @@ def find_race(master, race_no):
 
 
 def format_race_datetime(race):
-    year, month, day = [int(part) for part in race["date"].split("/")]
-    hour, minute = [int(part) for part in race["time"].split(":")]
-    return f"{year:04d}/{month:02d}/{day:02d}　{hour:02d}:{minute:02d}"
+    date_text = str(race.get("date") or "").strip()
+    time_text = str(race.get("time") or "").strip()
+    try:
+        sep = "-" if "-" in date_text else "/"
+        parts = [int(p) for p in date_text.split(sep)]
+        if len(parts) == 3:
+            date_text = f"{parts[0]:04d}/{parts[1]:02d}/{parts[2]:02d}"
+    except ValueError:
+        pass
+    try:
+        parts = [int(p) for p in time_text.split(":")]
+        if len(parts) >= 2:
+            time_text = f"{parts[0]:02d}:{parts[1]:02d}"
+    except ValueError:
+        pass
+    return f"{date_text}　{time_text}".strip()
 
 
 def copy_top_left_style(ws, source, targets):
@@ -78,7 +105,8 @@ def generate(race_no):
     ws = wb.active
     ws.print_area = "A1:M34"
 
-    ws["A1"] = master["tournament"]["race_name"]
+    tournament = master["tournament"]
+    ws["A1"] = tournament.get("name") or tournament.get("race_name", "")
     ws["E1"] = "競漕記録"
     ws["J1"] = f"print {datetime.now().strftime('%Y/%m/%d %H:%M:%S')}"
     ws["A8"] = race_no
