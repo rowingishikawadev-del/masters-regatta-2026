@@ -1266,12 +1266,6 @@ function parseMasterCSV(csvContent) {
 }
 
 /**
- * フォルダ内から指定ファイル名のファイルを検索する
- * @param {GoogleAppsScript.Drive.Folder} folder
- * @param {string} fileName
- * @returns {GoogleAppsScript.Drive.File|null}
- */
-/**
  * master/ フォルダから指定名のファイルを読み込む
  * CSV (.csv) と Googleスプレッドシート の両方に対応
  * @param {GoogleAppsScript.Drive.Folder} folder
