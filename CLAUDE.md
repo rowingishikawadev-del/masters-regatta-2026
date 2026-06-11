@@ -45,6 +45,7 @@ Push: `git push origin main` / `git push staging main`
 2. **大会本番完了** (2026-05-23・24)。今後は改善・来年汎用化が中心
 3. **2リモート**: `origin` (test) ＆ `staging` (prod)。両方への push を意識
 4. **JARA公式PDF確定版**: schedule (0507版) / entries (day1 ver5 / day2 ver3)
+5. **data/ master/ は凍結（v2026-final）。テンプレは template/、進捗は docs/progress/refactor-plugin-tracker.md**
 
 ## 引継書（最新）
 → `Sessions/Masters Regatta.md` の「## 引継書（最新）」セクション参照

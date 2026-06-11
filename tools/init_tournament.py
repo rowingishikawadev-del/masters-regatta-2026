@@ -30,10 +30,12 @@ sys.path.insert(0, str(TOOLS_DIR))
 from common import C
 
 # デフォルト出力先
+# NOTE: テンプレートCSVは template/master/ に出力する。
+#       本番凍結データを持つ master/ には書かない。
 DEFAULT_CONFIG_PATH    = PROJECT_DIR / "tournament.config.json"
-MASTER_DIR             = PROJECT_DIR / "master"
-SCHEDULE_TEMPLATE_PATH = MASTER_DIR  / "schedule_template.csv"
-ENTRIES_TEMPLATE_PATH  = MASTER_DIR  / "entries_template.csv"
+TEMPLATE_MASTER_DIR    = PROJECT_DIR / "template" / "master"   # テンプレート出力先（master/ は書かない）
+SCHEDULE_TEMPLATE_PATH = TEMPLATE_MASTER_DIR / "schedule_template.csv"
+ENTRIES_TEMPLATE_PATH  = TEMPLATE_MASTER_DIR / "entries_template.csv"
 
 # テンプレートCSVコピー元
 SCHEDULE_SAMPLE = PROJECT_DIR / "test" / "csv" / "schedule_sample.csv"
@@ -238,7 +240,7 @@ def write_config(config: dict, out_path: Path) -> None:
 
 
 def write_schedule_template() -> None:
-    MASTER_DIR.mkdir(parents=True, exist_ok=True)
+    TEMPLATE_MASTER_DIR.mkdir(parents=True, exist_ok=True)
     comment_header = (
         "# レーススケジュール テンプレート\n"
         "# 列の説明:\n"
@@ -265,7 +267,7 @@ def write_schedule_template() -> None:
 
 
 def write_entries_template() -> None:
-    MASTER_DIR.mkdir(parents=True, exist_ok=True)
+    TEMPLATE_MASTER_DIR.mkdir(parents=True, exist_ok=True)
     comment_header = (
         "# エントリー情報 テンプレート\n"
         "# 列の説明:\n"
@@ -295,13 +297,13 @@ def show_next_steps(config_path: Path) -> None:
     print(f"1. {C.CYAN}{config_path}{C.RESET} を確認・編集")
     print()
     print("2. 以下のファイルを編集してエントリーを入力:")
-    print(f"   {C.CYAN}master/schedule_template.csv{C.RESET}  ← レーススケジュール")
-    print(f"   {C.CYAN}master/entries_template.csv{C.RESET}   ← エントリー情報")
+    print(f"   {C.CYAN}template/master/schedule_template.csv{C.RESET}  ← レーススケジュール")
+    print(f"   {C.CYAN}template/master/entries_template.csv{C.RESET}   ← エントリー情報")
     print()
     print("3. 入力後、master.json を生成:")
     print(f"   {C.YELLOW}python3 tools/generate_master.py \\")
-    print(f"     --schedule master/schedule_template.csv \\")
-    print(f"     --entries  master/entries_template.csv  \\")
+    print(f"     --schedule template/master/schedule_template.csv \\")
+    print(f"     --entries  template/master/entries_template.csv  \\")
     print(f"     --output   data/master.json -y{C.RESET}")
     print()
     print("4. GAS Script Properties への投入:")
