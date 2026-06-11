@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<!-- TEMPLATE: scaffold が config から完成版を生成する。プレースホルダー残存のままスタッフに渡さないこと（D-M4） -->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>当日スタッフ マニュアル｜ボート競技速報サイト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<header>
+  <a href="index.html">← ドキュメント一覧</a>
+  <h1>当日担当者マニュアル</h1>
+  <p>{{TOURNAMENT_NAME}} 2026 / 計測・CSV投入担当向け</p>
+</header>
+
+<div class="page">
+
+  <!-- ヒーローセクション -->
+  <div class="hero">
+    <h1>🚣 ボート競技速報サイト｜当日スタッフ マニュアル</h1>
+    <p>計測終了後にCSVファイルをアップロードするだけで、サイトに自動反映されます。</p>
+    <div class="badge-list">
+      <span class="badge">📱 スマホ対応</span>
+      <span class="badge">⏱ 反映まで約3分</span>
+      <span class="badge">🤖 自動処理・手動操作不要</span>
+    </div>
+  </div>
+
+  <!-- 全体の流れ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="step-num">🔁</div>
+      <h2>全体の流れ（1レースごとに繰り返す）</h2>
+    </div>
+
+    <div class="flow">
+      <div class="flow-step">① 計測終了<span class="flow-time">タイマーアプリ</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">② CSVを書き出し<span class="flow-time">タイマーアプリ</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">③ Driveにアップ<span class="flow-time">あなたの作業</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">④ 自動処理<span class="flow-time">〜2分</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">⑤ サイト更新<span class="flow-time">〜1分</span></div>
+    </div>
+
+    <div class="callout callout-ok">
+      <div class="callout-icon">✅</div>
+      <div class="callout-body">
+        <strong>あなたがやることは③だけ！</strong>
+        CSVファイルを決められたフォルダにアップロードすると、あとはシステムが自動でサイトを更新します。
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 1: アップロード先フォルダ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="step-num">1</div>
+      <h2>アップロード先フォルダを開く</h2>
+    </div>
+
+    <p>以下のボタンから直接フォルダを開いてアップロードしてください。</p>
+
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin:16px 0;">
+      <a href="{{DRIVE_FOLDER_URL}}"
+         target="_blank"
+         style="display:flex; align-items:center; gap:10px; background:#1967d2; color:#fff; text-decoration:none; border-radius:8px; padding:14px 20px; font-weight:700; font-size:15px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+        📁 大会フォルダを開く
+      </a>
+    </div>
+
+    <p style="margin-bottom:10px;">大会フォルダの中の <code>race_csv/</code> フォルダ → 計測ポイントのフォルダを選んでアップロードしてください。</p>
+
+    <table>
+      <tr>
+        <th>CSVのファイル名</th>
+        <th>アップロード先</th>
+        <th>意味</th>
+      </tr>
+      <tr>
+        <td><code>R001_500m.csv</code></td>
+        <td><span class="path">race_csv / 500m /</span></td>
+        <td>500m地点センサー記録</td>
+      </tr>
+      <tr>
+        <td><code>R001_1000m.csv</code></td>
+        <td><span class="path">race_csv / 1000m /</span></td>
+        <td>1000m地点センサー記録（全レースのゴール記録）</td>
+      </tr>
+    </table>
+
+    <div class="callout callout-warn" style="margin-top:14px;">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body">
+        <strong>全レース、2 つの CSV を必ず両方アップしてください</strong>
+        <code>R001_500m.csv</code> → <code>500m/</code> フォルダ、<code>R001_1000m.csv</code> → <code>1000m/</code> フォルダです。
+        <br>
+        <strong style="color:#c0392b;">500m レース・1000m レース どちらも 2 ファイル両方が必要です。</strong>
+        どちらか片方だけでは自動処理されません。
+      </div>
+    </div>
+
+    <!-- フォルダ分岐ガイド -->
+    <div style="background:#f0f7ff;border:2px solid #3b7dd8;border-radius:10px;padding:18px 20px;margin-top:18px;">
+      <div style="font-size:13px;font-weight:700;color:#1967d2;margin-bottom:12px;">📂 どのフォルダに入れるか？ 迷ったらこれを見てください</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;background:#fff;border:2px solid #f0c040;border-radius:8px;padding:14px;">
+          <div style="font-size:12px;color:#888;margin-bottom:6px;">ファイル名に</div>
+          <div style="font-size:22px;font-weight:700;color:#b8860b;text-align:center;margin:8px 0;font-family:monospace;">_500m</div>
+          <div style="font-size:12px;color:#888;margin-bottom:10px;text-align:center;">が含まれている</div>
+          <div style="background:#fef9e7;border-radius:6px;padding:8px;text-align:center;">
+            <div style="font-size:11px;color:#888;">入れる場所</div>
+            <div style="font-size:15px;font-weight:700;color:#9a7d0a;font-family:monospace;">race_csv / 500m /</div>
+          </div>
+        </div>
+        <div style="flex:1;min-width:200px;background:#fff;border:2px solid #3b7dd8;border-radius:8px;padding:14px;">
+          <div style="font-size:12px;color:#888;margin-bottom:6px;">ファイル名に</div>
+          <div style="font-size:22px;font-weight:700;color:#1967d2;text-align:center;margin:8px 0;font-family:monospace;">_1000m</div>
+          <div style="font-size:12px;color:#888;margin-bottom:10px;text-align:center;">が含まれている</div>
+          <div style="background:#e8f0fe;border-radius:6px;padding:8px;text-align:center;">
+            <div style="font-size:11px;color:#888;">入れる場所</div>
+            <div style="font-size:15px;font-weight:700;color:#1967d2;font-family:monospace;">race_csv / 1000m /</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: ファイル名の見方 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="step-num">2</div>
+      <h2>ファイル名の見方</h2>
+    </div>
+
+    <p>CSVファイルの名前は <strong>レース番号と計測ポイント</strong> の2つだけです。シンプルに覚えてください。</p>
+
+<pre><span class="hl">R003</span>_<span class="hl">1000m</span>.csv
+  ↑       ↑
+レース番号  計測ポイント</pre>
+
+    <table>
+      <tr><th>部分</th><th>意味</th><th>例</th></tr>
+      <tr><td><code>R001</code> 〜 <code>R999</code></td><td>レース番号（3桁ゼロ埋め）</td><td>R001 = 第1レース、R012 = 第12レース</td></tr>
+      <tr><td><code>500</code> または <code>1000</code></td><td>計測ポイント</td><td>500 = 中間、1000 = フィニッシュ</td></tr>
+    </table>
+
+    <h3>1レースにつき2ファイル届く（1000mコースの場合）</h3>
+<pre><span class="ok">R003_500m.csv</span>    ← 中間タイム（500m地点）
+<span class="ok">R003_1000m.csv</span>   ← フィニッシュ（1000m地点）</pre>
+
+    <div class="callout callout-warn">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body">
+        <strong>2ファイル両方が揃ってはじめてサイトが更新されます</strong>
+        500m だけ・1000m だけでは反映されません。両方アップされるのを待ってください。
+      </div>
+    </div>
+
+    <!-- NG/OK ファイル名比較 -->
+    <h3>よくある間違い — ファイル名の NG 例</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+      <div style="display:flex;gap:10px;align-items:center;background:#fdedec;border:1px solid #f1948a;border-radius:6px;padding:10px 14px;">
+        <span style="font-size:18px;flex-shrink:0;">❌</span>
+        <div style="flex:1;">
+          <span style="font-family:monospace;font-size:14px;color:#c0392b;">R001_500.csv</span>
+          <span style="font-size:12px;color:#888;margin-left:8px;">← 「m」が抜けている</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;background:#fdedec;border:1px solid #f1948a;border-radius:6px;padding:10px 14px;">
+        <span style="font-size:18px;flex-shrink:0;">❌</span>
+        <div style="flex:1;">
+          <span style="font-family:monospace;font-size:14px;color:#c0392b;">R1_500m.csv</span>
+          <span style="font-size:12px;color:#888;margin-left:8px;">← 番号が3桁でない（R001 と書く）</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;background:#fdedec;border:1px solid #f1948a;border-radius:6px;padding:10px 14px;">
+        <span style="font-size:18px;flex-shrink:0;">❌</span>
+        <div style="flex:1;">
+          <span style="font-family:monospace;font-size:14px;color:#c0392b;">r001_500m.csv</span>
+          <span style="font-size:12px;color:#888;margin-left:8px;">← 小文字「r」はNG（大文字「R」で始める）</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;background:#eafaf1;border:1px solid #82e0aa;border-radius:6px;padding:10px 14px;">
+        <span style="font-size:18px;flex-shrink:0;">✅</span>
+        <div style="flex:1;">
+          <span style="font-family:monospace;font-size:14px;color:#1a7a3e;font-weight:700;">R001_500m.csv</span>
+          <span style="font-size:12px;color:#888;margin-left:8px;">← 正しい形式</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CSVファイル名チェッカー -->
+    <div style="background:#fff;border:2px solid #2D4F2C;border-radius:10px;padding:18px 20px;margin-top:20px;">
+      <div style="font-size:13px;font-weight:700;color:#2D4F2C;margin-bottom:10px;">🔍 ファイル名チェッカー — アップロード前に確認</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input type="text" id="fname-check-input" placeholder="例: R001_500m.csv" oninput="checkFilename(this.value)"
+          style="flex:1;min-width:180px;border:1px solid #ddd;border-radius:6px;padding:8px 12px;font-family:monospace;font-size:14px;">
+      </div>
+      <div id="fname-check-result" style="margin-top:10px;font-size:13px;min-height:24px;"></div>
+    </div>
+    <script>
+    function checkFilename(val) {
+      const el = document.getElementById('fname-check-result');
+      if (!val) { el.innerHTML = ''; return; }
+      const ok = /^R\d{3}_(500m|1000m)\.csv$/i.test(val);
+      const caseFix = /^r\d{3}_(500m|1000m)\.csv$/i.test(val);
+      const noM = /^R\d{3}_(500|1000)\.csv$/i.test(val);
+      const badN = /^R\d{1,2}_(500m|1000m)\.csv$/i.test(val);
+      if (ok && !caseFix) {
+        const folder = val.includes('500m') ? 'race_csv / 500m /' : 'race_csv / 1000m /';
+        el.innerHTML = `<span style="color:#1a7a3e;font-weight:700;">✅ 正しい形式です！</span>　アップロード先: <code style="background:#e8f0fe;padding:2px 6px;border-radius:3px;">${folder}</code>`;
+      } else if (caseFix) {
+        el.innerHTML = `<span style="color:#c0392b;font-weight:700;">❌ 先頭が小文字「r」になっています。</span>　正しくは <code>R${val.slice(1)}</code> です。`;
+      } else if (noM) {
+        const num = val.includes('1000') ? '1000' : '500';
+        el.innerHTML = `<span style="color:#c0392b;font-weight:700;">❌ 計測ポイントの「m」が抜けています。</span>　正しくは <code>${val.replace(num+'.csv', num+'m.csv')}</code> です。`;
+      } else if (badN) {
+        el.innerHTML = `<span style="color:#c0392b;font-weight:700;">❌ レース番号が3桁でありません。</span>　例: R1 → <code>R001</code>、R12 → <code>R012</code> のようにゼロを補ってください。`;
+      } else {
+        el.innerHTML = `<span style="color:#c0392b;font-weight:700;">❌ ファイル名の形式が違います。</span>　正しい形式: <code>R001_500m.csv</code> または <code>R001_1000m.csv</code>`;
+      }
+    }
+    </script>
+  </div>
+
+  <!-- STEP 3: アップロード手順 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="step-num">3</div>
+      <h2>CSVをアップロードする手順</h2>
+    </div>
+
+    <ol class="steps">
+      <li>タイマーアプリからCSVファイルを書き出す（ダウンロードする）</li>
+      <li>ファイル名を確認して、<strong>500m か 1000m かを確認</strong>する</li>
+      <li>Google Drive を開き、大会フォルダ →<span class="path">race_csv</span>→ 計測ポイントのフォルダを開く</li>
+      <li>ファイルを<strong>ドラッグ＆ドロップ</strong>（またはフォルダ内で「+ 新規」→「ファイルのアップロード」）</li>
+      <li>アップロード完了を確認したら作業完了！　あとは自動です</li>
+    </ol>
+
+    <div class="callout callout-ok">
+      <div class="callout-icon">⏱</div>
+      <div class="callout-body">
+        <strong>約2〜3分後にサイトに反映されます</strong>
+        サイトを開いて確認してみましょう。
+        <br>→ <a href="https://{{SITE_URL}}" target="_blank" style="color:#2D4F2C;font-weight:700;">https://{{SITE_URL}}</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: サイト確認 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="step-num">4</div>
+      <h2>サイトで結果を確認する</h2>
+    </div>
+
+    <p>アップロードから3分ほどでサイトが更新されます。以下の点を確認してください。</p>
+
+    <ul class="checklist" style="margin-top:12px;">
+      <li>対象レースの結果（タイム・順位）が表示されているか</li>
+      <li>選手名・所属が正しく表示されているか</li>
+      <li>棄権・途中棄権の表示が正しいか（出漕しなかった選手は「棄権」と表示される）</li>
+      <li>右下のステータスバーに「更新」時刻が最新になっているか</li>
+    </ul>
+
+    <h3>手動で更新を確認したい場合</h3>
+    <p>画面右下の <strong>🔄 ボタン</strong>を押すと今すぐ最新データを取得します。</p>
+  </div>
+
+  <!-- トラブル対応 -->
+  <div class="section priority-high" style="border-left: 4px solid var(--red);">
+    <div class="section-header">
+      <div class="step-num" style="background:var(--red);">!</div>
+      <h2>うまくいかないときのチェックリスト</h2>
+    </div>
+
+    <table>
+      <tr>
+        <th>症状</th>
+        <th>確認ポイント</th>
+        <th>対処</th>
+      </tr>
+      <tr>
+        <td>3分経ってもサイトが更新されない</td>
+        <td>フォルダの場所は合っているか？</td>
+        <td>500m/1000m フォルダを再確認。間違えていたら正しいフォルダに移動する</td>
+      </tr>
+      <tr>
+        <td>片方のタイムしか表示されない</td>
+        <td>2ファイル両方アップされているか？</td>
+        <td>500m と 1000m の両ファイルがアップ済みか確認する</td>
+      </tr>
+      <tr>
+        <td>選手名が表示されない（レーン番号だけ）</td>
+        <td>entries.csv のレース番号・レーン番号の入力ミス</td>
+        <td>大会責任者に報告する（entries.csv の修正が必要）</td>
+      </tr>
+      <tr>
+        <td>4分以上経っても更新されない</td>
+        <td>ファイル名が正しい形式か？</td>
+        <td>ファイル名が <code>R001_500m.csv</code> の形式か確認する</td>
+      </tr>
+      <tr>
+        <td>上記で解決しない</td>
+        <td>—</td>
+        <td><strong style="color:var(--red);">大会責任者（GAS管理者）に連絡する</strong></td>
+      </tr>
+    </table>
+
+    <div class="callout callout-ng" style="margin-top:16px;">
+      <div class="callout-icon">🚫</div>
+      <div class="callout-body">
+        <strong>自分で判断して GAS の設定を変えたり、GitHubを触ったりしないでください</strong>
+        システムの設定変更は大会責任者のみが行います。
+      </div>
+    </div>
+  </div>
+
+  <!-- 当日チェックリスト -->
+  <div class="section">
+    <div class="section-header">
+      <div class="step-num">✔</div>
+      <h2>大会開始前チェックリスト</h2>
+    </div>
+    <ul class="checklist">
+      <li>Google Drive にアクセスできる（アカウントにログインしている）</li>
+      <li>大会フォルダの場所を確認した（<span class="path">race_csv / 500m /</span> と <span class="path">race_csv / 1000m /</span>）</li>
+      <li>速報サイトが開けることを確認した（ブックマーク推奨）</li>
+      <li>タイマーアプリからCSVを書き出す方法を確認した</li>
+      <li>テスト用に1ファイル試しにアップしてみた（任意）</li>
+    </ul>
+  </div>
+
+  <!-- よくある質問 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="step-num">Q</div>
+      <h2>よくある質問</h2>
+    </div>
+
+    <h3>同じレースのCSVが2回届いた場合は？</h3>
+    <p>両方アップして大丈夫です。システムが自動で<strong>新しい方（ファイル名の時刻が新しい方）</strong>を採用します。</p>
+
+    <h3>棄権した選手はどうなりますか？</h3>
+    <p>エントリーに登録されている選手がCSVに含まれていない場合、自動的に「<strong>棄権（DNS）</strong>」として表示されます。特別な操作は不要です。</p>
+
+    <h3>500m コースしかない種目の場合は？</h3>
+    <p>500m のCSVだけをアップしてください。1000m フォルダへのアップは不要です（大会責任者がその種目を500mコースとして登録済みの場合）。</p>
+
+    <h3>サイトは誰でも見られますか？</h3>
+    <p>はい。インターネットにつながっていれば誰でもアクセスできます。観客や保護者にURLを共有してください。</p>
+
+    <h3>過去のレース結果はどこで見られますか？</h3>
+    <p>同じサイトで全レースの結果がいつでも確認できます。「全レース一覧」タブから探せます。</p>
+  </div>
+
+  <!-- リンク -->
+  <div class="section">
+    <div class="section-header">
+      <div class="step-num">🔗</div>
+      <h2>関連リンク</h2>
+    </div>
+    <a class="big-link" href="https://{{SITE_URL}}" target="_blank">🏁 速報サイトを開く</a>
+    <a class="big-link big-link-sub" href="schedule_input_guide.html">📋 全項目定義書</a>
+    <a class="big-link big-link-sub" href="../gas/セットアップガイド.html">⚙️ セットアップガイド（管理者向け）</a>
+  </div>
+
+
+
+</div>
+
+<footer>
+  <p>{{TOURNAMENT_NAME}} 2026 | 運用ドキュメント</p>
+  <p><a href="index.html">← ドキュメント一覧に戻る</a></p>
+</footer>
+
+</body>
+</html>

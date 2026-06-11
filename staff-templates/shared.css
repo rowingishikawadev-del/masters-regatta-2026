@@ -1,0 +1,281 @@
+/* TEMPLATE SHARED STYLES — staff-templates/shared.css
+   scaffold が config から完成版を生成する際に参照する共通CSS。
+   CSS変数: --color-primary (#2D4F2C) / --color-accent (#E8C840) は §5 brand と同名。
+   このファイルは各テンプレートHTMLから <link rel="stylesheet" href="shared.css"> で読み込む。
+*/
+
+:root {
+  --color-primary: #2D4F2C;
+  --color-accent: #E8C840;
+  --color-bg: #F7F4EF;
+  --color-border: #E8E3DB;
+  --color-text: #333333;
+  --color-text-muted: #666666;
+  --color-on-primary: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+html { line-break: strict; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.7;
+  margin: 0;
+}
+
+header {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  padding: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+header a {
+  color: var(--color-on-primary);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+header a:hover {
+  opacity: 0.9;
+}
+
+header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0.5rem 0 0;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 0.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+h2:first-of-type {
+  margin-top: 0;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.rule-box {
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 1rem;
+  font-size: 0.95rem;
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+  margin: 1rem 0;
+  color: var(--color-primary);
+  letter-spacing: 0.02em;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+thead {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+  color: var(--color-text);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+code {
+  background: #f4f4f4;
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: var(--color-primary);
+}
+
+pre {
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.75rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.note {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-top: 0.5rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge-ok {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.badge-ng {
+  background: #c0392b;
+  color: var(--color-on-primary);
+}
+
+.file-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.file-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.95rem;
+}
+
+.file-list li:last-child {
+  border-bottom: none;
+}
+
+.file-name {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  background: #f4f4f4;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.file-desc {
+  color: var(--color-text-muted);
+  flex-grow: 1;
+}
+
+.file-desc a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.file-desc a:hover {
+  text-decoration: underline;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+footer {
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  padding: 1.5rem;
+  text-align: center;
+  color: #999999;
+  margin-top: 2rem;
+}
+
+footer a {
+  color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .file-list li {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
