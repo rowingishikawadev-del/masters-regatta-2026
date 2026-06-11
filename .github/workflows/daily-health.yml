@@ -1,8 +1,9 @@
 name: 日次ヘルスチェック
 
 on:
-  schedule:
-    - cron: '0 23 * * *'  # 毎日 08:00 JST
+  # 2026大会終了につき定期実行停止（2026-06-12）。次大会前に schedule を復活させる:
+  # schedule:
+  #   - cron: '0 23 * * *'  # 毎日 08:00 JST
   workflow_dispatch:
 
 jobs:

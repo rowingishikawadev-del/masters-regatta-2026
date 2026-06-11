@@ -1,8 +1,9 @@
 name: GAS heartbeat watchdog
 
 on:
-  schedule:
-    - cron: '*/10 * * * *'
+  # 2026大会終了につき定期実行停止（2026-06-12）。次大会前に schedule を復活させる:
+  # schedule:
+  #   - cron: '*/10 * * * *'
   workflow_dispatch:
     inputs:
       dry_run:
