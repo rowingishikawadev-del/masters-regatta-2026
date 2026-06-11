@@ -1030,8 +1030,8 @@ function getTournamentPeriodStatus() {
   // 戻り値: 'before' | 'active' | 'after' | 'unknown'
   const dates = masterData?.tournament?.dates;
   if (!dates || !dates.length) return 'unknown';
-  const nowJST = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
-  const todayStr = nowJST.toISOString().slice(0, 10); // YYYY-MM-DD
+  // toISOString は常に UTC 出力で深夜0〜9時にズレるため Intl で直接 JST 日付を得る（en-CA は YYYY-MM-DD）
+  const todayStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo' }).format(new Date());
   const sorted = [...dates].sort();
   const first = sorted[0];
   const last  = sorted[sorted.length - 1];

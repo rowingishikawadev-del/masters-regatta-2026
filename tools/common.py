@@ -45,6 +45,8 @@ def log_debug(msg: str) -> None:
 
 def log_section(msg: str) -> None:
     print(f"\n{C.BOLD}{C.CYAN}{'='*60}{C.RESET}")
+    if msg:
+        print(f"{C.BOLD}{C.CYAN}  {msg}{C.RESET}")
 
 def log_title(msg: str) -> None:
     print(f"{C.BOLD}{C.CYAN}  {msg}{C.RESET}\n{'='*60}{C.RESET}\n")

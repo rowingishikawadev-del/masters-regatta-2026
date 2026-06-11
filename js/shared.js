@@ -49,7 +49,8 @@
    * @returns {{ master: string, resultDir: string, result: (no: number) => string }}
    */
   function paths(basePath) {
-    const base = (basePath || '').replace(/\/?$/, '') === '' ? '' : basePath.replace(/\/?$/, '/');
+    const trimmed = (basePath || '').replace(/\/?$/, '');
+    const base = trimmed === '' ? '' : trimmed + '/';
     const master    = base + 'data/master.json';
     const resultDir = base + 'data/results/';
     const result    = (no) => resultDir + 'race_' + String(no).padStart(3, '0') + '.json';

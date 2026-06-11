@@ -581,7 +581,6 @@ function buildResultRowsHTML(race, result, opts) {
 function buildEntryRowsHTML(race, opts = {}) {
   const entries = [...(race.entries || [])].sort((a, b) => a.lane - b.lane);
   if (opts.fullColumns) {
-    const { showMidpoint } = opts;
     return entries.map(e => `
         <tr>
           <td>-</td>
@@ -1074,9 +1073,8 @@ function toggleFilterPanel() {
 function isTournamentOver() {
   if (!masterData || !masterData.tournament?.dates?.length) return false;
   const lastDate = masterData.tournament.dates.slice(-1)[0];
-  // JST で今日の日付を取得（UTCだと9時間ズレて大会当日が「終了」になるケースを防ぐ）
-  const nowJST = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
-  const todayJST = nowJST.toISOString().slice(0, 10); // YYYY-MM-DD
+  // JST で今日の日付を取得（toISOString は常に UTC 出力で深夜0〜9時にズレるため不使用。en-CA は YYYY-MM-DD を返す）
+  const todayJST = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo' }).format(new Date());
   return lastDate < todayJST; // 当日は「終了」に含めない（< のみ）
 }
 

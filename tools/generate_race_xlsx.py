@@ -51,7 +51,10 @@ DUMMY_RESULTS = {
 
 
 def find_race(master, race_no):
-    return _find_race_common(master, race_no)
+    try:
+        return _find_race_common(master, race_no)
+    except ValueError as e:
+        raise SystemExit(str(e))
 
 
 def format_race_datetime(race):
