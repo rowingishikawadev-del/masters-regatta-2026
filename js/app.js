@@ -168,10 +168,11 @@ async function loadAll() {
     // ページタイトルを大会名に動的更新
     document.title = (masterData.tournament?.race_name || '速報サイト') + ' 速報';
 
-    // master.json 読み込み直後にスケジュールの骨格を表示
-    renderAll();
+    // master.json 読み込み直後にヘッダ・フィルタの骨格だけ準備（ビュー本体はまだ描画しない）
+    // トグルビューはスケルトンUIで読み込み中を表現済み。
+    renderStructure();
 
-    // 結果だけを後から埋める
+    // 結果ロード後に各ビューを1回だけ描画（裁定10: 初回二重描画の解消）
     await loadResults();
     renderToggleView();
     renderTableView();
@@ -287,13 +288,22 @@ async function fetchJSONWithRetry(path, maxRetries = 3, timeoutMs = 25000) {
 // ========= 描画 =========
 
 /**
- * 全UIを描画する
+ * UIの骨格（ヘッダ・フィルタ・使用プロパティ判定）を準備する。
+ * 各ビュー本体の描画はここでは行わず、結果ロード後に1回だけ描画する
+ * （裁定10: 初回ロードの二重描画を解消。リフレッシュ時の再描画は別途維持）。
  */
-function renderAll() {
+function renderStructure() {
   // 使用中プロパティを計算（未使用列の非表示判定に使用）
   usedProps = detectUsedProps();
   renderTournamentHeader();
   renderFilterOptions();
+}
+
+/**
+ * 全UIを描画する（骨格準備 + 全ビュー描画）。
+ */
+function renderAll() {
+  renderStructure();
   renderToggleView();
   renderTableView();
   renderScheduleView();
@@ -462,24 +472,188 @@ function renderRaceBlock(race) {
     ${tableHTML}`;
 }
 
+// ========= 共通描画ヘルパー（トグル/テーブル両ビュー共用） =========
+
 /**
- * 結果未投入時のエントリー情報テーブルを返す
+ * 写真フラグの絵文字を返す（裁定7: photoMark方式に統一）
  */
-function renderEntryTable(race) {
+function photoMark(r) {
+  return r.photo_flag ? '📷' : '';
+}
+
+/**
+ * 結果有無に応じたバッジHTMLを返す
+ * 裁定3: 確定（結果あり）/ 未実施（結果なし）に統一。
+ * pendingClass で結果なし時のクラスをビュー間で吸収（テーブルは badge-pending を維持）。
+ */
+function raceBadgeHTML(hasResult, opts = {}) {
+  if (hasResult) return '<span class="badge badge-done">確定</span>';
+  const pendingClass = opts.pendingClass || 'badge-upcoming';
+  return `<span class="badge ${pendingClass}">未実施</span>`;
+}
+
+/**
+ * このレースで有効な計測ポイントと中間表示フラグを返す
+ */
+function resolveMeasurementPoints(race) {
+  const raceCourseLength = race.course_length || masterData?.tournament?.course_length || 1000;
+  const allPts = masterData?.measurement_points || ['500', '1000'];
+  const pts = allPts.filter(p => {
+    const m = parseInt(p, 10);
+    return isNaN(m) || m <= raceCourseLength;
+  });
+  return { raceCourseLength, pts, showMidpoint: pts.length > 1 };
+}
+
+/**
+ * 結果テーブルの thead HTML を返す（裁定2: age_group 列構成は共通）
+ * opts.hideMobileAffiliation で「所属」列の hide-mobile を制御（テーブル/トグルとも true）
+ */
+function buildTableHeadHTML(opts) {
+  const { raceCourseLength, showMidpoint } = opts;
+  const timeHeader = showMidpoint
+    ? `<th class="col-times" style="width:110px">${raceCourseLength}m / 500m</th>`
+    : `<th class="col-times" style="width:90px">${raceCourseLength}m</th>`;
+  return `
+    <thead>
+      <tr>
+        <th style="width:44px">着順</th>
+        <th class="col-lane" style="width:28px">B</th>
+        <th class="hide-mobile" style="min-width:90px">所属</th>
+        <th style="min-width:110px">クルー</th>
+        <th class="cat-col" style="width:48px">区分</th>
+        ${timeHeader}
+        <th class="hide-mobile" style="width:50px">備考</th>
+      </tr>
+    </thead>`;
+}
+
+/**
+ * 結果あり時の <tr> 群を生成する（完走→DNF→DNS 振り分け・tie集計・行生成）
+ * 裁定5: tie_group は完走結果のみで集計
+ * 裁定6: rankClass は r.rank !== null && r.rank <= 3
+ * 裁定7: photoMark + note を備考列に出力
+ * 裁定8: row-retired クラスは付けない
+ * 裁定9: showMidpoint / h(val) || '-' をセルに適用
+ */
+function buildResultRowsHTML(race, result, opts) {
+  const { pts, showMidpoint } = opts;
+
+  const entryMap = {};
+  (race.entries || []).forEach(e => { entryMap[e.lane] = e; });
+
+  // エントリーにあるが結果にないレーン → 棄権（DNS）として追加
+  const resultsList = result?.results || [];
+  const resultLanes = new Set(resultsList.map(r => r.lane));
+  const dnsRows = (race.entries || [])
+    .filter(e => !resultLanes.has(e.lane))
+    .map(e => ({ lane: e.lane, rank: null, times: {}, finish: null, split: '', tie_group: '', photo_flag: false, note: '', status: 'dns' }));
+
+  // 完走→DNF→DNS の順、同 status 内は rank→lane
+  const sorted = [...resultsList, ...dnsRows].sort((a, b) => {
+    if (a.status === 'finish' && b.status !== 'finish') return -1;
+    if (a.status !== 'finish' && b.status === 'finish') return 1;
+    if (a.rank !== null && b.rank !== null) return a.rank - b.rank;
+    return a.lane - b.lane;
+  });
+
+  // 同着グループ集計: 完走結果のみで数える（裁定5）
+  const tieGroupCounts = {};
+  resultsList.forEach(r => {
+    if (r.tie_group) tieGroupCounts[r.tie_group] = (tieGroupCounts[r.tie_group] || 0) + 1;
+  });
+
+  // エントリーのないレーン（所属・クルー未登録）は表示しない
+  const validSorted = sorted.filter(r => {
+    const e = entryMap[r.lane] || {};
+    return e.crew_name || e.affiliation;
+  });
+
+  return validSorted.map(r => {
+    const entry = entryMap[r.lane] || {};
+    const isDns = r.status === 'dns';
+    const isDnf = r.status === 'dnf';
+
+    const rankClass = (r.rank !== null && r.rank <= 3) ? `rank-${r.rank}` : '';
+    const mark = photoMark(r);
+    const note = r.note ? `<span style="color:#e03e3e;font-size:11px">${h(r.note)}</span>` : '';
+    const isTie = r.tie_group && tieGroupCounts[r.tie_group] > 1;
+
+    const sub500 = (showMidpoint && r.times && r.times[pts[0]])
+      ? `<div class="time-500-sub">500m ${r.times[pts[0]].formatted}</div>` : '';
+
+    let rankDisplay, timesDisplay;
+    if (isDns) {
+      rankDisplay = `<span class="rank-dns">棄権</span>`;
+      timesDisplay = `<span class="status-dns">DNS</span>`;
+    } else if (isDnf) {
+      rankDisplay = `<span class="rank-dnf">途中棄権</span>`;
+      timesDisplay = `<span class="status-dnf">DNF</span>${sub500}`;
+    } else {
+      rankDisplay = `<span class="rank rank-${r.rank}">${r.rank}${isTie ? '=' : ''}</span>`;
+      timesDisplay = `<span class="time-main">${r.finish ? r.finish.formatted : '-'}</span>${sub500}`;
+    }
+
+    const cat = entry.category || '';
+    const categoryCell = `<td class="cat-col"><span class="entry-category">${h(cat) || '-'}</span></td>`;
+    const entryAgeLabel = entry.age_group
+      ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
+    const affiliationSub = entry.affiliation
+      ? `<div class="crew-affiliation-sub">${h(entry.affiliation)}</div>` : '';
+    const noteInline = (!isDns && (r.photo_flag || r.note))
+      ? `<div class="note-inline">${mark}${note}</div>` : '';
+
+    return `
+      <tr class="${rankClass}">
+        <td>${rankDisplay}</td>
+        <td class="col-lane">${r.lane}</td>
+        <td class="hide-mobile">${h(entry.affiliation) || '-'}</td>
+        <td class="crew-name">${h(entry.crew_name) || '-'}${entryAgeLabel}${affiliationSub}</td>
+        ${categoryCell}
+        <td class="col-times">${timesDisplay}${noteInline}</td>
+        <td class="hide-mobile">${isDns ? '' : mark + note}</td>
+      </tr>`;
+  }).join('');
+}
+
+/**
+ * 結果なし時のエントリー <tr> 群を生成する
+ * 裁定8: lane 昇順ソート + h(val) || '-' null ガード。row-retired は付けない。
+ * opts.fullColumns=true で結果テーブルと同じ7列構成（テーブルビュー用）、
+ * false でトグルビューの簡易5列構成（区分付き）。
+ */
+function buildEntryRowsHTML(race, opts = {}) {
   const entries = [...(race.entries || [])].sort((a, b) => a.lane - b.lane);
-  if (entries.length === 0) {
-    return '<p class="no-result">エントリー情報なし</p>';
+  if (opts.fullColumns) {
+    const { showMidpoint } = opts;
+    return entries.map(e => `
+        <tr>
+          <td>-</td>
+          <td class="col-lane">${e.lane}</td>
+          <td class="hide-mobile">${h(e.affiliation) || '-'}</td>
+          <td class="crew-name">${h(e.crew_name) || '-'}</td>
+          <td class="cat-col"><span class="entry-category">${h(e.category) || '-'}</span></td>
+          <td class="col-times">-</td>
+          <td class="hide-mobile"></td>
+        </tr>`).join('');
   }
-  const rows = entries.map(e => {
-    const catCell = `<td class="cat-col"><span class="entry-category">${h(e.category) || '-'}</span></td>`;
-    return `<tr>
+  return entries.map(e => `<tr>
       <td></td>
       <td>${e.lane}</td>
       <td>${h(e.affiliation) || '-'}</td>
       <td class="crew-name">${h(e.crew_name) || '-'}</td>
-      ${catCell}
-    </tr>`;
-  }).join('');
+      <td class="cat-col"><span class="entry-category">${h(e.category) || '-'}</span></td>
+    </tr>`).join('');
+}
+
+/**
+ * 結果未投入時のエントリー情報テーブルを返す
+ */
+function renderEntryTable(race) {
+  if ((race.entries || []).length === 0) {
+    return '<p class="no-result">エントリー情報なし</p>';
+  }
+  const rows = buildEntryRowsHTML(race);
   const categoryHeader = `<th class="cat-col" style="width:48px">区分</th>`;
   return `
     <div class="result-table-wrapper">
@@ -500,119 +674,12 @@ function renderEntryTable(race) {
  * レース結果テーブルHTMLを返す
  */
 function renderResultTable(race, result) {
-  // レースごとの course_length があれば優先、なければ大会デフォルト
-  const raceCourseLength = race.course_length || masterData.tournament?.course_length || 1000;
-  const allPts = masterData?.measurement_points || ['500', '1000'];
-  // このレースの距離以下の計測ポイントのみ有効とする（例: 500m種目では500m列のみ）
-  const pts = allPts.filter(p => {
-    const m = parseInt(p, 10);
-    return isNaN(m) || m <= raceCourseLength;
-  });
-  const showMidpoint = pts.length > 1;
-
-  // エントリー情報をlaneで引く
-  const entryMap = {};
-  (race.entries || []).forEach(e => { entryMap[e.lane] = e; });
-
-  // エントリーにあるが結果にないレーン → 棄権（DNS）として追加
-  const resultsList = result?.results || [];
-  const resultLanes = new Set(resultsList.map(r => r.lane));
-  const dnsRows = (race.entries || [])
-    .filter(e => !resultLanes.has(e.lane))
-    .map(e => ({ lane: e.lane, rank: null, times: {}, finish: null, split: '', tie_group: '', photo_flag: false, note: '', status: 'dns' }));
-
-  // 結果をrank順にソート（完走→DNF→DNS の順）
-  const sorted = [...resultsList, ...dnsRows].sort((a, b) => {
-    if (a.status === 'finish' && b.status !== 'finish') return -1;
-    if (a.status !== 'finish' && b.status === 'finish') return 1;
-    if (a.rank !== null && b.rank !== null) return a.rank - b.rank;
-    return a.lane - b.lane;
-  });
-
-  // 同着グループを集計: tie_group が同じ艇が複数いるか
-  const tieGroupCounts = {};
-  sorted.forEach(r => {
-    if (r.tie_group) {
-      tieGroupCounts[r.tie_group] = (tieGroupCounts[r.tie_group] || 0) + 1;
-    }
-  });
-
-  // エントリーのないレーン（所属・クルー未登録）は表示しない
-  const validSorted = sorted.filter(r => {
-    const e = entryMap[r.lane] || {};
-    return e.crew_name || e.affiliation;
-  });
-
-  const rows = validSorted.map(r => {
-    const entry = entryMap[r.lane] || {};
-    const isDns = r.status === 'dns';
-    const isDnf = r.status === 'dnf';
-
-    const rankClass = r.rank !== null && r.rank <= 3 ? `rank-${r.rank}` : '';
-    const photoMark = r.photo_flag ? '📷' : '';
-    const note = r.note ? `<span style="color:#e03e3e;font-size:11px">${h(r.note)}</span>` : '';
-    const isTie = r.tie_group && tieGroupCounts[r.tie_group] > 1;
-
-    // 500mスプリット（サブ表示）
-    const sub500 = (showMidpoint && r.times && r.times[pts[0]])
-      ? `<div class="time-500-sub">500m ${r.times[pts[0]].formatted}</div>` : '';
-
-    let rankDisplay, timesDisplay;
-    if (isDns) {
-      rankDisplay = `<span class="rank-dns">棄権</span>`;
-      timesDisplay = `<span class="status-dns">DNS</span>`;
-    } else if (isDnf) {
-      rankDisplay = `<span class="rank-dnf">途中棄権</span>`;
-      timesDisplay = `<span class="status-dnf">DNF</span>${sub500}`;
-    } else {
-      rankDisplay = `<span class="rank rank-${r.rank}">${r.rank}${isTie ? '=' : ''}</span>`;
-      timesDisplay = `<span class="time-main">${r.finish ? r.finish.formatted : '-'}</span>${sub500}`;
-    }
-
-    // カテゴリー列（全レース常時表示・アルファベット1文字）
-    const cat = entry.category || '';
-    const categoryCell = `<td class="cat-col"><span class="entry-category">${cat || '-'}</span></td>`;
-
-    // エントリー個別のage_groupがある場合（後方互換）はクルー名横に表示
-    const entryAgeLabel = entry.age_group
-      ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
-
-    const affiliationSub = entry.affiliation
-      ? `<div class="crew-affiliation-sub">${h(entry.affiliation)}</div>` : '';
-    const noteInline = (!isDns && (r.photo_flag || r.note))
-      ? `<div class="note-inline">${photoMark}${note}</div>` : '';
-
-    return `
-      <tr class="${rankClass}${isDns || isDnf ? ' row-retired' : ''}">
-        <td>${rankDisplay}</td>
-        <td class="col-lane">${r.lane}</td>
-        <td class="hide-mobile">${h(entry.affiliation) || '-'}</td>
-        <td class="crew-name">${h(entry.crew_name) || '-'}${entryAgeLabel}${affiliationSub}</td>
-        ${categoryCell}
-        <td class="col-times">${timesDisplay}${noteInline}</td>
-        <td class="hide-mobile">${isDns ? '' : photoMark + note}</td>
-      </tr>`;
-  }).join('');
-
-  const timeHeader = showMidpoint
-    ? `<th class="col-times" style="width:110px">${raceCourseLength}m / 500m</th>`
-    : `<th class="col-times" style="width:90px">${raceCourseLength}m</th>`;
-  const categoryHeader = `<th class="cat-col" style="width:48px">区分</th>`;
-
+  const opts = resolveMeasurementPoints(race);
+  const rows = buildResultRowsHTML(race, result, opts);
   return `
     <div class="result-table-wrapper">
     <table class="result-table">
-      <thead>
-        <tr>
-          <th style="width:44px">着順</th>
-          <th class="col-lane" style="width:28px">B</th>
-          <th class="hide-mobile" style="min-width:90px">所属</th>
-          <th style="min-width:110px">クルー</th>
-          ${categoryHeader}
-          ${timeHeader}
-          <th class="hide-mobile" style="width:50px">備考</th>
-        </tr>
-      </thead>
+      ${buildTableHeadHTML(opts)}
       <tbody>${rows}</tbody>
     </table>
     </div>`;
@@ -812,120 +879,39 @@ function renderTableView() {
   const container = document.getElementById('view-table-content');
   if (!container) return;
 
-  const allPts = masterData?.measurement_points || ['500', '1000'];
+  // 裁定1: schedule配列順依存をやめ race_no 昇順に統一
+  const races = [...(masterData?.schedule || [])].sort((a, b) => a.race_no - b.race_no);
 
-  const html = (masterData?.schedule || []).map(race => {
-    const raceCourseLength = race.course_length || masterData.tournament?.course_length || 1000;
-    const pts = allPts.filter(p => { const m = parseInt(p, 10); return isNaN(m) || m <= raceCourseLength; });
-    const showMid = pts.length > 1;
+  const html = races.map(race => {
+    const opts = resolveMeasurementPoints(race);
     const result = resultsCache[race.race_no];
-    const entryMap = {};
-    (race.entries || []).forEach(e => { entryMap[e.lane] = e; });
     const hasResult = !!result;
 
-    // ヘッダー情報
-    const badge = hasResult
-      ? `<span class="badge badge-done">結果あり</span>`
-      : `<span class="badge badge-pending">未実施</span>`;
-    const agePart = usedProps.hasAgeGroup && race.age_group ? ` (${race.age_group})` : '';
-    const title = `Race ${race.race_no}｜${race.event_name}${agePart}`;
+    // 裁定3: 確定/未実施バッジに統一（テーブルは badge-pending を維持）
+    const badge = raceBadgeHTML(hasResult, { pendingClass: 'badge-pending' });
+    // 裁定2: age_group は <span class="age-group"> ラップに統一
+    const ageLabel = (usedProps.hasAgeGroup && race.age_group)
+      ? `<span class="age-group">(${race.age_group})</span>` : '';
+    const title = `Race ${race.race_no}｜${h(race.event_name)}${ageLabel}`;
 
-    // テーブル内容
-    let tableBody = '';
-    if (hasResult) {
-      // 棄権（DNS）を追加
-      const resultsList2 = result?.results || [];
-      const resultLanes = new Set(resultsList2.map(r => r.lane));
-      const dnsEntries = (race.entries || [])
-        .filter(e => !resultLanes.has(e.lane))
-        .map(e => ({ lane: e.lane, rank: null, times: {}, finish: null, split: '', tie_group: '', photo_flag: false, note: '', status: 'dns' }));
-      const allResults = [...resultsList2, ...dnsEntries].sort((a, b) => {
-        if (a.status === 'finish' && b.status !== 'finish') return -1;
-        if (a.status !== 'finish' && b.status === 'finish') return 1;
-        if (a.rank !== null && b.rank !== null) return a.rank - b.rank;
-        return a.lane - b.lane;
-      });
+    // 裁定8: 結果なし時は共通ヘルパーで lane 昇順・null ガード・row-retired なし
+    const tableBody = hasResult
+      ? buildResultRowsHTML(race, result, opts)
+      : buildEntryRowsHTML(race, { fullColumns: true, showMidpoint: opts.showMidpoint });
 
-      const tieGroupCounts = {};
-      resultsList2.forEach(r => {
-        if (r.tie_group) tieGroupCounts[r.tie_group] = (tieGroupCounts[r.tie_group] || 0) + 1;
-      });
-
-      tableBody = allResults.filter(r => {
-        const e = entryMap[r.lane] || {};
-        return e.crew_name || e.affiliation;
-      }).map(r => {
-        const entry = entryMap[r.lane] || {};
-        const isDns = r.status === 'dns';
-        const isDnf = r.status === 'dnf';
-        const isTie = r.tie_group && tieGroupCounts[r.tie_group] > 1;
-        const sub500 = (showMid && r.times && r.times[pts[0]])
-          ? `<div class="time-500-sub">500m ${r.times[pts[0]].formatted}</div>` : '';
-        let rankCell, timesCell;
-        if (isDns) {
-          rankCell = `<span class="rank-dns">棄権</span>`;
-          timesCell = `<span class="status-dns">DNS</span>`;
-        } else if (isDnf) {
-          rankCell = `<span class="rank-dnf">途中棄権</span>`;
-          timesCell = `<span class="status-dnf">DNF</span>${sub500}`;
-        } else {
-          rankCell = `<span class="rank rank-${r.rank}">${r.rank}${isTie ? '=' : ''}</span>`;
-          timesCell = `<span class="time-main">${r.finish ? r.finish.formatted : '-'}</span>${sub500}`;
-        }
-        const entryAgeLabel = entry.age_group ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
-        const catCell = (() => {
-          const cat = entry.category || '';
-          return `<td class="cat-col"><span class="entry-category">${cat || '-'}</span></td>`;
-        })();
-        const affiliationSub = entry.affiliation
-          ? `<div class="crew-affiliation-sub">${h(entry.affiliation)}</div>` : '';
-        const noteInline = (!isDns && (r.photo_flag || r.note))
-          ? `<div class="note-inline">${r.photo_flag ? '📷' : ''}${r.note ? `<span style="color:#e03e3e;font-size:11px">${h(r.note)}</span>` : ''}</div>` : '';
-        return `<tr class="${r.rank && r.rank <= 3 ? `rank-${r.rank}` : ''}${isDns || isDnf ? ' row-retired' : ''}">
-          <td>${rankCell}</td>
-          <td class="col-lane">${r.lane}</td>
-          <td class="hide-mobile">${h(entry.affiliation) || '-'}</td>
-          <td class="crew-name">${h(entry.crew_name) || '-'}${entryAgeLabel}${affiliationSub}</td>
-          ${catCell}
-          <td class="col-times">${timesCell}${noteInline}</td>
-          <td class="hide-mobile">${(!isDns && r.note) ? `<span style="color:#e03e3e;font-size:11px">${h(r.note)}</span>` : ''}</td>
-        </tr>`;
-      }).join('');
-    } else {
-      tableBody = (race.entries || []).map(e => `
-        <tr class="row-retired">
-          <td>-</td><td>${e.lane}</td>
-          <td>${h(e.affiliation)}</td>
-          <td class="crew-name">${h(e.crew_name)}</td>
-          <td class="cat-col"><span class="entry-category">${e.category || '-'}</span></td>
-          ${showMid ? `<td class="hide-mobile">-</td>` : ''}
-          <td>-</td><td></td>
-        </tr>`).join('');
-    }
-
-    const timeHeader = showMid
-      ? `<th class="col-times" style="width:110px">${raceCourseLength}m / 500m</th>`
-      : `<th class="col-times" style="width:90px">${raceCourseLength}m</th>`;
-
+    // テーブルビューはレース軸・1行ヘッダ構成（意図的差異・維持）。裁定4: 矢印は先頭に統一。
     return `
-      <div class="toggle" data-race="${race.race_no}">
+      <div class="toggle" data-race="${race.race_no}" data-category="${h(race.category)}" data-crews="${h((race.entries || []).map(e => `${e.crew_name} ${e.affiliation}`).join(' ').toLowerCase())}">
         <div class="toggle-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="toggle-arrow">▶</span>
           <span class="toggle-title">${title}</span>
           <span class="toggle-meta">${formatDate(race.date)} ${formatRaceTime(race.time)}</span>
           ${badge}
-          <span class="toggle-arrow">▶</span>
         </div>
         <div class="toggle-body">
           <div class="result-table-wrapper">
           <table class="result-table">
-            <thead><tr>
-              <th style="width:44px">着順</th>
-              <th class="col-lane" style="width:28px">B</th>
-              <th class="hide-mobile" style="min-width:90px">所属</th><th style="min-width:110px">クルー</th>
-              <th class="cat-col" style="width:48px">区分</th>
-              ${timeHeader}
-              <th class="hide-mobile" style="width:50px">備考</th>
-            </tr></thead>
+            ${buildTableHeadHTML(opts)}
             <tbody>${tableBody}</tbody>
           </table>
           </div>
