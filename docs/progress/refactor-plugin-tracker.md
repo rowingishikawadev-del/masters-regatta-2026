@@ -11,8 +11,8 @@
 | 0 | ベースライン固定 | ✅ 完了（CI停止 / v2026-final タグ / 未コミット整理 / GAS heartbeat トリガー停止確認 02:44 最終） |
 | バグ修正 | xlsx 3件 + judge_form composeRaceTime_ | ✅ 完了・push 済（e2e 252/254、FAIL 2件は race_124 データ欠損で既存） |
 | Gate 1 | 3者審査（engineer/security/designer） | ✅ 完了: 全員 concern→PM裁定で MUST 12件採用・計画書反映済み |
-| 1 | デッドコード・ゴミ一掃 | 🔄 実行中（Sonnet 4並列: GAS / app.js / CSS / ファイル） |
-| 2 | 重複統合 + 安定化（v1-stable タグ） | ⬜ |
+| 1 | デッドコード・ゴミ一掃 | ✅ 完了 02:57 push済（-347行+ファイル31件。e2e 252/254 + make test 16/16。R007/R008はadmin現役と判明し保持。カテゴリー内順位機能はPhase 3バックログへ） |
+| 2 | 重複統合 + 安定化（v1-stable タグ） | 🔄 実行中（2A Python common.py / 2C GAS shared / D-M1差異一覧の3並列。2Bは差異一覧承認後） |
 | 3 | 設定外部化（config / schema 先行確定が条件） | ⬜ |
 | 4 | 構造再編（engine/template/events 分離） | ⬜ |
 | 5 | プラグイン化・公開（新規クリーンrepo） | ⬜ |
