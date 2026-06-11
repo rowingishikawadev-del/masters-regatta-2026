@@ -196,9 +196,13 @@ function exportJudgeFormPdf_(spreadsheetId, fileName) {
 }
 
 function composeRaceTime_(date, time) {
+  if (!date) return '';
   const normalizedDate = normalizeDateString_(date);
-  const normalizedTime = String(time || '').trim();
-  return normalizedDate + '　' + normalizedTime;
+  const t = String(time || '');
+  const tParts = t.split(':');
+  const hh = ('0' + (tParts[0] || '0')).slice(-2);
+  const mi = ('0' + (tParts[1] || '00')).slice(-2);
+  return normalizedDate + '　' + hh + ':' + mi;
 }
 
 function fetchMasterData_(config) {
