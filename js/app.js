@@ -11,29 +11,19 @@ const CONFIG = {
   RESULT_JSON: (no) => `data/results/race_${String(no).padStart(3, '0')}.json`,
   // 自動更新間隔（ミリ秒）
   REFRESH_INTERVAL: 120000,
-  // ラウンドの表示名マッピング
-  ROUND_NAMES: {
-    FA: '決勝A', FB: '決勝B', SF: '準決勝',
-    H: '予選', RK: '順位決定', R: '敗者復活'
-  },
+  // ラウンドの表示名マッピング（正本は RegattaShared.ROUND_NAMES / js/shared.js）
+  ROUND_NAMES: RegattaShared.ROUND_NAMES,
 
 };
 
 // ========= ユーティリティ =========
 
-/** HTMLエスケープ（XSS対策） */
-function h(str) {
-  if (str === null || str === undefined) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
+// h() は RegattaShared.h() の別名（js/shared.js で定義）
+const h = RegattaShared.h;
 
-// ========= ローカルストレージキャッシュキー =========
-const LS_MASTER_KEY = 'regatta_master_v2';
-const LS_RESULT_PREFIX = 'regatta_result_v2_';
+// ========= ローカルストレージキャッシュキー（RegattaShared から参照） =========
+const LS_MASTER_KEY    = RegattaShared.LS_MASTER_KEY;
+const LS_RESULT_PREFIX = RegattaShared.LS_RESULT_PREFIX;
 
 // ========= グローバル状態 =========
 let masterData = null;       // master.json の内容
@@ -247,43 +237,9 @@ async function loadResults(cacheMode = 'no-cache') {
   return newlyUpdated;
 }
 
-/**
- * JSONをfetchしてパースする
- * cacheMode: 初回ロードは 'default'（ブラウザキャッシュ利用）、強制更新は 'no-cache'
- */
-async function fetchJSON(path, timeoutMs = 25000, cacheMode = 'no-cache') {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const res = await fetch(path, { signal: controller.signal, cache: cacheMode });
-    if (!res.ok) throw new Error(`HTTP ${res.status}: ${path}`);
-    return JSON.parse(await res.text());
-  } catch (e) {
-    if (e.name === 'AbortError') throw new Error(`タイムアウト: ${path}`);
-    throw e;
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
-/**
- * リトライ付きfetch（最大maxRetries回、失敗時は再試行）
- */
-async function fetchJSONWithRetry(path, maxRetries = 3, timeoutMs = 25000) {
-  let lastError;
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      return await fetchJSON(path, timeoutMs, 'no-cache');
-    } catch (e) {
-      lastError = e;
-      if ((e.message || '').includes('HTTP 404')) throw e;
-      if (attempt < maxRetries) {
-        await new Promise(r => setTimeout(r, 1000 * attempt));
-      }
-    }
-  }
-  throw lastError;
-}
+// fetchJSON / fetchJSONWithRetry は RegattaShared に移管（js/shared.js で定義）
+const fetchJSON          = RegattaShared.fetchJSON;
+const fetchJSONWithRetry = RegattaShared.fetchJSONWithRetry;
 
 // ========= 描画 =========
 
@@ -811,7 +767,7 @@ function renderScheduleView() {
 function highlightCurrentRace() {
   if (!masterData) return;
   const now = new Date();
-  const WINDOW_MS = 15 * 60 * 1000; // ±15分
+  const WINDOW_MS = 20 * 60 * 1000; // ±20分（R1: レース実所要13〜18分に合わせadminの20分と統一）
 
   // 結果未確定のレースの中で、現在時刻に最も近い1レースだけを「実施中」にする
   let currentRace = null;
@@ -1111,13 +1067,17 @@ function toggleFilterPanel() {
 // ========= ステータスバー =========
 
 /**
- * 大会日程が全て過去かどうかを判定する
+ * 大会日程が全て過去かどうかを判定する（R2: JST明示・UTC深夜ズレ解消）
+ * - toLocaleString('en-US', {timeZone:'Asia/Tokyo'}) でJST日付を取得（adminと統一）
+ * - 大会当日は「終了」に含めない（< 比較。UTC基準では深夜0〜9時に翌日扱いになるバグを修正）
  */
 function isTournamentOver() {
   if (!masterData || !masterData.tournament?.dates?.length) return false;
   const lastDate = masterData.tournament.dates.slice(-1)[0];
-  const today = new Date().toISOString().split('T')[0];
-  return lastDate < today;
+  // JST で今日の日付を取得（UTCだと9時間ズレて大会当日が「終了」になるケースを防ぐ）
+  const nowJST = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
+  const todayJST = nowJST.toISOString().slice(0, 10); // YYYY-MM-DD
+  return lastDate < todayJST; // 当日は「終了」に含めない（< のみ）
 }
 
 /**

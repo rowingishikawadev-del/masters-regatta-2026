@@ -735,6 +735,7 @@
   <div class="footer">管理者専用ページ — このURLは第三者に共有しないでください<br>Rowing Live Results Admin Dashboard</div>
 </div>
 
+<script src="../../js/shared.js?v=20260612a"></script>
 <script>
 function adminCheckFname(val) {
   const el = document.getElementById('admin-fname-result');
@@ -758,9 +759,11 @@ function adminCheckFname(val) {
   }
 }
 
-const MASTER_JSON = '../../data/master.json';
-const RESULT_JSON = no => `../../data/results/race_${String(no).padStart(3,'0')}.json`;
-const ROUND_NAMES = { FA:'決勝A', FB:'決勝B', SF:'準決勝', H:'予選', RK:'順位決定', R:'敗者復活' };
+// パス定数・ROUND_NAMES は RegattaShared から参照（js/shared.js で定義）
+const _paths      = RegattaShared.paths('../../');
+const MASTER_JSON = _paths.master;
+const RESULT_JSON = _paths.result;
+const ROUND_NAMES = RegattaShared.ROUND_NAMES;
 
 let masterData = null;
 let resultsCache = {};
@@ -785,9 +788,8 @@ function timeAgo(iso) {
   if (min < 1440) return `${Math.floor(min/60)}時間前`;
   return `${Math.floor(min/1440)}日前`;
 }
-function h(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+// h() は RegattaShared.h() の別名（js/shared.js で定義）
+const h = RegattaShared.h;
 
 /* ===== 時計（JST確実表示） ===== */
 function getJST() {
@@ -870,11 +872,11 @@ function switchTab(id, btn) {
 
 /* ===== メインロード ===== */
 async function loadAll() {
+  // R3: master 取得を fetchJSONWithRetry（25秒タイムアウト・3回リトライ）で堅牢化（app.js 相当）
   try {
-    const res = await fetch(MASTER_JSON + '?t=' + Date.now());
-    masterData = await res.json();
+    masterData = await RegattaShared.fetchJSONWithRetry(MASTER_JSON + '?t=' + Date.now(), 3, 25000);
   } catch(e) {
-    document.getElementById('header-sub').textContent = 'master.json の取得に失敗しました';
+    document.getElementById('header-sub').textContent = 'master.json の取得に失敗しました: ' + e.message;
     return;
   }
 
@@ -893,7 +895,7 @@ async function loadAll() {
   document.getElementById('st-generated').textContent = genAt
     ? fmtDateTime(genAt) + '（' + timeAgo(genAt) + '）' : '-';
 
-  // 結果JSON取得
+  // 結果JSON取得（PC前提で全件並列 Promise.all — 管理者ダッシュボードはPC環境での使用を想定）
   resultsCache = {};
   await Promise.all(schedule.map(async race => {
     try {
@@ -1126,6 +1128,7 @@ function renderPipeline() {
     gasStatus = 'warn';
     gasDesc = '定期実行記録なし — GASでonTrigger()を一度実行してください';
   } else if (diffMin <= 8) {
+    // R4: 8分 = 2分間隔トリガー×4回分の猶予（1回くらい失敗しても次回で回復できる範囲）
     gasStatus = 'ok';
     gasDesc = `定期実行: ${fmtDateTime(triggerAt)}（${timeAgo(triggerAt)}）— 正常稼働中 ✓`;
   } else if (diffMin <= 15) {
@@ -1139,6 +1142,8 @@ function renderPipeline() {
   // GitHub・Cloudflare のバッジ: 非運用期間なら「非運用期間」、運用中はGAS稼働状況に連動
   function pipelineBadge(activeOk, activeWarn) {
     if (periodStatus !== 'active') return 'idle';
+    // R4: パイプライン閾値20分はGAS→GitHub→Cloudflare伝搬遅延を考慮した別概念
+    //     （実施中WINDOW 20分とは意味が異なる。GAS実行→JSON更新→Pages反映の合計猶予時間）
     return diffMin <= 20 ? activeOk : activeWarn;
   }
 
@@ -1196,7 +1201,10 @@ loadAll();
 setInterval(loadAll, 120000); // 2分ごと自動再取得
 
 function clearBrowserCache() {
-  const keys = Object.keys(localStorage).filter(k => k.startsWith('regatta_result_v2_') || k === 'regatta_master_v2');
+  // localStorageキー定数は RegattaShared から参照（直書き廃止）
+  const LS_PREFIX = RegattaShared.LS_RESULT_PREFIX;
+  const LS_MASTER = RegattaShared.LS_MASTER_KEY;
+  const keys = Object.keys(localStorage).filter(k => k.startsWith(LS_PREFIX) || k === LS_MASTER);
   keys.forEach(k => localStorage.removeItem(k));
   document.getElementById('cache-clear-msg').style.display = 'inline';
   setTimeout(() => location.reload(), 1500);
