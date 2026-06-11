@@ -22,8 +22,10 @@ const CONFIG = {
 const h = RegattaShared.h;
 
 // ========= ローカルストレージキャッシュキー（RegattaShared から参照） =========
-const LS_MASTER_KEY    = RegattaShared.LS_MASTER_KEY;
-const LS_RESULT_PREFIX = RegattaShared.LS_RESULT_PREFIX;
+const LS_MASTER_KEY    = RegattaShared.LS_MASTER_KEY;    // v3
+const LS_RESULT_PREFIX = RegattaShared.LS_RESULT_PREFIX; // v3
+const LS_MASTER_KEY_V2    = RegattaShared.LS_MASTER_KEY_V2;    // v2（削除用）
+const LS_RESULT_PREFIX_V2 = RegattaShared.LS_RESULT_PREFIX_V2; // v2（削除用）
 
 // ========= グローバル状態 =========
 let masterData = null;       // master.json の内容
@@ -125,7 +127,34 @@ async function loadAll() {
     try {
       masterData = await fetchJSONWithRetry(CONFIG.MASTER_JSON, 3, 25000);
       if (!masterData || !masterData.schedule) throw new Error('MASTER_NOT_FOUND');
-      // 成功したらキャッシュ保存
+
+      // ===== SPEC §4 localStorage v3 キー移行（fetch成功後のみ） =====
+      // 検証ルール1: 保存済み master の tournament.id と fetch した id が不一致→v3全破棄
+      const fetchedId = masterData.tournament?.id || 'legacy';
+      try {
+        const savedRaw = localStorage.getItem(LS_MASTER_KEY);
+        if (savedRaw) {
+          const saved = JSON.parse(savedRaw);
+          const savedId = saved?.d?.tournament?.id || null;
+          if (!savedId || savedId !== fetchedId) {
+            // id不一致 or 保存側にidが無い → v3全破棄
+            localStorage.removeItem(LS_MASTER_KEY);
+            for (const key of Object.keys(localStorage)) {
+              if (key.startsWith(LS_RESULT_PREFIX)) localStorage.removeItem(key);
+            }
+          }
+        }
+      } catch(_) {}
+      // 検証ルール2: v2旧キー削除は「fetch成功後のみ」（オフライン・fetch失敗時は何も削除しない）
+      try {
+        localStorage.removeItem(LS_MASTER_KEY_V2);
+        for (const key of Object.keys(localStorage)) {
+          if (key.startsWith(LS_RESULT_PREFIX_V2)) localStorage.removeItem(key);
+        }
+      } catch(_) {}
+      // 検証ルール3: v2キーが無ければ何もしない（上記 removeItem は存在しなくてもエラーにならない）
+
+      // v3キーに保存
       try { localStorage.setItem(LS_MASTER_KEY, JSON.stringify({ d: masterData, t: Date.now() })); } catch(_) {}
     } catch(netErr) {
       if (netErr.message === 'MASTER_NOT_FOUND' || netErr.message.includes('HTTP 404')) {
@@ -155,8 +184,8 @@ async function loadAll() {
       race_no: race.race_num || race.race_no
     }));
 
-    // ページタイトルを大会名に動的更新
-    document.title = (masterData.tournament?.race_name || '速報サイト') + ' 速報';
+    // ページタイトルを大会名に動的更新（SPEC §1: name || race_name）
+    document.title = (masterData.tournament?.name || masterData.tournament?.race_name || '速報サイト') + ' 速報';
 
     // master.json 読み込み直後にヘッダ・フィルタの骨格だけ準備（ビュー本体はまだ描画しない）
     // トグルビューはスケルトンUIで読み込み中を表現済み。
@@ -270,8 +299,10 @@ function renderAll() {
  */
 function renderTournamentHeader() {
   const t = masterData?.tournament || {};
+  // SPEC §1: tournament.name || tournament.race_name（v2互換）
+  const tournamentName = t.name || t.race_name || '';
   const el = document.getElementById('tournament-name');
-  if (el) el.textContent = '🏁 ' + (t.race_name || '');
+  if (el) el.textContent = '🏁 ' + tournamentName;
 
   const metaEl = document.getElementById('tournament-meta');
   const dates = (t.dates || []).map(d => formatDate(d)).join('・');
@@ -281,16 +312,53 @@ function renderTournamentHeader() {
 
   // カバーエリアにも大会情報を表示
   const coverName = document.getElementById('cover-tournament-name');
-  if (coverName) coverName.textContent = t.race_name || '';
+  if (coverName) coverName.textContent = tournamentName;
   const coverMeta = document.getElementById('cover-meta');
   if (coverMeta) coverMeta.textContent = `${dates} | ${t.venue || ''}`;
 }
 
 
 /**
- * 日別タブとフィルタの日程オプションをマスタから動的生成する
+ * カテゴリフィルタの選択肢ラベルマップ（現行ラベルを維持）
+ */
+const CATEGORY_LABELS = { M: '男子', W: '女子', X: '混成' };
+
+/**
+ * 日別タブとフィルタの日程オプション・カテゴリフィルタをマスタから動的生成する
+ * SPEC §3: カテゴリ選択肢 master.categories → 全レース entries.category ユニーク抽出 → 空なら非表示
  */
 function renderFilterOptions() {
+  // カテゴリフィルタ動的生成
+  const catSelect = document.getElementById('filter-cat');
+  if (catSelect) {
+    // 解決チェーン
+    let categories = [];
+    if (Array.isArray(masterData?.categories) && masterData.categories.length > 0) {
+      // チェーン1: master.categories
+      categories = masterData.categories;
+    } else {
+      // チェーン2: 全レースの entries.category をユニーク抽出
+      const catSet = new Set();
+      (masterData?.schedule || []).forEach(r => {
+        (r.entries || []).forEach(e => { if (e.category) catSet.add(e.category); });
+      });
+      categories = Array.from(catSet);
+    }
+    if (categories.length === 0) {
+      // チェーン3: 空ならカテゴリフィルタUI非表示
+      catSelect.style.display = 'none';
+    } else {
+      catSelect.style.display = '';
+      catSelect.innerHTML = '<option value="all">カテゴリ: すべて</option>';
+      categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = CATEGORY_LABELS[cat] || cat;
+        catSelect.appendChild(opt);
+      });
+    }
+  }
+
   const dates = [...new Set((masterData?.schedule || []).map(r => r.date))].sort();
 
   // 日別タブを生成（日数に関わらず常に表示）
@@ -300,7 +368,7 @@ function renderFilterOptions() {
       .concat(dates.map(d => ({ value: d, label: formatDate(d) })));
     dayTabs.innerHTML = tabs.map(t =>
       `<button class="day-tab${filterState.date === t.value ? ' active' : ''}"
-        onclick="selectDayTab('${t.value}')">${t.label}</button>`
+        onclick="selectDayTab('${String(t.value).replace(/[^\w-]/g, '')}')">${t.label}</button>`
     ).join('');
     dayTabs.style.display = '';
   }
@@ -449,15 +517,43 @@ function raceBadgeHTML(hasResult, opts = {}) {
 }
 
 /**
- * このレースで有効な計測ポイントと中間表示フラグを返す
+ * このレースで有効な計測ポイント（数値配列）と中間表示フラグを返す。
+ *
+ * 解決チェーン（SPEC §1 互換チェーン）:
+ *   1. race.course.measurement_points  （v3: 数値配列）
+ *   2. master.default_course.measurement_points  （v3: 数値配列）
+ *   3. master.measurement_points  （v2: "500m","1000m" 等の文字列配列 → parseInt）
+ *   4. フォールバック [500, 1000]
+ *
+ * 返り値の pts は昇順数値配列。最終要素=ゴール・それ以外=中間点。
  */
 function resolveMeasurementPoints(race) {
-  const raceCourseLength = race.course_length || masterData?.tournament?.course_length || 1000;
-  const allPts = masterData?.measurement_points || ['500', '1000'];
-  const pts = allPts.filter(p => {
-    const m = parseInt(p, 10);
-    return isNaN(m) || m <= raceCourseLength;
-  });
+  // ゴール距離: race.course.length_m → master.default_course.length_m → tournament.course_length → 1000
+  const raceCourseLength =
+    race.course?.length_m ||
+    masterData?.default_course?.length_m ||
+    masterData?.tournament?.course_length ||
+    1000;
+
+  // 計測点の解決チェーン
+  let rawPts = null;
+  if (Array.isArray(race.course?.measurement_points) && race.course.measurement_points.length > 0) {
+    // チェーン1: race.course.measurement_points（v3 数値配列）
+    rawPts = race.course.measurement_points;
+  } else if (Array.isArray(masterData?.default_course?.measurement_points) && masterData.default_course.measurement_points.length > 0) {
+    // チェーン2: master.default_course.measurement_points（v3 数値配列）
+    rawPts = masterData.default_course.measurement_points;
+  } else if (Array.isArray(masterData?.measurement_points) && masterData.measurement_points.length > 0) {
+    // チェーン3: master.measurement_points（v2 文字列配列 "500m","1000m" → parseInt）
+    rawPts = masterData.measurement_points;
+  } else {
+    // チェーン4: デフォルト
+    rawPts = [500, 1000];
+  }
+
+  // 数値正規化（文字列 "500m" → 500）
+  const pts = rawPts.map(p => parseInt(String(p), 10)).filter(n => !isNaN(n));
+
   return { raceCourseLength, pts, showMidpoint: pts.length > 1 };
 }
 
@@ -466,10 +562,14 @@ function resolveMeasurementPoints(race) {
  * opts.hideMobileAffiliation で「所属」列の hide-mobile を制御（テーブル/トグルとも true）
  */
 function buildTableHeadHTML(opts) {
-  const { raceCourseLength, showMidpoint } = opts;
+  const { raceCourseLength, pts, showMidpoint } = opts;
+  // 中間点ラベル: ゴール以外の計測点を "Xm" 形式でスラッシュ区切り（500m固定リテラル撤去）
+  const midLabels = showMidpoint
+    ? pts.slice(0, -1).map(p => p + 'm').join('/')
+    : '';
   const timeHeader = showMidpoint
-    ? `<th class="col-times" style="width:110px">${raceCourseLength}m / 500m</th>`
-    : `<th class="col-times" style="width:90px">${raceCourseLength}m</th>`;
+    ? `<th class="col-times" style="width:110px">タイム</th>`
+    : `<th class="col-times" style="width:90px">タイム</th>`;
   return `
     <thead>
       <tr>
@@ -535,8 +635,14 @@ function buildResultRowsHTML(race, result, opts) {
     const note = r.note ? `<span style="color:#e03e3e;font-size:11px">${h(r.note)}</span>` : '';
     const isTie = r.tie_group && tieGroupCounts[r.tie_group] > 1;
 
-    const sub500 = (showMidpoint && r.times && r.times[pts[0]])
-      ? `<div class="time-500-sub">500m ${r.times[pts[0]].formatted}</div>` : '';
+    // 中間点ごとのサブ行（SPEC §3: class名 time-500-sub 流用、改名禁止。aria-label付与）
+    // results JSONのタイムキーは "{point}m" 形式（例: "500m"）
+    const midPts = pts.slice(0, -1); // 最終要素=ゴールを除いた中間点
+    const sub500 = (showMidpoint && r.times)
+      ? midPts.filter(pt => r.times[pt + 'm']).map(pt =>
+          `<div class="time-500-sub" aria-label="${pt}m通過 ${r.times[pt + 'm'].formatted}">${pt}m ${r.times[pt + 'm'].formatted}</div>`
+        ).join('')
+      : '';
 
     let rankDisplay, timesDisplay;
     if (isDns) {
@@ -660,7 +766,7 @@ function renderScheduleView() {
       .concat(uniqueDates.map(d => ({ value: d, label: formatDate(d) })));
     schedDayTabs.innerHTML = tabs.map(t =>
       `<button class="day-tab${scheduleFilterDate === t.value ? ' active' : ''}"
-        onclick="selectScheduleDayTab('${t.value}')">${t.label}</button>`
+        onclick="selectScheduleDayTab('${String(t.value).replace(/[^\w-]/g, '')}')">${t.label}</button>`
     ).join('');
   }
 

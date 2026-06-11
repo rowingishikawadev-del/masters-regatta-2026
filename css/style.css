@@ -19,13 +19,18 @@ body {
 
 /* ========= カラー変数 ========= */
 :root {
+  /* ── ブランドトークン（SPEC §5 / tournament.config.json brand セクション対応） ── */
+  /* scaffold 生成時はここを上書き。色値は変えない（既存 HEX をそのまま変数値に）   */
+  --color-primary: #24602A;   /* brand.primary_color 相当（既存 --accent HEX を変数化） */
+  --color-accent:  #C9A227;   /* brand.accent_color  相当（新設。scaffold 上書き用）     */
+
   --bg:         #F4F1EB;
   --card:       #FFFFFF;
   --border:     #DDD8CE;
   --text:       #252220;
   --text-sub:   #6B6560;
   --text-muted: #A8A19A;
-  --accent:     #24602A;
+  --accent:     var(--color-primary);  /* HEX直書き(#24602A) → var()参照に置換（色値不変） */
   --accent-light:#3A7E40;
   --accent-bg:  #E4F0E5;
   --gold:       #A8831E;

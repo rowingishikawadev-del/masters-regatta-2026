@@ -86,11 +86,9 @@
       </div>
       <!-- フィルタパネル（モバイルでは折りたたみ） -->
       <div class="filter-panel" id="filter-panel">
+        <!-- カテゴリ選択肢は JS 側で動的生成（SPEC §3 / §1）。直書き option 撤去済み -->
         <select class="filter-select" id="filter-cat" onchange="applyFilters()" aria-label="カテゴリフィルター">
           <option value="all">カテゴリ: すべて</option>
-          <option value="M">男子</option>
-          <option value="W">女子</option>
-          <option value="X">混成</option>
         </select>
 <select class="filter-select" id="filter-day" onchange="applyFilters()" aria-label="日程フィルター">
           <option value="all">日程: すべて</option>
@@ -135,7 +133,7 @@
 <!-- トースト通知コンテナ -->
 <div id="toast-container"></div>
 
-<script src="js/shared.js?v=20260612a"></script>
-<script src="js/app.js?v=20260612a"></script>
+<script src="js/shared.js?v=20260612b"></script>
+<script src="js/app.js?v=20260612b"></script>
 </body>
 </html>

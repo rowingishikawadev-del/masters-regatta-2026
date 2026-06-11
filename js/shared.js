@@ -35,9 +35,12 @@
   };
 
   // ========= localStorageキー定数 =========
-  // admin clearBrowserCache(admin:1199) の直書き文字列をこの定数で参照する。
-  const LS_MASTER_KEY    = 'regatta_master_v2';
-  const LS_RESULT_PREFIX = 'regatta_result_v2_';
+  // v3キー（SPEC §4）。v2キー削除は master.json fetch成功後のみ実施（オフライン保護）。
+  const LS_MASTER_KEY    = 'regatta_master_v3';
+  const LS_RESULT_PREFIX = 'regatta_result_v3_';
+  // v2旧キー（削除用参照のみ。fetch成功後に app.js 側で削除）
+  const LS_MASTER_KEY_V2    = 'regatta_master_v2';
+  const LS_RESULT_PREFIX_V2 = 'regatta_result_v2_';
 
   // ========= データパス解決 =========
   /**
@@ -122,6 +125,8 @@
     ROUND_NAMES: ROUND_NAMES,
     LS_MASTER_KEY: LS_MASTER_KEY,
     LS_RESULT_PREFIX: LS_RESULT_PREFIX,
+    LS_MASTER_KEY_V2: LS_MASTER_KEY_V2,
+    LS_RESULT_PREFIX_V2: LS_RESULT_PREFIX_V2,
     paths: paths,
     fetchJSON: fetchJSON,
     fetchJSONWithRetry: fetchJSONWithRetry,
