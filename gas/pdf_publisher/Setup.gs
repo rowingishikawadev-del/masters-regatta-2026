@@ -13,12 +13,14 @@
  */
 
 const DEFAULT_SETUP = {
-  GITHUB_REPO: 'rowingishikawadev-del/masters-regatta-2026',
+  GITHUB_REPO: '',            // Script Properties で設定必須（setupFromConfig 参照）
   GITHUB_BRANCH: 'main',
-  GITHUB_TOKEN: '',  // 龍偉が手動で設定する
-  TEMPLATE_SHEET_ID: '1A_CIgcyJ-1jp6qwIhxItDKpVtbMIRc8C5IGJajr0D7g',
-  PDF_OUTPUT_FOLDER_ID: '1n74sgVFD40JIjDf06pltjKp77yBhs4mY',
-  PDF_ARCHIVE_FOLDER_ID: '12a23a8CwR8f6yLMS_kt5C_M1ZnK1Xvp5'
+  GITHUB_TOKEN: '',           // 龍偉が手動で設定する
+  TEMPLATE_SHEET_ID: '',      // Script Properties で設定必須（setupFromConfig 参照）
+  PDF_OUTPUT_FOLDER_ID: '',   // Script Properties で設定必須（setupFromConfig 参照）
+  PDF_ARCHIVE_FOLDER_ID: '',  // Script Properties で設定必須（setupFromConfig 参照）
+  PRE_RACE_BOOKLET_FOLDER_ID: '',  // Script Properties で設定必須（setupFromConfig 参照）
+  BOOKLET_TEMPLATE_GID: ''    // Script Properties で設定必須（setupFromConfig 参照）
 };
 
 const PDF_TRIGGER_FUNCTION = 'processPendingPDFs';
@@ -38,7 +40,8 @@ function saveSetup() {
 
   properties.setProperties(values, false);
   Logger.log('スクリプトプロパティを保存しました。');
-  Logger.log(JSON.stringify(values, null, 2));
+  // ID 全文はログに残さない（Viewer 権限者がログ閲覧可能なため先頭4文字のみ）
+  Logger.log(JSON.stringify(maskSecrets_(values), null, 2));
   if (!values.GITHUB_TOKEN) {
     Logger.log('⚠️ GITHUB_TOKEN が未設定です。スクリプトプロパティに手動で設定してください（既存GASと同じ値）。');
   }
@@ -102,4 +105,64 @@ function listTriggers() {
 
   Logger.log(JSON.stringify(rows, null, 2));
   return rows;
+}
+
+/**
+ * tournament.config.json の gas セクション JSON を貼り付けることで
+ * Script Properties へ一括投入する（SPEC §5 gas マッピング表準拠）。
+ *
+ * 使い方:
+ *   1. tournament.config.json の "gas" セクション全体を JSON 文字列化して引数に渡す
+ *   2. GASエディタで setupFromConfig を選択して実行
+ *
+ * 例:
+ *   setupFromConfig('{"pdf_template_sheet_id":"1A...","pdf_output_folder_id":"1n...","pdf_archive_folder_id":"12...","booklet_folder_id":"1L...","booklet_template_gid":"1774552995","judge_template_sheet_id":"1Q...","prep_folder_id":"1L..."}')
+ *
+ * マッピング（SPEC §5 gas セクション → Script Properties キー）:
+ *   pdf_template_sheet_id  → TEMPLATE_SHEET_ID
+ *   pdf_output_folder_id   → PDF_OUTPUT_FOLDER_ID
+ *   pdf_archive_folder_id  → PDF_ARCHIVE_FOLDER_ID
+ *   booklet_folder_id      → PRE_RACE_BOOKLET_FOLDER_ID
+ *   booklet_template_gid   → BOOKLET_TEMPLATE_GID
+ *
+ * @param {string} jsonString  tournament.config.json の gas セクション（JSON 文字列）
+ */
+function setupFromConfig(jsonString) {
+  const gas = JSON.parse(jsonString);
+  const mapping = {
+    pdf_template_sheet_id: 'TEMPLATE_SHEET_ID',
+    pdf_output_folder_id:  'PDF_OUTPUT_FOLDER_ID',
+    pdf_archive_folder_id: 'PDF_ARCHIVE_FOLDER_ID',
+    booklet_folder_id:     'PRE_RACE_BOOKLET_FOLDER_ID',
+    booklet_template_gid:  'BOOKLET_TEMPLATE_GID'
+  };
+
+  const properties = PropertiesService.getScriptProperties();
+  const toSet = {};
+
+  Object.keys(mapping).forEach(function(configKey) {
+    if (gas[configKey] !== undefined && gas[configKey] !== null && gas[configKey] !== '') {
+      toSet[mapping[configKey]] = String(gas[configKey]);
+    }
+  });
+
+  // github_repo は deploy.github_repo から取得できる場合も考慮（任意）
+  if (gas.github_repo) {
+    toSet['GITHUB_REPO'] = gas.github_repo;
+  }
+
+  properties.setProperties(toSet, false);
+  Logger.log('[setupFromConfig] pdf_publisher: Script Properties を投入しました');
+  Logger.log(JSON.stringify(maskSecrets_(toSet), null, 2));
+  Logger.log('⚠️ GITHUB_TOKEN は手動で設定してください（既存GASと同じ値）');
+}
+
+/** ログ出力用に値をマスクする（先頭4文字のみ表示） */
+function maskSecrets_(obj) {
+  const masked = {};
+  Object.keys(obj).forEach(k => {
+    const v = String(obj[k] || '');
+    masked[k] = v ? v.substring(0, 4) + '***' : '(未設定)';
+  });
+  return masked;
 }

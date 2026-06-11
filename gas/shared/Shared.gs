@@ -106,6 +106,25 @@ function getScheduleArray_(masterData) {
 }
 
 /**
+ * config オブジェクトの必須キーが全て設定されているか検証する。
+ * 欠落キーがあれば Drive 書き込み・GitHub API 到達前に即 throw する（黙殺禁止）。
+ * 既存の本番 Script Properties が設定済みの場合は挙動不変。
+ *
+ * @param {object} config  getConfig_() が返すオブジェクト
+ * @param {string[]} requiredKeys  検証するキー名の配列（config オブジェクトのプロパティ名）
+ * @throws {Error}  欠落キーがある場合
+ */
+function validateConfig_(config, requiredKeys) {
+  const missing = (requiredKeys || []).filter(function(key) {
+    const val = config[key];
+    return val === undefined || val === null || String(val).trim() === '' || val === 0;
+  });
+  if (missing.length > 0) {
+    throw new Error('Script Properties 未設定: ' + missing.join(', ') + ' — setupFromConfig() を実行して設定してください');
+  }
+}
+
+/**
  * 日付文字列を 'YYYY/MM/DD' 形式に正規化する。
  * Date オブジェクトは JST でフォーマットする。
  * 文字列は 'YYYY/MM/DD' または 'YYYY-MM-DD'（月・日はゼロ埋め任意）を受け付ける。

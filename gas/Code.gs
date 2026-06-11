@@ -5,7 +5,7 @@
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  *  バージョン: v1.3.1 (2026/05/25)
  *  最終 push:  2026/05/25 02:50  (clasp by Claude Code)
- *  scriptId:   1PYr-9DlmBOECNR0G6jDYYuTRVnW_Bt8GVMt3YHARmdBZ1uwhY_whvRLm
+ *  scriptId:   （リポジトリには記録しない。clasp の .clasp.json を参照）
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  *  ▼ 変更履歴
  *  v1.3.1 (2026/05/25)
@@ -114,9 +114,9 @@ function runNow() { processPendingCSVs(); }
 // 設定オブジェクト
 // ============================================================
 const CONFIG = {
-  // GitHub リポジトリ情報（GITHUB_OWNER スクリプトプロパティで上書き可）
+  // GitHub リポジトリ情報（GITHUB_OWNER スクリプトプロパティで設定必須）
   github: {
-    owner: PropertiesService.getScriptProperties().getProperty('GITHUB_OWNER') || 'rowingishikawadev-del',
+    owner: PropertiesService.getScriptProperties().getProperty('GITHUB_OWNER') || '',
     repo: 'masters-regatta-2026',
     branch: 'main',
     resultsPath: 'data/results',
@@ -289,6 +289,26 @@ function processPendingCSVs(startTime) {
 
       const raceNo = parseInt(match[1], 10);
       const filePoint = match[2];
+
+      // §2 距離トークン検証（I-3 裁定）:
+      // 第2キャプチャが "NNNm" or "NNNNm" 形式の場合 → measurement_points に含まれるか検証
+      // 含まれない場合はエラーフォルダ移動（黙殺禁止）。形式不一致は現行どおり処理。
+      const distanceTokenMatch = filePoint.match(/^(\d{3,4})m$/i);
+      if (distanceTokenMatch) {
+        const tokenDist = distanceTokenMatch[1] + 'm';
+        // measurementPoints は文字列比較（v2 形式 "500m","1000m" を考慮）
+        const validPoints = measurementPoints.map(function(p) { return p.toLowerCase(); });
+        if (validPoints.indexOf(tokenDist.toLowerCase()) === -1) {
+          Logger.log('[processPendingCSVs] 距離トークン不正（measurement_points に含まれない）のためエラーフォルダへ移動: ' + fileName + ' (token=' + tokenDist + ', valid=' + measurementPoints.join(',') + ')');
+          try {
+            const errFolder = getOrCreateFolder(raceCsvFolder.getId(), 'error');
+            file.moveTo(errFolder);
+          } catch (moveErr) {
+            Logger.log('[processPendingCSVs] エラーフォルダ移動失敗: ' + moveErr.message);
+          }
+          continue;
+        }
+      }
 
       if (filePoint.toLowerCase() !== point.toLowerCase()) {
         Logger.log('[processPendingCSVs] ポイント不一致のためスキップ: ' + fileName + ' (期待: ' + point + ', 実際: ' + filePoint + ')');
@@ -961,7 +981,7 @@ function reprocessAllRaces() {
 
   // 2. 「削除済」フォルダからも戻す（clearAllResults で移動された分の救済）
   //    DELETED_FOLDER_ID スクリプトプロパティ or デフォルト ID を参照
-  const deletedFolderId = props.getProperty('DELETED_FOLDER_ID') || '1DaFuSAZQxdYqqI0-_SvidMEfK8G1zUa4';
+  const deletedFolderId = props.getProperty('DELETED_FOLDER_ID') || '';  // Script Properties: DELETED_FOLDER_ID で設定必須
   let deletedRestored = 0;
   try {
     const deletedFolder = DriveApp.getFolderById(deletedFolderId);
@@ -1783,7 +1803,7 @@ function clearAllResults() {
   // processed/ の全CSVを「削除済」フォルダへ移動
   // フォルダIDはスクリプトプロパティ DELETED_FOLDER_ID で上書き可（デフォルト固定ID）
   try {
-    const deletedFolderId = props.getProperty('DELETED_FOLDER_ID') || '1DaFuSAZQxdYqqI0-_SvidMEfK8G1zUa4';
+    const deletedFolderId = props.getProperty('DELETED_FOLDER_ID') || '';  // Script Properties: DELETED_FOLDER_ID で設定必須
     const deletedFolder = DriveApp.getFolderById(deletedFolderId);
     const rootFolderId = props.getProperty(CONFIG.props.driveFolderId);
     const measurementPoints = getMeasurementPoints();
@@ -2081,33 +2101,33 @@ function createTestMasterFiles() {
   const masterFolder = getOrCreateFolder(rootId, CONFIG.folders.master);
 
   // ----------------------------------------------------------------
-  // tournament.csv
+  // tournament.csv（大会固有値は末尾の TEST_FIXTURES から参照）
   // ----------------------------------------------------------------
   const tournamentCsv =
     'key,value\n' +
-    'race_name,第17回全日本マスターズレガッタ石川県復興特別大会（テスト）\n' +
-    'venue,石川県津幡漕艇競技場\n' +
-    'course_length,1000\n' +
+    'race_name,' + TEST_FIXTURES.raceName + '\n' +
+    'venue,' + TEST_FIXTURES.venue + '\n' +
+    'course_length,' + TEST_FIXTURES.defaultCourseLength + '\n' +
     'youtube_url,\n';
 
   // ----------------------------------------------------------------
-  // schedule.csv
+  // schedule.csv（大会固有値は末尾の TEST_FIXTURES から参照）
   // R001〜R006 は既存テストCSV（createTestCSVs/createTestRace006）と対応
   // R007: W1X DEF    複数カテゴリー合同（女子シングル D・E・F）1000m
   // R008: Mix2X GH   混成ダブルスカル G・H 合同 1000m
   // ----------------------------------------------------------------
   const scheduleCsv =
     'race_no,event_code,event_name,category,age_group,round,date,time,course_length\n' +
-    '1,M1X,男子シングルスカル,M,G,FA,2026-05-23,07:00,\n' +
-    '2,M2X,男子ダブルスカル,M,E,FA,2026-05-23,07:08,\n' +
-    '3,M4+,男子舵手つきフォア,M,F,FA,2026-05-23,07:16,\n' +
-    '4,W1X,女子シングルスカル,W,D,FA,2026-05-23,07:24,\n' +
-    '5,W2X,女子ダブルスカル,W,G,FA,2026-05-23,07:32,\n' +
-    '6,M1X,男子シングルスカル,M,H,FA,2026-05-23,07:40,\n' +
+    '1,M1X,男子シングルスカル,M,G,FA,' + TEST_FIXTURES.day1 + ',07:00,\n' +
+    '2,M2X,男子ダブルスカル,M,E,FA,' + TEST_FIXTURES.day1 + ',07:08,\n' +
+    '3,M4+,男子舵手つきフォア,M,F,FA,' + TEST_FIXTURES.day1 + ',07:16,\n' +
+    '4,W1X,女子シングルスカル,W,D,FA,' + TEST_FIXTURES.day1 + ',07:24,\n' +
+    '5,W2X,女子ダブルスカル,W,G,FA,' + TEST_FIXTURES.day1 + ',07:32,\n' +
+    '6,M1X,男子シングルスカル,M,H,FA,' + TEST_FIXTURES.day1 + ',07:40,\n' +
     // R007: age_group=DEF → categories:["D","E","F"] に自動変換
-    '7,W1X,女子シングルスカル,W,DEF,FA,2026-05-23,08:28,\n' +
+    '7,W1X,女子シングルスカル,W,DEF,FA,' + TEST_FIXTURES.day1 + ',08:28,\n' +
     // R008: age_group=GH → categories:["G","H"] に自動変換
-    '8,Mix2X,混成ダブルスカル,Mix,GH,FA,2026-05-23,09:00,\n';
+    '8,Mix2X,混成ダブルスカル,Mix,GH,FA,' + TEST_FIXTURES.day1 + ',09:00,\n';
 
   // ----------------------------------------------------------------
   // entries.csv
@@ -2267,3 +2287,20 @@ function createTestMultiCategoryCSVs() {
   Logger.log('  R008 H内: 1位レーン4 / 2位レーン3');
   Logger.log('2分以内に onTrigger が自動実行します');
 }
+
+// ============================================================
+// テスト用 2026 固有値フィクスチャ（テスト関数はここから参照する）
+// 大会固有値をここに集約することで、来年汎用化時に1か所だけ変更すれば済む。
+// ============================================================
+
+/**
+ * テスト用大会固有値。createTestMasterFiles 等のテスト関数はここから参照する。
+ * 本番環境の Script Properties とは独立（テスト専用）。
+ */
+const TEST_FIXTURES = {
+  raceName: '第17回全日本マスターズレガッタ石川県復興特別大会（テスト）',
+  venue: '石川県津幡漕艇競技場',
+  defaultCourseLength: 1000,
+  day1: '2026-05-23',
+  day2: '2026-05-24'
+};

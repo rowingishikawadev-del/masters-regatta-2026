@@ -4,7 +4,7 @@
  *  Version: 0.21.0
  *  Last Updated: 2026/05/25
  *  Last Pushed:  2026/05/25 (clasp by Claude Code)
- *  scriptId:     1C8qpIqKRLNtQcTl0LerglEaMdt1X9rvZJeH89GT7c48kiQUAvFzlswAt
+ *  scriptId:     （リポジトリには記録しない。clasp の .clasp.json を参照）
  *  Changes:
  *   - v0.21.0 (2026/05/25): 結果一覧 PDF を全レース「6レーン固定」で表示
  *      （各レーンに該当クルーの結果を配置・空レーンは空欄）。行高さを明示
@@ -66,16 +66,19 @@ const CONFIG_KEYS = {
   githubToken: 'GITHUB_TOKEN',
   templateSheetId: 'TEMPLATE_SHEET_ID',
   outputFolderId: 'PDF_OUTPUT_FOLDER_ID',
-  archiveFolderId: 'PDF_ARCHIVE_FOLDER_ID'
+  archiveFolderId: 'PDF_ARCHIVE_FOLDER_ID',
+  // Script Properties で設定必須（setupFromConfig 参照）
+  preRaceBookletFolderId: 'PRE_RACE_BOOKLET_FOLDER_ID',
+  bookletTemplateGid: 'BOOKLET_TEMPLATE_GID'
 };
 
 const DEFAULT_CONFIG = {
-  GITHUB_REPO: 'rowingishikawadev-del/masters-regatta-2026',
+  GITHUB_REPO: '',           // Script Properties で設定必須（setupFromConfig 参照）
   GITHUB_BRANCH: 'main',
   GITHUB_TOKEN: '',
-  TEMPLATE_SHEET_ID: '1A_CIgcyJ-1jp6qwIhxItDKpVtbMIRc8C5IGJajr0D7g',
-  PDF_OUTPUT_FOLDER_ID: '1n74sgVFD40JIjDf06pltjKp77yBhs4mY',
-  PDF_ARCHIVE_FOLDER_ID: '12a23a8CwR8f6yLMS_kt5C_M1ZnK1Xvp5'
+  TEMPLATE_SHEET_ID: '',     // Script Properties で設定必須（setupFromConfig 参照）
+  PDF_OUTPUT_FOLDER_ID: '',  // Script Properties で設定必須（setupFromConfig 参照）
+  PDF_ARCHIVE_FOLDER_ID: ''  // Script Properties で設定必須（setupFromConfig 参照）
 };
 
 const CACHE_KEYS = {
@@ -90,9 +93,9 @@ const DEFAULT_INITIAL_RANKS = 6;
 const LOCK_WAIT_MS = 500;
 const MAX_RUNTIME_MS = 4 * 60 * 1000;
 const STOP_BEFORE_MS = 25 * 1000;
-const PRE_RACE_BOOKLET_FOLDER_ID = '1LHAVHRnwVgMaQL4ipaDGa6HINz-9oXkn';
+// PRE_RACE_BOOKLET_FOLDER_ID / BOOKLET_TEMPLATE_GID は Script Properties で設定必須（setupFromConfig 参照）
+// getConfig_() 経由で取得するためここでは定数定義しない
 const PRE_RACE_BOOKLET_FILENAME = 'レース前準備資料.pdf';
-const BOOKLET_TEMPLATE_GID = 1774552995;  // 準備資料用テンプレートシートの gid
 
 function initializeTemplate() {
   Logger.log('=== 雛形初期化開始 v' + PDF_PUBLISHER_VERSION + ' ===');
@@ -150,6 +153,8 @@ function processPendingPDFs() {
 
   try {
     const config = getConfig_();
+    // Drive 書き込み・GitHub API 到達前に必須キーを検証（Script Properties 未設定なら即 throw）
+    validateConfig_(config, ['githubRepo', 'templateSheetId', 'outputFolderId', 'archiveFolderId']);
     const properties = PropertiesService.getScriptProperties();
     const masterData = fetchMasterData_(config);
     const raceFiles = listRaceFiles_(config);
@@ -373,11 +378,11 @@ function generateResultsBookletForDate(dateStr, masterData) {
     const pdfBlob = exportBookletPdf_(tmpSpreadsheet.getId(), fileName);
     Logger.log('PDF export 完了: bytes=' + pdfBlob.getBytes().length);
 
-    const targetFolder = DriveApp.getFolderById(PRE_RACE_BOOKLET_FOLDER_ID);
+    const targetFolder = DriveApp.getFolderById(config.preRaceBookletFolderId);
     const existing = targetFolder.getFilesByName(fileName);
     while (existing.hasNext()) existing.next().setTrashed(true);
     targetFolder.createFile(pdfBlob);
-    Logger.log('PDF 格納完了: ' + PRE_RACE_BOOKLET_FOLDER_ID + '/' + fileName);
+    Logger.log('PDF 格納完了: ' + config.preRaceBookletFolderId + '/' + fileName);
 
     return { fileName: fileName, raceCount: processed };
   } finally {
@@ -450,11 +455,12 @@ function generatePreRaceBookletForDate(dateStr, masterData) {
   Logger.log('一時Spreadsheet作成: ' + tmpFile.getId());
 
   try {
-    // 準備資料用テンプレートシート（gid=1774552995）を使う
+    // 準備資料用テンプレートシート（BOOKLET_TEMPLATE_GID）を使う
+    // Script Properties: BOOKLET_TEMPLATE_GID（setupFromConfig 参照）
     const allSheets = tmpSpreadsheet.getSheets();
-    let templateSheet = allSheets.find(function(s) { return s.getSheetId() === BOOKLET_TEMPLATE_GID; });
+    let templateSheet = allSheets.find(function(s) { return s.getSheetId() === config.bookletTemplateGid; });
     if (!templateSheet) {
-      Logger.log('警告: gid=' + BOOKLET_TEMPLATE_GID + ' のシートが見つからない。先頭シートを使用');
+      Logger.log('警告: gid=' + config.bookletTemplateGid + ' のシートが見つからない。先頭シートを使用');
       templateSheet = allSheets[0];
     }
     allSheets.forEach(function(s) {
@@ -483,11 +489,11 @@ function generatePreRaceBookletForDate(dateStr, masterData) {
     const pdfBlob = exportBookletPdf_(tmpSpreadsheet.getId(), fileName);
     Logger.log('PDF export 完了: bytes=' + pdfBlob.getBytes().length);
 
-    const targetFolder = DriveApp.getFolderById(PRE_RACE_BOOKLET_FOLDER_ID);
+    const targetFolder = DriveApp.getFolderById(config.preRaceBookletFolderId);
     const existing = targetFolder.getFilesByName(fileName);
     while (existing.hasNext()) existing.next().setTrashed(true);
     targetFolder.createFile(pdfBlob);
-    Logger.log('PDF格納完了: ' + PRE_RACE_BOOKLET_FOLDER_ID + '/' + fileName);
+    Logger.log('PDF格納完了: ' + config.preRaceBookletFolderId + '/' + fileName);
 
     return { fileName: fileName, raceCount: schedule.length };
   } finally {
@@ -583,11 +589,11 @@ function testGenerateBooklet() {
 }
 
 function testGenerateBookletDay1() {
-  return generatePreRaceBookletForDate('2026/05/23');
+  return generatePreRaceBookletForDate(PDF_TEST_FIXTURES.day1);
 }
 
 function testGenerateBookletDay2() {
-  return generatePreRaceBookletForDate('2026/05/24');
+  return generatePreRaceBookletForDate(PDF_TEST_FIXTURES.day2);
 }
 
 function testGenerateRace1RealFormat() {
@@ -776,6 +782,7 @@ function regenerate500mResultPdfs() {
 
 function getConfig_() {
   const properties = PropertiesService.getScriptProperties().getProperties();
+  const gid = properties[CONFIG_KEYS.bookletTemplateGid];
   return {
     githubRepo: properties[CONFIG_KEYS.githubRepo] || DEFAULT_CONFIG.GITHUB_REPO,
     githubBranch: properties[CONFIG_KEYS.githubBranch] || DEFAULT_CONFIG.GITHUB_BRANCH,
@@ -783,6 +790,9 @@ function getConfig_() {
     templateSheetId: properties[CONFIG_KEYS.templateSheetId] || DEFAULT_CONFIG.TEMPLATE_SHEET_ID,
     outputFolderId: properties[CONFIG_KEYS.outputFolderId] || DEFAULT_CONFIG.PDF_OUTPUT_FOLDER_ID,
     archiveFolderId: properties[CONFIG_KEYS.archiveFolderId] || DEFAULT_CONFIG.PDF_ARCHIVE_FOLDER_ID,
+    // Script Properties で設定必須（setupFromConfig 参照）
+    preRaceBookletFolderId: properties[CONFIG_KEYS.preRaceBookletFolderId] || '',
+    bookletTemplateGid: gid ? parseInt(gid, 10) : 0,
     userAgent: 'masters-regatta-pdf-publisher'  // fetchText_（Shared.gs）が使用する User-Agent
   };
 }
@@ -1398,11 +1408,11 @@ function generateResultsListPdfForDate(dateStr, masterData) {
     const fileName = '結果一覧_' + normalizedDate.replace(/\//g, '-') + '.pdf';
     const pdfBlob = exportListPdf_(ss.getId(), sheet.getSheetId(), fileName);
 
-    const targetFolder = DriveApp.getFolderById(PRE_RACE_BOOKLET_FOLDER_ID);
+    const targetFolder = DriveApp.getFolderById(config.preRaceBookletFolderId);
     const existing = targetFolder.getFilesByName(fileName);
     while (existing.hasNext()) existing.next().setTrashed(true);
     targetFolder.createFile(pdfBlob);
-    Logger.log('PDF 格納完了: ' + PRE_RACE_BOOKLET_FOLDER_ID + '/' + fileName);
+    Logger.log('PDF 格納完了: ' + config.preRaceBookletFolderId + '/' + fileName);
 
     return { fileName: fileName, raceCount: schedule.length };
   } finally {
@@ -1493,3 +1503,17 @@ function trashExistingPdf_(folder, fileName) {
   const files = folder.getFilesByName(fileName);
   while (files.hasNext()) files.next().setTrashed(true);
 }
+
+// ============================================================
+//  テスト用 2026 固有値フィクスチャ（テスト関数はここから参照する）
+//  大会固有値をここに集約することで、来年汎用化時に1か所だけ変更すれば済む。
+// ============================================================
+
+/**
+ * テスト用大会固有値。testGenerateBookletDay1 等のテスト関数はここから参照する。
+ * 本番環境の Script Properties とは独立（テスト専用）。
+ */
+const PDF_TEST_FIXTURES = {
+  day1: '2026/05/23',
+  day2: '2026/05/24'
+};

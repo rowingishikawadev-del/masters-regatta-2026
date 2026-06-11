@@ -29,11 +29,11 @@ const CONFIG_KEYS = {
 };
 
 const DEFAULT_CONFIG = {
-  GITHUB_REPO: 'rowingishikawadev-del/masters-regatta-2026',
+  GITHUB_REPO: '',           // Script Properties で設定必須（setupFromConfig 参照）
   GITHUB_BRANCH: 'main',
   GITHUB_TOKEN: '',
-  TEMPLATE_SHEET_ID: '1Q37f2gAgfLwIr2snBjLUiZKcUEr99wr97NjbhDNFRHc',
-  OUTPUT_FOLDER_ID: '1LHAVHRnwVgMaQL4ipaDGa6HINz-9oXkn'
+  TEMPLATE_SHEET_ID: '',     // Script Properties で設定必須（setupFromConfig 参照）
+  OUTPUT_FOLDER_ID: ''       // Script Properties で設定必須（setupFromConfig 参照）
 };
 
 const MASTER_JSON_PATH = 'data/master.json';
@@ -54,6 +54,8 @@ const JUDGE_LANE_CATEGORY_ROW = 7;
 function generateAllJudgeForms() {
   Logger.log('=== generateAllJudgeForms start v' + JUDGE_FORM_PUBLISHER_VERSION + ' ===');
   const config = getConfig_();
+  // Drive 書き込み・GitHub API 到達前に必須キーを検証（Script Properties 未設定なら即 throw）
+  validateConfig_(config, ['githubRepo', 'templateSheetId', 'outputFolderId']);
   const masterData = fetchMasterData_(config);
   const dates = getTournamentDates_(masterData);
 
@@ -214,11 +216,11 @@ function fetchMasterData_(config) {
 }
 
 function testGenerateDay1() {
-  generateJudgeFormForDate('2026/05/23');
+  generateJudgeFormForDate(JUDGE_TEST_FIXTURES.day1);
 }
 
 function testGenerateDay2() {
-  generateJudgeFormForDate('2026/05/24');
+  generateJudgeFormForDate(JUDGE_TEST_FIXTURES.day2);
 }
 
 function testGenerateAllDays() {
@@ -334,3 +336,17 @@ function trashExistingFileByName_(folder, fileName) {
 }
 
 // buildRawUrl_ / fetchText_ / normalizeDateString_ / pad2_ / getTournamentDates_ / getScheduleArray_ は Shared.gs で定義（make build-gas で生成）
+
+// ============================================================
+//  テスト用 2026 固有値フィクスチャ（テスト関数はここから参照する）
+//  大会固有値をここに集約することで、来年汎用化時に1か所だけ変更すれば済む。
+// ============================================================
+
+/**
+ * テスト用大会固有値。testGenerateDay1/Day2 等のテスト関数はここから参照する。
+ * 本番環境の Script Properties とは独立（テスト専用）。
+ */
+const JUDGE_TEST_FIXTURES = {
+  day1: '2026/05/23',
+  day2: '2026/05/24'
+};

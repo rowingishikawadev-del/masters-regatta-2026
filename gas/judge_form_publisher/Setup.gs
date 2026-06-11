@@ -8,11 +8,11 @@
  */
 
 const DEFAULT_SETUP = {
-  GITHUB_REPO: 'rowingishikawadev-del/masters-regatta-2026',
+  GITHUB_REPO: '',         // Script Properties で設定必須（setupFromConfig 参照）
   GITHUB_BRANCH: 'main',
   GITHUB_TOKEN: '',
-  TEMPLATE_SHEET_ID: '1Q37f2gAgfLwIr2snBjLUiZKcUEr99wr97NjbhDNFRHc',
-  OUTPUT_FOLDER_ID: '1LHAVHRnwVgMaQL4ipaDGa6HINz-9oXkn'
+  TEMPLATE_SHEET_ID: '',   // Script Properties で設定必須（setupFromConfig 参照）
+  OUTPUT_FOLDER_ID: ''     // Script Properties で設定必須（setupFromConfig 参照）
 };
 
 /**
@@ -69,4 +69,54 @@ function maskSecretValues_(values) {
     copy[key] = key === 'GITHUB_TOKEN' && values[key] ? '***' : values[key];
   });
   return copy;
+}
+
+/**
+ * tournament.config.json の gas セクション JSON を貼り付けることで
+ * Script Properties へ一括投入する（SPEC §5 gas マッピング表準拠）。
+ *
+ * 使い方:
+ *   1. tournament.config.json の "gas" セクション全体を JSON 文字列化して引数に渡す
+ *   2. GASエディタで setupFromConfig を選択して実行
+ *
+ * マッピング（SPEC §5 gas セクション → Script Properties キー）:
+ *   judge_template_sheet_id → TEMPLATE_SHEET_ID
+ *   prep_folder_id          → OUTPUT_FOLDER_ID
+ *
+ * @param {string} jsonString  tournament.config.json の gas セクション（JSON 文字列）
+ */
+function setupFromConfig(jsonString) {
+  const gas = JSON.parse(jsonString);
+  const mapping = {
+    judge_template_sheet_id: 'TEMPLATE_SHEET_ID',
+    prep_folder_id:          'OUTPUT_FOLDER_ID'
+  };
+
+  const properties = PropertiesService.getScriptProperties();
+  const toSet = {};
+
+  Object.keys(mapping).forEach(function(configKey) {
+    if (gas[configKey] !== undefined && gas[configKey] !== null && gas[configKey] !== '') {
+      toSet[mapping[configKey]] = String(gas[configKey]);
+    }
+  });
+
+  if (gas.github_repo) {
+    toSet['GITHUB_REPO'] = gas.github_repo;
+  }
+
+  properties.setProperties(toSet, false);
+  Logger.log('[setupFromConfig] judge_form_publisher: Script Properties を投入しました');
+  Logger.log(JSON.stringify(maskSecrets_(toSet), null, 2));
+  Logger.log('⚠️ GITHUB_TOKEN は手動で設定してください（既存GASと同じ値）');
+}
+
+/** ログ出力用に値をマスクする（先頭4文字のみ表示） */
+function maskSecrets_(obj) {
+  const masked = {};
+  Object.keys(obj).forEach(k => {
+    const v = String(obj[k] || '');
+    masked[k] = v ? v.substring(0, 4) + '***' : '(未設定)';
+  });
+  return masked;
 }
