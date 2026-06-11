@@ -84,7 +84,7 @@ const CACHE_KEYS = {
 };
 
 const RESULT_DIR = 'data/results';
-const JST_TIMEZONE = 'Asia/Tokyo';
+// JST_TIMEZONE は Shared.gs で定義（make build-gas で生成）
 const RANKING_ROW_COUNT = 8;
 const DEFAULT_INITIAL_RANKS = 6;
 const LOCK_WAIT_MS = 500;
@@ -782,7 +782,8 @@ function getConfig_() {
     githubToken: properties[CONFIG_KEYS.githubToken] || DEFAULT_CONFIG.GITHUB_TOKEN,
     templateSheetId: properties[CONFIG_KEYS.templateSheetId] || DEFAULT_CONFIG.TEMPLATE_SHEET_ID,
     outputFolderId: properties[CONFIG_KEYS.outputFolderId] || DEFAULT_CONFIG.PDF_OUTPUT_FOLDER_ID,
-    archiveFolderId: properties[CONFIG_KEYS.archiveFolderId] || DEFAULT_CONFIG.PDF_ARCHIVE_FOLDER_ID
+    archiveFolderId: properties[CONFIG_KEYS.archiveFolderId] || DEFAULT_CONFIG.PDF_ARCHIVE_FOLDER_ID,
+    userAgent: 'masters-regatta-pdf-publisher'  // fetchText_（Shared.gs）が使用する User-Agent
   };
 }
 
@@ -860,25 +861,7 @@ function fetchRaceResult_(config, raceNo) {
   return JSON.parse(fetchText_(buildRawUrl_(config, RESULT_DIR + '/' + fileName), config));
 }
 
-function buildRawUrl_(config, path) {
-  return 'https://raw.githubusercontent.com/' + config.githubRepo + '/' + config.githubBranch + '/' + path;
-}
-
-function fetchText_(url, config) {
-  const headers = { 'User-Agent': 'masters-regatta-pdf-publisher' };
-  if (config && config.githubToken) {
-    headers.Authorization = 'token ' + config.githubToken;
-  }
-  const response = UrlFetchApp.fetch(url, {
-    muteHttpExceptions: true,
-    headers: headers
-  });
-  const status = response.getResponseCode();
-  if (status < 200 || status >= 300) {
-    throw new Error('fetch失敗: status=' + status + ' url=' + url + ' body=' + response.getContentText().substring(0, 500));
-  }
-  return response.getContentText();
-}
+// buildRawUrl_ / fetchText_ は Shared.gs で定義（make build-gas で生成）
 
 function createHash_(text) {
   const bytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, text, Utilities.Charset.UTF_8);

@@ -37,7 +37,7 @@ const DEFAULT_CONFIG = {
 };
 
 const MASTER_JSON_PATH = 'data/master.json';
-const JST_TIMEZONE = 'Asia/Tokyo';
+// JST_TIMEZONE は Shared.gs で定義（make build-gas で生成）
 const JUDGE_TEMPLATE_RANGE_A1 = 'A1:I7';
 const JUDGE_MAX_LANE = 6;
 const JUDGE_FIRST_LANE_COL = 4;
@@ -283,22 +283,12 @@ function getConfig_() {
     githubBranch: properties[CONFIG_KEYS.githubBranch] || DEFAULT_CONFIG.GITHUB_BRANCH,
     githubToken: properties[CONFIG_KEYS.githubToken] || DEFAULT_CONFIG.GITHUB_TOKEN,
     templateSheetId: properties[CONFIG_KEYS.templateSheetId] || DEFAULT_CONFIG.TEMPLATE_SHEET_ID,
-    outputFolderId: properties[CONFIG_KEYS.outputFolderId] || DEFAULT_CONFIG.OUTPUT_FOLDER_ID
+    outputFolderId: properties[CONFIG_KEYS.outputFolderId] || DEFAULT_CONFIG.OUTPUT_FOLDER_ID,
+    userAgent: 'masters-regatta-judge-form-publisher'  // fetchText_（Shared.gs）が使用する User-Agent
   };
 }
 
-function getTournamentDates_(masterData) {
-  const dates = masterData && masterData.tournament && masterData.tournament.dates;
-  if (!Array.isArray(dates)) return [];
-  return dates.map(normalizeDateString_).filter(function(dateStr) { return dateStr; });
-}
-
-function getScheduleArray_(masterData) {
-  if (!masterData) return [];
-  if (Array.isArray(masterData.schedule)) return masterData.schedule;
-  if (masterData.schedule && Array.isArray(masterData.schedule.races)) return masterData.schedule.races;
-  return [];
-}
+// getTournamentDates_ / getScheduleArray_ / normalizeDateString_ / pad2_ は Shared.gs で定義（make build-gas で生成）
 
 function getRaceEntries_(race) {
   if (!race || !Array.isArray(race.entries)) return [];
@@ -343,38 +333,4 @@ function trashExistingFileByName_(folder, fileName) {
   }
 }
 
-function normalizeDateString_(value) {
-  if (!value) return '';
-  if (Object.prototype.toString.call(value) === '[object Date]') {
-    return Utilities.formatDate(value, JST_TIMEZONE, 'yyyy/MM/dd');
-  }
-  const text = String(value).trim();
-  const match = text.match(/^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})$/);
-  if (!match) return text;
-  return match[1] + '/' + pad2_(match[2]) + '/' + pad2_(match[3]);
-}
-
-function pad2_(value) {
-  return ('0' + Number(value)).slice(-2);
-}
-
-function buildRawUrl_(config, path) {
-  return 'https://raw.githubusercontent.com/' + config.githubRepo + '/' + config.githubBranch + '/' + path;
-}
-
-function fetchText_(url, config) {
-  const headers = { 'User-Agent': 'masters-regatta-judge-form-publisher' };
-  if (config && config.githubToken) {
-    headers.Authorization = 'token ' + config.githubToken;
-  }
-
-  const response = UrlFetchApp.fetch(url, {
-    muteHttpExceptions: true,
-    headers: headers
-  });
-  const status = response.getResponseCode();
-  if (status < 200 || status >= 300) {
-    throw new Error('fetch失敗: status=' + status + ' url=' + url + ' body=' + response.getContentText().substring(0, 500));
-  }
-  return response.getContentText();
-}
+// buildRawUrl_ / fetchText_ / normalizeDateString_ / pad2_ / getTournamentDates_ / getScheduleArray_ は Shared.gs で定義（make build-gas で生成）

@@ -1,6 +1,7 @@
 # サブフォルダは別 GAS プロジェクト
 pdf_publisher/**
 judge_form_publisher/**
+shared/**
 
 # ドキュメント
 **/*.md

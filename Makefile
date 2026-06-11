@@ -1,8 +1,8 @@
 # ボート競技ライブリザルト - 開発用コマンド集
-.PHONY: help test watch status master
+.PHONY: help test watch status master build-gas
 
 help:  ## このヘルプを表示
-	@grep -E '^[a-z]+:.*##' Makefile | awk -F':.*## ' '{printf "  %-12s %s\n", $$1, $$2}'
+	@grep -E '^[a-z][a-z-]+:.*##' Makefile | awk -F':.*## ' '{printf "  %-12s %s\n", $$1, $$2}'
 
 test:  ## E2Eテストを実行
 	python3 test/e2e_test.py
@@ -29,3 +29,6 @@ pipeline: ## テストCSVからrace JSONを生成
 push-test: ## テストCSVを処理してGitHubにPush（TOKEN必須）
 	@test -n "$(TOKEN)" || (echo "使い方: make push-test TOKEN=ghp_xxx" && exit 1)
 	python3 tools/simulate_pipeline.py --csv test/csv/ --push --token $(TOKEN)
+
+build-gas: ## GAS共有ソース(gas/shared/Shared.gs)を各プロジェクトに配布
+	python3 tools/build_gas.py
