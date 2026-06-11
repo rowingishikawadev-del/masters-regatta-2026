@@ -429,7 +429,6 @@ h1.page-title {
 .rank-3 { background: linear-gradient(to right, var(--bronze-bg), transparent 50%); }
 
 .crew-name { font-weight: 400; color: var(--text); white-space: nowrap; }
-.affiliation-cell { white-space: nowrap; }
 .time-main {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -437,12 +436,6 @@ h1.page-title {
   color: var(--text);
   letter-spacing: 0.01em;
 }
-.time-split {
-  font-variant-numeric: tabular-nums;
-  color: var(--text-sub);
-  font-size: 12px;
-}
-.time-half { font-size: 11px; color: var(--text-muted); }
 
 /* 結果なし */
 .no-result {
@@ -451,58 +444,6 @@ h1.page-title {
   padding: 14px 0;
 }
 
-/* ========= 全レーステーブル（DBビュー） ========= */
-.db-table-wrapper {
-  overflow-x: auto;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-}
-.db-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-.db-table th {
-  padding: 11px 12px;
-  text-align: left;
-  font-weight: 400;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  border-bottom: 1px solid var(--border);
-  background: #FAF8F4;
-  position: sticky;
-  top: 0;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.db-table th:hover { background: #F0EDE7; }
-.db-table th .sort-icon { font-size: 10px; margin-left: 2px; color: var(--text-muted); }
-.db-table td {
-  padding: 10px 12px;
-  border-bottom: 1px solid #F0EDE7;
-  white-space: nowrap;
-  color: var(--text);
-}
-.db-table tr:hover td { background: #FAF8F4; }
-.db-code {
-  font-family: monospace;
-  background: var(--accent-bg);
-  color: var(--accent);
-  padding: 1px 5px;
-  border-radius: var(--radius);
-  font-size: 11px;
-}
-.db-round {
-  font-size: 11px;
-  padding: 2px 6px;
-  border-radius: var(--radius);
-}
-.db-round-fa { background: var(--live-bg); color: var(--live); }
-.db-round-h { background: var(--accent-bg); color: var(--accent); }
-.db-round-rk { background: #F0EDE7; color: var(--text-sub); }
 
 /* ========= ステータスバー ========= */
 .update-bar {
@@ -583,7 +524,6 @@ h1.page-title {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .db-table { font-size: 12px; }
   .hide-mobile { display: none !important; }
   .update-bar { font-size: 11px; padding: 0 10px; }
   .hide-mobile-flex { display: none !important; }
@@ -743,7 +683,6 @@ h1.page-title {
   white-space: nowrap;
   font-weight: 400;
 }
-.sc-round { width: 72px; font-size: 12px; color: var(--text-sub); white-space: nowrap; }
 .sc-status { width: 72px; white-space: nowrap; }
 .sc-winner { min-width: 180px; }
 .sc-winner-name {
@@ -753,10 +692,6 @@ h1.page-title {
   color: var(--text-sub);
 }
 
-/* ========= テーブルソートアイコン ========= */
-.db-table th.sort-asc  .sort-icon::after { content: ' ↑'; color: var(--accent); }
-.db-table th.sort-desc .sort-icon::after { content: ' ↓'; color: var(--accent); }
-.db-table th .sort-icon { color: var(--text-muted); }
 
 /* ========= ランク表示（絵文字廃止・シンプル数字） ========= */
 .rank {
@@ -783,45 +718,6 @@ h1.page-title {
   letter-spacing: 0.05em;
 }
 
-/* ========= エラーカード ========= */
-.error-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 40px 24px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  max-width: 360px;
-  margin: 48px auto;
-  text-align: center;
-}
-.error-icon {
-  font-size: 32px;
-  color: var(--text-muted);
-  line-height: 1;
-}
-.error-title {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--text);
-}
-.error-body {
-  font-size: 13px;
-  color: var(--text-sub);
-}
-.error-card button {
-  margin-top: 12px;
-  padding: 8px 20px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--bg);
-  color: var(--text);
-  font-size: 13px;
-  cursor: pointer;
-}
-.error-card button:hover { background: var(--accent-bg); }
 
 /* ========= アーカイブバッジ ========= */
 #archive-badge {
@@ -836,7 +732,6 @@ h1.page-title {
 
 /* ========= 年齢区分 中央揃え ========= */
 .age-group { text-align: center; display: inline-block; min-width: 24px; }
-td.age-group-cell { text-align: center; }
 
 /* ========= スマホ専用UI（max-width: 640px） ========= */
 @media (max-width: 640px) {
@@ -1051,12 +946,7 @@ td.age-group-cell { text-align: center; }
   }
 
   .time-main { font-size: 16px; }
-  .time-half { font-size: 11px; }
   .rank { font-size: 17px; }
-
-  /* テーブルビュー: 横スクロール */
-  .db-table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .db-table { font-size: 13px; min-width: 580px; }
 
   /* スケジュールビュー: コンパクト */
   .schedule-table { font-size: 14px; }
@@ -1070,8 +960,6 @@ td.age-group-cell { text-align: center; }
   /* toast 位置 */
   #toast-container { bottom: 24px; }
 
-  /* SP専用非表示クラス */
-  .hide-sp { display: none !important; }
 }
 
 /* ========= 文字サイズ変更 ========= */
@@ -1128,7 +1016,6 @@ body.fs-large .result-table th { font-size: 18px; }
 body.fs-large .schedule-table td,
 body.fs-large .schedule-table th { font-size: 18px; }
 body.fs-large .crew-name      { font-size: 18px; }
-body.fs-large .race-event-name { font-size: 20px; }
 
 /* ========= エラーメッセージ（改善版） ========= */
 #error-message {
@@ -1196,8 +1083,6 @@ body.fs-large .race-event-name { font-size: 20px; }
   line-height: 1.7;
 }
 
-/* ========= ボトムナビゲーション ========= */
-.bottom-nav { display: none; } /* デスクトップでは非表示 */
 
 /* ========= 印刷用スタイル ========= */
 @media print {
@@ -1280,34 +1165,10 @@ body.fs-large .race-event-name { font-size: 20px; }
   color: var(--text-muted);
   margin-top: 2px;
 }
-/* 後方互換 */
-.col-time {
-  font-variant-numeric: tabular-nums;
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--text-sub);
-  white-space: nowrap;
-  text-align: right;
-}
-.col-finish {
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  text-align: right;
-}
 .col-lane {
   text-align: center;
   font-weight: 600;
   color: var(--text-sub);
-}
-.sc-winner-lane {
-  display: inline-block;
-  background: var(--accent-bg);
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 600;
-  padding: 1px 5px;
-  border-radius: 3px;
-  margin-right: 4px;
 }
 .sc-winner-time {
   font-weight: 700;
