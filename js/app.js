@@ -16,8 +16,7 @@ const CONFIG = {
     FA: '決勝A', FB: '決勝B', SF: '準決勝',
     H: '予選', RK: '順位決定', R: '敗者復活'
   },
-  // カテゴリの表示名
-  CATEGORY_NAMES: { M: '男子', W: '女子', X: '混成' },
+
 };
 
 // ========= ユーティリティ =========
@@ -50,8 +49,6 @@ const filterState = { category: 'all', round: 'all', date: 'all', crew: '', stat
 let scheduleFilterDate = 'all';
 // テーブルビューのソート状態
 const sortState = { col: null, dir: 'asc' };
-// テーブルビュー用の生データ行（ソート用に保持）
-let dbRows = [];
 // 使用中プロパティ（未使用列を非表示にするため）
 let usedProps = {};
 
@@ -396,9 +393,6 @@ function renderToggleView() {
 
   container.innerHTML = '';
   groups.forEach(({ eventCode, eventName, category, races }) => {
-    // フィルタ適用
-    if (!matchesFilter(category, races)) return;
-
     // レースをrace_no昇順にソート
     races.sort((a, b) => a.race_no - b.race_no);
 
@@ -446,7 +440,6 @@ function renderToggleView() {
  */
 function renderRaceBlock(race) {
   const result = resultsCache[race.race_no];
-  const roundName = CONFIG.ROUND_NAMES[race.round] || race.round;
   const dateStr = formatDate(race.date);
   const ageLabel = (usedProps.hasAgeGroup && race.age_group) ? `<span class="age-group">(${race.age_group})</span>` : '';
 
@@ -521,8 +514,6 @@ function renderResultTable(race, result) {
   const entryMap = {};
   (race.entries || []).forEach(e => { entryMap[e.lane] = e; });
 
-  const showCategoryCol = false;
-
   // エントリーにあるが結果にないレーン → 棄権（DNS）として追加
   const resultsList = result?.results || [];
   const resultLanes = new Set(resultsList.map(r => r.lane));
@@ -545,32 +536,6 @@ function renderResultTable(race, result) {
       tieGroupCounts[r.tie_group] = (tieGroupCounts[r.tie_group] || 0) + 1;
     }
   });
-
-  // 複数カテゴリー合同レースのカテゴリー内順位を計算
-  // エントリーのcategoryをもとに、完走者をカテゴリーごとにグループ化して順位付け
-  const rankInCategoryMap = {};
-  if (showCategoryCol) {
-    const finishedByCategory = {};
-    sorted.forEach(r => {
-      if (r.status !== 'finish') return;
-      const cat = (entryMap[r.lane] || {}).category || '';
-      if (!cat) return;
-      if (!finishedByCategory[cat]) finishedByCategory[cat] = [];
-      finishedByCategory[cat].push(r);
-    });
-    Object.entries(finishedByCategory).forEach(([cat, rows]) => {
-      // すでにfinishタイム順にソート済み
-      let catRank = 1;
-      rows.forEach((r, i) => {
-        if (i > 0) {
-          const prev = rows[i - 1];
-          const isTied = r.tie_group && r.tie_group === prev.tie_group;
-          if (!isTied) catRank = i + 1;
-        }
-        rankInCategoryMap[r.lane] = catRank;
-      });
-    });
-  }
 
   // エントリーのないレーン（所属・クルー未登録）は表示しない
   const validSorted = sorted.filter(r => {
@@ -606,12 +571,10 @@ function renderResultTable(race, result) {
 
     // カテゴリー列（全レース常時表示・アルファベット1文字）
     const cat = entry.category || '';
-    const catRank = showCategoryCol ? rankInCategoryMap[r.lane] : null;
-    const catRankStr = (showCategoryCol && !isDns && !isDnf && catRank) ? `<span class="cat-rank">${catRank}位</span>` : '';
-    const categoryCell = `<td class="cat-col"><span class="entry-category">${cat || '-'}</span>${catRankStr}</td>`;
+    const categoryCell = `<td class="cat-col"><span class="entry-category">${cat || '-'}</span></td>`;
 
     // エントリー個別のage_groupがある場合（後方互換）はクルー名横に表示
-    const entryAgeLabel = (!showCategoryCol && entry.age_group)
+    const entryAgeLabel = entry.age_group
       ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
 
     const affiliationSub = entry.affiliation
@@ -888,31 +851,6 @@ function renderTableView() {
         if (r.tie_group) tieGroupCounts[r.tie_group] = (tieGroupCounts[r.tie_group] || 0) + 1;
       });
 
-      const isMultiCat = false;
-
-      // カテゴリー内順位を計算
-      const catRankMap = {};
-      if (isMultiCat) {
-        const finishedByCat = {};
-        allResults.forEach(r => {
-          if (r.status !== 'finish') return;
-          const cat = (entryMap[r.lane] || {}).category || '';
-          if (!cat) return;
-          if (!finishedByCat[cat]) finishedByCat[cat] = [];
-          finishedByCat[cat].push(r);
-        });
-        Object.entries(finishedByCat).forEach(([, rows]) => {
-          let cr = 1;
-          rows.forEach((r, i) => {
-            if (i > 0) {
-              const isTied = r.tie_group && r.tie_group === rows[i - 1].tie_group;
-              if (!isTied) cr = i + 1;
-            }
-            catRankMap[r.lane] = cr;
-          });
-        });
-      }
-
       tableBody = allResults.filter(r => {
         const e = entryMap[r.lane] || {};
         return e.crew_name || e.affiliation;
@@ -934,12 +872,10 @@ function renderTableView() {
           rankCell = `<span class="rank rank-${r.rank}">${r.rank}${isTie ? '=' : ''}</span>`;
           timesCell = `<span class="time-main">${r.finish ? r.finish.formatted : '-'}</span>${sub500}`;
         }
-        const entryAgeLabel = (!isMultiCat && entry.age_group) ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
+        const entryAgeLabel = entry.age_group ? `<span class="entry-age-group">${h(entry.age_group)}</span>` : '';
         const catCell = (() => {
           const cat = entry.category || '';
-          const cr = isMultiCat ? catRankMap[r.lane] : null;
-          const crStr = (isMultiCat && !isDns && !isDnf && cr) ? `<span class="cat-rank">${cr}位</span>` : '';
-          return `<td class="cat-col"><span class="entry-category">${cat || '-'}</span>${crStr}</td>`;
+          return `<td class="cat-col"><span class="entry-category">${cat || '-'}</span></td>`;
         })();
         const affiliationSub = entry.affiliation
           ? `<div class="crew-affiliation-sub">${h(entry.affiliation)}</div>` : '';
@@ -998,17 +934,9 @@ function renderTableView() {
   }).join('');
 
   container.innerHTML = html;
-  updateDbTableCount();
 }
 
 // ========= テーブルビューのソート =========
-
-/**
- * テーブルヘッダーをクリックしたときにソートする
- */
-function sortDbTable(thEl) {
-  // 全レース一覧はトグル形式のため、ソートは無効
-}
 
 // ========= 固定検索バー =========
 
@@ -1141,13 +1069,6 @@ function updateFilterCount() {
   } else if (noResult) {
     noResult.style.display = 'none';
   }
-}
-
-/**
- * テーブルビューの件数ラベルを更新する
- */
-function updateDbTableCount() {
-  // 非表示のため何もしない
 }
 
 // ========= 全展開・全折畳 =========
@@ -1362,10 +1283,6 @@ function setupRefreshTimer() {
  * オンライン/オフラインイベントを監視してステータスバーに反映する
  */
 function setupOfflineDetection() {
-  // 重複登録防止
-  if (window.__offlineListenerAdded) return;
-  window.__offlineListenerAdded = true;
-
   window.addEventListener('offline', () => {
     isOffline = true;
     updateOfflineStatus();
@@ -1469,13 +1386,6 @@ function groupByEventCode(schedule) {
 }
 
 /**
- * カテゴリとレース一覧がフィルタ条件に合うか判定する
- */
-function matchesFilter(category, races) {
-  return true; // 表示時にtoggle単位で制御するので常にtrue
-}
-
-/**
  * "07:00" → "7:00" に変換（先頭ゼロを除去）
  * スケジュールビューやレースヘッダーで使用する
  */
@@ -1522,23 +1432,6 @@ function detectUsedProps() {
     hasCategories:  schedule.some(r => r.categories && r.categories.length > 1),
     hasAgeCategories: !!(masterData.age_categories && masterData.age_categories.length > 0),
   };
-}
-
-/**
- * ミリ秒を "M:SS.cc" 形式（センチ秒2桁）にフォーマットする
- * 例: 112834 → "1:52.83"
- * JSONのformattedが正しく生成されている場合は不要だが、
- * 将来的にms→表示変換が必要になった場合のためのユーティリティ
- * @param {number} ms
- * @returns {string}
- */
-function formatTime(ms) {
-  const totalCentiseconds = Math.floor(ms / 10);
-  const centiseconds = totalCentiseconds % 100;
-  const totalSeconds = Math.floor(totalCentiseconds / 100);
-  const seconds = totalSeconds % 60;
-  const minutes = Math.floor(totalSeconds / 60);
-  return minutes + ':' + String(seconds).padStart(2, '0') + '.' + String(centiseconds).padStart(2, '0');
 }
 
 /**
