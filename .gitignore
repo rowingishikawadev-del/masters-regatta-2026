@@ -2,6 +2,7 @@
 .env
 *.env
 gas/secrets.json
+tournament.config.json
 
 # macOS
 .DS_Store

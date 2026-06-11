@@ -1,0 +1,33 @@
+{
+  "_spec": "tournament.config.json — SPEC §5 (docs/SPEC_phase3_config.md v1.1). このファイルは .gitignore 対象。example は tournament.config.example.json を参照。",
+  "tournament": {
+    "id": "",
+    "name": "",
+    "venue": "",
+    "dates": []
+  },
+  "default_course": {
+    "length_m": 1000,
+    "measurement_points": [500, 1000]
+  },
+  "categories": ["M", "W", "X"],
+  "brand": {
+    "primary_color": "",
+    "accent_color": "",
+    "font_family": "Noto Sans JP, sans-serif"
+  },
+  "deploy": {
+    "github_repo": "",
+    "pages_url": "",
+    "test_pages_url": ""
+  },
+  "gas": {
+    "pdf_template_sheet_id": "",
+    "pdf_output_folder_id": "",
+    "pdf_archive_folder_id": "",
+    "booklet_folder_id": "",
+    "booklet_template_gid": "",
+    "judge_template_sheet_id": "",
+    "prep_folder_id": ""
+  }
+}

@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
+import argparse
 import csv
 import re
+import shutil
 import subprocess
+import sys
 import unicodedata
 from collections import OrderedDict, defaultdict
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PDFS = [
-    Path("/Users/ryuiyamada/Downloads/2026masters_schedule0511a (2).pdf"),
-    Path("/Users/ryuiyamada/Downloads/2026masters_schedule0507b (1).pdf"),
-]
-SCHEDULE_CSV = ROOT / "tools" / "schedule.csv"
-ENTRIES_CSV = ROOT / "tools" / "entries.csv"
 
 EVENT_CODE_SUFFIX = {
     "シングルスカル": "1X",
@@ -64,6 +61,19 @@ def event_code(event_name):
         if event_name.endswith(suffix_name):
             return category + code_suffix
     return ""
+
+
+def check_pdftotext():
+    """pdftotext が使えるか確認する。なければ分かりやすいエラーを出す。"""
+    if shutil.which("pdftotext") is None:
+        print(
+            "[ERROR] pdftotext が見つかりません。\n"
+            "  macOS: brew install poppler\n"
+            "  Ubuntu/Debian: sudo apt install poppler-utils\n"
+            "  Windows: https://github.com/oschwartz10612/poppler-windows を参照",
+            file=sys.stderr,
+        )
+        sys.exit(1)
 
 
 def extract_pdf_text(pdf_path):
@@ -166,24 +176,72 @@ def write_csv(path, fieldnames, rows):
         writer.writerows(rows)
 
 
-def main():
-    missing = [str(path) for path in PDFS if not path.exists()]
-    if missing:
-        raise FileNotFoundError("Missing PDF input(s): " + ", ".join(missing))
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="JARA公式PDFからスケジュール・エントリーCSVを生成する",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "例:\n"
+            "  python3 tools/build_csv_from_pdf.py \\\n"
+            "    --schedule-pdf ~/Downloads/schedule_a.pdf ~/Downloads/schedule_b.pdf\n"
+            "\n"
+            "  python3 tools/build_csv_from_pdf.py \\\n"
+            "    --schedule-pdf schedule.pdf \\\n"
+            "    --out-dir /tmp/output\n"
+        ),
+    )
+    parser.add_argument(
+        "--schedule-pdf",
+        nargs="+",
+        required=True,
+        metavar="PDF",
+        help="処理対象の PDF ファイルパス（複数指定可）",
+    )
+    parser.add_argument(
+        "--out-dir",
+        default=None,
+        metavar="DIR",
+        help="出力先ディレクトリ（省略時: tools/ 直下）",
+    )
+    return parser.parse_args()
 
-    entry_rows = parse_pdfs(PDFS)
+
+def main():
+    args = parse_args()
+
+    check_pdftotext()
+
+    pdf_paths = [Path(p) for p in args.schedule_pdf]
+    missing = [str(p) for p in pdf_paths if not p.exists()]
+    if missing:
+        print(
+            "[ERROR] 以下の PDF が見つかりません:\n" + "\n".join(f"  {m}" for m in missing),
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    out_dir = Path(args.out_dir) if args.out_dir else ROOT / "tools"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    schedule_csv = out_dir / "schedule.csv"
+    entries_csv = out_dir / "entries.csv"
+
+    entry_rows = parse_pdfs(pdf_paths)
     schedule, entries = build_outputs(entry_rows)
 
     write_csv(
-        SCHEDULE_CSV,
+        schedule_csv,
         ["race_no", "event_code", "event_name", "category", "age_group", "round", "date", "time", "course_length"],
         schedule,
     )
     write_csv(
-        ENTRIES_CSV,
+        entries_csv,
         ["race_no", "lane", "crew_name", "affiliation", "category"],
         entries,
     )
+
+    print(f"schedule.csv -> {schedule_csv}  ({len(schedule)} レース)")
+    print(f"entries.csv  -> {entries_csv}  ({len(entries)} エントリー)")
 
 
 if __name__ == "__main__":

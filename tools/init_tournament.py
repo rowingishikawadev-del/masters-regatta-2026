@@ -3,14 +3,18 @@
 新大会セットアップツール — 大会ごとに使い回せる対話式セットアップスクリプト
 
 使い方:
-  python3 tools/init_tournament.py
+  python3 tools/init_tournament.py                        # 対話式（tournament.config.json + CSV テンプレ生成）
+  python3 tools/init_tournament.py --non-interactive      # 全デフォルト値で出力
+  python3 tools/init_tournament.py --out /tmp/out.json   # 出力先を指定
+  python3 tools/init_tournament.py --non-interactive --out /tmp/out.json
 
-実行すると対話式で大会情報を入力し、以下を生成する:
-  - data/master.json          : tournament情報のみ（scheduleは空配列）
+生成ファイル:
+  - tournament.config.json       : SPEC §5 準拠の大会設定（--out で変更可）
   - master/schedule_template.csv : スケジュール入力用テンプレート
   - master/entries_template.csv  : エントリー入力用テンプレート
 """
 
+import argparse
 import json
 import os
 import shutil
@@ -25,22 +29,75 @@ PROJECT_DIR = TOOLS_DIR.parent
 sys.path.insert(0, str(TOOLS_DIR))
 from common import C
 
-# 出力先パス
-MASTER_JSON_PATH       = PROJECT_DIR / "data"   / "master.json"
+# デフォルト出力先
+DEFAULT_CONFIG_PATH    = PROJECT_DIR / "tournament.config.json"
 MASTER_DIR             = PROJECT_DIR / "master"
 SCHEDULE_TEMPLATE_PATH = MASTER_DIR  / "schedule_template.csv"
 ENTRIES_TEMPLATE_PATH  = MASTER_DIR  / "entries_template.csv"
 
-# テンプレートCSVコピー元（tools/ 直下にサンプルがある場合はそちらを優先）
+# テンプレートCSVコピー元
 SCHEDULE_SAMPLE = PROJECT_DIR / "test" / "csv" / "schedule_sample.csv"
 ENTRIES_SAMPLE  = PROJECT_DIR / "test" / "csv" / "entries_sample.csv"
 
 
+# ---------------------------------------------------------------------------
+# ウィザード質問一覧（SPEC §5 全フィールド対応）
+# ---------------------------------------------------------------------------
+# 大会情報 (tournament)
+#   Q01: tournament.id        例: 2026-masters
+#   Q02: tournament.name      例: 第17回全日本マスターズレガッタ
+#   Q03: tournament.venue     例: 石川県津幡漕艇競技場
+#   Q04: tournament.dates     例: 2026-05-23,2026-05-24
+# コース設定 (default_course)
+#   Q05: default_course.length_m              例: 1000
+#   Q06: default_course.measurement_points   例: 500,1000
+# カテゴリ (categories)
+#   Q07: categories           例: M,W,X
+# ブランド (brand)
+#   Q08: brand.primary_color  例: #2D4F2C
+#   Q09: brand.accent_color   例: #C9A227
+#   Q10: brand.font_family    例: Noto Sans JP, sans-serif
+# デプロイ (deploy)
+#   Q11: deploy.github_repo   例: owner/repo （空可）
+#   Q12: deploy.pages_url     例: https://xxx.pages.dev （空可）
+#   Q13: deploy.test_pages_url 例: https://test.pages.dev （空可）
+# GAS設定 (gas) — 全て空可
+#   Q14: gas.pdf_template_sheet_id
+#   Q15: gas.pdf_output_folder_id
+#   Q16: gas.pdf_archive_folder_id
+#   Q17: gas.booklet_folder_id
+#   Q18: gas.booklet_template_gid
+#   Q19: gas.judge_template_sheet_id
+#   Q20: gas.prep_folder_id
+# ---------------------------------------------------------------------------
+
+DEFAULTS = {
+    "tournament_id":              "2026-masters",
+    "tournament_name":            "第17回全日本マスターズレガッタ",
+    "tournament_venue":           "石川県津幡漕艇競技場",
+    "tournament_dates":           "2026-05-23,2026-05-24",
+    "course_length_m":            "1000",
+    "measurement_points":         "500,1000",
+    "categories":                 "M,W,X",
+    "brand_primary_color":        "#2D4F2C",
+    "brand_accent_color":         "#C9A227",
+    "brand_font_family":          "Noto Sans JP, sans-serif",
+    "deploy_github_repo":         "",
+    "deploy_pages_url":           "",
+    "deploy_test_pages_url":      "",
+    "gas_pdf_template_sheet_id":  "",
+    "gas_pdf_output_folder_id":   "",
+    "gas_pdf_archive_folder_id":  "",
+    "gas_booklet_folder_id":      "",
+    "gas_booklet_template_gid":   "",
+    "gas_judge_template_sheet_id": "",
+    "gas_prep_folder_id":         "",
+}
+
+
 def prompt(label: str, default: str) -> str:
-    """
-    ユーザーに入力を促し、Enterのみで default を返す。
-    """
-    display_default = f" [{default}]" if default else ""
+    """ユーザーに入力を促し、Enterのみで default を返す。"""
+    display_default = f" [{default}]" if default else " (空欄可)"
     try:
         value = input(f"{label}{display_default}: ").strip()
     except (EOFError, KeyboardInterrupt):
@@ -50,10 +107,7 @@ def prompt(label: str, default: str) -> str:
 
 
 def confirm(label: str, default_yes: bool = True) -> bool:
-    """
-    Y/n または y/N で確認。
-    default_yes=True のとき Enter → Yes。
-    """
+    """Y/n または y/N で確認。"""
     hint = "[Y/n]" if default_yes else "[y/N]"
     try:
         answer = input(f"{label} {hint}: ").strip().lower()
@@ -65,42 +119,126 @@ def confirm(label: str, default_yes: bool = True) -> bool:
     return answer in ("y", "yes")
 
 
-def write_master_json(
-    name: str,
-    dates: list[str],
-    venue: str,
-    course_length: int,
-    measurement_points: list[str],
-    youtube_url: str,
-) -> None:
-    """
-    tournament 情報のみ書き込んだ master.json を生成する。
-    schedule は空配列で初期化する。
-    """
-    master = {
+def collect_answers(non_interactive: bool) -> dict:
+    """非対話モードはデフォルトをそのまま返す。対話モードは質問を順番に聞く。"""
+    if non_interactive:
+        return dict(DEFAULTS)
+
+    ans = {}
+    D = DEFAULTS
+
+    print(f"\n{C.BOLD}{C.CYAN}=== 大会設定ウィザード (SPEC §5) ==={C.RESET}")
+    print("Enter のみでデフォルト値を採用します。空欄可のフィールドはそのまま Enter でOK。\n")
+
+    print(f"{C.BOLD}▶ 大会情報{C.RESET}")
+    ans["tournament_id"]    = prompt("Q01 大会ID (英数ハイフン)", D["tournament_id"])
+    ans["tournament_name"]  = prompt("Q02 大会名", D["tournament_name"])
+    ans["tournament_venue"] = prompt("Q03 会場", D["tournament_venue"])
+    ans["tournament_dates"] = prompt("Q04 開催日 (YYYY-MM-DD カンマ区切り)", D["tournament_dates"])
+
+    print(f"\n{C.BOLD}▶ コース設定{C.RESET}")
+    ans["course_length_m"]       = prompt("Q05 コース距離 (m)", D["course_length_m"])
+    ans["measurement_points"]    = prompt("Q06 計測ポイント (m カンマ区切り・昇順)", D["measurement_points"])
+
+    print(f"\n{C.BOLD}▶ カテゴリ{C.RESET}")
+    ans["categories"] = prompt("Q07 カテゴリ (カンマ区切り)", D["categories"])
+
+    print(f"\n{C.BOLD}▶ ブランド設定{C.RESET}")
+    ans["brand_primary_color"] = prompt("Q08 メインカラー (HEX)", D["brand_primary_color"])
+    ans["brand_accent_color"]  = prompt("Q09 アクセントカラー (HEX)", D["brand_accent_color"])
+    ans["brand_font_family"]   = prompt("Q10 フォントファミリー", D["brand_font_family"])
+
+    print(f"\n{C.BOLD}▶ デプロイ設定 (空欄可){C.RESET}")
+    ans["deploy_github_repo"]     = prompt("Q11 GitHub リポジトリ (owner/repo)", D["deploy_github_repo"])
+    ans["deploy_pages_url"]       = prompt("Q12 本番 Pages URL", D["deploy_pages_url"])
+    ans["deploy_test_pages_url"]  = prompt("Q13 テスト Pages URL", D["deploy_test_pages_url"])
+
+    print(f"\n{C.BOLD}▶ GAS 設定 (全て空欄可 — 実行後に Script Properties へ投入){C.RESET}")
+    print("  ※ pdf_publisher / judge_form_publisher の Google Drive / Sheets ID を入力してください")
+    ans["gas_pdf_template_sheet_id"]   = prompt("Q14 pdf_template_sheet_id", D["gas_pdf_template_sheet_id"])
+    ans["gas_pdf_output_folder_id"]    = prompt("Q15 pdf_output_folder_id", D["gas_pdf_output_folder_id"])
+    ans["gas_pdf_archive_folder_id"]   = prompt("Q16 pdf_archive_folder_id", D["gas_pdf_archive_folder_id"])
+    ans["gas_booklet_folder_id"]       = prompt("Q17 booklet_folder_id", D["gas_booklet_folder_id"])
+    ans["gas_booklet_template_gid"]    = prompt("Q18 booklet_template_gid", D["gas_booklet_template_gid"])
+    ans["gas_judge_template_sheet_id"] = prompt("Q19 judge_template_sheet_id", D["gas_judge_template_sheet_id"])
+    ans["gas_prep_folder_id"]          = prompt("Q20 prep_folder_id", D["gas_prep_folder_id"])
+
+    return ans
+
+
+def build_config(ans: dict) -> dict:
+    """回答を SPEC §5 スキーマに変換する。"""
+    dates = [d.strip() for d in ans["tournament_dates"].split(",") if d.strip()]
+    measurement_points_raw = [p.strip() for p in ans["measurement_points"].split(",") if p.strip()]
+    try:
+        measurement_points = [int(p) for p in measurement_points_raw]
+    except ValueError:
+        print(
+            f"{C.RED}[ERROR]{C.RESET} 計測ポイントは整数で入力してください: {ans['measurement_points']!r}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    try:
+        length_m = int(ans["course_length_m"].strip())
+    except ValueError:
+        print(
+            f"{C.RED}[ERROR]{C.RESET} コース距離は整数で入力してください: {ans['course_length_m']!r}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    categories = [c.strip() for c in ans["categories"].split(",") if c.strip()]
+
+    return {
+        "_spec": "tournament.config.json — SPEC §5 (docs/SPEC_phase3_config.md v1.1). このファイルは .gitignore 対象。example は tournament.config.example.json を参照。",
         "tournament": {
-            "name":          name,
-            "dates":         dates,
-            "venue":         venue,
-            "course_length": course_length,
-            "youtube_url":   youtube_url,
+            "id":    ans["tournament_id"],
+            "name":  ans["tournament_name"],
+            "venue": ans["tournament_venue"],
+            "dates": dates,
         },
-        "measurement_points": measurement_points,
-        "schedule": [],
+        "default_course": {
+            "length_m":            length_m,
+            "measurement_points":  measurement_points,
+        },
+        "categories": categories,
+        "brand": {
+            "primary_color": ans["brand_primary_color"],
+            "accent_color":  ans["brand_accent_color"],
+            "font_family":   ans["brand_font_family"],
+        },
+        "deploy": {
+            "github_repo":    ans["deploy_github_repo"],
+            "pages_url":      ans["deploy_pages_url"],
+            "test_pages_url": ans["deploy_test_pages_url"],
+        },
+        "gas": {
+            "pdf_template_sheet_id":   ans["gas_pdf_template_sheet_id"],
+            "pdf_output_folder_id":    ans["gas_pdf_output_folder_id"],
+            "pdf_archive_folder_id":   ans["gas_pdf_archive_folder_id"],
+            "booklet_folder_id":       ans["gas_booklet_folder_id"],
+            "booklet_template_gid":    ans["gas_booklet_template_gid"],
+            "judge_template_sheet_id": ans["gas_judge_template_sheet_id"],
+            "prep_folder_id":          ans["gas_prep_folder_id"],
+        },
     }
-    MASTER_JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
-    json_str = json.dumps(master, ensure_ascii=False, indent=2) + "\n"
-    MASTER_JSON_PATH.write_text(json_str, encoding="utf-8")
-    print(f"  {C.GREEN}→ {MASTER_JSON_PATH.relative_to(PROJECT_DIR)} を生成しました{C.RESET}")
+
+
+def write_config(config: dict, out_path: Path) -> None:
+    """tournament.config.json を書き出す。"""
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    json_str = json.dumps(config, ensure_ascii=False, indent=2) + "\n"
+    out_path.write_text(json_str, encoding="utf-8")
+    try:
+        rel = out_path.relative_to(PROJECT_DIR)
+    except ValueError:
+        rel = out_path
+    print(f"  {C.GREEN}→ {rel} を生成しました{C.RESET}")
 
 
 def write_schedule_template() -> None:
-    """
-    スケジュール入力用テンプレートCSVを master/ フォルダに出力する。
-    test/csv/schedule_sample.csv が存在する場合はコメントヘッダーを付けてコピーする。
-    """
     MASTER_DIR.mkdir(parents=True, exist_ok=True)
-
     comment_header = (
         "# レーススケジュール テンプレート\n"
         "# 列の説明:\n"
@@ -113,30 +251,21 @@ def write_schedule_template() -> None:
         "#   date      : 開催日（YYYY-MM-DD形式）\n"
         "#   time      : 発艇時刻（HH:MM形式）\n"
     )
-
     if SCHEDULE_SAMPLE.is_file():
-        # サンプルCSVを読み込んでコメントヘッダーを付与して出力
         sample_body = SCHEDULE_SAMPLE.read_text(encoding="utf-8")
         SCHEDULE_TEMPLATE_PATH.write_text(comment_header + sample_body, encoding="utf-8")
     else:
-        # サンプルがない場合は最小限のテンプレートを生成
         body = (
             "race_no,event_code,event_name,category,age_group,round,date,time\n"
             "1,M_1X,男子シングルスカル,M,G,FA,2025-06-07,07:00\n"
             "2,W_1X,女子シングルスカル,W,G,FA,2025-06-07,07:08\n"
         )
         SCHEDULE_TEMPLATE_PATH.write_text(comment_header + body, encoding="utf-8")
-
     print(f"  {C.GREEN}→ {SCHEDULE_TEMPLATE_PATH.relative_to(PROJECT_DIR)} を出力しました{C.RESET}")
 
 
 def write_entries_template() -> None:
-    """
-    エントリー入力用テンプレートCSVを master/ フォルダに出力する。
-    test/csv/entries_sample.csv が存在する場合はコメントヘッダーを付けてコピーする。
-    """
     MASTER_DIR.mkdir(parents=True, exist_ok=True)
-
     comment_header = (
         "# エントリー情報 テンプレート\n"
         "# 列の説明:\n"
@@ -145,7 +274,6 @@ def write_entries_template() -> None:
         "#   crew_name  : クルー名（シングル=選手名、ペア以上=「選手A / 選手B」形式）\n"
         "#   affiliation: 所属（チーム名・学校名等）\n"
     )
-
     if ENTRIES_SAMPLE.is_file():
         sample_body = ENTRIES_SAMPLE.read_text(encoding="utf-8")
         ENTRIES_TEMPLATE_PATH.write_text(comment_header + sample_body, encoding="utf-8")
@@ -158,79 +286,88 @@ def write_entries_template() -> None:
             "2,1,選手名D,所属クラブA\n"
         )
         ENTRIES_TEMPLATE_PATH.write_text(comment_header + body, encoding="utf-8")
-
     print(f"  {C.GREEN}→ {ENTRIES_TEMPLATE_PATH.relative_to(PROJECT_DIR)} を出力しました{C.RESET}")
 
 
-def show_next_steps() -> None:
-    """セットアップ完了後の次のステップを表示する。"""
-    print(f"\n{C.BOLD}{C.GREEN}=== セットアップ完了 ==={C.RESET}")
-    print()
+def show_next_steps(config_path: Path) -> None:
+    print(f"\n{C.BOLD}{C.GREEN}=== セットアップ完了 ==={C.RESET}\n")
     print("次のステップ:")
-    print("1. 以下のファイルを編集してエントリーを入力してください:")
+    print(f"1. {C.CYAN}{config_path}{C.RESET} を確認・編集")
+    print()
+    print("2. 以下のファイルを編集してエントリーを入力:")
     print(f"   {C.CYAN}master/schedule_template.csv{C.RESET}  ← レーススケジュール")
     print(f"   {C.CYAN}master/entries_template.csv{C.RESET}   ← エントリー情報")
     print()
-    print("2. 入力後、以下のコマンドで master.json を生成:")
+    print("3. 入力後、master.json を生成:")
     print(f"   {C.YELLOW}python3 tools/generate_master.py \\")
     print(f"     --schedule master/schedule_template.csv \\")
     print(f"     --entries  master/entries_template.csv  \\")
     print(f"     --output   data/master.json -y{C.RESET}")
     print()
-    print("3. または Google Drive にアップして GAS の importMasterData() を実行")
+    print("4. GAS Script Properties への投入:")
+    print(f"   {C.YELLOW}# tournament.config.json の gas セクションを setupFromConfig() に貼り付ける{C.RESET}")
     print()
-    print("4. 確認:")
+    print("5. GitHub Repository Variables を設定:")
+    print(f"   {C.YELLOW}TOURNAMENT_START={C.RESET} (大会初日 YYYY-MM-DD)")
+    print(f"   {C.YELLOW}TOURNAMENT_END  ={C.RESET} (大会翌日 YYYY-MM-DD)")
+    print()
+    print("6. 確認:")
     print(f"   {C.YELLOW}python3 tools/check_status.py{C.RESET}")
     print()
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="tournament.config.json 生成ウィザード (SPEC §5)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "例:\n"
+            "  python3 tools/init_tournament.py\n"
+            "  python3 tools/init_tournament.py --non-interactive\n"
+            "  python3 tools/init_tournament.py --non-interactive --out /tmp/tournament.config.json\n"
+        ),
+    )
+    parser.add_argument(
+        "--non-interactive",
+        action="store_true",
+        help="対話をスキップして全フィールドをデフォルト値で出力",
+    )
+    parser.add_argument(
+        "--out",
+        default=None,
+        metavar="FILE",
+        help=f"tournament.config.json の出力先 (省略時: {DEFAULT_CONFIG_PATH})",
+    )
+    parser.add_argument(
+        "--no-csv",
+        action="store_true",
+        help="テンプレートCSVを生成しない",
+    )
+    return parser.parse_args()
+
+
 def main() -> int:
-    print(f"\n{C.BOLD}{C.CYAN}=== 新大会セットアップ ==={C.RESET}\n")
+    args = parse_args()
 
-    # ---- 大会情報の入力 --------------------------------------------------------
-    name             = prompt("大会名",               "第16回全日本マスターズレガッタ")
-    dates_str        = prompt("開催日（カンマ区切り）", "2025-06-07,2025-06-08")
-    venue            = prompt("会場",                 "長野・下諏訪ボートコース 1000m")
-    course_len_str   = prompt("コース距離（m）",       "1000")
-    points_str       = prompt("計測ポイント（カンマ区切り）", "500m,1000m")
-    youtube_url      = prompt("YouTube Live URL（なければ空欄）", "")
+    config_path = Path(args.out) if args.out else DEFAULT_CONFIG_PATH
 
-    # 入力値のパース
-    dates              = [d.strip() for d in dates_str.split(",")  if d.strip()]
-    measurement_points = [p.strip() for p in points_str.split(",") if p.strip()]
-    try:
-        course_length = int(course_len_str.strip())
-    except ValueError:
-        print(f"{C.RED}[ERROR]{C.RESET} コース距離は整数で入力してください: {course_len_str!r}")
-        return 1
+    ans = collect_answers(non_interactive=args.non_interactive)
+    config = build_config(ans)
 
     print()
+    write_config(config, config_path)
 
-    # ---- master.json 生成確認 ---------------------------------------------------
-    do_master = confirm("→ data/master.json を生成しますか？", default_yes=True)
-
-    # ---- テンプレートCSVコピー確認 ---------------------------------------------
-    do_template = confirm("→ テンプレートCSVをコピーしますか？", default_yes=True)
-
-    print()
-
-    # ---- 処理実行 ---------------------------------------------------------------
-    if do_master:
-        write_master_json(
-            name               = name,
-            dates              = dates,
-            venue              = venue,
-            course_length      = course_length,
-            measurement_points = measurement_points,
-            youtube_url        = youtube_url,
-        )
-
-    if do_template:
+    if not args.no_csv and not args.non_interactive:
+        do_template = confirm("→ テンプレートCSVをコピーしますか？", default_yes=True)
+        if do_template:
+            write_schedule_template()
+            write_entries_template()
+    elif not args.no_csv and args.non_interactive:
+        # non-interactive モードでは CSV も自動生成
         write_schedule_template()
         write_entries_template()
 
-    # ---- 次のステップ表示 -------------------------------------------------------
-    show_next_steps()
+    show_next_steps(config_path)
     return 0
 
 

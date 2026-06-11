@@ -49,8 +49,17 @@ jobs:
 
           now_ts=$(date +%s)
           now_jst=$(TZ=Asia/Tokyo date '+%Y/%m/%d %H:%M:%S JST')
-          period_start_ts=$(TZ=Asia/Tokyo date -d '2026-05-22 12:00:00' +%s)
-          period_end_ts=$(TZ=Asia/Tokyo date -d '2026-05-25 00:00:00' +%s)
+
+          TOURNAMENT_START="${{ vars.TOURNAMENT_START }}"
+          TOURNAMENT_END="${{ vars.TOURNAMENT_END }}"
+
+          if [ -z "$TOURNAMENT_START" ] || [ -z "$TOURNAMENT_END" ]; then
+            echo "TOURNAMENT_START / TOURNAMENT_END が未設定のため監視をスキップします"
+            exit 0
+          fi
+
+          period_start_ts=$(TZ=Asia/Tokyo date -d "${TOURNAMENT_START} 12:00:00" +%s)
+          period_end_ts=$(TZ=Asia/Tokyo date -d "${TOURNAMENT_END} 00:00:00" +%s)
 
           if [ "$now_ts" -ge "$period_start_ts" ] && [ "$now_ts" -lt "$period_end_ts" ]; then
             threshold_minutes=15
