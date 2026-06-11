@@ -28,6 +28,7 @@ PROJECT_DIR = TOOLS_DIR.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
 import simulate_pipeline as pipeline
+from common import C
 
 # ---------------------------------------------------------------------------
 # 定数
@@ -50,19 +51,6 @@ OUTPUT_DIR = PROJECT_DIR / "data" / "results"
 
 # デフォルト計測ポイント（カンマ区切り文字列）
 DEFAULT_POINTS = "500m,1000m"
-
-# ---------------------------------------------------------------------------
-# ANSIカラー定義（colorama不要）
-# ---------------------------------------------------------------------------
-class C:
-    RESET  = "\033[0m"
-    BOLD   = "\033[1m"
-    GREEN  = "\033[32m"
-    YELLOW = "\033[33m"
-    CYAN   = "\033[36m"
-    RED    = "\033[31m"
-    GRAY   = "\033[90m"
-    BLUE   = "\033[34m"
 
 
 def load_state() -> set:

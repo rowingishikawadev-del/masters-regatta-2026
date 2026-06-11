@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 import argparse
 import json
+import sys
 from copy import copy
 from datetime import datetime
 from pathlib import Path
 
 from openpyxl import load_workbook
 from openpyxl.styles import Alignment
+
+# tools/ 内から同ディレクトリの common を import
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import find_race as _find_race_common, format_race_datetime as _format_race_datetime_common
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,29 +51,11 @@ DUMMY_RESULTS = {
 
 
 def find_race(master, race_no):
-    for race in master["schedule"]:
-        if int(race["race_no"]) == race_no:
-            return race
-    raise ValueError(f"race_no {race_no} not found in {MASTER_JSON}")
+    return _find_race_common(master, race_no)
 
 
 def format_race_datetime(race):
-    date_text = str(race.get("date") or "").strip()
-    time_text = str(race.get("time") or "").strip()
-    try:
-        sep = "-" if "-" in date_text else "/"
-        parts = [int(p) for p in date_text.split(sep)]
-        if len(parts) == 3:
-            date_text = f"{parts[0]:04d}/{parts[1]:02d}/{parts[2]:02d}"
-    except ValueError:
-        pass
-    try:
-        parts = [int(p) for p in time_text.split(":")]
-        if len(parts) >= 2:
-            time_text = f"{parts[0]:02d}:{parts[1]:02d}"
-    except ValueError:
-        pass
-    return f"{date_text}　{time_text}".strip()
+    return _format_race_datetime_common(race.get("date"), race.get("time"))
 
 
 def copy_top_left_style(ws, source, targets):

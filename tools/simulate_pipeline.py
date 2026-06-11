@@ -31,25 +31,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
-# ---------------------------------------------------------------------------
-# ANSIカラー定義（colorama不要）
-# ---------------------------------------------------------------------------
-class C:
-    RESET  = "\033[0m"
-    BOLD   = "\033[1m"
-    GREEN  = "\033[32m"
-    YELLOW = "\033[33m"
-    CYAN   = "\033[36m"
-    RED    = "\033[31m"
-    GRAY   = "\033[90m"
-
-def log_info(msg: str)    -> None: print(f"{C.CYAN}[INFO]{C.RESET}  {msg}")
-def log_ok(msg: str)      -> None: print(f"{C.GREEN}[OK]{C.RESET}    {msg}")
-def log_warn(msg: str)    -> None: print(f"{C.YELLOW}[WARN]{C.RESET}  {msg}")
-def log_error(msg: str)   -> None: print(f"{C.RED}[ERROR]{C.RESET} {msg}", file=sys.stderr)
-def log_debug(msg: str)   -> None: print(f"{C.GRAY}[DEBUG]{C.RESET} {msg}")
-def log_section(msg: str) -> None: print(f"\n{C.BOLD}{C.CYAN}{'='*60}{C.RESET}")
-def log_title(msg: str)   -> None: print(f"{C.BOLD}{C.CYAN}  {msg}{C.RESET}\n{'='*60}{C.RESET}\n")
+# tools/ 内から同ディレクトリの common を import
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import C, log_info, log_ok, log_warn, log_error, log_debug, log_section, log_title, ms_to_formatted
 
 # ---------------------------------------------------------------------------
 # CSV ファイル名パース
@@ -74,17 +58,7 @@ def parse_csv_filename(filename: str):
 # タイム変換ユーティリティ
 # ---------------------------------------------------------------------------
 
-def ms_to_formatted(ms: int) -> str:
-    """
-    ミリ秒 → 'M:SS.ss' 形式。
-    例: 108220 → '1:48.22'
-    """
-    total_cs = ms // 10          # センチ秒（0.01秒単位）
-    centisec = total_cs % 100
-    total_sec = total_cs // 100
-    sec = total_sec % 60
-    minutes = total_sec // 60
-    return f"{minutes}:{sec:02d}.{centisec:02d}"
+# ms_to_formatted は common.py からインポート済み
 
 def parse_time_to_ms(time_str: str) -> Optional[int]:
     """

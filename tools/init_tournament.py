@@ -21,6 +21,10 @@ from pathlib import Path
 TOOLS_DIR   = Path(__file__).resolve().parent
 PROJECT_DIR = TOOLS_DIR.parent
 
+# tools/ 内から同ディレクトリの common を import
+sys.path.insert(0, str(TOOLS_DIR))
+from common import C
+
 # 出力先パス
 MASTER_JSON_PATH       = PROJECT_DIR / "data"   / "master.json"
 MASTER_DIR             = PROJECT_DIR / "master"
@@ -30,17 +34,6 @@ ENTRIES_TEMPLATE_PATH  = MASTER_DIR  / "entries_template.csv"
 # テンプレートCSVコピー元（tools/ 直下にサンプルがある場合はそちらを優先）
 SCHEDULE_SAMPLE = PROJECT_DIR / "test" / "csv" / "schedule_sample.csv"
 ENTRIES_SAMPLE  = PROJECT_DIR / "test" / "csv" / "entries_sample.csv"
-
-# ---------------------------------------------------------------------------
-# ANSIカラー定義（colorama不要）
-# ---------------------------------------------------------------------------
-class C:
-    RESET  = "\033[0m"
-    BOLD   = "\033[1m"
-    GREEN  = "\033[32m"
-    YELLOW = "\033[33m"
-    CYAN   = "\033[36m"
-    RED    = "\033[31m"
 
 
 def prompt(label: str, default: str) -> str:

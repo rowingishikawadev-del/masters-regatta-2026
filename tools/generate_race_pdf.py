@@ -4,9 +4,13 @@ import html
 import json
 import re
 import subprocess
+import sys
 from datetime import datetime
 from pathlib import Path
 
+# tools/ 内から同ディレクトリの common を import
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import find_race as _find_race_common, format_race_datetime as _format_race_datetime_common
 
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_PATH = ROOT / "print_templates" / "race_record_template.html"
@@ -51,10 +55,10 @@ def load_json(path):
 
 
 def find_race(master, race_no):
-    for race in master.get("schedule", []):
-        if int(race.get("race_no", -1)) == race_no:
-            return race
-    raise SystemExit(f"race_no {race_no} not found in data/master.json")
+    try:
+        return _find_race_common(master, race_no)
+    except ValueError as e:
+        raise SystemExit(str(e))
 
 
 def load_results(race_no):
@@ -67,21 +71,7 @@ def load_results(race_no):
 
 
 def format_race_datetime(date_value, time_value):
-    date_text = str(date_value or "").strip()
-    time_text = str(time_value or "").strip()
-    try:
-        parts = [int(part) for part in date_text.split("/")]
-        if len(parts) == 3:
-            date_text = f"{parts[0]:04d}/{parts[1]:02d}/{parts[2]:02d}"
-    except ValueError:
-        pass
-    try:
-        parts = [int(part) for part in time_text.split(":")]
-        if len(parts) >= 2:
-            time_text = f"{parts[0]:02d}:{parts[1]:02d}"
-    except ValueError:
-        pass
-    return f"{date_text}\u3000{time_text}".strip()
+    return _format_race_datetime_common(date_value, time_value)
 
 
 def normalize_result(item, entries_by_lane):

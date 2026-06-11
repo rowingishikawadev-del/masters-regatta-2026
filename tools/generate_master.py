@@ -52,23 +52,9 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Optional
 
-# ---------------------------------------------------------------------------
-# ANSIカラー定義（colorama不要）
-# ---------------------------------------------------------------------------
-class C:
-    RESET  = "\033[0m"
-    BOLD   = "\033[1m"
-    GREEN  = "\033[32m"
-    YELLOW = "\033[33m"
-    CYAN   = "\033[36m"
-    RED    = "\033[31m"
-    GRAY   = "\033[90m"
-
-def log_info(msg: str)  -> None: print(f"{C.CYAN}[INFO]{C.RESET}  {msg}")
-def log_ok(msg: str)    -> None: print(f"{C.GREEN}[OK]{C.RESET}    {msg}")
-def log_warn(msg: str)  -> None: print(f"{C.YELLOW}[WARN]{C.RESET}  {msg}")
-def log_error(msg: str) -> None: print(f"{C.RED}[ERROR]{C.RESET} {msg}", file=sys.stderr)
-def log_debug(msg: str) -> None: print(f"{C.GRAY}[DEBUG]{C.RESET} {msg}")
+# tools/ 内から同ディレクトリの common を import
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import C, log_info, log_ok, log_warn, log_error, log_debug
 
 # ---------------------------------------------------------------------------
 # CSVユーティリティ

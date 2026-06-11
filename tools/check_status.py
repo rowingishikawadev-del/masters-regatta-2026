@@ -26,6 +26,10 @@ from typing import Optional, Tuple
 TOOLS_DIR   = Path(__file__).resolve().parent
 PROJECT_DIR = TOOLS_DIR.parent
 
+# tools/ 内から同ディレクトリの common を import
+sys.path.insert(0, str(TOOLS_DIR))
+from common import C, log_ok, log_warn, log_info
+
 # ---------------------------------------------------------------------------
 # 定数
 # ---------------------------------------------------------------------------
@@ -39,33 +43,9 @@ RESULTS_DIR = PROJECT_DIR / "data" / "results"
 # 「最近の更新」とみなす閾値（分）
 RECENT_THRESHOLD_MINUTES = 30
 
-# ---------------------------------------------------------------------------
-# ANSIカラー定義
-# ---------------------------------------------------------------------------
-class C:
-    RESET  = "\033[0m"
-    BOLD   = "\033[1m"
-    GREEN  = "\033[32m"
-    RED    = "\033[31m"
-    YELLOW = "\033[33m"
-    CYAN   = "\033[36m"
-    GRAY   = "\033[90m"
-
-
-def log_ok(msg: str) -> None:
-    print(f"{C.GREEN}[OK]{C.RESET}    {msg}")
-
-
-def log_warn(msg: str) -> None:
-    print(f"{C.YELLOW}[WARN]{C.RESET}  {msg}")
-
 
 def log_fail(msg: str) -> None:
     print(f"{C.RED}[FAIL]{C.RESET}  {C.RED}{msg}{C.RESET}")
-
-
-def log_info(msg: str) -> None:
-    print(f"{C.CYAN}[INFO]{C.RESET}  {msg}")
 
 
 def log_sub(msg: str) -> None:
