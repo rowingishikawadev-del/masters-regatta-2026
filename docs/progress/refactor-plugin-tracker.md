@@ -30,6 +30,12 @@ E-M1 CI向けconfig展開(Repo Variables) / E-M2 schema確定→3B着手 / E-M3 
 3. 未完了 Phase の先頭から再開。実装=Sonnet サブエージェント委譲、Fable はレビュー
 4. 各 Phase 末 Gate: e2e（`python3 test/e2e_test.py --skip-pipeline`、基準=252/254 PASS）+ レビュー + 表示確認
 
+## 全体設計監査（2026-06-12・社内提示前の最終品質確認）
+
+- 監査2本（機能実証・文書↔実装整合）で **Critical 8 / Major 17 / Minor 数件**を検出 → 修正4ジョブで全件解消
+- 最重要修正: 配信ルート site/ への全レイヤー統一（GAS書込先・CI・ツール・e2e・Pages手順）/ SETUP_GUIDE の創作プロパティ名を実コード準拠14種に是正 / 実名・実URL例示の完全フィクション化（grep 0件）
+- 最終状態: kit `make test` 16/16 PASS・scaffold E2E exit 0・プレースホルダー辞書17項目が scaffold 実装と完全一致
+
 ## 残課題メモ
 
 - **kit の public 化は未実施**（龍偉の GO + 最終 security grep が条件。現状 private）

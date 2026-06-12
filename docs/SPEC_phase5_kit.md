@@ -12,7 +12,7 @@
 
 ```
 regatta-results-kit/
-├ site/                  ← 配信テンプレ。masters の index.html/js/css/404/_headers/_redirects を移植
+├ site/                  ← 配信テンプレ（**Cloudflare Pages の Build output directory = `site`**。GAS・ツール・CIのデータパスも site/data/ に統一）
 │   └ admin/__ADMIN_PATH__/index.html   ← S-M3: scaffold がランダムパスに置換
 ├ staff/__STAFF_PATH__/  ← staff-templates/ 6本+shared.css を移植（プレースホルダー形式のまま）
 ├ gas/                   ← 3 GAS プロジェクト（クリーン版）+ shared/ + build_gas.py 連携
@@ -44,6 +44,6 @@ regatta-results-kit/
 
 ## 5. Phase 6 連携（年度ハブ・本 SPEC に含む）
 
-- kit に `hub/` を追加: 協会ハブのテンプレ。`hub/association.json`（協会名・hub_url・tournaments[]: {id,name,year,dates,status: upcoming|live|final,url}）+ `hub/index.html`（年タブ→大会カード一覧。completed は「過去大会」セクション分離。バッジは色+テキスト）
+- kit に `hub/` を追加: 協会ハブのテンプレ。`hub/association.json`（協会名・hub_url・tournaments[]: {id,name,year,dates,**venue(任意)**,status: upcoming|live|final,url}）+ `hub/index.html`（年タブ→大会カード一覧。final は「過去大会」セクション分離。バッジは色+テキスト）
 - site/ テンプレのヘッダに「ハブへ戻る」リンク（master.json `tournament.hub_url` が非空のときのみ表示・D-M3）
 - ハブ自体も静的1ページ＝任意の Pages で配信可。大会追加 = association.json に1エントリ追記（将来 CC プラグインが代行）
