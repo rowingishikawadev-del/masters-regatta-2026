@@ -14,9 +14,10 @@
 | 1 | デッドコード・ゴミ一掃 | ✅ 完了 02:57 push済（-347行+ファイル31件。e2e 252/254 + make test 16/16。R007/R008はadmin現役と判明し保持。カテゴリー内順位機能はPhase 3バックログへ） |
 | 2 | 重複統合 + 安定化 | ✅ 完了 `v1-stable` タグ済（common.py/Shared.gs/shared.js 新設・ビュー統合・JST日付バグ修正。レビュー: js-ts/python/独立監査(Codex不通でSonnet代行)→Critical 0。e2e 252/254 + make test 16/16 + スクショ4枚確認） |
 | 3 | 設定外部化 | ✅ 完了 push済（SPEC v1.1凍結→3B 4並列実装。実ID全除去・v3互換チェーン・500-2000m混在対応・configウィザード・staff-templates/新設。独立SPEC審査block 8件裁定済・security concern 3件修正済。v3デモスクショで2000m中間タイム表示確認。e2e 252/254維持） |
-| 4 | 構造再編（engine/template/events 分離） | ⬜ |
-| 5 | プラグイン化・公開（新規クリーンrepo） | ⬜ |
-| 6 | 年度ハブ | ⬜ |
+| 4 | 構造再編（縮小版・PM裁定） | ✅ 完了（template/正本新設・docs統合。配信ファイル無変更） |
+| 5 | プラグイン化 | ✅ 完了（**https://github.com/RYUIYAMADA/regatta-results-kit**・private・履歴ゼロ・秘密情報grepゼロ。scaffold.py 実証6分で Gate5 クリア・/regatta-setup CCコマンド・SETUP_GUIDE自動生成。**public化は龍偉GO待ち**） |
+| 6 | 年度ハブ | ✅ 完了（kit/hub/: association.json 1エントリ追記方式・年タブ・過去大会分離・site側hub_url戻りリンク） |
+| LP | 大会担当者向け紹介LP | ✅ 完了（kit/lp/index.html・採用4ステップ・「リンクを入れるだけ」連携ガイド・視覚QA合格） |
 
 ## Gate 1 MUST（採用済み・詳細は REFACTORING_PLAN.md §Gate1審査結果）
 
@@ -30,6 +31,10 @@ E-M1 CI向けconfig展開(Repo Variables) / E-M2 schema確定→3B着手 / E-M3 
 4. 各 Phase 末 Gate: e2e（`python3 test/e2e_test.py --skip-pipeline`、基準=252/254 PASS）+ レビュー + 表示確認
 
 ## 残課題メモ
+
+- **kit の public 化は未実施**（龍偉の GO + 最終 security grep が条件。現状 private）
+- ヘッドレス Chrome は最小ウィンドウ幅 ~500px。390px 指定はクロップされ偽の「見切れ」に見える → モバイル検証は幅500以上 or DevTools エミュレーションで行う（2026-06-12 学習）
+- kit の scaffold 残課題: {{DRIVE_FOLDER_URL}} は GAS 接続後に手動更新 / generate_master.py 出力に schema_version なし（実害なし・v0.2 で整合）
 
 - init_tournament.py のテンプレCSV出力先が凍結領域 master/ を上書きする（Phase 4 のディレクトリ再編で template/ に変更する。今回は git restore で復元済み）
 - Codex bridge ジョブが2連続 failed（p2-xreview / p3-spec-review）→ Sonnet 代行で続行中。Mac mini 側の codex 認証要確認
