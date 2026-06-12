@@ -18,6 +18,7 @@
 | 5 | プラグイン化 | ✅ 完了（**https://github.com/RYUIYAMADA/regatta-results-kit**・private・履歴ゼロ・秘密情報grepゼロ。scaffold.py 実証6分で Gate5 クリア・/regatta-setup CCコマンド・SETUP_GUIDE自動生成。**public化は龍偉GO待ち**） |
 | 6 | 年度ハブ | ✅ 完了（kit/hub/: association.json 1エントリ追記方式・年タブ・過去大会分離・site側hub_url戻りリンク） |
 | LP | 大会担当者向け紹介LP | ✅ 完了（kit/lp/index.html・採用4ステップ・「リンクを入れるだけ」連携ガイド・視覚QA合格・監査後に主張の事実整合も完了） |
+| 進行モデル | 公開ライブラリ化（龍偉要件 2026-06-12） | ✅ 完了（registry+全日本A/B+エンジン同梱27/27PASS・ポータル選択・/progression-add 登録コマンド。自動実行は次フェーズ） |
 | ポータル | 管理者ポータル（龍偉要件 2026-06-12） | ✅ 完了（GAS Webアプリ4タブ: 大会/年度管理・Drive接続チューニング・デザインのライブプレビュー→theme.json反映・状態。git/ターミナル完全不要・Googleアカウント認証・PATサーバー側秘匿。テーマ時のみヘッダーグラデをJS導出、既定はピクセル不変を実証） |
 
 ## Gate 1 MUST（採用済み・詳細は REFACTORING_PLAN.md §Gate1審査結果）
